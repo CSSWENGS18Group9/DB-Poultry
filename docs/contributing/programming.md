@@ -128,15 +128,3 @@ The name of the Kotlin class itself **does not contain** the suffix `Kt`. During
 ### Java Classes
 
 Calling Java-defined classes (or its methods) inside a Kotlin file remain the same. That is, it is the usual Java class calling syntax. 
-
-## Resources
-### General Documentation
-- [Java Documentation](https://docs.oracle.com/en/java/javase/21/)
-- [Kotlin Documentation](https://kotlinlang.org/docs/home.html)
-- [MongoDB (Java) Documentation](https://www.mongodb.com/docs/languages/java/)
-- [JavaFX Documentation](https://openjfx.io/index.html)
-- [Gradle Documentation](https://docs.gradle.org/current/userguide/userguide.html)
-
-### Getting Started
-- [Getting started with MongoDB in Java](https://www.mongodb.com/docs/drivers/java/sync/current/get-started/)
-- [Getting started with JavaFX using Gradle](https://openjfx.io/openjfx-docs/#gradle)
