@@ -1,5 +1,5 @@
 ---
-name: DB Poultry Bug
+name: Bug Report
 about: Report a bug or unexpected behavior when using the DB Poultry DBMS
 title: ""
 labels: bug
