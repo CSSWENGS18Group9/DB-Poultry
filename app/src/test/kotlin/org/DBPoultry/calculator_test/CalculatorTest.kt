@@ -15,7 +15,7 @@ class CalculatorTest {
         // this test should fail
         // since as per our code, if the result is negative
         // Calculator.subtraction will return 0
-        assertEquals(-7, Calculator.subtraction(3, 10), "3 - 10 = -7")
+        // assertEquals(-7, Calculator.subtraction(3, 10), "3 - 10 = -7")
         
         // this one will work
         assertEquals(0, Calculator.subtraction(3, 10), "3 - 10 = -7")
