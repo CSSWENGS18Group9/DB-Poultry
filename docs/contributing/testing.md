@@ -33,7 +33,7 @@ public class Calculator {
 ```
 
 
-We will create a unit test file inside `src/test/kotlin/org/DBPoultry/calculator_test/` named `CalculatorTest.java`.
+We will create a unit test file inside `app/src/test/kotlin/org/DBPoultry/calculator_test/` named `CalculatorTest.java`.
 
 > As a standard, the file name of a unit test should be `<ClassName>Test.kt`, where `<ClassName>` is the name of the class being tested.
 
