@@ -14,3 +14,4 @@ of your PR -->
 - [ ] The PR title is descriptive enough
 - [ ] The PR is labeled appropriately
 - [ ] Test(s) are implemented
+- [ ] Regression test is successful
