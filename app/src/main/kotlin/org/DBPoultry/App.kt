@@ -1,5 +1,6 @@
 package org.DBPoultry
 
 fun main() {
-    Greeting.greeting()
+    println(Calculator.addition(10, 5))
+    println(Calculator.subtraction(3, 10))
 }
