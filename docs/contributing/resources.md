@@ -8,6 +8,8 @@ This should contain documentation of all tools used, and references (if any). Th
 - [MongoDB (Java) Documentation](https://www.mongodb.com/docs/languages/java/)
 - [JavaFX Documentation](https://openjfx.io/index.html)
 - [Gradle Documentation](https://docs.gradle.org/current/userguide/userguide.html)
+- [JUnit Documentation](https://junit.org/junit5/docs/5.12.2/api/)
+  - [Assertions](https://junit.org/junit5/docs/5.12.2/api/org.junit.jupiter.api/org/junit/jupiter/api/Assertions.html)
 
 ## Getting Started
 - [Getting started with MongoDB in Java](https://www.mongodb.com/docs/drivers/java/sync/current/get-started/)
