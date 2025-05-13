@@ -19,7 +19,9 @@ repositories {
 }
 
 dependencies {
-    testImplementation(libs.junit)
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+    testImplementation(kotlin("test"))
+
     implementation(kotlin("stdlib"))
     // Add any other dependencies here
     // ...
@@ -60,4 +62,8 @@ java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
     }
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
