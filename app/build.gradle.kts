@@ -19,12 +19,35 @@ repositories {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
-    testImplementation(kotlin("test"))
-
-    implementation(kotlin("stdlib"))
     // Add any other dependencies here
-    // ...
+    // Put the dependency below the comment where that dependency 
+    // belongs
+    // Example, we add the JUnit dependency under the header
+    // "Dependencies for QA" since JUnit will be used by the QAs
+    //
+    // Follow the format:
+    //   
+    //      // <name of dependency>
+    //      implementation("...")
+    // 
+    // If unsure, message @zrygan
+
+    // Dependencies for QA
+    // JUnit 
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+    
+    // Dependencies for Dev
+
+    // Dependencies for UI/UX
+
+    // Dependencies for Database
+    // PostgreSQL
+    implementation("org.postgresql:postgresql:17.5")
+    
+    // Dependencies for Kotlin
+    // Kotlin STDLIB
+    implementation(kotlin("stdlib"))
+    testImplementation(kotlin("test"))
 }
 
 sourceSets {
