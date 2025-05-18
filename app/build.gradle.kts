@@ -35,15 +35,15 @@ dependencies {
     // Dependencies for QA
     // JUnit 
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
-    
+
     // Dependencies for Dev
 
     // Dependencies for UI/UX
 
     // Dependencies for Database
     // PostgreSQL
-    implementation("org.postgresql:postgresql:17.5")
-    
+    implementation("org.postgresql:postgresql:42.7.3")
+
     // Dependencies for Kotlin
     // Kotlin STDLIB
     implementation(kotlin("stdlib"))
@@ -71,9 +71,8 @@ sourceSets {
 }
 
 application {
-    mainClass.set("org.DBPoultry.AppKt")
+    mainClass.set("org.db_poultry.AppKt")
 }
-
 
 kotlin {
     jvmToolchain {
