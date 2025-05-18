@@ -6,7 +6,7 @@ We will be using Docker to contain all the necessary depencies for the project:
 - [Adoptium (jdk-21.0.7+6)](https://adoptium.net/)
 - [Kotlin 21.20](https://github.com/JetBrains/kotlin/releases/tag/v2.1.20)
 - [Gradle 8.14](https://gradle.org/)
-- [PostgreSQL 17.5]()
+- [PostgreSQL 17.5](https://www.postgresql.org/)
 
 ## Using Docker
 
