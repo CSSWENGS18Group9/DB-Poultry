@@ -26,3 +26,6 @@ build
 # VS Code
 .vscode/
 .kotlin/
+
+# IntelliJ IDEA
+.idea/
