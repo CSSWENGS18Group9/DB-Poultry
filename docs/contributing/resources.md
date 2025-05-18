@@ -5,7 +5,7 @@ This should contain documentation of all tools used, and references (if any). Th
 ## General Documentation
 - [Java Documentation](https://docs.oracle.com/en/java/javase/21/)
 - [Kotlin Documentation](https://kotlinlang.org/docs/home.html)
-- MySQL
+- [PostgreSQL Documentation](https://www.postgresql.org/docs/current/index.html)
 - [JavaFX Documentation](https://openjfx.io/index.html)
 - [Gradle Documentation](https://docs.gradle.org/current/userguide/userguide.html)
 - [JUnit Documentation](https://junit.org/junit5/docs/5.12.2/api/)
