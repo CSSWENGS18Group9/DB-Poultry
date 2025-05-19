@@ -1,33 +1,36 @@
--- Prefixed for composite ID of inventory
--- this ENUM determines what the type of supply
--- this ENUM also ensures only the following supply are in the database
---
--- POTENTIAL ISSUE: 
---     this may be an issue if the client wishes to do other supplies
-CREATE Type supply_prefix AS ENUM (
-    'ChkF_',  -- Chicken Feed
-    'Apog_',  -- Apog
-    'Adul_',  -- Adulticide
-    'Strg_',  -- String
-    'Fuel_',  -- Fuel
-    'ChkM_',  -- Chicken Medicine
-    'Larv_',  -- Larvicide
-    'FlyG_',  -- Fly Glue
-    'Dist_',  -- Disinfectant
---  'Misc_',  -- Miscellaneous
-)
+-- ENUM for unit types
+CREATE TYPE UnitType AS ENUM ('weight', 'volume', 'length');
+
+-- Supply Type Table
+CREATE TABLE Supply_Type (
+    -- Supply_Type Primary Key
+    -- Prefix of Supply_Type
+    -- Ex. `ChkF_`, `Apog_`
+    Supply_Type_Prefix VARCHAR(5) PRIMARY KEY,      
+
+    -- The unit of measurement for that Supply_Type
+    -- for weight: grams        (g)
+    -- for volume: mililiters   (ml)
+    -- for length: centimeters  (cm)
+    Supply_Type_Unt UnitType
+);
 
 -- Supply Table
 CREATE TABLE Supply (
     -- Structured Primary Key
-    Supply_Prefix supply_prefix NOT NULL,
     Supply_ID SERIAL PRIMARY KEY,
+    Supply_Type_Prefix VARCHAR(5) 
+                       NOT NULL 
+                       REFERENCES Supply_Type(Supply_Type_Prefix),
     
     -- Table Columns
-    Quantity NUMERIC(8,4),                -- arbitrary precision 
-    Unit INTEGER,                         -- this does not make sense
+    Quantity NUMERIC(8,8),  -- arbitrary precision 
+    -- Unit INTEGER         -- Removed this line since the Unit 
+                            -- is already given by the Supply_Type
+                            -- return if needed (@zrygan)
 );
 
+-- Delivery Table
 CREATE TABLE Delivery (
     -- Primary Key
     Delivery_ID SERIAL PRIMARY KEY,
@@ -36,13 +39,14 @@ CREATE TABLE Delivery (
     Date TIMESTAMP
 );
 
+-- Delivery Detail Table
+-- Contains the details/logistics of a delivery
 CREATE TABLE Delivery_Detail (
     -- Supply Foreign Key
-    Supply_Prefix supply_prefix NOT NULL,
-    Supply_ID SERIAL NOT NULL,
+    Supply_ID INTEGER NOT NULL,
 
     -- Delivery Foreign Key
-    Delivery_ID SERIAL NOT NULL,
+    Delivery_ID INTEGER NOT NULL,
 
     -- Table Columns
     -- FIXME:   @jazjimenez @OutForMilks is this necessary since
@@ -55,13 +59,13 @@ CREATE TABLE Delivery_Detail (
     FOREIGN KEY (Delivery_ID) REFERENCES Delivery(Delivery_ID)
 );
 
+-- (Supply) Usage Table
 CREATE TABLE Usage (
     -- Primary Key
     Usage_ID SERIAL PRIMARY KEY,
 
     -- Supply Foreign Key
-    Supply_Prefix supply_prefix NOT NULL 
-    Supply_ID SERIAL NOT NULL,
+    Supply_ID INTEGER NOT NULL,
 
     -- Table Columns
     -- FIXME:   @jazjimenez @OutForMilks is this necessary since
