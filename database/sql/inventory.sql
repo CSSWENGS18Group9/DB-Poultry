@@ -1,5 +1,10 @@
 -- ENUM for unit types
-CREATE TYPE UnitType AS ENUM ('weight', 'volume', 'length');
+CREATE TYPE UnitType AS ENUM (
+                                'weight', 
+                                'volume', 
+                                'length', 
+                                'discrete'
+                             );
 
 -- Supply Type Table
 CREATE TABLE Supply_Type (
@@ -9,9 +14,14 @@ CREATE TABLE Supply_Type (
     Supply_Type_Prefix VARCHAR(5) PRIMARY KEY,      
 
     -- The unit of measurement for that Supply_Type
-    -- for weight: grams        (g)
-    -- for volume: mililiters   (ml)
-    -- for length: centimeters  (cm)
+    -- for weight: 
+    --      grams        (g)
+    -- for volume: 
+    --      mililiters   (ml)
+    -- for length: 
+    --      centimeters  (cm)
+    -- for discrete number of something (like cans, bottles, sacks):
+    --      discrete
     Supply_Type_Unt UnitType
 );
 
