@@ -2,6 +2,15 @@
 
 This is the documentation for the PostgreSQL Database.
 
+## Directory
+
+- The Data Definition Language (DDL) Scripts (`sql/`):
+	- `coop.sql`, defines the coop table
+	- `inventory.sql`, defines the supple, delivery, usage, and helper tables
+- The Data Manipulation Languages (DML) Scripts (`sql/`):
+	- `basic_supply_types.sql`, defines the default supply types in the DBMS
+- Dummy Data is in the `test/` directory
+
 ## Structured ID for Inventory
 Primary Key becomes a composite key:
 	Supply_Prefix
@@ -24,9 +33,20 @@ Example keys are:
 	ChkF_986345321
 	Dist_32
 
-### Potential Issue
+This was done using:
+```sql
+CREATE TABLE Supply_Type (
+    Supply_Type_Prefix VARCHAR(5) PRIMARY KEY,      
+    Supply_Type_Unt UnitType
+);
 
-Since the Supply_Prefix is an enum, it will strictly only allow for 
-the enumerated supply types to be included.
+-- ...
 
-Potential solution, we may add Misc_ as a prefix. 
+CREATE TABLE Supply (
+    Supply_ID SERIAL PRIMARY KEY,
+    Supply_Type_Prefix VARCHAR(5) 
+                       NOT NULL 
+                       REFERENCES Supply_Type(Supply_Type_Prefix),
+    Quantity NUMERIC(8,8),
+);
+```
