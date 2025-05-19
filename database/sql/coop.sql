@@ -1,14 +1,24 @@
 CREATE TABLE Coop (
-    Coop_ID TEXT PRIMARY KEY,
-    Name TEXT,
+    -- Primary Key
+    Coop_ID SERIAL PRIMARY KEY,
+    
+    -- Table Columns
+    Coop_Name TEXT,
     Capacity INTEGER
 );
 
 CREATE TABLE Poultry_Records (
-    Poultry_ID TEXT PRIMARY KEY,
-    Coop_ID TEXT,
+    -- Primary Key
+    Poultry_ID SERIAL PRIMARY KEY,
+
+    -- Coop Foreign Key
+    Coop_ID SERIAL,
+
+    -- Table Columns
     Current_Count INTEGER,
     Depleted_Count INTEGER,
     Date TIMESTAMP,
+
+    -- Table Constraints
     FOREIGN KEY (Coop_ID) REFERENCES Coop(Coop_ID)
 );
