@@ -9,6 +9,7 @@ plugins {
     application
     kotlin("jvm") version "2.1.10"
     java
+ 
 }
 
 group = "org.example"
@@ -16,6 +17,14 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+}
+
+// JavaFX
+val javafxVersion = "17.0.2"
+val platform = when (System.getProperty("os.name").lowercase()) {
+    "mac os x", "macos" -> "mac"
+    "linux" -> "linux"
+    else -> "win"
 }
 
 dependencies {
@@ -32,21 +41,30 @@ dependencies {
     // 
     // If unsure, message @zrygan
 
-    // Dependencies for QA
-    // JUnit 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
-
     // Dependencies for Dev
+    // Dependencies for Kotlin
+    // Kotlin STDLIB
+    implementation(kotlin("stdlib"))
+    testImplementation(kotlin("test"))
+
 
     // Dependencies for UI/UX
+    val javafxModules = listOf("base", "graphics", "controls", "fxml")
+
+    javafxModules.forEach {
+        implementation("org.openjfx:javafx-$it:$javafxVersion:$platform")
+    }
 
     // Dependencies for Database
     // PostgreSQL
     implementation("org.postgresql:postgresql:42.7.3")
 
-    // Dependencies for Kotlin
-    // Kotlin STDLIB
+    // Kotlin
     implementation(kotlin("stdlib"))
+
+    // Dependencies for QA
+    // JUnit 
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
     testImplementation(kotlin("test"))
 }
 
