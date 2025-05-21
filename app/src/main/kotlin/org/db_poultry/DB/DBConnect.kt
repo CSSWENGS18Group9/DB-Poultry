@@ -1,4 +1,4 @@
-package org.db_poultry
+package org.db_poultry.DB
 
 import java.sql.Connection
 import java.sql.DriverManager
