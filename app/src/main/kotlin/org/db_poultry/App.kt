@@ -6,7 +6,7 @@ import org.db_poultry.db.DBConnect
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.gui.MainFrame
 
-import java.lang.ClassNotFoundException;
+import java.lang.ClassNotFoundException
 
 class App {
     private lateinit var databaseName: String
@@ -30,10 +30,10 @@ class App {
             generateErrorMessage(
                 "Error at `getDotEnd() in `App.kt`",
                 "Failed to load environment variables; not found",
-                "If environment variables does exist make sure it is in `app/`. Otherwise, creare one in `app/`.",
+                "If environment variables does exist make sure it is in `app/`. Otherwise, create one in `app/`.",
                 e
             )
-            
+
             return false
         }
 
@@ -48,7 +48,7 @@ class App {
             generateErrorMessage(
                 "Error at `openMainFrame()` in `App.kt`.",
                 "Failed to open MainFrame GUI; class not found.",
-                "Rename the `index` GUI to `MainFrame` and should be at the root folder of `Gui/`."
+                "Rename the `index` GUI to `MainFrame` and should be at the root folder of `Gui/`.", e
             )
 
             return false
@@ -57,14 +57,18 @@ class App {
 
     fun start() {
         if (!getDotEnv()) {
-            println("Error at `start()` in `App.kt`")
-            println("Environment (dot env) has a missing variable.")
+            generateErrorMessage(
+                "Error at `start()` in `App.kt`.",
+                "Dot env file has a missing variable.",
+                "Check if the dot env file has DATABASE_NAME, DATABASE_PASS, and DATABASE_PORT"
+            )
+
             return
         }
 
         val jdbcUrl = "jdbc:postgresql://localhost:$databasePort/$databaseName"
 
-        // Connect to the PostgreSQL DB
+        // Connect to the PostgresSQL DB
         DBConnect(
             databaseName,
             jdbcUrl,

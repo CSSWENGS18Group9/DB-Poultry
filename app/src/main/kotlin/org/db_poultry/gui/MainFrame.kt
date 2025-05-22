@@ -6,6 +6,7 @@ import javafx.stage.Stage
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 
+
 class MainFrame : Application() {
     override fun start(primaryStage: Stage) {
         try {
