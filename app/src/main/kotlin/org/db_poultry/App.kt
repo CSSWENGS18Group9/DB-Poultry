@@ -31,7 +31,6 @@ class App {
             return false
         }
 
-        return false
     }
 
     fun start() {
