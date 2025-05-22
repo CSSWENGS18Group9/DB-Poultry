@@ -3,7 +3,7 @@ package org.db_poultry
 import javafx.application.Application
 import io.github.cdimascio.dotenv.Dotenv
 import org.db_poultry.DB.DBConnect
-import org.db_poultry.GUI.Sample
+import org.db_poultry.GUI.MainFrame
 
 class App {
     private lateinit var databaseName: String
@@ -42,6 +42,7 @@ class App {
 
         val jdbcUrl = "jdbc:postgresql://localhost:$databasePort/$databaseName"
 
+        // Connect to the PostgreSQL DB
         DBConnect(
             databaseName,
             jdbcUrl,
@@ -49,6 +50,8 @@ class App {
             databasePass
         )
 
+        // Open MainFrame (index GUI)
+        Application.launch(MainFrame::class.java)
     }
 }
 

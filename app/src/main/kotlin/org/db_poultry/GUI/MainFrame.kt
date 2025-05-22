@@ -8,7 +8,7 @@ import javafx.stage.Stage
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 
-class Sample : Application() {
+class MainFrame : Application() {
     override fun start(primaryStage: Stage) {
         try {
             val loader = FXMLLoader(javaClass.getResource("/dbpoultry.fxml"))
