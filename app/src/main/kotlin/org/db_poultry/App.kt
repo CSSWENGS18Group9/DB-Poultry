@@ -1,17 +1,17 @@
 package org.db_poultry
 
-import javafx.application.Application
 import io.github.cdimascio.dotenv.Dotenv
+import javafx.application.Application
 import org.db_poultry.db.DBConnect
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.gui.MainFrame
-
-import java.lang.ClassNotFoundException
+import java.sql.Connection
 
 class App {
     private lateinit var databaseName: String
     private lateinit var databasePass: String
     private lateinit var databasePort: String
+    private lateinit var databaseObjc: DBConnect
 
     private fun getDotEnv(): Boolean {
         try {
@@ -69,7 +69,7 @@ class App {
         val jdbcUrl = "jdbc:postgresql://localhost:$databasePort/$databaseName"
 
         // Connect to the PostgresSQL DB
-        DBConnect(
+        databaseObjc = DBConnect(
             jdbcUrl,
             databaseName,
             databasePass
@@ -78,8 +78,11 @@ class App {
         // Open MainFrame (index GUI)
         openMainFrame()
     }
+
+    fun getConnection(): Connection? = databaseObjc.getConnection()
 }
 
 fun main() {
-    App().start()
+    val app = App()
+    app.start()
 }
