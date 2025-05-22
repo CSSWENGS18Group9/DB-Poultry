@@ -70,7 +70,6 @@ class App {
 
         // Connect to the PostgresSQL DB
         DBConnect(
-            databaseName,
             jdbcUrl,
             databaseName,
             databasePass
