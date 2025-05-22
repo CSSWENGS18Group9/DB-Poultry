@@ -2,8 +2,11 @@ package org.db_poultry
 
 import javafx.application.Application
 import io.github.cdimascio.dotenv.Dotenv
-import org.db_poultry.DB.DBConnect
-import org.db_poultry.GUI.MainFrame
+import org.db_poultry.db.DBConnect
+import org.db_poultry.errors.generateErrorMessage
+import org.db_poultry.gui.MainFrame
+
+import java.lang.ClassNotFoundException;
 
 class App {
     private lateinit var databaseName: String
@@ -24,17 +27,36 @@ class App {
 
             return true
         } catch (e: Exception) {
-            println("Error at `getDotEnv() in `App.kt`")
-            println("Failed to load environment variables not found.")
-            e.printStackTrace()
-
+            generateErrorMessage(
+                "Error at `getDotEnd() in `App.kt`",
+                "Failed to load environment variables; not found",
+                "If environment variables does exist make sure it is in `app/`. Otherwise, creare one in `app/`.",
+                e
+            )
+            
             return false
         }
 
     }
 
+    private fun openMainFrame(): Boolean {
+        try {
+            Application.launch(MainFrame::class.java)
+
+            return true
+        } catch (e: ClassNotFoundException) {
+            generateErrorMessage(
+                "Error at `openMainFrame()` in `App.kt`.",
+                "Failed to open MainFrame GUI; class not found.",
+                "Rename the `index` GUI to `MainFrame` and should be at the root folder of `Gui/`."
+            )
+
+            return false
+        }
+    }
+
     fun start() {
-        if(!getDotEnv()){
+        if (!getDotEnv()) {
             println("Error at `start()` in `App.kt`")
             println("Environment (dot env) has a missing variable.")
             return
@@ -51,7 +73,7 @@ class App {
         )
 
         // Open MainFrame (index GUI)
-        Application.launch(MainFrame::class.java)
+        openMainFrame()
     }
 }
 
