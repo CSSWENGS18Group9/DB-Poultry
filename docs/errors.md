@@ -16,8 +16,8 @@ System.out.println("<Description>.")
 
 > Example:
 > ```java
-> println("Error at `getDotEnv() in `App.kt`")
-> println("Failed to load environment variables not found.")          
+> println("Error at `getDotEnv()` in `App.kt`")
+> println("Failed to load environment variables: not found.")          
 > ```
 
 ## If you're in a `try-catch` statement
