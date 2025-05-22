@@ -5,15 +5,23 @@ import javafx.scene.Scene
 import javafx.scene.control.Label
 import javafx.scene.layout.StackPane
 import javafx.stage.Stage
+import javafx.fxml.FXMLLoader
+import javafx.scene.Parent
 
 class Sample : Application() {
     override fun start(primaryStage: Stage) {
-        val label = Label("Hello, World!")
-        val root = StackPane(label)
-        val scene = Scene(root, 300.0, 200.0)
+        try {
+            val loader = FXMLLoader(javaClass.getResource("/dbpoultry.fxml"))
+            val root = loader.load<Parent>()
+            val scene = Scene(root)
+            primaryStage.scene = scene
+            primaryStage.title = "JavaFX SceneBuilder Demo"
+            primaryStage.show()
 
-        primaryStage.title = "JavaFX Kotlin Example"
-        primaryStage.scene = scene
-        primaryStage.show()
+            println("JavaFX application started successfully.")
+        } catch (e: Exception) {
+            println("Error loading FXML file:\n")
+            e.printStackTrace()
+        }
     }
 }

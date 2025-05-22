@@ -8,6 +8,7 @@
 plugins {
     application
     kotlin("jvm") version "2.1.10"
+    id("org.openjfx.javafxplugin") version "0.1.0"
     java
  
 }
@@ -25,6 +26,11 @@ val platform = when (System.getProperty("os.name").lowercase()) {
     "mac os x", "macos" -> "mac"
     "linux" -> "linux"
     else -> "win"
+}
+
+javafx {
+    version = "17.0.2"
+    modules = listOf("javafx.controls", "javafx.fxml")
 }
 
 dependencies {
@@ -49,11 +55,11 @@ dependencies {
 
 
     // Dependencies for UI/UX
-    val javafxModules = listOf("base", "graphics", "controls", "fxml")
+    // val javafxModules = listOf("base", "graphics", "controls", "fxml")
 
-    javafxModules.forEach {
-        implementation("org.openjfx:javafx-$it:$javafxVersion:$platform")
-    }
+    // javafxModules.forEach {
+    //     implementation("org.openjfx:javafx-$it:$javafxVersion:$platform")
+    // }
 
     // Dependencies for Database
     // PostgreSQL
