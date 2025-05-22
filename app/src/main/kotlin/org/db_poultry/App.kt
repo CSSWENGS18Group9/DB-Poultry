@@ -28,7 +28,7 @@ class App {
             return true
         } catch (e: Exception) {
             generateErrorMessage(
-                "Error at `getDotEnd() in `App.kt`",
+                "Error at `getDotEnv()` in `App.kt`",
                 "Failed to load environment variables; not found",
                 "If environment variables does exist make sure it is in `app/`. Otherwise, create one in `app/`.",
                 e
