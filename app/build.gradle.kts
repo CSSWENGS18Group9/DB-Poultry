@@ -66,9 +66,6 @@ dependencies {
     // Dot Env (.env file)
     implementation("io.github.cdimascio:dotenv-java:3.0.0")
 
-    // Kotlin
-    implementation(kotlin("stdlib"))
-
     // Dependencies for QA
     // JUnit 
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
