@@ -25,4 +25,6 @@ class DBConnect(
             )
         }
     }
+
+    fun getConnection(): Connection? = connection
 }
