@@ -53,11 +53,11 @@ dependencies {
     testImplementation(kotlin("test"))
     
     // Dependencies for UI/UX
-    // val javafxModules = listOf("base", "graphics", "controls", "fxml")
+    val javafxModules = listOf("base", "graphics", "controls", "fxml")
 
-    // javafxModules.forEach {
-    //     implementation("org.openjfx:javafx-$it:$javafxVersion:$platform")
-    // }
+    javafxModules.forEach {
+        implementation("org.openjfx:javafx-$it:$javafxVersion:$platform")
+    }
 
     // Dependencies for Database
     // PostgreSQL
