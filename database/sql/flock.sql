@@ -8,15 +8,15 @@ CREATE TABLE Flock (
 
 CREATE TABLE Flock_Details (
     -- Primary Key
-    Flock_Details_ID SERIAL PRIMARY KEY
+    Flock_Details_ID SERIAL PRIMARY KEY,
 
     -- Flock Foreign Key
-    Flock_ID SERIAL
+    Flock_ID INTEGER,
 
     -- Table Columns
-    FD_Date TIMESTAMP
-    Current_Count INTEGER
-    Depleted_Count INTEGER
+    FD_Date TIMESTAMP,
+    Current_Count INTEGER,
+    Depleted_Count INTEGER,
 
     -- Table Constraints
     FOREIGN KEY (Flock_ID) REFERENCES Flock(Flock_ID)
