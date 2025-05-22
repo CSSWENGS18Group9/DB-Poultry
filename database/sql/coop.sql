@@ -1,24 +1,23 @@
-CREATE TABLE Coop (
+CREATE TABLE Flock (
     -- Primary Key
-    Coop_ID SERIAL PRIMARY KEY,
-    
+    Flock_ID SERIAL PRIMARY KEY,
+
     -- Table Columns
-    Coop_Name TEXT,
-    Capacity INTEGER
+    Starting_Date TIMESTAMP
 );
 
-CREATE TABLE Poultry_Records (
+CREATE TABLE Flock_Details (
     -- Primary Key
-    Poultry_ID SERIAL PRIMARY KEY,
+    Flock_Details_ID SERIAL PRIMARY KEY
 
-    -- Coop Foreign Key
-    Coop_ID SERIAL,
+    -- Flock Foreign Key
+    Flock_ID SERIAL
 
     -- Table Columns
-    Current_Count INTEGER,
-    Depleted_Count INTEGER,
-    Date TIMESTAMP,
+    FD_Date TIMESTAMP
+    Current_Count INTEGER
+    Depleted_Count INTEGER
 
     -- Table Constraints
-    FOREIGN KEY (Coop_ID) REFERENCES Coop(Coop_ID)
+    FOREIGN KEY (Flock_ID) REFERENCES Flock(Flock_ID)
 );
