@@ -6,7 +6,7 @@ This is the documentation for the PostgreSQL Database.
 
 - The Data Definition Language (DDL) Scripts (`sql/`):
 	- `coop.sql`, defines the coop table
-	- `inventory.sql`, defines the supple, delivery, usage, and helper tables
+	- `inventory.sql`, defines the supply, delivery, usage, and helper tables
 - The Data Manipulation Languages (DML) Scripts (`sql/`):
 	- `basic_supply_types.sql`, defines the default supply types in the DBMS
 - Dummy Data is in the `test/` directory
