@@ -48,12 +48,10 @@ dependencies {
     // If unsure, message @zrygan
 
     // Dependencies for Dev
-    // Dependencies for Kotlin
-    // Kotlin STDLIB
+    // Kotlin
     implementation(kotlin("stdlib"))
     testImplementation(kotlin("test"))
-
-
+    
     // Dependencies for UI/UX
     // val javafxModules = listOf("base", "graphics", "controls", "fxml")
 
@@ -64,6 +62,9 @@ dependencies {
     // Dependencies for Database
     // PostgreSQL
     implementation("org.postgresql:postgresql:42.7.3")
+
+    // Dot Env (.env file)
+    implementation("io.github.cdimascio:dotenv-java:3.0.0")
 
     // Kotlin
     implementation(kotlin("stdlib"))
