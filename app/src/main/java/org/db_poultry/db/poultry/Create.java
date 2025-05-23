@@ -13,7 +13,8 @@ public class Create {
      * Adds a new record into the Poultry table
      *
      * @param connect       the Connection thing with SQL
-     * @param flockID       the ID of this flock
+     * @param poultryID     the ID of this poultry
+     * @param flockID       the flock ID this poultry is connected to
      * @param date          the starting date of this flock
      * @param depleted      the amount of dead chicken
      * @param curCount      the current amount of chickens
