@@ -10,7 +10,7 @@ plugins {
     kotlin("jvm") version "2.1.10"
     id("org.openjfx.javafxplugin") version "0.1.0"
     java
- 
+
 }
 
 group = "org.example"
@@ -51,7 +51,7 @@ dependencies {
     // Kotlin
     implementation(kotlin("stdlib"))
     testImplementation(kotlin("test"))
-    
+
     // Dependencies for UI/UX
     val javafxModules = listOf("base", "graphics", "controls", "fxml")
 
@@ -60,7 +60,7 @@ dependencies {
     }
 
     // Dependencies for Database
-    // PostgreSQL
+    // PostgresSQL
     implementation("org.postgresql:postgresql:42.7.3")
 
     // Dot Env (.env file)
