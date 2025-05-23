@@ -2,6 +2,9 @@ package org.db_poultry.db.supplies;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 public class SupplyManage {
 
@@ -34,9 +37,8 @@ public class SupplyManage {
             preppedStatement.close(); // Closes preparedStatement
 
             return query2; // Returns the copied preppedStatement as a String
-        } catch (Exception e) {
-            System.out.println("addSupply() error!!");
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            generateErrorMessage("Error in `addSupply()`.", "SQLException occurred.", "", e);
             return null;
         }
     }
@@ -70,9 +72,8 @@ public class SupplyManage {
             preppedStatement.close(); // Closes preparedStatement
 
             return query2; // Returns 1 if success
-        } catch (Exception e) {
-            System.out.println("updateSupply() error!!");
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            generateErrorMessage("Error in `updateSupply()`.", "SQLException occurred.", "", e);
             return null;
         }
     }

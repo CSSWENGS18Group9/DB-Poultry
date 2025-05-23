@@ -2,7 +2,10 @@ package org.db_poultry.db.poultry;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+
+import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 public class Create {
 
@@ -36,9 +39,8 @@ public class Create {
             preppedStatement.close(); // Closes preparedStatement
 
             return query2; // Returns the copied preppedStatement as a String
-        } catch (Exception e) {
-            System.out.println("createPoultry() error!!");
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            generateErrorMessage("Error in `createPoultry()`.", "SQLException occurred.", "", e);
             return null;
         }
     }
