@@ -32,11 +32,11 @@ public class SupplyManage {
 
             preppedStatement.executeUpdate(); // Executes query
 
-            String query2 = preppedStatement.toString(); // Stores the value of preppedStatement as a String
+            String storedPreppedStatement = preppedStatement.toString(); // Stores the value of preppedStatement as a String
 
             preppedStatement.close(); // Closes preparedStatement
 
-            return query2; // Returns the copied preppedStatement as a String
+            return storedPreppedStatement; // Returns the copied preppedStatement as a String
         } catch (SQLException e) {
             generateErrorMessage("Error in `addSupply()`.", "SQLException occurred.", "", e);
             return null;
