@@ -6,6 +6,16 @@ import java.sql.Timestamp;
 
 public class Create {
 
+    /**
+     * Adds a new record into the Poultry table
+     *
+     * @param connect       the Connection thing with SQL
+     * @param flockID       the ID of this flock
+     * @param date          the starting date of this flock
+     * @param depleted      the amount of dead chicken
+     * @param curCount      the current amount of chickens
+     * @return a String which is the query with filled-in values
+     */
     public static String createPoultry(Connection connect, int flockID, Timestamp date, int depleted, int curCount) {
         String query = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Current_Count, Depleted_Count) VALUES (?,?, ?, ?)"; // Query to be used in preparedStatement
 

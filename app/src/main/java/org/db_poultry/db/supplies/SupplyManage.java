@@ -13,7 +13,7 @@ public class SupplyManage {
      * @param supplyID      the ID of this supply
      * @param quantity      the quantity of this supply
      * @param unit          the unit of this supply
-     * @return an int if record was inserted properly
+     * @return a String which is the query with filled-in values
      */
     public static String addSupply(Connection connect, String supplyPrefix, int supplyID, int quantity, int unit) {
         String query = "INSERT INTO Supply (Supply_Prefix, Supply_ID, Quantity, Unit) VALUES (?, ?, ?, ?)"; // Query to be used in preparedStatement
@@ -41,39 +41,39 @@ public class SupplyManage {
         }
     }
 
-        /**
-         * Updates an existing record in the Supply table
-         *
-         * @param connect       the Connection thing with SQL
-         * @param supplyPrefix  the prefix of this supply
-         * @param supplyID      the ID of this supply
-         * @param quantity      the quantity of this supply
-         * @param unit          the unit of this supply
-         * @return an int if record was updated properly
-         */
-        public static String updateSupply(Connection connect, String supplyPrefix, String supplyID,int quantity, int unit) {
-            String query = "UPDATE Supply SET Quantity = ?, unit = ? WHERE Supply_ID = ? AND Supply_Prefix = ?"; // Query to be used in preparedStatement
+    /**
+     * Updates an existing record in the Supply table
+     *
+     * @param connect       the Connection thing with SQL
+     * @param supplyPrefix  the prefix of this supply
+     * @param supplyID      the ID of this supply
+     * @param quantity      the quantity of this supply
+     * @param unit          the unit of this supply
+     * @return a String which is the query with filled-in values
+     */
+    public static String updateSupply(Connection connect, String supplyPrefix, String supplyID,int quantity, int unit) {
+        String query = "UPDATE Supply SET Quantity = ?, unit = ? WHERE Supply_ID = ? AND Supply_Prefix = ?"; // Query to be used in preparedStatement
 
-            try {
-                PreparedStatement preppedStatement = connect.prepareStatement(query); // preparedStatement for SQL stuff
+        try {
+            PreparedStatement preppedStatement = connect.prepareStatement(query); // preparedStatement for SQL stuff
 
-                // Sets the values to be updated
-                preppedStatement.setInt(1, quantity);
-                preppedStatement.setInt(2, unit);
-                preppedStatement.setString(3, supplyID);
-                preppedStatement.setString(4, supplyPrefix);
+            // Sets the values to be updated
+            preppedStatement.setInt(1, quantity);
+            preppedStatement.setInt(2, unit);
+            preppedStatement.setString(3, supplyID);
+            preppedStatement.setString(4, supplyPrefix);
 
-                preppedStatement.executeUpdate(); // Executes query
+            preppedStatement.executeUpdate(); // Executes query
 
-                String query2 = preppedStatement.toString(); // Stores the value of preppedStatement as a String
+            String query2 = preppedStatement.toString(); // Stores the value of preppedStatement as a String
 
-                preppedStatement.close(); // Closes preparedStatement
+            preppedStatement.close(); // Closes preparedStatement
 
-                return query2; // Returns 1 if success
-            } catch (Exception e) {
-                System.out.println("updateSupply() error!!");
-                System.out.println(e.getMessage());
-                return null;
-            }
+            return query2; // Returns 1 if success
+        } catch (Exception e) {
+            System.out.println("updateSupply() error!!");
+            System.out.println(e.getMessage());
+            return null;
         }
+    }
 }

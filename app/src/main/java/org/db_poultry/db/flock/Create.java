@@ -6,6 +6,14 @@ import java.sql.Timestamp;
 
 public class Create {
 
+    /**
+     * Adds a new record into the Flock table
+     *
+     * @param connect       the Connection thing with SQL
+     * @param flockID       the ID of this flock
+     * @param startDate     the starting date of this flock
+     * @return a String which is the query with filled-in values
+     */
     public static String createFlock(Connection connect, int flockID, Timestamp startDate) {
         String query = "INSERT INTO Flock (Flock_ID, Starting_Date) VALUES (?,?)"; // Query to be used in preparedStatement
 
