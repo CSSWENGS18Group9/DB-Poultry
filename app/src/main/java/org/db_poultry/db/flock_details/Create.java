@@ -23,6 +23,9 @@ public class Create {
         String query = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Current_Count, Depleted_Count) VALUES (?, ?, ?, ?)"; // Query to be used in preparedStatement
 
         try {
+            // FIXME: @justinching30 Fix this line
+            // the complete query should be the (base version) of the string
+            String completeQuery = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Current_Count, Depleted_Count) VALUES (?, ?, ?, ?)";
             PreparedStatement preppedStatement = connect.prepareStatement(query); // preparedStatement for SQL stuff
 
             // Sets the values to be added
@@ -33,11 +36,10 @@ public class Create {
 
             preppedStatement.executeUpdate(); // Executes query
 
-            String storedPreppedStatement = preppedStatement.toString(); // Stores the value of preppedStatement as a String
 
             preppedStatement.close(); // Closes preparedStatement
 
-            return storedPreppedStatement; // Returns the copied preppedStatement as a String
+            return completeQuery; // Returns the copied preppedStatement as a String
         } catch (SQLException e) {
             generateErrorMessage("Error in `createFlockDetails()`.", "SQLException occurred.", "", e);
             return null;
