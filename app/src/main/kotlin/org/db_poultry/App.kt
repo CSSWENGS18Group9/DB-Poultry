@@ -9,11 +9,11 @@ import org.db_poultry.gui.MainFrame
 import java.lang.ClassNotFoundException
 
 class App {
-    private lateinit var databaseName: String
-    private lateinit var databasePass: String
-    private lateinit var databasePort: String
+    lateinit var databaseName: String
+    lateinit var databasePass: String
+    lateinit var databasePort: String
 
-    private fun getDotEnv(): Boolean {
+    fun getDotEnv(): Boolean {
         try {
             val dotenv = Dotenv.load()
 
