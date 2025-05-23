@@ -1,4 +1,34 @@
 package org.db_poultry.db.poultry;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Timestamp;
+
 public class Create {
+
+    public static String createPoultry(Connection connect, int flockID, Timestamp date, int depleted, int curCount) {
+        String query = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Current_Count, Depleted_Count) VALUES (?,?, ?, ?)"; // Query to be used in preparedStatement
+
+        try {
+            PreparedStatement preppedStatement = connect.prepareStatement(query); // preparedStatement for SQL stuff
+
+            // Sets the values to be added
+            preppedStatement.setInt(1, flockID);
+            preppedStatement.setTimestamp(2, date);
+            preppedStatement.setInt(3, depleted);
+            preppedStatement.setInt(4, curCount);
+
+            preppedStatement.executeUpdate(); // Executes query
+
+            String query2 = preppedStatement.toString(); // Stores the value of preppedStatement as a String
+
+            preppedStatement.close(); // Closes preparedStatement
+
+            return query2; // Returns the copied preppedStatement as a String
+        } catch (Exception e) {
+            System.out.println("createPoultry() error!!");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

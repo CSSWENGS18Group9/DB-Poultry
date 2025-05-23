@@ -1,6 +1,7 @@
-package org.db_poultry;
+package org.db_poultry.db.supplies;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public class SupplyManage {
 
@@ -14,7 +15,7 @@ public class SupplyManage {
      * @param unit          the unit of this supply
      * @return an int if record was inserted properly
      */
-    public static int addSupply(Connection connect, String supplyPrefix, int supplyID, int quantity, int unit) {
+    public static String addSupply(Connection connect, String supplyPrefix, int supplyID, int quantity, int unit) {
         String query = "INSERT INTO Supply (Supply_Prefix, Supply_ID, Quantity, Unit) VALUES (?, ?, ?, ?)"; // Query to be used in preparedStatement
 
         try {
@@ -26,14 +27,17 @@ public class SupplyManage {
             preppedStatement.setInt(3, quantity);
             preppedStatement.setInt(4, unit);
 
-            int success = preppedStatement.executeUpdate(); // Executes query
+            preppedStatement.executeUpdate(); // Executes query
+
+            String query2 = preppedStatement.toString(); // Stores the value of preppedStatement as a String
 
             preppedStatement.close(); // Closes preparedStatement
 
-            return success; // Returns 1 if success
+            return query2; // Returns the copied preppedStatement as a String
         } catch (Exception e) {
+            System.out.println("addSupply() error!!");
             System.out.println(e.getMessage());
-            return 0;
+            return null;
         }
     }
 
@@ -47,7 +51,7 @@ public class SupplyManage {
          * @param unit          the unit of this supply
          * @return an int if record was updated properly
          */
-        public static int updateSupply (Connection connect, String supplyPrefix, String supplyID,int quantity, int unit) {
+        public static String updateSupply(Connection connect, String supplyPrefix, String supplyID,int quantity, int unit) {
             String query = "UPDATE Supply SET Quantity = ?, unit = ? WHERE Supply_ID = ? AND Supply_Prefix = ?"; // Query to be used in preparedStatement
 
             try {
@@ -59,14 +63,17 @@ public class SupplyManage {
                 preppedStatement.setString(3, supplyID);
                 preppedStatement.setString(4, supplyPrefix);
 
-                int success = preppedStatement.executeUpdate(); // Executes query
+                preppedStatement.executeUpdate(); // Executes query
+
+                String query2 = preppedStatement.toString(); // Stores the value of preppedStatement as a String
 
                 preppedStatement.close(); // Closes preparedStatement
 
-                return success; // Returns 1 if success
+                return query2; // Returns 1 if success
             } catch (Exception e) {
+                System.out.println("updateSupply() error!!");
                 System.out.println(e.getMessage());
-                return 0;
+                return null;
             }
         }
 }
