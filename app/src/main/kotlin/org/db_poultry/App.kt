@@ -8,12 +8,12 @@ import org.db_poultry.gui.MainFrame
 import java.sql.Connection
 
 class App {
-    private lateinit var databaseName: String
-    private lateinit var databasePass: String
-    private lateinit var databasePort: String
-    private lateinit var databaseObjc: DBConnect
+    lateinit var databaseName: String
+    lateinit var databasePass: String
+    lateinit var databasePort: String
+    lateinit var databaseObjc: DBConnect
 
-    private fun getDotEnv(): Boolean {
+    fun getDotEnv(): Boolean {
         try {
             val dotenv = Dotenv.load()
 
@@ -39,7 +39,7 @@ class App {
 
     }
 
-    private fun openMainFrame(): Boolean {
+    fun openMainFrame(): Boolean {
         try {
             Application.launch(MainFrame::class.java)
 
@@ -74,9 +74,6 @@ class App {
             databaseName,
             databasePass
         )
-
-        // Open MainFrame (index GUI)
-        openMainFrame()
     }
 
     fun getConnection(): Connection? = databaseObjc.getConnection()
@@ -84,5 +81,8 @@ class App {
 
 fun main() {
     val app = App()
+
+    // Open MainFrame (index GUI)
     app.start()
+    app.openMainFrame()
 }
