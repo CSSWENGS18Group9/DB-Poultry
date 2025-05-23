@@ -10,11 +10,10 @@ class DBConnect(
     username: String,
     password: String
 ) {
-    private var connection: Connection? = null
+    val conn: Connection = DriverManager.getConnection(jdbcURL, username, password)
 
     init {
         try {
-            connection = DriverManager.getConnection(jdbcURL, username, password)
             println("Welcome to DBPoultry's DBMS")
             println("Connected to: $jdbcURL")
         } catch (e: SQLException) {
