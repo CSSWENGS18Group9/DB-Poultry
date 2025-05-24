@@ -3,15 +3,12 @@ CREATE TABLE Flock (
     Flock_ID SERIAL PRIMARY KEY,
 
     -- Table Columns
-    Starting_Date DATE
+    Starting_Date UNIQUE DATE
 );
 
 CREATE TABLE Flock_Details (
     -- Primary Key
     Flock_Details_ID SERIAL PRIMARY KEY,
-
-    -- Flock Foreign Key
-    Flock_ID SERIAL,
 
     -- Table Columns
     FD_Date DATE,
