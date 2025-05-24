@@ -19,10 +19,11 @@ public class SupplyManage {
      * @return a String which is the query with filled-in values
      */
     public static String addSupply(Connection connect, String supplyPrefix, int supplyID, int quantity, int unit) {
-        String query = "INSERT INTO Supply (Supply_Prefix, Supply_ID, Quantity, Unit) VALUES (?, ?, ?, ?)"; // Query to be used in preparedStatement
+        String completeQuery = "INSERT INTO Supply (Supply_Prefix, Supply_ID, Quantity, Unit) VALUES (" + supplyPrefix + ", " + supplyID + ", " + quantity + ", " + unit + ")"; // Query filled in to be returned
+        String incompleteQuery = "INSERT INTO Supply (Supply_Prefix, Supply_ID, Quantity, Unit) VALUES (?, ?, ?, ?)"; // Query to be used in preparedStatement
 
         try {
-            PreparedStatement preppedStatement = connect.prepareStatement(query); // preparedStatement for SQL stuff
+            PreparedStatement preppedStatement = connect.prepareStatement(incompleteQuery); // preparedStatement for SQL stuff
 
             // Sets the values to be added
             preppedStatement.setString(1, supplyPrefix);
@@ -32,11 +33,9 @@ public class SupplyManage {
 
             preppedStatement.executeUpdate(); // Executes query
 
-            String storedPreppedStatement = preppedStatement.toString(); // Stores the value of preppedStatement as a String
-
             preppedStatement.close(); // Closes preparedStatement
 
-            return storedPreppedStatement; // Returns the copied preppedStatement as a String
+            return completeQuery; // Returns the copied preppedStatement as a String
         } catch (SQLException e) {
             generateErrorMessage("Error in `addSupply()`.", "SQLException occurred.", "", e);
             return null;

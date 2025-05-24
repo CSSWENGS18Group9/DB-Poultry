@@ -17,13 +17,11 @@ public class Create {
      * @return a String which is the query with filled-in values
      */
     public static String createFlock(Connection connect, Timestamp startDate) {
-        String query = "INSERT INTO Flock (Starting_Date) VALUES (?)"; // Query to be used in preparedStatement
+        String completeQuery = "INSERT INTO Flock (Starting_Date) VALUES (" + startDate + ")"; // Query filled in to be returned
+        String incompleteQuery = "INSERT INTO Flock (Starting_Date) VALUES (?)"; // Query to be used in preparedStatement
 
         try {
-            // FIXME: @justinching30 Fix this line
-            // the complete query should be the (base version) of the string
-            String completeQuery = "INSERT INTO Flock (Starting_Date) VALUES ("+ startDate +")";
-            PreparedStatement preppedStatement = connect.prepareStatement(query); // preparedStatement for SQL stuff
+            PreparedStatement preppedStatement = connect.prepareStatement(incompleteQuery); // preparedStatement for SQL stuff
 
             // Sets the values to be added
             preppedStatement.setTimestamp(1, startDate);
@@ -32,7 +30,7 @@ public class Create {
 
             preppedStatement.close(); // Closes preparedStatement
 
-            return completeQuery; // Returns the copied preppedStatement as a String
+            return completeQuery; // Returns the filled-in query
         } catch (SQLException e) {
             generateErrorMessage("Error in `createFlock()`.", "SQLException occurred.", "", e);
             return null;

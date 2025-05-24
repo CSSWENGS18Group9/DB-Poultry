@@ -20,13 +20,11 @@ public class Create {
      * @return a String which is the query with filled-in values
      */
     public static String createFlockDetails(Connection connect, int flockID, Timestamp date, int depleted, int curCount) {
-        String query = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Current_Count, Depleted_Count) VALUES (?, ?, ?, ?)"; // Query to be used in preparedStatement
+        String completeQuery = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Current_Count, Depleted_Count) VALUES (" + flockID + " ," + date + " ," + curCount + " ," + depleted + ")"; // Query filled in to be returned
+        String incompleteQuery = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Current_Count, Depleted_Count) VALUES (?, ?, ?, ?)"; // Query to be used in preparedStatement
 
         try {
-            // FIXME: @justinching30 Fix this line
-            // the complete query should be the (base version) of the string
-            String completeQuery = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Current_Count, Depleted_Count) VALUES (?, ?, ?, ?)";
-            PreparedStatement preppedStatement = connect.prepareStatement(query); // preparedStatement for SQL stuff
+            PreparedStatement preppedStatement = connect.prepareStatement(incompleteQuery); // preparedStatement for SQL stuff
 
             // Sets the values to be added
             preppedStatement.setInt(1, flockID);
@@ -36,10 +34,9 @@ public class Create {
 
             preppedStatement.executeUpdate(); // Executes query
 
-
             preppedStatement.close(); // Closes preparedStatement
 
-            return completeQuery; // Returns the copied preppedStatement as a String
+            return completeQuery; // Returns the filled-in query
         } catch (SQLException e) {
             generateErrorMessage("Error in `createFlockDetails()`.", "SQLException occurred.", "", e);
             return null;
