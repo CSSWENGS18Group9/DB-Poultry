@@ -3,7 +3,7 @@ package org.db_poultry.db.flock_details;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
@@ -19,7 +19,7 @@ public class Create {
      * @param curCount      the current amount of chickens
      * @return a String which is the query with filled-in values
      */
-    public static String createFlockDetails(Connection connect, int flockID, Timestamp date, int depleted, int curCount) {
+    public static String createFlockDetails(Connection connect, int flockID, Date date, int depleted, int curCount) {
         String completeQuery = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Current_Count, Depleted_Count) VALUES (" + flockID + " ," + date + " ," + curCount + " ," + depleted + ")"; // Query filled in to be returned
         String incompleteQuery = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Current_Count, Depleted_Count) VALUES (?, ?, ?, ?)"; // Query to be used in preparedStatement
 
@@ -28,7 +28,7 @@ public class Create {
 
             // Sets the values to be added
             preppedStatement.setInt(1, flockID);
-            preppedStatement.setTimestamp(2, date);
+            preppedStatement.setDate(2, date);
             preppedStatement.setInt(3, curCount);
             preppedStatement.setInt(4, depleted);
 

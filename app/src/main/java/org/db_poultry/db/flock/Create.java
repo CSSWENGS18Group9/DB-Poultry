@@ -3,7 +3,7 @@ package org.db_poultry.db.flock;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
@@ -16,7 +16,7 @@ public class Create {
      * @param startDate     the starting date of this flock
      * @return a String which is the query with filled-in values
      */
-    public static String createFlock(Connection connect, Timestamp startDate) {
+    public static String createFlock(Connection connect, Date startDate) {
         String completeQuery = "INSERT INTO Flock (Starting_Date) VALUES (" + startDate + ")"; // Query filled in to be returned
         String incompleteQuery = "INSERT INTO Flock (Starting_Date) VALUES (?)"; // Query to be used in preparedStatement
 
@@ -24,7 +24,7 @@ public class Create {
             PreparedStatement preppedStatement = connect.prepareStatement(incompleteQuery); // preparedStatement for SQL stuff
 
             // Sets the values to be added
-            preppedStatement.setTimestamp(1, startDate);
+            preppedStatement.setDate(1, startDate);
 
             preppedStatement.executeUpdate(); // Executes query
 

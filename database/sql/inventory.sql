@@ -46,7 +46,7 @@ CREATE TABLE Delivery (
     Delivery_ID SERIAL PRIMARY KEY,
 
     -- Table Columns
-    Date TIMESTAMP
+    Date DATE
 );
 
 -- Delivery Detail Table
@@ -81,7 +81,7 @@ CREATE TABLE Usage (
     -- FIXME:   @jazjimenez @OutForMilks is this necessary since
     --          it's already in Supply Table?
     Quantity NUMERIC(8,4),
-    Date TIMESTAMP,
+    Date DATE,
 
     -- Table Constraints
     FOREIGN KEY (Supply_ID) REFERENCES Supply(Supply_ID)
