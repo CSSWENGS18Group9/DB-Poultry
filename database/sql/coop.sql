@@ -11,9 +11,9 @@ CREATE TABLE Flock_Details (
     Flock_Details_ID SERIAL PRIMARY KEY,
 
     -- Table Columns
-    FD_Date DATE,
-    Current_Count INTEGER,
-    Depleted_Count INTEGER,
+    FD_Date UNIQUE DATE,
+    Current_Count INTEGER CHECK (Current_Count >= 0),
+    Depleted_Count INTEGER CHECK (Depleted_Count >= 0),
 
     -- Table Constraints
     FOREIGN KEY (Flock_ID) REFERENCES Flock(Flock_ID)
