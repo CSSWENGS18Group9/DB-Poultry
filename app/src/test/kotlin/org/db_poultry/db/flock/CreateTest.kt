@@ -26,6 +26,12 @@ class CreateTest {
         val result = Create.createFlock(conn.conn, timestamp)
         assertTrue(result?.contains("insert into flock", ignoreCase = true) == true)
     }
+
+    @Test
+    fun testCreateFlockWithSameDate() {
+        val timestamp = Timestamp(SimpleDateFormat("yyyy-MM-dd").parse("1999-01-01").time)
+        Create.createFlock(conn.conn, timestamp)
+        val result = Create.createFlock(conn.conn, timestamp)
+        assertNull(result)
+    }
 }
-
-
