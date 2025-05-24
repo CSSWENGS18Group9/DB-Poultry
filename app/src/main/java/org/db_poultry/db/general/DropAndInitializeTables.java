@@ -9,7 +9,7 @@ import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 public class DropAndInitializeTables {
 
     public static String initTables(Connection connect) {
-        String completeQuery = "DROP TABLE IF EXISTS Flock, Flock_Details;"; // First query that drops the Flock and Flock_Details tables
+        String completeQuery = "DROP TABLE IF EXISTS Flock, Flock_Details"; // First query that drops the Flock and Flock_Details tables
 
         try {
             Statement statement = connect.createStatement(); // statement for SQL stuff
