@@ -17,7 +17,7 @@ public class Create {
      * @return a String which is the query with filled-in values
      */
     public static String createFlockDetails(Connection connect, int flockID, Timestamp date, int depleted, int curCount) {
-        String completeQuery = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Current_Count, Depleted_Count) VALUES (" + flockID + ", " + date + ", " + curCount + ", " + depleted + ")"; // Query filled in to be returned
+        String completeQuery = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Current_Count, Depleted_Count) VALUES (" + flockID + " ," + date + " ," + curCount + " ," + depleted + ")"; // Query filled in to be returned
         String incompleteQuery = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Current_Count, Depleted_Count) VALUES (?, ?, ?, ?)"; // Query to be used in preparedStatement
 
         try {
