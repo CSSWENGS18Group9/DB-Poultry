@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.db_poultry.db.DBConnect
 import org.db_poultry.App
+import java.sql.Date
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 
@@ -21,54 +22,65 @@ class CreateTest {
     }
 
     @Test
-    fun testCreateFlockDetails() {
-        val timestamp = Timestamp(SimpleDateFormat("yyyy-MM-dd").parse("1999-01-01").time)
-        val result = Create.createFlockDetails(conn.conn, 1, timestamp, 0, 1)
-        assertEquals(result, "INSERT INTO Flock_Details (Flock_ID, FD_Date, Current_Count, Depleted_Count) VALUES (1, $timestamp, 0, 1)", "succesfully created flock")
+    fun testCreateFlockDetailsValidInput() {
+        val date =      Date.valueOf("1999-01-01")
+
+        val result = Create.createFlockDetails(conn.conn, 1, date, 0)
+
+        assertEquals("INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, 1999-01-01, 0)", result)
     }
 
     @Test
-    fun testCreateFlockDetailsWithNegativeInput() {
-        val timestamp = Timestamp(SimpleDateFormat("yyyy-MM-dd").parse("1999-01-01").time)
-        val result = Create.createFlockDetails(conn.conn, -1, timestamp, -1, -1)
+    fun testCreateFlockDetailsWithNegativeFlockID() {
+        val date =      Date.valueOf("1999-01-02")
+
+        val result = Create.createFlockDetails(conn.conn, -1, date, 0)
         assertNull(result)
     }
 
     @Test
-    /*
-        Tests if the user can enter in the first Flock Detail where there is zero curCount
-     */
-    fun testCreateFlockDetailsWithZeroCurCountStart() {
-        val timestamp = Timestamp(SimpleDateFormat("yyyy-MM-dd").parse("1999-01-01").time)
-        val result = Create.createFlockDetails(conn.conn, 1, timestamp, 1, 0)
+    fun testCreateFlockDetailsWithNegativeDepletedCount() {
+        val date =      Date.valueOf("1999-01-03")
+
+        val result = Create.createFlockDetails(conn.conn, 1, date, -1)
         assertNull(result)
     }
 
     @Test
-    fun testCreateFlockDetailsWithIncreasingCurCount() {
-        val timestampOne = Timestamp(SimpleDateFormat("yyyy-MM-dd").parse("1999-01-01").time)
-        val timestampTwo = Timestamp(SimpleDateFormat("yyyy-MM-dd").parse("1999-01-02").time)
-        Create.createFlockDetails(conn.conn, 1, timestampOne, 1, 1)
-        val result = Create.createFlockDetails(conn.conn, 1, timestampTwo, 1, 2)
+    fun testCreateFlockDetailsWithNegativeFlockIDandDepletedCount() {
+        val date =      Date.valueOf("1999-01-04")
+
+        val result = Create.createFlockDetails(conn.conn, -1, date, -1)
         assertNull(result)
     }
 
     @Test
     fun testCreateFlockDetailsWithSameDateInSameFlockID() {
-        val timestamp = Timestamp(SimpleDateFormat("yyyy-MM-dd").parse("1999-01-01").time)
-        Create.createFlockDetails(conn.conn, 1, timestamp, 1, 1)
-        val result = Create.createFlockDetails(conn.conn, 1, timestamp, 1, 2)
+        val date =      Date.valueOf("1999-01-05")
+
+                        Create.createFlockDetails(conn.conn, 1, date, 1)
+        val result =    Create.createFlockDetails(conn.conn, 1, date, 1)
         assertNull(result)
     }
 
     @Test
-    fun testCreateFlockDetailsWithMiscalculatedCurCount() {
-        val timestampOne = Timestamp(SimpleDateFormat("yyyy-MM-dd").parse("1999-01-01").time)
-        val timestampTwo = Timestamp(SimpleDateFormat("yyyy-MM-dd").parse("1999-01-02").time)
-        Create.createFlockDetails(conn.conn, 1, timestampOne, 0, 10)
-        val result = Create.createFlockDetails(conn.conn, 1, timestampTwo, 1, 8)
+    fun testCreateFlockDetailsWithSameDateInDifferentFlockID() {
+        val date =      Date.valueOf("1999-01-06")
+
+                        Create.createFlockDetails(conn.conn, 1, date, 1)
+        val result =    Create.createFlockDetails(conn.conn, 2, date, 1)
+        assertEquals("INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (2, 1999-01-06, 1)", result)
+    }
+
+    @Test
+    fun testCreateFlockDetailsWithDNEFlockID() {
+        val date =      Date.valueOf("1999-01-07")
+
+        val result = Create.createFlockDetails(conn.conn, 1000, date, 1)
         assertNull(result)
     }
+
+
 }
 
 
