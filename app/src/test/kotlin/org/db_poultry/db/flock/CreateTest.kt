@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.db_poultry.db.DBConnect
 import org.db_poultry.App
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
+import java.sql.Date
 
 class CreateTest {
     private var jdbcURL: String
@@ -21,17 +20,40 @@ class CreateTest {
     }
 
     @Test
-    fun testCreateFlock() {
-        val timestamp = Timestamp(SimpleDateFormat("yyyy-MM-dd").parse("1999-01-01").time)
-        val result = Create.createFlock(conn.conn, timestamp)
-        assertTrue(result?.contains("insert into flock", ignoreCase = true) == true)
+    fun testCreateFlockValidInputs() {
+        val date =      Date.valueOf("1999-01-01")
+
+        val result =    Create.createFlock(conn.conn, 100, date)
+
+        assertEquals(   result,
+                        "INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (100, 1999-01-01)")
     }
 
     @Test
     fun testCreateFlockWithSameDate() {
-        val timestamp = Timestamp(SimpleDateFormat("yyyy-MM-dd").parse("1999-01-01").time)
-        Create.createFlock(conn.conn, timestamp)
-        val result = Create.createFlock(conn.conn, timestamp)
+        val date =      Date.valueOf("1999-01-02")
+
+                        Create.createFlock(conn.conn, 100, date)
+        val result =    Create.createFlock(conn.conn, 100, date)
+
+        assertNull(result)
+    }
+
+    @Test
+    fun testCreateFlockWithZeroCount() {
+        val date =      Date.valueOf("1999-01-03")
+
+        val result =    Create.createFlock(conn.conn, 0, date)
+
+        assertNull(result)
+    }
+
+    @Test
+    fun testCreateFlockWithNegativeCount() {
+        val date =      Date.valueOf("1999-01-04")
+
+        val result =    Create.createFlock(conn.conn, -1, date)
+
         assertNull(result)
     }
 }
