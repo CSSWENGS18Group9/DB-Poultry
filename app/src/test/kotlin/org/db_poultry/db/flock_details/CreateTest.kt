@@ -21,16 +21,16 @@ class CreateTest {
 
     @Test
     fun testCreateFlockDetailsValidInput() {
-        val date =      Date.valueOf("1999-01-01")
+        val date =      Date.valueOf("1000-01-01")
 
         val result = Create.createFlockDetails(conn.conn, 1, date, 0)
 
-        assertEquals("INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, 1999-01-01, 0)", result)
+        assertEquals("INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, 1000-01-01, 0)", result)
     }
 
     @Test
     fun testCreateFlockDetailsWithNegativeFlockID() {
-        val date =      Date.valueOf("1999-01-02")
+        val date =      Date.valueOf("1000-01-02")
 
         val result = Create.createFlockDetails(conn.conn, -1, date, 0)
         assertNull(result)
@@ -38,7 +38,7 @@ class CreateTest {
 
     @Test
     fun testCreateFlockDetailsWithNegativeDepletedCount() {
-        val date =      Date.valueOf("1999-01-03")
+        val date =      Date.valueOf("1000-01-03")
 
         val result = Create.createFlockDetails(conn.conn, 1, date, -1)
         assertNull(result)
@@ -46,7 +46,7 @@ class CreateTest {
 
     @Test
     fun testCreateFlockDetailsWithNegativeFlockIDandDepletedCount() {
-        val date =      Date.valueOf("1999-01-04")
+        val date =      Date.valueOf("1000-01-04")
 
         val result = Create.createFlockDetails(conn.conn, -1, date, -1)
         assertNull(result)
@@ -54,7 +54,7 @@ class CreateTest {
 
     @Test
     fun testCreateFlockDetailsWithSameDateInSameFlockID() {
-        val date =      Date.valueOf("1999-01-05")
+        val date =      Date.valueOf("1000-01-05")
 
                         Create.createFlockDetails(conn.conn, 1, date, 1)
         val result =    Create.createFlockDetails(conn.conn, 1, date, 1)
@@ -63,7 +63,7 @@ class CreateTest {
 
     @Test
     fun testCreateFlockDetailsWithSameDateInDifferentFlockID() {
-        val date =      Date.valueOf("1999-01-06")
+        val date =      Date.valueOf("1000-01-06")
 
                         Create.createFlockDetails(conn.conn, 1, date, 1)
         val result =    Create.createFlockDetails(conn.conn, 2, date, 1)
@@ -72,7 +72,7 @@ class CreateTest {
 
     @Test
     fun testCreateFlockDetailsWithDNEFlockID() {
-        val date =      Date.valueOf("1999-01-07")
+        val date =      Date.valueOf("1000-01-07")
 
         val result = Create.createFlockDetails(conn.conn, 1000, date, 1)
         assertNull(result)

@@ -21,16 +21,16 @@ class CreateTest {
 
     @Test
     fun testCreateFlockValidInputs() {
-        val date =      Date.valueOf("1999-01-01")
+        val date =      Date.valueOf("1000-01-01")
 
         val result =    Create.createFlock(conn.conn, 100, date)
 
-        assertEquals("INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (100, 1999-01-01)", result)
+        assertEquals("INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (100, 1000-01-01)", result)
     }
 
     @Test
     fun testCreateFlockWithSameDate() {
-        val date =      Date.valueOf("1999-01-02")
+        val date =      Date.valueOf("1000-01-02")
 
                         Create.createFlock(conn.conn, 100, date)
         val result =    Create.createFlock(conn.conn, 100, date)
@@ -40,7 +40,7 @@ class CreateTest {
 
     @Test
     fun testCreateFlockWithZeroCount() {
-        val date =      Date.valueOf("1999-01-03")
+        val date =      Date.valueOf("1000-01-03")
 
         val result =    Create.createFlock(conn.conn, 0, date)
 
@@ -49,7 +49,7 @@ class CreateTest {
 
     @Test
     fun testCreateFlockWithNegativeCount() {
-        val date =      Date.valueOf("1999-01-04")
+        val date =      Date.valueOf("1000-01-04")
 
         val result =    Create.createFlock(conn.conn, -1, date)
 
