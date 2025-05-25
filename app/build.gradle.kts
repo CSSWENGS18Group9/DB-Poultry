@@ -28,23 +28,18 @@ val platform = when (System.getProperty("os.name").lowercase()) {
     else -> "win"
 }
 
-javafx {
-    version = "17.0.2"
-    modules = listOf("javafx.controls", "javafx.fxml")
-}
-
 dependencies {
     // Add any other dependencies here
-    // Put the dependency below the comment where that dependency 
+    // Put the dependency below the comment where that dependency
     // belongs
     // Example, we add the JUnit dependency under the header
     // "Dependencies for QA" since JUnit will be used by the QAs
     //
     // Follow the format:
-    //   
+    //
     //      // <name of dependency>
     //      implementation("...")
-    // 
+    //
     // If unsure, message @zrygan
 
     // Dependencies for Dev

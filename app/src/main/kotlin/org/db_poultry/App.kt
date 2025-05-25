@@ -8,12 +8,11 @@ import org.db_poultry.gui.MainFrame
 import java.sql.Connection
 
 class App {
-    lateinit var databaseName: String
-    lateinit var databasePass: String
-    lateinit var databasePort: String
-    lateinit var databaseObjc: DBConnect
+    private lateinit var databaseName: String
+    private lateinit var databasePass: String
+    private lateinit var databasePort: String
 
-    fun getDotEnv(): Boolean {
+    private fun getDotEnv(): Boolean {
         try {
             val dotenv = Dotenv.load()
 
