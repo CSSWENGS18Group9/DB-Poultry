@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FEFAE0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle fx:id="shapeBg" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="310.0" layoutX="35.0" layoutY="45.0" stroke="TRANSPARENT" strokeType="INSIDE" width="530.0">
+         <effect>
+            <DropShadow offsetY="1.5">
+               <color>
+                  <Color opacity="0.4000000059604645" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Rectangle>
+      <Text fx:id="textHeader" fill="#8f250c" layoutX="136.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create New Flock" textAlignment="CENTER" wrappingWidth="328.126953125">
+         <font>
+            <Font name="HelveticaNowDisplay-Bold" size="36.0" />
+         </font>
+      </Text>
+      <Text fx:id="textBody1" fill="#bc6d25" layoutX="48.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Starting Date" textAlignment="RIGHT" wrappingWidth="228.12698364257812">
+         <font>
+            <Font name="HelveticaNowDisplay-Bold" size="30.0" />
+         </font>
+      </Text>
+      <Text fx:id="textBody2" fill="#bc6d25" layoutX="48.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Count" textAlignment="RIGHT" wrappingWidth="228.12698364257812">
+         <font>
+            <Font name="HelveticaNowDisplay-Bold" size="30.0" />
+         </font>
+      </Text>
+      <DatePicker fx:id="datePicker" layoutX="300.0" layoutY="176.0" prefHeight="30.0" prefWidth="228.0" />
+      <TextField fx:id="textField" layoutX="300.0" layoutY="233.0" prefHeight="30.0" prefWidth="228.0" />
+   </children>
+</AnchorPane>

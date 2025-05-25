@@ -3,6 +3,7 @@ package org.db_poultry.Controller
 import javafx.fxml.FXML
 import javafx.scene.layout.AnchorPane
 import javafx.scene.text.Text
+import javafx.scene.shape.Rectangle
 
 class CreateController {
 
@@ -10,6 +11,9 @@ class CreateController {
     private lateinit var anchorPaneCreate: AnchorPane
 
     @FXML
-    private lateinit var txtSampleCreate: Text
+    private lateinit var createHeader: Text
+
+    @FXML
+    private lateinit var insideFrame: Rectangle
 
 }

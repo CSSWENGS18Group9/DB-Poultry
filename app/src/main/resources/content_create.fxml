@@ -1,16 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane fx:id="anchorPaneCreate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="anchorPaneCreate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: FEFAE0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text fx:id="txtSampleCreate" layoutX="219.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Page" textAlignment="CENTER" wrappingWidth="162.8033447265625">
+      <Rectangle fx:id="insideFrame" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="78.0" layoutX="120.0" layoutY="59.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-background-radius: 10px; -fx-arc-width: 15; -fx-arc-height: 15;" width="360.0">
+         <effect>
+            <DropShadow offsetY="1.5">
+               <color>
+                  <Color opacity="0.4000000059604645" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Rectangle>
+      <Text fx:id="createHeader" fill="#bc6c25" layoutX="182.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Page" textAlignment="CENTER" wrappingWidth="236.4033203125">
          <font>
-            <Font name="HelveticaNowDisplay-Regular" size="27.0" />
+            <Font name="HelveticaNowDisplay-Bold" size="36.0" />
          </font>
       </Text>
+      <Button layoutX="165.0" layoutY="165.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="270.0" style="-fx-background-color: white; -fx-background-radius: 15px;" text="Create New Flock" textFill="#8f250c">
+         <font>
+            <Font name="HelveticaNowDisplay-Bold" size="22.0" />
+         </font>
+         <effect>
+            <DropShadow offsetY="1.5">
+               <color>
+                  <Color opacity="0.4000000059604645" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Button>
+      <Button layoutX="165.0" layoutY="263.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="270.0" style="-fx-background-color: white; -fx-background-radius: 15px;" text="Create Flock Details" textFill="#8f250c">
+         <font>
+            <Font name="HelveticaNowDisplay-Bold" size="22.0" />
+         </font>
+         <effect>
+            <DropShadow offsetY="1.5">
+               <color>
+                  <Color opacity="0.4000000059604645" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Button>
    </children>
 </AnchorPane>
