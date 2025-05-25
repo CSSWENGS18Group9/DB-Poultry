@@ -21,16 +21,16 @@ public class Create {
             return null;
         }
 
-        String completeQuery = "INSERT INTO Flock_Details (FD_Date, Depleted_Count, Flock_ID) VALUES (" + date + " ," + depleted + " ," + flockID + ")"; // Query filled in to be returned
-        String incompleteQuery = "INSERT INTO Flock_Details (FD_Date, Depleted_Count, Flock_ID) VALUES (?, ?, ?)"; // Query to be used in preparedStatement
+        String completeQuery = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (" + flockID + " ," + date + " ," + depleted + ")"; // Query filled in to be returned
+        String incompleteQuery = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (?, ?, ?)"; // Query to be used in preparedStatement
 
         try {
             PreparedStatement preppedStatement = connect.prepareStatement(incompleteQuery); // preparedStatement for SQL stuff
 
             // Sets the values to be added
-            preppedStatement.setDate(1, date);
-            preppedStatement.setInt(2, depleted);
-            preppedStatement.setInt(3, flockID);
+            preppedStatement.setInt(1, flockID);
+            preppedStatement.setDate(2, date);
+            preppedStatement.setInt(3, depleted);
 
             preppedStatement.executeUpdate(); // Executes query
 
