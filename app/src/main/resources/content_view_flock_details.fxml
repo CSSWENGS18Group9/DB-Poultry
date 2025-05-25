@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane fx:id="viewFlockDetailsAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.Controller.ViewFlockDetailsController">
+   <children>
+      <Label layoutX="222.0" layoutY="38.0" text="Flock Name">
+         <font>
+            <Font name="HelveticaNowDisplay-Bold" size="29.0" />
+         </font>
+      </Label>
+      <TableView layoutX="60.0" layoutY="128.0" prefHeight="200.0" prefWidth="480.0">
+        <columns>
+          <TableColumn fx:id="dateCol" prefWidth="240.0" text="Date" />
+          <TableColumn fx:id="depletionsCol" minWidth="0.0" prefWidth="239.0" text="Depletions" />
+        </columns>
+      </TableView>
+      <Text layoutX="60.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Started: ">
+         <font>
+            <Font name="HelveticaNowDisplay-Bold" size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="300.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity Started:">
+         <font>
+            <Font name="HelveticaNowDisplay-Bold" size="15.0" />
+         </font>
+      </Text>
+   </children>
+</Pane>
