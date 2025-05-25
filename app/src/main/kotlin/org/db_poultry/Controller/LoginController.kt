@@ -1,5 +1,7 @@
 package org.db_poultry.Controller
 
+import org.db_poultry.Util.SceneSwitcher
+
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
@@ -25,18 +27,9 @@ class LoginController {
     @FXML
     private lateinit var tfUN: TextField
     
+    @FXML
     fun switchToHome() {
-        println("Switching to Home")
-        try {
-            val loader = FXMLLoader(javaClass.getResource("/home.fxml"))
-            val homeRoot: Parent = loader.load()
-
-            val stage = btnSample.scene.window as Stage
-
-            stage.scene = Scene(homeRoot)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        SceneSwitcher.switchTo(btnSample, "/home.fxml")
     }
 
 }
