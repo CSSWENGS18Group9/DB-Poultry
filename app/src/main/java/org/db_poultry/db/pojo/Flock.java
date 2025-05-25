@@ -1,4 +1,4 @@
-package org.db_poultry.db.flock.pojo;
+package org.db_poultry.db.pojo;
 
 import java.sql.Timestamp;
 
@@ -7,6 +7,7 @@ import java.sql.Timestamp;
  */
 public class Flock {
     private final int flockId;
+    private final int startingCount;
     private final Timestamp startingDate;
 
     /**
@@ -14,8 +15,9 @@ public class Flock {
      * @param flockId the id of the flock
      * @param startingDate the starting date of the flock
      */
-    public Flock(int flockId, Timestamp startingDate) {
+    public Flock(int flockId, int startingCount, Timestamp startingDate) {
         this.flockId = flockId;
+        this.startingCount = startingCount;
         this.startingDate = startingDate;
     }
 
@@ -25,6 +27,14 @@ public class Flock {
      */
     public int getFlockId() {
         return flockId;
+    }
+
+    /**
+     * getter for starting count
+     * @return starting count
+     */
+    public int getStartingCount() {
+        return startingCount;
     }
 
     /**
