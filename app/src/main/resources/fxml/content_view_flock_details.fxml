@@ -4,28 +4,30 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="viewFlockDetailsAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.Controller.ViewFlockDetailsController">
+<Pane fx:id="viewFlockDetailsAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: fefae0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.Controller.ViewFlockDetailsController">
    <children>
-      <Label layoutX="222.0" layoutY="38.0" text="Flock Name">
+      <Rectangle fx:id="rectFlockDetails" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="321.0" layoutX="46.0" layoutY="40.0" stroke="#8f250c" strokeType="INSIDE" style="-fx-arc-height: 15; -fx-arc-width: 15;" width="509.0" />
+      <Label fx:id="lblFlockName" layoutX="223.0" layoutY="56.0" text="Flock Name" textFill="#8f250c">
          <font>
             <Font name="HelveticaNowDisplay-Bold" size="29.0" />
          </font>
       </Label>
-      <TableView layoutX="60.0" layoutY="128.0" prefHeight="200.0" prefWidth="480.0">
+      <TableView layoutX="61.0" layoutY="145.0" prefHeight="200.0" prefWidth="480.0">
         <columns>
-          <TableColumn fx:id="dateCol" prefWidth="240.0" text="Date" />
-          <TableColumn fx:id="depletionsCol" minWidth="0.0" prefWidth="239.0" text="Depletions" />
+          <TableColumn fx:id="colDate" prefWidth="240.0" text="Date" />
+          <TableColumn fx:id="colDepletions" minWidth="0.0" prefWidth="239.0" text="Depletions" />
         </columns>
       </TableView>
-      <Text layoutX="60.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Started: ">
+      <Text fx:id="lblDateStarted" fill="#8f250c" layoutX="140.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Started">
          <font>
             <Font name="HelveticaNowDisplay-Bold" size="15.0" />
          </font>
       </Text>
-      <Text layoutX="300.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity Started:">
+      <Text fx:id="lblQuantityStaretd" fill="#8f250c" layoutX="364.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity Started">
          <font>
             <Font name="HelveticaNowDisplay-Bold" size="15.0" />
          </font>
