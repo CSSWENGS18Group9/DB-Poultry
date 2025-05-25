@@ -1,5 +1,7 @@
 package org.db_poultry.Controller
 
+import org.db_poultry.Util.SceneSwitcher
+
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.Button
@@ -28,28 +30,14 @@ class HomeController {
 
     @FXML
     fun switchToHome(event: ActionEvent) {
-
+        println("Switching to home view")
+        SceneSwitcher.switchTo(btnBackToLogin, "/login.fxml")
     }
 
     @FXML
-    private fun navigateToCreate() {
-        loadContentView("/content_create.fxml")
+    fun switchToGenerate(event: ActionEvent) {
+        println("Switching to generate view")
+        SceneSwitcher.switchContent(gotoGenerate, "/content_view.fxml")
     }
 
-    @FXML
-    private fun navigateToView() {
-        loadContentView("/content_view.fxml")
-    }
-
-    @FXML
-    private fun navigateToGenerate() {
-        loadContentView("/content_generate.fxml")
-    }
-
-    private fun loadContentView(fxmlPath: String) {
-        val loader = javafx.fxml.FXMLLoader(javaClass.getResource(fxmlPath))
-        val content = loader.load<AnchorPane>()
-        homeAnchorPane.children.clear()
-        homeAnchorPane.children.add(content)
-    }
 }

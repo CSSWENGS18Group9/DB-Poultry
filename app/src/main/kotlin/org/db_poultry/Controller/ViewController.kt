@@ -1,11 +1,12 @@
 package org.db_poultry.Controller
 
+import org.db_poultry.Util.SceneSwitcher
+
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.ChoiceBox
 import javafx.scene.text.Text
 
-import org.db_poultry.Util.SceneSwitcher
 
 class ViewController {
 
@@ -15,7 +16,7 @@ class ViewController {
     @FXML
     fun switchToViewFlockDetails() {
         println("hello")
-        SceneSwitcher.switchTo(confirmFlockBtn, "/content_view_flock_details.fxml")
+        SceneSwitcher.switchContent(confirmFlockBtn, "/content_view_flock_details.fxml")
     }
 
     @FXML

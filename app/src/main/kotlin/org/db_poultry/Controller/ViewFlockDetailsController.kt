@@ -1,3 +1,7 @@
+package org.db_poultry.Controller
+
+import org.db_poultry.Util.SceneSwitcher
+
 import javafx.fxml.FXML
 import javafx.scene.control.TableColumn
 
