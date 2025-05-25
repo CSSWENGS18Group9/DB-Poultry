@@ -20,27 +20,27 @@ class MainLayoutController {
         // Set today's date
         val today = LocalDate.now()
         dateLabel.text = today.toString()
-        loadContentView("/content_home.fxml")
+        loadContentView("/fxml/content_home.fxml")
     }
     
     @FXML
     private fun navigateToHome() {
-        loadContentView("/content_home.fxml")
+        loadContentView("/fxml/content_home.fxml")
     }
     
     @FXML
     private fun navigateToCreate() {
-        loadContentView("/content_create.fxml")
+        loadContentView("/fxml/content_create.fxml")
     }
     
     @FXML
     private fun navigateToView() {
-        loadContentView("/content_view.fxml")
+        loadContentView("/fxml/content_view.fxml")
     }
 
     @FXML
     private fun navigateToGenerate() {
-        loadContentView("/content_generate.fxml")
+        loadContentView("/fxml/content_generate.fxml")
     }
     
     // Load content into the center area of BorderPane

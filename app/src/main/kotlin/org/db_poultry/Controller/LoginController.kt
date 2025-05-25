@@ -30,7 +30,7 @@ class LoginController {
     
     @FXML
     fun switchToHome() {
-        SceneSwitcher.switchTo(btnSample, "/main_layout.fxml")
+        SceneSwitcher.switchTo(btnSample, "/fxml/main_layout.fxml")
     }
 
 }

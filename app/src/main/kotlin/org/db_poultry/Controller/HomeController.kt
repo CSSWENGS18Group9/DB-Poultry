@@ -31,13 +31,18 @@ class HomeController {
     @FXML
     fun switchToHome(event: ActionEvent) {
         println("Switching to home view")
-        SceneSwitcher.switchTo(btnBackToLogin, "/login.fxml")
+        SceneSwitcher.switchTo(btnBackToLogin, "/fxml/login.fxml")
+    }
+
+    @FXML
+    fun switchToCreate(event: ActionEvent) {
+        SceneSwitcher.switchContent(gotoCreate, "/fxml/content_create.fxml")
     }
 
     @FXML
     fun switchToGenerate(event: ActionEvent) {
         println("Switching to generate view")
-        SceneSwitcher.switchContent(gotoGenerate, "/content_view.fxml")
+        SceneSwitcher.switchContent(gotoGenerate, "/fxml/content_view.fxml")
     }
 
 }

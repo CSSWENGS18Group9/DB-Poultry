@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane fx:id="selectFlockAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.Controller.ViewController">
+   <children>
+      <AnchorPane prefHeight="400.0" prefWidth="200.0" />
+      <ChoiceBox fx:id="selectFlockChoiceBox" layoutX="178.0" layoutY="180.0" prefHeight="43.0" prefWidth="245.0" />
+      <Text fx:id="selectFlockLbl" layoutX="194.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Flock">
+         <font>
+            <Font name="HelveticaNowDisplay-Bold" size="38.0" />
+         </font>
+      </Text>
+      <Button fx:id="confirmFlockBtn" onAction="#switchToViewFlockDetails" layoutX="260.0" layoutY="265.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Confirm" />
+   </children>
+</AnchorPane>

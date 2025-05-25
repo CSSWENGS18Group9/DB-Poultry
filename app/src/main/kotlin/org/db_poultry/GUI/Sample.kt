@@ -13,7 +13,7 @@ class Sample : Application() {
         loadCustomFonts()
 
         try {
-            val loader = FXMLLoader(javaClass.getResource("/login.fxml"))
+            val loader = FXMLLoader(javaClass.getResource("/fxml/login.fxml"))
             val root = loader.load<Parent>()
             val scene = Scene(root)
             primaryStage.scene = scene
