@@ -2,10 +2,16 @@ package org.db_poultry
 
 import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
+import org.db_poultry.*
 import org.db_poultry.db.DBConnect
+import org.db_poultry.db.cleanTables
+import org.db_poultry.db.flock.CreateFlock
+import org.db_poultry.db.flock.ViewFlock
+import org.db_poultry.db.flock_details.CreateFlockDetails
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.gui.MainFrame
 import java.sql.Connection
+import java.sql.Date
 
 class App {
     lateinit var databaseName: String
@@ -17,9 +23,9 @@ class App {
         try {
             val dotenv = Dotenv.load()
 
-            databaseName = dotenv["DATABASE_NAME"] ?: error("Missing DATABASE_NAME")
-            databasePass = dotenv["DATABASE_PASS"] ?: error("Missing DATABASE_PASS")
-            databasePort = dotenv["DATABASE_PORT"] ?: error("Missing DATABASE_PORT")
+            databaseName = (dotenv["DATABASE_NAME"] ?: "Missing DATABASE_NAME") as String
+            databasePass = (dotenv["DATABASE_PASS"] ?: "Missing DATABASE_PASS") as String
+            databasePort = (dotenv["DATABASE_PORT"] ?: "Missing DATABASE_PORT") as String
 
             println("database name:$databaseName")
             println("database pass:$databasePass")
@@ -81,8 +87,28 @@ class App {
 
 fun main() {
     val app = App()
+    app.start()
 
     // Open MainFrame (index GUI)
-    app.start()
-    app.openMainFrame()
+//    app.openMainFrame()
+
+    // Sample run
+    cleanTables(app.getConnection())
+    val date = Date.valueOf("1000-01-01")
+
+    // insert record
+    CreateFlock.createFlock(app.getConnection(), 100, date)
+    CreateFlockDetails.createFlockDetails(app.getConnection(), 1, date, 99)
+
+    // check if record exists
+    val allByDate = ViewFlock.allByDate(app.getConnection())
+    val record = allByDate[date] // get the one with date
+
+    if (record != null) {
+        println(record.flock)
+        println("==========")
+        println(record.flockDetails)
+    } else{
+        println("Not Found")
+    }
 }
