@@ -14,10 +14,10 @@ public class FlockDetails {
     /**
      * constructor for the flock details
      *
-     * @param flockDetailsId          the flock details id
-     * @param flockId       the flock id
-     * @param fdDate        the date of the flock details
-     * @param depletedCount the depleted count of the flock (number of chickens dead)
+     * @param flockDetailsId the flock details id
+     * @param flockId        the flock id
+     * @param fdDate         the date of the flock details
+     * @param depletedCount  the depleted count of the flock (number of chickens dead)
      */
     public FlockDetails(int flockDetailsId, int flockId, Timestamp fdDate, int depletedCount) {
         this.flockDetailsId = flockDetailsId;

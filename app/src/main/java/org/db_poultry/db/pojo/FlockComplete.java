@@ -13,6 +13,7 @@ public class FlockComplete {
 
     /**
      * constructor
+     *
      * @param flock the flock pojo (or the parent table)
      */
     public FlockComplete(Flock flock) {
@@ -24,6 +25,7 @@ public class FlockComplete {
 
     /**
      * getter for the flock
+     *
      * @return flock POJO
      */
     public Flock getFlock() {
@@ -32,6 +34,7 @@ public class FlockComplete {
 
     /**
      * getter for the flock details (as a list) that has the flock as their "parent"
+     *
      * @return a list of flock detail POJOs
      */
     public List<FlockDetails> getFlockDetails() {
@@ -40,6 +43,7 @@ public class FlockComplete {
 
     /**
      * adds a flock detail to the POJO
+     *
      * @param fd the flock detail we want to add
      */
     public void addFlockDetail(FlockDetails fd) {
