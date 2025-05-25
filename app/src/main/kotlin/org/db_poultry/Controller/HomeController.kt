@@ -31,4 +31,25 @@ class HomeController {
 
     }
 
+    @FXML
+    private fun navigateToCreate() {
+        loadContentView("/content_create.fxml")
+    }
+
+    @FXML
+    private fun navigateToView() {
+        loadContentView("/content_view.fxml")
+    }
+
+    @FXML
+    private fun navigateToGenerate() {
+        loadContentView("/content_generate.fxml")
+    }
+
+    private fun loadContentView(fxmlPath: String) {
+        val loader = javafx.fxml.FXMLLoader(javaClass.getResource(fxmlPath))
+        val content = loader.load<AnchorPane>()
+        homeAnchorPane.children.clear()
+        homeAnchorPane.children.add(content)
+    }
 }
