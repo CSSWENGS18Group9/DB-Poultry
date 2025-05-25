@@ -6,11 +6,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.Controller.HomeController">
+<AnchorPane fx:id="homeAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.Controller.HomeController">
    <children>
       <Text fx:id="txtHomeMenu" layoutX="223.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home Menu" textAlignment="CENTER" wrappingWidth="153.13671875">
          <font>
-            <Font size="22.0" />
+            <Font name="HelveticaNowDisplay-Regular" size="22.0" />
          </font>
       </Text>
       <TextField fx:id="tfHomeMenu" layoutX="226.0" layoutY="94.0" />

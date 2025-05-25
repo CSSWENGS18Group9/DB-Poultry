@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.Controller.MainLayoutController">
+    <!-- Sidebar on the left -->
+    <left>
+        <VBox prefHeight="143.0" prefWidth="116.0" spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 10;">
+            <Label style="-fx-font-weight: bold;" text="Navigation" />
+            <Button fx:id="btnHome" onAction="#navigateToHome" text="Home" />
+            <Button fx:id="btnCreate" onAction="#navigateToCreate" text="Create" />
+            <Button fx:id="btnView" onAction="#navigateToView" text="View" />
+        </VBox>
+    </left>
+    
+    <!-- Content area - will be replaced dynamically -->
+    <center>
+        <!-- Initial content will be loaded here -->
+    </center>
+</BorderPane>

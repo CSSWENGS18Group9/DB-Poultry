@@ -8,6 +8,7 @@ import javafx.scene.Parent
 import javafx.scene.Scene
 import javafx.stage.Stage
 import javafx.event.ActionEvent
+import javafx.scene.layout.AnchorPane
 
 import javafx.scene.control.Button
 import javafx.scene.text.Text
@@ -29,7 +30,7 @@ class LoginController {
     
     @FXML
     fun switchToHome() {
-        SceneSwitcher.switchTo(btnSample, "/home.fxml")
+        SceneSwitcher.switchTo(btnSample, "/main_layout.fxml")
     }
 
 }
