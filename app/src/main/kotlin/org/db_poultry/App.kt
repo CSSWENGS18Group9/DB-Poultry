@@ -1,17 +1,17 @@
 package org.db_poultry
 
-import javafx.application.Application
 import io.github.cdimascio.dotenv.Dotenv
+import javafx.application.Application
 import org.db_poultry.db.DBConnect
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.gui.MainFrame
-
-import java.lang.ClassNotFoundException
+import java.sql.Connection
 
 class App {
     lateinit var databaseName: String
     lateinit var databasePass: String
     lateinit var databasePort: String
+    lateinit var databaseObjc: DBConnect
 
     fun getDotEnv(): Boolean {
         try {
@@ -28,7 +28,7 @@ class App {
             return true
         } catch (e: Exception) {
             generateErrorMessage(
-                "Error at `getDotEnd() in `App.kt`",
+                "Error at `getDotEnv()` in `App.kt`",
                 "Failed to load environment variables; not found",
                 "If environment variables does exist make sure it is in `app/`. Otherwise, create one in `app/`.",
                 e
@@ -39,7 +39,7 @@ class App {
 
     }
 
-    private fun openMainFrame(): Boolean {
+    fun openMainFrame(): Boolean {
         try {
             Application.launch(MainFrame::class.java)
 
@@ -69,17 +69,20 @@ class App {
         val jdbcUrl = "jdbc:postgresql://localhost:$databasePort/$databaseName"
 
         // Connect to the PostgresSQL DB
-        DBConnect(
+        databaseObjc = DBConnect(
             jdbcUrl,
             databaseName,
             databasePass
         )
-
-        // Open MainFrame (index GUI)
-        openMainFrame()
     }
+
+    fun getConnection(): Connection? = databaseObjc.getConnection()
 }
 
 fun main() {
-    App().start()
+    val app = App()
+
+    // Open MainFrame (index GUI)
+    app.start()
+    app.openMainFrame()
 }
