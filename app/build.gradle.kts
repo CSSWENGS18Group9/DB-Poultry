@@ -8,9 +8,7 @@
 plugins {
     application
     kotlin("jvm") version "2.1.10"
-    id("org.openjfx.javafxplugin") version "0.1.0"
     java
- 
 }
 
 group = "org.example"
@@ -18,19 +16,6 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
-}
-
-// JavaFX
-val javafxVersion = "17.0.2"
-val platform = when (System.getProperty("os.name").lowercase()) {
-    "mac os x", "macos" -> "mac"
-    "linux" -> "linux"
-    else -> "win"
-}
-
-javafx {
-    version = "17.0.2"
-    modules = listOf("javafx.controls", "javafx.fxml")
 }
 
 dependencies {
@@ -47,28 +32,21 @@ dependencies {
     // 
     // If unsure, message @zrygan
 
-    // Dependencies for Dev
-    // Kotlin
-    implementation(kotlin("stdlib"))
-    testImplementation(kotlin("test"))
-    
-    // Dependencies for UI/UX
-    val javafxModules = listOf("base", "graphics", "controls", "fxml")
-
-    javafxModules.forEach {
-        implementation("org.openjfx:javafx-$it:$javafxVersion:$platform")
-    }
-
-    // Dependencies for Database
-    // PostgreSQL
-    implementation("org.postgresql:postgresql:42.7.3")
-
-    // Dot Env (.env file)
-    implementation("io.github.cdimascio:dotenv-java:3.0.0")
-
     // Dependencies for QA
     // JUnit 
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+    
+    // Dependencies for Dev
+
+    // Dependencies for UI/UX
+
+    // Dependencies for Database
+    // PostgreSQL
+    implementation("org.postgresql:postgresql:17.5")
+    
+    // Dependencies for Kotlin
+    // Kotlin STDLIB
+    implementation(kotlin("stdlib"))
     testImplementation(kotlin("test"))
 }
 
@@ -93,8 +71,9 @@ sourceSets {
 }
 
 application {
-    mainClass.set("org.db_poultry.AppKt")
+    mainClass.set("org.DBPoultry.AppKt")
 }
+
 
 kotlin {
     jvmToolchain {

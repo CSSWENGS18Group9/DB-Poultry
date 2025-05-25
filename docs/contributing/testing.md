@@ -15,7 +15,7 @@ We use **JUnit** for unit testing both Java and Kotlin code. You don't need to w
 Suppose we want to test the following `Calculator` Java class:
 
 ```java
-package org.db_poultry;
+package org.DBPoultry;
 
 public class Calculator {
     public static int addition(int x, int y) {
@@ -40,20 +40,20 @@ We will create a unit test file inside `app/src/test/kotlin/org/DBPoultry/calcul
 The unit test for the `Calculator` class is as follows:
 
 ```kotlin
-package org.db_poultry.calculator_test;
+package org.DBPoultry.calculator_test;
 
-import org.db_poultry.Calculator
+import org.DBPoultry.Calculator
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 
 class CalculatorTest {
     @Test
-    fun testAddition() {
+    fun testAddition(){
         assertEquals(15, Calculator.addition(10, 5), "10 + 5 = 15")
     }
 
     @Test
-    fun testSubtraction() {
+    fun testSubtraction(){
         // this test should fail
         // since as per our code, if the result is negative
         // Calculator.subtraction will return 0

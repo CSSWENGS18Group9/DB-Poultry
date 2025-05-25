@@ -53,13 +53,13 @@ All `.java` files will be placed in the `java/` directory, while all `.kt` (not 
 All Java files inside the directory `java/org/DBPoultry/<package name>` will have the package:
 
 ```java
-package org.db_poultry.<package name>;
+package org.DBPoultry.<package name>;
 ```
 
 While, all Kotlin files inside the directory `kotlin/org/DBPoultry/<package name>` will have the package:
 
 ```kotlin
-package org.db_poultry.<package name >
+package org.DBPoultry.<package name>
 ```
 
 **Notice** that if you have the two directories, one in `java/` and the other in `kotlin/`. They will have the *same package*! 
@@ -88,13 +88,13 @@ Hence, if we want to use a Kotlin class that is in the package `kotlin/../MyPack
 
 ```java
 // We want to use MyKotlin.kt inside MyJava.java
-// Package of MyKotlin.kt is org.db_poultry.MyPackage
+// Package of MyKotlin.kt is org.DBPoultry.MyPackage
 
 // CORRECT
-package org.db_poultry.MyPackage;
+package org.DBPoultry.MyPackage;
 
 // INCORRECT
-// import org.db_poultry.MyPackage;
+// import org.DBPoultry.MyPackage;
 ```
 
 ### Kotlin Classes
@@ -104,18 +104,18 @@ Everytime we use a class writtin in Kotlin we append `Kt`. This is to differenti
 For instance, we want to use the class `Foo` inside a Java file, we will append `Kt` at the end of the class name:
 
 ```java
-package org.db_poultry.MyPackage;
+package org.DBPoultry.MyPackage;
 
-import org.db_poultry.AnotherPackage.FooKt;
+import org.DBPoultry.AnotherPackage.FooKt;
 ```
 
 Or, we want to use a Kotlin-defined method `my_function` inside a Java file:
 
 ```java
-package org.db_poultry.MyPackage;
+package org.DBPoultry.MyPackage;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args){
         // I want to use method `my_function` inside a 
         // Kotlin-defined class MyKotlinClass.
         MyKotlinClassKt.myfunction();
