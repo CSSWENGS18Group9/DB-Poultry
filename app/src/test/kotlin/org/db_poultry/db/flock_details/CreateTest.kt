@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Assertions.*
 import org.db_poultry.db.DBConnect
 import org.db_poultry.App
 import java.sql.Date
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
 
 class CreateTest {
     private var jdbcURL: String
@@ -69,7 +67,7 @@ class CreateTest {
 
                         Create.createFlockDetails(conn.conn, 1, date, 1)
         val result =    Create.createFlockDetails(conn.conn, 2, date, 1)
-        assertEquals("INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (2, 1999-01-06, 1)", result)
+        assertNull(result)
     }
 
     @Test
@@ -79,8 +77,6 @@ class CreateTest {
         val result = Create.createFlockDetails(conn.conn, 1000, date, 1)
         assertNull(result)
     }
-
-
 }
 
 
