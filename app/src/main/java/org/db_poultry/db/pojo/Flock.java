@@ -12,7 +12,8 @@ public class Flock {
 
     /**
      * constructor for the flock
-     * @param flockId the id of the flock
+     *
+     * @param flockId      the id of the flock
      * @param startingDate the starting date of the flock
      */
     public Flock(int flockId, int startingCount, Timestamp startingDate) {
@@ -23,6 +24,7 @@ public class Flock {
 
     /**
      * getter for the flock id
+     *
      * @return flock id
      */
     public int getFlockId() {
@@ -31,6 +33,7 @@ public class Flock {
 
     /**
      * getter for starting count
+     *
      * @return starting count
      */
     public int getStartingCount() {
@@ -39,6 +42,7 @@ public class Flock {
 
     /**
      * getter for the starting date
+     *
      * @return starting date
      */
     public Timestamp getStartingDate() {

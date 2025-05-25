@@ -1,8 +1,8 @@
 package org.db_poultry.db.flock;
 
 import org.db_poultry.db.pojo.Flock;
-import org.db_poultry.db.pojo.FlockDetails;
 import org.db_poultry.db.pojo.FlockComplete;
+import org.db_poultry.db.pojo.FlockDetails;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -10,26 +10,22 @@ import java.util.function.Function;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
-public class View {
+public class ViewFlock {
 
     /**
      * A query that gets all the information and all records in the Flock table. Used in allByID and allByDate.
      *
-     *
-     * @param con the sql connection
+     * @param con       the sql connection
      * @param keyMapper function that extracts a key from the FlockDetails pojo and uses it as the key of the hash map
+     * @param <K>       the generic; the type of the key in the hash map. See allByID and allByDate to see what <K> refers to
      * @return hashmap of the Flock and FlockDetails table
-     * @param <K> the generic; the type of the key in the hash map. See allByID and allByDate to see what <K> refers to
      */
     private static <K> HashMap<K, FlockComplete> queryAll(Connection con, Function<Flock, K> keyMapper) {
         HashMap<K, FlockComplete> result = new HashMap<>();
 
-        String sql = "SELECT f.flock_id, f.starting_count, f.starting_date, " +
-                "fd.flock_details_id, fd.fd_date, fd.depleted_count " +
-                "FROM Flock f INNER JOIN Flock_Details fd ON f.flock_id = fd.flock_id";
+        String sql = "SELECT f.flock_id, f.starting_count, f.starting_date, " + "fd.flock_details_id, fd.fd_date, fd.depleted_count " + "FROM Flock f INNER JOIN Flock_Details fd ON f.flock_id = fd.flock_id";
 
-        try (Statement stmt = con.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 // Flock columns
@@ -38,7 +34,7 @@ public class View {
                 Timestamp startingDate = rs.getTimestamp("starting_date");
 
                 // Flock Details columns
-                int fdId = rs.getInt("fd_id");
+                int fdId = rs.getInt("flock_details_id");
                 Timestamp fdDate = rs.getTimestamp("fd_date");
                 int depletedCount = rs.getInt("depleted_count");
 
@@ -59,6 +55,7 @@ public class View {
 
     /**
      * Uses the generic function above to get all table entries and relates it by ID
+     *
      * @param con the sql connection
      * @return the hashmap where flockID is the key of each entry in the hash map
      */
@@ -69,6 +66,7 @@ public class View {
 
     /**
      * Uses the generic function above to get all table entries and relates it by Date
+     *
      * @param con the sql connection
      * @return the hashmap where Date is the key of each entry in the hash map
      */
