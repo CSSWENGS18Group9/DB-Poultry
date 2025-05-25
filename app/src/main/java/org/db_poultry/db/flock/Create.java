@@ -20,7 +20,7 @@ public class Create {
             return null;
         }
 
-        String completeQuery = "INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (" + startCount + " ," + startDate + ")"; // Query filled in to be returned
+        String completeQuery = "INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (" + startCount + ", " + startDate + ")"; // Query filled in to be returned
         String incompleteQuery = "INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (?, ?)"; // Query to be used in preparedStatement
 
         try {
