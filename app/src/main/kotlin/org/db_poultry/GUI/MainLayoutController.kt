@@ -4,14 +4,22 @@ import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.layout.BorderPane
 import javafx.scene.Parent
+import javafx.scene.control.Label
+import java.time.LocalDate
 
 class MainLayoutController {
 
     @FXML
     private lateinit var borderPane: BorderPane
+
+    @FXML
+    private lateinit var dateLabel: Label
     
     // Initialize with home content
     fun initialize() {
+        // Set today's date
+        val today = LocalDate.now()
+        dateLabel.text = today.toString()
         loadContentView("/content_home.fxml")
     }
     
@@ -28,6 +36,11 @@ class MainLayoutController {
     @FXML
     private fun navigateToView() {
         loadContentView("/content_view.fxml")
+    }
+
+    @FXML
+    private fun navigateToGenerate() {
+        loadContentView("/content_generate.fxml")
     }
     
     // Load content into the center area of BorderPane

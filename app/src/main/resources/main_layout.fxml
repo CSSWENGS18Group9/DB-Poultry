@@ -4,15 +4,23 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.Controller.MainLayoutController">
     <!-- Sidebar on the left -->
     <left>
-        <VBox prefHeight="143.0" prefWidth="116.0" spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 10;">
+        <VBox prefHeight="281.0" prefWidth="116.0" spacing="10" style="-fx-background-color: #FEFAE0; -fx-padding: 10; -fx-border-color: #606C38; -fx-border-image-width: 3;">
             <Label style="-fx-font-weight: bold;" text="Navigation" />
-            <Button fx:id="btnHome" onAction="#navigateToHome" text="Home" />
-            <Button fx:id="btnCreate" onAction="#navigateToCreate" text="Create" />
-            <Button fx:id="btnView" onAction="#navigateToView" text="View" />
+            <Button fx:id="btnHome" alignment="CENTER" onAction="#navigateToHome" prefHeight="57.0" prefWidth="118.0" text="Home" />
+            <Button fx:id="btnCreate" onAction="#navigateToCreate" prefHeight="57.0" prefWidth="174.0" text="Create" />
+            <Button fx:id="btnView" onAction="#navigateToView" prefHeight="55.0" prefWidth="218.0" text="View" />
+            <Button fx:id="btnGenerate" layoutX="20.0" layoutY="120.0" onAction="#navigateToView" prefHeight="68.0" prefWidth="473.0" text="Generate" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="182.0" stroke="TRANSPARENT" strokeType="INSIDE" width="93.0" />
+         <Label fx:id="dateLabel" alignment="CENTER" prefHeight="30.0" prefWidth="102.0" style="-fx-background-color: white;" text="Label" textAlignment="CENTER">
+            <font>
+               <Font size="18.0" />
+            </font></Label>
         </VBox>
     </left>
     
