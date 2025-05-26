@@ -1,4 +1,4 @@
-package org.db_poultry.db.flock_detailsDAO;
+package org.db_poultry.db.flockDetailsDAO;
 
 import java.sql.Connection;
 import java.sql.Date;

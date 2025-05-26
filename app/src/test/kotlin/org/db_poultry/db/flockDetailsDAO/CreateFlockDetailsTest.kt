@@ -1,4 +1,4 @@
-package org.db_poultry.db.flock_detailsDAO
+package org.db_poultry.db.flockDetailsDAO
 
 import org.db_poultry.App
 import org.db_poultry.db.DBConnect
