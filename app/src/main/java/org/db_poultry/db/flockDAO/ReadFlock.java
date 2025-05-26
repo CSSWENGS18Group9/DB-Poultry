@@ -11,7 +11,6 @@ import java.util.function.Function;
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 public class ReadFlock {
-
     /**
      * A query that gets all the information and all records in the Flock table. Used in allByID and allByDate.
      *
@@ -23,7 +22,9 @@ public class ReadFlock {
     private static <K> HashMap<K, FlockComplete> queryAll(Connection con, Function<Flock, K> keyMapper) {
         HashMap<K, FlockComplete> result = new HashMap<>();
 
-        String sql = "SELECT f.flock_id, f.starting_count, f.starting_date, " + "fd.flock_details_id, fd.fd_date, fd.depleted_count " + "FROM Flock f INNER JOIN Flock_Details fd ON f.flock_id = fd.flock_id";
+        String sql =    "SELECT f.flock_id, f.starting_count, f.starting_date, " +
+                        "fd.flock_details_id, fd.fd_date, fd.depleted_count " +
+                        "FROM Flock f LEFT JOIN Flock_Details fd ON f.flock_id = fd.flock_id";
 
         try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
 
