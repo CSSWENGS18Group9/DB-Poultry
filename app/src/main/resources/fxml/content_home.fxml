@@ -13,17 +13,17 @@
          </font>
       </Text>
       <Button fx:id="btnBackToLogin" layoutX="32.0" layoutY="332.0" mnemonicParsing="false" onAction="#switchToHome" style="-fx-background-radius: 15px;" text="Back to Login" />
-      <Button fx:id="gotoCreate" layoutX="170.0" layoutY="65.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px;" text="Create">
+      <Button fx:id="gotoCreate" layoutX="170.0" layoutY="65.0" mnemonicParsing="false" onAction="#switchToCreate" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px;" text="Create">
          <font>
             <Font size="30.0" />
          </font>
       </Button>
-      <Button fx:id="gotoView" layoutX="170.0" layoutY="170.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px;" text="View">
+      <Button fx:id="gotoView" layoutX="170.0" layoutY="170.0" mnemonicParsing="false" onAction="#switchToView" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px;" text="View">
          <font>
             <Font size="30.0" />
          </font>
       </Button>
-      <Button fx:id="gotoGenerate" layoutX="170.0" layoutY="273.0" mnemonicParsing="false" onAction="#switchToGenerate" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px;" text="Generate">
+      <Button fx:id="gotoGenerate" layoutX="170.0" layoutY="273.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px;" text="Generate">
          <font>
             <Font size="30.0" />
          </font>

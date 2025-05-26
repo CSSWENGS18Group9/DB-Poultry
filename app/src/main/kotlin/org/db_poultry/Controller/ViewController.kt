@@ -14,14 +14,14 @@ class ViewController {
     private lateinit var confirmFlockBtn: Button
 
     @FXML
-    fun switchToViewFlockDetails() {
-        SceneSwitcher.switchContent(confirmFlockBtn, "/content_view_flock_details.fxml")
-    }
-
-    @FXML
     private lateinit var selectFlockChoiceBox: ChoiceBox<Any>
 
     @FXML
     private lateinit var selectFlockLbl: Text
 
+    @FXML
+    fun switchToViewFlockDetails() {
+        println("Switching to view flock details")
+        SceneSwitcher.switchContent(confirmFlockBtn, "/fxml/content_view_flock_details.fxml")
+    }
 }

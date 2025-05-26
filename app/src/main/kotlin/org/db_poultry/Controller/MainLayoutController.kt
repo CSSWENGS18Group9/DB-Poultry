@@ -38,10 +38,10 @@ class MainLayoutController {
         loadContentView("/fxml/content_view.fxml")
     }
 
-    @FXML
-    private fun navigateToGenerate() {
-        loadContentView("/fxml/content_generate.fxml")
-    }
+    // @FXML
+    // private fun navigateToGenerate() {
+    //     loadContentView("/fxml/content_generate.fxml")
+    // }
     
     // Load content into the center area of BorderPane
     private fun loadContentView(fxmlPath: String) {

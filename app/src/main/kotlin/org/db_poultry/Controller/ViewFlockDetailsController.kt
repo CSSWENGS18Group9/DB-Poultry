@@ -13,4 +13,6 @@ class ViewFlockDetailsController {
     @FXML
     private lateinit var depletedChickenCountColumn: TableColumn<Any, Any>
 
+    
+
 }
