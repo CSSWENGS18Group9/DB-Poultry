@@ -2,6 +2,7 @@ package org.db_poultry.controller
 
 import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
+import org.db_poultry.db.flockDetailsDAO.DepletedCount
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.pojo.FlockComplete
 import java.sql.Connection
@@ -33,11 +34,20 @@ fun recordFlockDetails(
         return 0
     }
 
+
+
     if ((depletedCount < 0) || (depletedCount > flockSelected.flock.startingCount)) {
         // cant record flock detail if depleted count is negative
         // or depletedCount is greater than what we started with
         return 0
     }
+
+    if ((DepletedCount.cumulativeDepletedCount(connection, flockSelected.flock.flockId) + depletedCount )  > flockSelected.flock.startingCount) {
+        // check if adding the current depletedCount would exceed the starting count
+        // if it would, reject the input to prevent invalid data
+        return 0
+    }
+
 
     // FIXME: add more input validations here
 

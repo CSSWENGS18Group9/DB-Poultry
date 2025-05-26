@@ -1,9 +1,13 @@
 package org.db_poultry.db.flockDetailsDAO;
 
+import org.db_poultry.db.flockDAO.ReadFlock;
+import org.db_poultry.pojo.FlockComplete;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
