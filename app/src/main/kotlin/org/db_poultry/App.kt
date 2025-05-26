@@ -2,11 +2,10 @@ package org.db_poultry
 
 import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
+import org.db_poultry.controller.recordFlockDetails
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import org.db_poultry.db.flockDAO.CreateFlock
-import org.db_poultry.db.flockDAO.ViewFlock
-import org.db_poultry.db.flock_detailsDAO.CreateFlockDetails
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.gui.MainFrame
 import java.sql.Connection
@@ -89,25 +88,39 @@ fun main() {
     app.start()
 
     // Open MainFrame (index GUI)
-//    app.openMainFrame()
+    //    app.openMainFrame()
 
     // Sample run
     cleanTables(app.getConnection())
     val date = Date.valueOf("1000-01-01")
 
+    // -1
+    println(recordFlockDetails(app.getConnection(), date, Date.valueOf("1001-10-10"), 2))
+
     // insert record
     CreateFlock.createFlock(app.getConnection(), 100, date)
-    CreateFlockDetails.createFlockDetails(app.getConnection(), 1, date, 99)
 
-    // check if record exists
-    val allByDate = ViewFlock.allByDate(app.getConnection())
-    val record = allByDate[date] // get the one with date
+    CreateFlock.createFlock(app.getConnection(), 999, java.sql.Date.valueOf(java.time.LocalDate.now()))
 
-    if (record != null) {
-        println(record.flock)
-        println("==========")
-        println(record.flockDetails)
-    } else{
-        println("Not Found")
-    }
+    // 1
+    println(recordFlockDetails(app.getConnection(), date, Date.valueOf("1001-10-10"), 2))
+    // 0 (flockSelected not found)
+    println(recordFlockDetails(app.getConnection(), Date.valueOf("1001-10-10"), Date.valueOf("1001-10-10"), 2))
+    // 0 (depletedCount > startingCount)
+    println(recordFlockDetails(app.getConnection(), date, Date.valueOf("1001-10-11"), 99999))
+
+    // 1 (uses second flock)
+    println(
+        recordFlockDetails(
+            app.getConnection(),
+            java.sql.Date.valueOf(java.time.LocalDate.now()),
+            Date.valueOf("1001-10-13"),
+            0
+        )
+    )
+    // 1 (uses second flock)
+    println(recordFlockDetails(app.getConnection(), null, Date.valueOf("1001-10-12"), 0))
+    // 1 (uses second flock)
+    println(recordFlockDetails(app.getConnection(), null, null, 0))
+
 }
