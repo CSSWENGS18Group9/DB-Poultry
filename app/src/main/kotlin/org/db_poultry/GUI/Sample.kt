@@ -1,5 +1,7 @@
 package org.db_poultry.GUI
 
+import org.db_poultry.Util.ControllerManager
+
 import javafx.application.Application
 import javafx.fxml.FXMLLoader
 import javafx.stage.Stage
@@ -14,6 +16,7 @@ class Sample : Application() {
 
         try {
             val loader = FXMLLoader(javaClass.getResource("/fxml/login.fxml"))
+            loader.controllerFactory = ControllerManager.controllerFactory
             val root = loader.load<Parent>()
             val scene = Scene(root)
             primaryStage.scene = scene
