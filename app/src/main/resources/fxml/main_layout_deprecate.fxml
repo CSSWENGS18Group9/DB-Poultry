@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.Controller.MainLayoutController">
+   <children>
+      <SplitPane fx:id="mainSplitPane" dividerPositions="0.25" layoutY="63.0" mouseTransparent="true" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane fx:id="sidebarAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="397.0" prefWidth="129.0">
+               <children>
+                  <GridPane alignment="TOP_CENTER" prefHeight="397.3333333333333" prefWidth="146.0" vgap="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-font-weight: bold;" text="Navigation" textAlignment="CENTER">
+                           <font>
+                              <Font name="HelveticaNowDisplay-Bold" size="19.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="sidebarHomeBtn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#navigateToHome" prefHeight="50.0" prefWidth="103.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="Home" GridPane.rowIndex="1">
+                           <effect>
+                              <DropShadow offsetY="1.5">
+                                 <color>
+                                    <Color opacity="0.4000000059604645" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <font>
+                              <Font name="HelveticaNowDisplay-Bold" size="18.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="sidebarCreateBtn" alignment="TOP_RIGHT" onAction="#navigateToCreate" prefHeight="50.0" prefWidth="117.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="Create" GridPane.rowIndex="2">
+                           <effect>
+                              <DropShadow offsetY="1.5">
+                                 <color>
+                                    <Color opacity="0.4000000059604645" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <font>
+                              <Font name="HelveticaNowDisplay-Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="sidebarViewBtn" alignment="TOP_RIGHT" onAction="#navigateToView" prefHeight="55.0" prefWidth="218.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="View" GridPane.rowIndex="3">
+                           <effect>
+                              <DropShadow offsetY="1.5">
+                                 <color>
+                                    <Color opacity="0.4000000059604645" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <font>
+                              <Font name="HelveticaNowDisplay-Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="sidebarGenerateBtn" alignment="TOP_RIGHT" prefHeight="68.0" prefWidth="473.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="Generate" textAlignment="RIGHT" GridPane.rowIndex="4">
+                           <effect>
+                              <DropShadow offsetY="1.5">
+                                 <color>
+                                    <Color opacity="0.4000000059604645" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <font>
+                              <Font name="HelveticaNowDisplay-Bold" size="11.0" />
+                           </font>
+                        </Button>
+                        <Label fx:id="sideBarDateLabel" alignment="CENTER" prefHeight="30.0" prefWidth="102.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="Label" textAlignment="CENTER" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="HelveticaNowDisplay-Bold" size="14.0" />
+                           </font>
+                           <effect>
+                              <DropShadow offsetY="1.5">
+                                 <color>
+                                    <Color opacity="0.4000000059604645" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </Label>
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane fx:id="contentAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="446.0">
+               <children>
+                  <Button fx:id="homeCreateBtn" layoutX="153.0" layoutY="77.0" mnemonicParsing="false" onAction="#switchToCreate" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" text="Create" textFill="#bc6c25">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Bold" size="30.0" />
+                     </font>
+                     <effect>
+                        <DropShadow offsetY="1.5">
+                           <color>
+                              <Color opacity="0.4000000059604645" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Button>
+                  <Button fx:id="homeViewBtn" layoutX="23.0" layoutY="187.0" mnemonicParsing="false" onAction="#switchToView" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" text="View" textFill="#bc6c25">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Bold" size="30.0" />
+                     </font>
+                     <effect>
+                        <DropShadow offsetY="1.5">
+                           <color>
+                              <Color opacity="0.4000000059604645" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Button>
+                  <Button fx:id="homeGenerateBtn" layoutX="110.0" layoutY="241.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" text="Generate" textFill="#bc6c25">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Bold" size="30.0" />
+                     </font>
+                     <effect>
+                        <DropShadow offsetY="1.5">
+                           <color>
+                              <Color opacity="0.4000000059604645" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Button>
+                  <Text fx:id="txtHomeMenu" layoutX="153.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home Menu" textAlignment="CENTER" wrappingWidth="153.13671875">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Regular" size="22.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="homeReturnLoginBtn" layoutX="30.0" layoutY="348.0" mnemonicParsing="false" onAction="#switchToLogin" style="-fx-background-radius: 15px; -fx-background-color: white;" text="Back to Login">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Regular" size="12.0" />
+                     </font>
+                     <effect>
+                        <DropShadow offsetY="1.5">
+                           <color>
+                              <Color opacity="0.4000000059604645" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Button>
+                  <Text layoutX="186.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" supplies, flock records, or expenses">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Light" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="148.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" supplies, flock records, or expenses">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Light" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="69.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reports">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Light" size="12.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

@@ -25,33 +25,14 @@ object SceneSwitcher {
      * use switchContent() instead.
      */
     fun switchTo(node: Node, fxml: String) {
-        val stage = node.scene.window as Stage
-        val root: Parent = FXMLLoader(javaClass.getResource(fxml)).load()
-        stage.scene = Scene(root)
-    }
-    
-    /**
-     * Switches only the content area while preserving the sidebar.
-     * Use this for all navigation within the main application.
-     */
-    fun switchContent(node: Node, fxml: String) {
         try {
-            // Find the BorderPane in the scene graph
-            var current: Parent = node.parent
-            while (current !is BorderPane && current.parent != null) {
-                current = current.parent as Parent
-            }
-            
-            if (current is BorderPane) {
-                val borderPane = current as BorderPane
-                val view = FXMLLoader(javaClass.getResource(fxml)).load<Parent>()
-                borderPane.center = view
-            } else {
-                // Fallback to switching entire scene if BorderPane not found
-                println("Warning: BorderPane not found, falling back to full scene switch")
-                switchTo(node, fxml)
-            }
+            val stage = node.scene.window as Stage
+            val loader = FXMLLoader(javaClass.getResource(fxml))
+            loader.controllerFactory = ControllerManager.controllerFactory
+            val root: Parent = loader.load()
+            stage.scene = Scene(root)
         } catch (e: Exception) {
+            println("Error switching scene: ${e.message}")
             e.printStackTrace()
         }
     }

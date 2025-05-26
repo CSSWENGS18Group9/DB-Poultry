@@ -1,18 +1,35 @@
 package org.db_poultry.Controller
 
+import org.db_poultry.Util.ControllerManager
+import org.db_poultry.Util.SceneSwitcher
+
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
-import javafx.scene.layout.BorderPane
+import javafx.fxml.Initializable
 import javafx.scene.Parent
 
+import java.util.ResourceBundle
+import java.time.LocalDate
+import java.net.URL
+
+import javafx.event.ActionEvent
 import javafx.scene.control.Button
 import javafx.scene.control.Label
-import java.time.LocalDate
+import javafx.scene.control.SplitPane
+import javafx.scene.layout.AnchorPane
+import javafx.scene.layout.GridPane
+import javafx.scene.text.Text
 
-class MainLayoutController {
+class MainLayoutController : Initializable {
 
     @FXML
-    private lateinit var borderPane: BorderPane
+    private lateinit var contentAnchorPane: AnchorPane
+
+    @FXML
+    private lateinit var mainSplitPane: SplitPane
+
+    @FXML
+    private lateinit var mainGridPane: GridPane
 
     @FXML
     private lateinit var sidebarHomeBtn: Button
@@ -29,11 +46,11 @@ class MainLayoutController {
     @FXML
     private lateinit var sideBarDateLabel: Label
     
-    // Initialize with home content
-    fun initialize() {
+    override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
         // Set today's date
         val today = LocalDate.now()
         sideBarDateLabel.text = today.toString()
+
         loadContentView("/fxml/content_home.fxml")
     }
     
@@ -52,17 +69,21 @@ class MainLayoutController {
         loadContentView("/fxml/content_view.fxml")
     }
 
-    // @FXML
-    // private fun navigateToGenerate() {
-    //     loadContentView("/fxml/content_generate.fxml")
-    // }
-    
-    // Load content into the center area of BorderPane
     private fun loadContentView(fxmlPath: String) {
         try {
             val loader = FXMLLoader(javaClass.getResource(fxmlPath))
+            // loader.controllerFactory = ControllerManager.controllerFactory
             val view = loader.load<Parent>()
-            borderPane.center = view
+            
+            contentAnchorPane.children.clear()
+            contentAnchorPane.children.add(view)
+            
+            // Set AnchorPane constraints to fill the entire area
+            AnchorPane.setTopAnchor(view, 0.0)
+            AnchorPane.setRightAnchor(view, 0.0)
+            AnchorPane.setBottomAnchor(view, 0.0)
+            AnchorPane.setLeftAnchor(view, 0.0)
+            
         } catch (e: Exception) {
             e.printStackTrace()
         }
