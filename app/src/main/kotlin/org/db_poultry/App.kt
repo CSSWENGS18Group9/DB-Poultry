@@ -96,6 +96,9 @@ fun main() {
     cleanTables(app.getConnection())
     val date = Date.valueOf("1000-01-01")
 
+    // -1
+    println(recordFlockDetails(app.getConnection(), date, Date.valueOf("1001-10-10"), 2))
+
     // insert record
     CreateFlock.createFlock(app.getConnection(), 100, date)
     CreateFlockDetails.createFlockDetails(app.getConnection(), 1, date, 99)
@@ -103,5 +106,10 @@ fun main() {
     // check if record exists
     val allByDate = ReadFlock.allByDate(app.getConnection())
     val record = allByDate[date] // get the one with date
-    recordFlockDetails(app.getConnection(), Date.valueOf("1001-10-10"))
+    // 1
+    println(recordFlockDetails(app.getConnection(), date, Date.valueOf("1001-10-10"), 2))
+    // 0 (flockSelected not found)
+    println(recordFlockDetails(app.getConnection(), Date.valueOf("1001-10-10"), Date.valueOf("1001-10-10"), 2))
+    // 0 (depletedCount > startingCount)
+    println(recordFlockDetails(app.getConnection(), date, Date.valueOf("1001-10-10"), 99999))
 }
