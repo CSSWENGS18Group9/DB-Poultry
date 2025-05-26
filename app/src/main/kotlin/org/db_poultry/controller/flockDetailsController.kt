@@ -1,6 +1,6 @@
 package org.db_poultry.controller
 
-import org.db_poultry.db.flockDAO.GetFlocks
+import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.pojo.FlockComplete
@@ -25,7 +25,7 @@ fun recordFlockDetails(
     }
 
     // first verify if the Flock selected (given the timestamp) exists
-    val flocks = GetFlocks.allByDate(connection)
+    val flocks = ReadFlock.allByDate(connection)
 
     if (flocks.isEmpty()) {
         generateErrorMessage(
@@ -58,5 +58,4 @@ fun recordFlockDetails(
     CreateFlockDetails.createFlockDetails(connection, flockSelected.flock.flockId, flockDetailDate, depletedCount)
 
     return 1
-}
 }
