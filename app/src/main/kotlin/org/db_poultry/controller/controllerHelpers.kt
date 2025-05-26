@@ -4,12 +4,9 @@ import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.pojo.FlockComplete
 import java.sql.Connection
-import java.util.HashMap
 
 fun <K> validateAndRead(
-    connection: Connection?,
-    reader: (Connection) -> HashMap<K, FlockComplete>?,
-    callerName: String
+    connection: Connection?, reader: (Connection) -> HashMap<K, FlockComplete>?, callerName: String
 ): HashMap<K, FlockComplete>? {
     if (connection == null) {
         generateErrorMessage(

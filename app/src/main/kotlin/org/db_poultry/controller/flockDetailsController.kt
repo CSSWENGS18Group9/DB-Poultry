@@ -13,24 +13,9 @@ fun recordFlockDetails(
     flockDetailDate: java.sql.Date?,
     depletedCount: Int
 ): Int {
-    if (connection == null) {
-        generateErrorMessage(
-            "Error at `recordFlockDetails()` in `flockDetailsController`.",
-            "Connection is null",
-            "Ensure that the connection has been established.",
-        )
-        return -1
-    }
+    val flocks = validateAndReadByDates(connection)
 
-    val flocks = ReadFlock.allByDate(connection)
-
-    if (flocks.isEmpty()) {
-        generateErrorMessage(
-            "Error at `recordFlockDetails()` in `flockDetailsController`.",
-            "Flock table is empty; `ReadFlock.allByDate` returned an empty HashSet.",
-            "Ensure that there is data in the database."
-        )
-
+    if (flocks == null){
         return -1
     }
 
