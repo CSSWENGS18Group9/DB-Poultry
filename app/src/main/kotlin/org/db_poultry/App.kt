@@ -6,7 +6,7 @@ import org.db_poultry.controller.recordFlockDetails
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import org.db_poultry.db.flockDAO.CreateFlock
-import org.db_poultry.db.flockDAO.GetFlocks
+import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.gui.MainFrame
@@ -101,7 +101,7 @@ fun main() {
     CreateFlockDetails.createFlockDetails(app.getConnection(), 1, date, 99)
 
     // check if record exists
-    val allByDate = GetFlocks.allByDate(app.getConnection())
+    val allByDate = ReadFlock.allByDate(app.getConnection())
     val record = allByDate[date] // get the one with date
     recordFlockDetails(app.getConnection(), Date.valueOf("1001-10-10"))
 }
