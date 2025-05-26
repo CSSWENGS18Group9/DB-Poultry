@@ -2,6 +2,8 @@ package org.db_poultry.db.flockDetailsDAO
 
 import org.db_poultry.App
 import org.db_poultry.db.DBConnect
+import org.db_poultry.db.cleanTables
+import org.db_poultry.db.flockDAO.CreateFlock
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
@@ -18,11 +20,15 @@ class CreateFlockDetailsTest {
 
         jdbcURL = "jdbc:postgresql://localhost:${app.databasePort}/${app.databaseName}"
         conn = DBConnect(jdbcURL, app.databaseName, app.databasePass)
+
+        cleanTables(conn.getConnection())
     }
 
     @Test
     fun testCreateFlockDetailsValidInput() {
         val date = Date.valueOf("1000-01-01")
+
+        CreateFlock.createFlock(conn.getConnection(), 999, date)
 
         val result = CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, date, 0)
 

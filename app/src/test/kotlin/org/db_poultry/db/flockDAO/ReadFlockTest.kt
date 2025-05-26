@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.db_poultry.db.DBConnect
 import org.db_poultry.App
+import org.db_poultry.db.cleanTables
 import java.sql.Date
 
 class ReadFlockTest {
@@ -17,6 +18,7 @@ class ReadFlockTest {
 
         jdbcURL = "jdbc:postgresql://localhost:${app.databasePort}/${app.databaseName}"
         conn = DBConnect(jdbcURL, app.databaseName, app.databasePass)
+        cleanTables(conn.getConnection())
     }
 
     @Test

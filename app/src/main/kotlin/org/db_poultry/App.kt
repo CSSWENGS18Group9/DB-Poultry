@@ -6,8 +6,6 @@ import org.db_poultry.controller.recordFlockDetails
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import org.db_poultry.db.flockDAO.CreateFlock
-import org.db_poultry.db.flockDAO.ReadFlock
-import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.gui.MainFrame
 import java.sql.Connection
