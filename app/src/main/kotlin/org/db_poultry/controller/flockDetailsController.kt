@@ -27,7 +27,7 @@ fun recordFlockDetails(
     if (flocks.isEmpty()) {
         generateErrorMessage(
             "Error at `recordFlockDetails()` in `flockDetailsController`.",
-            "Flock table is empty; `GetFlocks.allByDate` returned an empty HashSet.",
+            "Flock table is empty; `ReadFlock.allByDate` returned an empty HashSet.",
             "Ensure that there is data in the database."
         )
 
