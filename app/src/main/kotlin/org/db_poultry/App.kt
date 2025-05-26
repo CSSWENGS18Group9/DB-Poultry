@@ -2,6 +2,7 @@ package org.db_poultry
 
 import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
+import org.db_poultry.controller.recordFlock
 import org.db_poultry.controller.recordFlockDetails
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
@@ -98,9 +99,14 @@ fun main() {
     println(recordFlockDetails(app.getConnection(), date, Date.valueOf("1001-10-10"), 2))
 
     // insert record
-    CreateFlock.createFlock(app.getConnection(), 100, date)
-
-    CreateFlock.createFlock(app.getConnection(), 999, java.sql.Date.valueOf(java.time.LocalDate.now()))
+    // 1
+    println(recordFlock(app.getConnection(), 100, date))
+    //1
+    println(recordFlock(app.getConnection(), 999, java.sql.Date.valueOf(java.time.LocalDate.now())))
+    // 0
+    println(recordFlock(app.getConnection(), 100, date))
+    // 0
+    println(recordFlock(app.getConnection(), 0, Date.valueOf("1999-01-01")))
 
     // 1
     println(recordFlockDetails(app.getConnection(), date, Date.valueOf("1001-10-10"), 2))
