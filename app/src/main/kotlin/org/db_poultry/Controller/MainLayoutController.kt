@@ -4,6 +4,8 @@ import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.layout.BorderPane
 import javafx.scene.Parent
+
+import javafx.scene.control.Button
 import javafx.scene.control.Label
 import java.time.LocalDate
 
@@ -13,13 +15,25 @@ class MainLayoutController {
     private lateinit var borderPane: BorderPane
 
     @FXML
-    private lateinit var dateLabel: Label
+    private lateinit var sidebarHomeBtn: Button
+
+    @FXML
+    private lateinit var sidebarCreateBtn: Button
+
+    @FXML
+    private lateinit var sidebarViewBtn: Button
+
+    @FXML
+    private lateinit var sidebarGenerateBtn: Button
+
+    @FXML
+    private lateinit var sideBarDateLabel: Label
     
     // Initialize with home content
     fun initialize() {
         // Set today's date
         val today = LocalDate.now()
-        dateLabel.text = today.toString()
+        sideBarDateLabel.text = today.toString()
         loadContentView("/fxml/content_home.fxml")
     }
     

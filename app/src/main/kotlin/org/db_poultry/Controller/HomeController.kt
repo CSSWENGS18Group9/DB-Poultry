@@ -11,16 +11,16 @@ import javafx.scene.text.Text
 class HomeController {
 
     @FXML
-    private lateinit var btnBackToLogin: Button
+    private lateinit var homeReturnLoginBtn: Button
 
     @FXML
-    private lateinit var gotoCreate: Button
+    private lateinit var homeCreateBtn: Button
 
     @FXML
-    private lateinit var gotoGenerate: Button
+    private lateinit var homeViewBtn: Button
 
     @FXML
-    private lateinit var gotoView: Button
+    private lateinit var homeGenerateBtn: Button
 
     @FXML
     private lateinit var homeAnchorPane: AnchorPane
@@ -29,27 +29,27 @@ class HomeController {
     private lateinit var txtHomeMenu: Text
 
     @FXML
-    fun switchToHome(event: ActionEvent) {
+    fun switchToLogin(event: ActionEvent) {
         println("Switching to login")
-        SceneSwitcher.switchTo(btnBackToLogin, "/fxml/login.fxml")
+        SceneSwitcher.switchTo(homeReturnLoginBtn, "/fxml/login.fxml")
     }
 
     @FXML
     fun switchToCreate(event: ActionEvent) {
         println("Switching to create view")
-        SceneSwitcher.switchContent(gotoCreate, "/fxml/content_create.fxml")
+        SceneSwitcher.switchContent(homeCreateBtn, "/fxml/content_create.fxml")
     }
 
     @FXML
     fun switchToView(event: ActionEvent) {
         println("Switching to view content")
-        SceneSwitcher.switchContent(gotoView, "/fxml/content_view.fxml")
+        SceneSwitcher.switchContent(homeViewBtn, "/fxml/content_view.fxml")
     }
 
     @FXML
     fun switchToGenerate(event: ActionEvent) {
         println("Switching to generate view")
-        // SceneSwitcher.switchContent(gotoGenerate, "/fxml/content_view.fxml")
+        // SceneSwitcher.switchContent(homeGenerateBtn, "/fxml/content_view.fxml")
     }
 
 }

@@ -21,13 +21,13 @@
             </DropShadow>
          </effect>
       </Rectangle>
-      <ChoiceBox fx:id="selectFlockChoiceBox" layoutX="123.0" layoutY="181.0" prefHeight="43.0" prefWidth="354.0" style="-fx-background-color: fefae0; -fx-background-radius: 10;" />
+      <ChoiceBox fx:id="viewSelectFlockChoiceBox" layoutX="123.0" layoutY="181.0" prefHeight="43.0" prefWidth="354.0" style="-fx-background-color: fefae0; -fx-background-radius: 10;" />
       <Text fx:id="selectFlockLbl" fill="#8f250c" layoutX="214.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Flock">
          <font>
             <Font name="HelveticaNowDisplay-Bold" size="31.0" />
          </font>
       </Text>
-      <Button fx:id="confirmFlockBtn" layoutX="260.0" layoutY="265.0" mnemonicParsing="false" onAction="#switchToViewFlockDetails" prefHeight="25.0" prefWidth="82.0" text="Confirm">
+      <Button fx:id="viewConfirmBtn" layoutX="260.0" layoutY="265.0" mnemonicParsing="false" onAction="#switchToViewFlockDetails" prefHeight="25.0" prefWidth="82.0" text="Confirm">
          <font>
             <Font name="HelveticaNowDisplay-Bold" size="13.0" />
          </font></Button>

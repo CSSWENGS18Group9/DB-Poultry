@@ -17,20 +17,21 @@ import javafx.scene.control.TextField
 class LoginController {
 
     @FXML
-    private lateinit var btnSample: Button
+    private lateinit var loginTitleText: Text
 
     @FXML
-    private lateinit var textSample: Text
+    private lateinit var passwordTextField: TextField
 
     @FXML
-    private lateinit var tfPassword: TextField
+    private lateinit var usernameTextField: TextField
 
     @FXML
-    private lateinit var tfUN: TextField
+    private lateinit var signInBtn: Button
     
     @FXML
-    fun switchToHome() {
-        SceneSwitcher.switchTo(btnSample, "/fxml/main_layout.fxml")
+    fun switchToHome(event: ActionEvent) {
+        println("Switching to home view")
+        SceneSwitcher.switchTo(signInBtn, "/fxml/main_layout.fxml")
     }
 
 }

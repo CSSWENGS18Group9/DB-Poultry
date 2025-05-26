@@ -11,17 +11,17 @@ import javafx.scene.text.Text
 class ViewController {
 
     @FXML
-    private lateinit var confirmFlockBtn: Button
-
-    @FXML
-    private lateinit var selectFlockChoiceBox: ChoiceBox<Any>
+    private lateinit var viewSelectFlockChoiceBox: ChoiceBox<Any>
 
     @FXML
     private lateinit var selectFlockLbl: Text
 
     @FXML
+    private lateinit var viewConfirmBtn: Button
+
+    @FXML
     fun switchToViewFlockDetails() {
         println("Switching to view flock details")
-        SceneSwitcher.switchContent(confirmFlockBtn, "/fxml/content_view_flock_details.fxml")
+        SceneSwitcher.switchContent(viewConfirmBtn, "/fxml/content_view_flock_details.fxml")
     }
 }
