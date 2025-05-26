@@ -9,6 +9,13 @@ import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 public class GetCumulativeDepletedCount {
 
+    /**
+     * Returns the total depleted count from a specified Flock ID
+     *
+     * @param connect  the Connection thing with SQL
+     * @param flockID  the flock ID this poultry is connected to
+     * @return an Int which is the total depleted count
+     */
     public static int cumulativeDepletedCount(Connection connect, int flockID) {
         String incompleteQuery = "SELECT SUM(Depleted_Count) AS Total_Count_Depleted FROM Flock_Details WHERE Flock_ID = ?"; // Query to be used in preparedStatement
 
