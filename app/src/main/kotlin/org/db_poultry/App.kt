@@ -90,7 +90,7 @@ fun main() {
     app.start()
 
     // Open MainFrame (index GUI)
-//    app.openMainFrame()
+    //    app.openMainFrame()
 
     // Sample run
     cleanTables(app.getConnection())
@@ -101,15 +101,28 @@ fun main() {
 
     // insert record
     CreateFlock.createFlock(app.getConnection(), 100, date)
-    CreateFlockDetails.createFlockDetails(app.getConnection(), 1, date, 99)
 
-    // check if record exists
-    val allByDate = ReadFlock.allByDate(app.getConnection())
-    val record = allByDate[date] // get the one with date
+    CreateFlock.createFlock(app.getConnection(), 999, java.sql.Date.valueOf(java.time.LocalDate.now()))
+
     // 1
     println(recordFlockDetails(app.getConnection(), date, Date.valueOf("1001-10-10"), 2))
     // 0 (flockSelected not found)
     println(recordFlockDetails(app.getConnection(), Date.valueOf("1001-10-10"), Date.valueOf("1001-10-10"), 2))
     // 0 (depletedCount > startingCount)
-    println(recordFlockDetails(app.getConnection(), date, Date.valueOf("1001-10-10"), 99999))
+    println(recordFlockDetails(app.getConnection(), date, Date.valueOf("1001-10-11"), 99999))
+
+    // 1 (uses second flock)
+    println(
+        recordFlockDetails(
+            app.getConnection(),
+            java.sql.Date.valueOf(java.time.LocalDate.now()),
+            Date.valueOf("1001-10-13"),
+            0
+        )
+    )
+    // 1 (uses second flock)
+    println(recordFlockDetails(app.getConnection(), null, Date.valueOf("1001-10-12"), 0))
+    // 1 (uses second flock)
+    println(recordFlockDetails(app.getConnection(), null, null, 0))
+
 }
