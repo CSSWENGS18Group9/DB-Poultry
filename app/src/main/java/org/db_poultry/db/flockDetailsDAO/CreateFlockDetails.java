@@ -19,12 +19,6 @@ public class CreateFlockDetails {
      * @return a String which is the query with filled-in values
      */
     public static String createFlockDetails(Connection connect, int flockID, Date date, int depleted) {
-        //🤡
-        if (depleted < 0) {
-            generateErrorMessage("Error in `createFlockDetails()`.", "Depleted amount is less than 0.", "", null);
-            return null;
-        }
-
         String completeQuery = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (" + flockID + ", " + date + ", " + depleted + ")"; // Query filled in to be returned
         String incompleteQuery = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (?, ?, ?)"; // Query to be used in preparedStatement
 
