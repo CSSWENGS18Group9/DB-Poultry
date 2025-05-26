@@ -1,4 +1,4 @@
-package org.db_poultry.db.flock_detailsDAO;
+package org.db_poultry.db.flockDetailsDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,13 +7,13 @@ import java.sql.SQLException;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
-public class GetCumulativeDepletedCount {
+public class DepletedCount {
 
     /**
      * Returns the total depleted count from a specified Flock ID
      *
-     * @param connect  the Connection thing with SQL
-     * @param flockID  the flock ID this poultry is connected to
+     * @param connect the Connection thing with SQL
+     * @param flockID the flock ID this poultry is connected to
      * @return an Int which is the total depleted count
      */
     public static int cumulativeDepletedCount(Connection connect, int flockID) {

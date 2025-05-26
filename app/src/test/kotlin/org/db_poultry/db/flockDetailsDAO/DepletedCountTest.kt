@@ -1,13 +1,13 @@
-package org.db_poultry.db.flock_detailsDAO
+package org.db_poultry.db.flockDetailsDAO
 
 import org.db_poultry.App
 import org.db_poultry.db.DBConnect
-import org.db_poultry.db.flockDAO.CreateFlock
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.db_poultry.db.cleanTables
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.sql.Date
 
-class GetCumulativeDepletedCountTest {
+class DepletedCountTest {
 
     private var jdbcURL: String
     private var conn: DBConnect
@@ -19,6 +19,8 @@ class GetCumulativeDepletedCountTest {
 
         jdbcURL = "jdbc:postgresql://localhost:${app.databasePort}/${app.databaseName}"
         conn = DBConnect(jdbcURL, app.databaseName, app.databasePass)
+
+        cleanTables(conn.getConnection())
     }
 
     @Test
@@ -31,7 +33,7 @@ class GetCumulativeDepletedCountTest {
         CreateFlockDetails.createFlockDetails(conn.getConnection(), 2, dateTwo, 10)
         CreateFlockDetails.createFlockDetails(conn.getConnection(), 2, dateThree, 15)
 
-        val result = GetCumulativeDepletedCount.cumulativeDepletedCount(conn.getConnection(), 2)
-        assertEquals(30, result)
+        val result = DepletedCount.cumulativeDepletedCount(conn.getConnection(), 2)
+        Assertions.assertEquals(30, result)
     }
 }
