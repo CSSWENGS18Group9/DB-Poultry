@@ -2,8 +2,10 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -12,15 +14,62 @@
     <left>
         <VBox prefHeight="281.0" prefWidth="116.0" spacing="10" style="-fx-background-color: #FEFAE0; -fx-padding: 10; -fx-border-color: #606C38; -fx-border-image-width: 3;">
             <Label style="-fx-font-weight: bold;" text="Navigation" />
-            <Button fx:id="sidebarHomeBtn" alignment="CENTER" onAction="#navigateToHome" prefHeight="57.0" prefWidth="118.0" text="Home" />
-            <Button fx:id="sidebarCreateBtn" onAction="#navigateToCreate" prefHeight="57.0" prefWidth="174.0" text="Create" />
-            <Button fx:id="sidebarViewBtn" onAction="#navigateToView" prefHeight="55.0" prefWidth="218.0" text="View" />
-            <Button fx:id="sidebarGenerateBtn" layoutX="20.0" layoutY="120.0" prefHeight="68.0" prefWidth="473.0" text="Generate" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="182.0" stroke="TRANSPARENT" strokeType="INSIDE" width="93.0" />
-         <Label fx:id="sideBarDateLabel" alignment="CENTER" prefHeight="30.0" prefWidth="102.0" style="-fx-background-color: white;" text="Label" textAlignment="CENTER">
+            <Button fx:id="sidebarHomeBtn" alignment="TOP_RIGHT" onAction="#navigateToHome" prefHeight="57.0" prefWidth="118.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="Home">
+            <effect>
+               <DropShadow offsetY="1.5">
+                  <color>
+                     <Color opacity="0.4000000059604645" />
+                  </color>
+               </DropShadow>
+            </effect>
             <font>
-               <Font size="18.0" />
-            </font></Label>
+               <Font name="HelveticaNowDisplay-Bold" size="12.0" />
+            </font></Button>
+            <Button fx:id="sidebarCreateBtn" alignment="TOP_RIGHT" onAction="#navigateToCreate" prefHeight="57.0" prefWidth="174.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="Create">
+            <effect>
+               <DropShadow offsetY="1.5">
+                  <color>
+                     <Color opacity="0.4000000059604645" />
+                  </color>
+               </DropShadow>
+            </effect>
+            <font>
+               <Font name="HelveticaNowDisplay-Bold" size="12.0" />
+            </font></Button>
+            <Button fx:id="sidebarViewBtn" alignment="TOP_RIGHT" onAction="#navigateToView" prefHeight="55.0" prefWidth="218.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="View">
+            <effect>
+               <DropShadow offsetY="1.5">
+                  <color>
+                     <Color opacity="0.4000000059604645" />
+                  </color>
+               </DropShadow>
+            </effect>
+            <font>
+               <Font name="HelveticaNowDisplay-Bold" size="12.0" />
+            </font></Button>
+            <Button fx:id="sidebarGenerateBtn" alignment="TOP_RIGHT" layoutX="20.0" layoutY="120.0" prefHeight="68.0" prefWidth="473.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="Generate" textAlignment="RIGHT">
+            <effect>
+               <DropShadow offsetY="1.5">
+                  <color>
+                     <Color opacity="0.4000000059604645" />
+                  </color>
+               </DropShadow>
+            </effect>
+            <font>
+               <Font name="HelveticaNowDisplay-Bold" size="11.0" />
+            </font></Button>
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="182.0" stroke="TRANSPARENT" strokeType="INSIDE" width="93.0" />
+         <Label fx:id="sideBarDateLabel" alignment="CENTER" prefHeight="30.0" prefWidth="102.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="Label" textAlignment="CENTER">
+            <font>
+               <Font name="HelveticaNowDisplay-Bold" size="14.0" />
+            </font>
+            <effect>
+               <DropShadow offsetY="1.5">
+                  <color>
+                     <Color opacity="0.4000000059604645" />
+                  </color>
+               </DropShadow>
+            </effect></Label>
         </VBox>
     </left>
     
