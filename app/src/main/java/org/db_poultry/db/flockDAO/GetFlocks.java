@@ -10,7 +10,7 @@ import java.util.function.Function;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
-public class ViewFlock {
+public class GetFlocks {
 
     /**
      * A query that gets all the information and all records in the Flock table. Used in allByID and allByDate.
