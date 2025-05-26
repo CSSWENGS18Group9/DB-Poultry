@@ -98,7 +98,7 @@ class CreateFlockDetailsTest {
         CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateTwo, 10)
         val result = CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateThree, 15)
 
-        Assertions.assertNull(result)
+        assertNull(result)
     }
 }
 
