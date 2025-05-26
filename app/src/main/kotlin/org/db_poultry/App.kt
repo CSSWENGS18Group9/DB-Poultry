@@ -2,12 +2,11 @@ package org.db_poultry
 
 import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
-import org.db_poultry.*
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
-import org.db_poultry.db.flock.CreateFlock
-import org.db_poultry.db.flock.ViewFlock
-import org.db_poultry.db.flock_details.CreateFlockDetails
+import org.db_poultry.db.flockDAO.CreateFlock
+import org.db_poultry.db.flockDAO.ViewFlock
+import org.db_poultry.db.flock_detailsDAO.CreateFlockDetails
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.gui.MainFrame
 import java.sql.Connection

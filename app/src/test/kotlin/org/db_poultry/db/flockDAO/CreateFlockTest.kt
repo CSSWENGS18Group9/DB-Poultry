@@ -1,4 +1,4 @@
-package org.db_poultry.db.flock
+package org.db_poultry.db.flockDAO
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*

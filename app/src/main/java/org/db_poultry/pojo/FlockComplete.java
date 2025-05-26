@@ -1,4 +1,4 @@
-package org.db_poultry.db.pojo;
+package org.db_poultry.pojo;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,8 @@
-package org.db_poultry.db.flock;
+package org.db_poultry.db.flockDAO;
 
-import org.db_poultry.db.pojo.Flock;
-import org.db_poultry.db.pojo.FlockComplete;
-import org.db_poultry.db.pojo.FlockDetails;
+import org.db_poultry.pojo.Flock;
+import org.db_poultry.pojo.FlockComplete;
+import org.db_poultry.pojo.FlockDetails;
 
 import java.sql.*;
 import java.util.HashMap;
