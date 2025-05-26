@@ -2,11 +2,12 @@ package org.db_poultry
 
 import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
+import org.db_poultry.controller.recordFlockDetails
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import org.db_poultry.db.flockDAO.CreateFlock
-import org.db_poultry.db.flockDAO.ViewFlock
-import org.db_poultry.db.flock_detailsDAO.CreateFlockDetails
+import org.db_poultry.db.flockDAO.GetFlocks
+import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.gui.MainFrame
 import java.sql.Connection
@@ -100,14 +101,7 @@ fun main() {
     CreateFlockDetails.createFlockDetails(app.getConnection(), 1, date, 99)
 
     // check if record exists
-    val allByDate = ViewFlock.allByDate(app.getConnection())
+    val allByDate = GetFlocks.allByDate(app.getConnection())
     val record = allByDate[date] // get the one with date
-
-    if (record != null) {
-        println(record.flock)
-        println("==========")
-        println(record.flockDetails)
-    } else{
-        println("Not Found")
-    }
+    recordFlockDetails(app.getConnection(), Date.valueOf("1001-10-10"))
 }
