@@ -4,6 +4,7 @@ import org.db_poultry.App
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import org.db_poultry.db.flockDAO.CreateFlock
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
@@ -83,6 +84,21 @@ class CreateFlockDetailsTest {
 
         val result = CreateFlockDetails.createFlockDetails(conn.getConnection(), 1000, date, 1)
         assertNull(result)
+    }
+
+    @Test
+    fun testCreateFlockDetailsWithDepletedCountOverStartCount() {
+        val dateOne = Date.valueOf("1000-08-01")
+        val dateTwo = Date.valueOf("1000-09-01")
+        val dateThree = Date.valueOf("1000-10-01")
+
+        CreateFlock.createFlock(conn.getConnection(), 15, dateOne)
+
+        CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateTwo, 10)
+        val result = CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateThree, 15)
+
+        Assertions.assertNull(result)
     }
 }
 
