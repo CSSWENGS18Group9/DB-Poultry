@@ -20,7 +20,7 @@ public class DepletedCount {
      * @param flockID the flock ID this poultry is connected to
      * @return an Int which is the total depleted count
      */
-    public static int cumulativeDepletedCount(Connection connect, int flockID) {
+    public static int getCumulativeDepletedCount(Connection connect, int flockID) {
         String incompleteQuery = "SELECT SUM(Depleted_Count) AS Total_Count_Depleted FROM Flock_Details WHERE Flock_ID = ?"; // Query to be used in preparedStatement
 
         HashMap<Integer, FlockComplete> flocks = ReadFlock.allByID(connect);

@@ -36,7 +36,7 @@ class DepletedCountTest {
         CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateTwo, 10)
         CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateThree, 15)
 
-        val result = DepletedCount.cumulativeDepletedCount(conn.getConnection(), 1)
+        val result = DepletedCount.getCumulativeDepletedCount(conn.getConnection(), 1)
         Assertions.assertEquals(30, result)
     }
 
@@ -52,7 +52,7 @@ class DepletedCountTest {
         CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateTwo, 10)
         CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateThree, 15)
 
-        val result = DepletedCount.cumulativeDepletedCount(conn.getConnection(), 1)
+        val result = DepletedCount.getCumulativeDepletedCount(conn.getConnection(), 1)
         Assertions.assertEquals(15, result)
     }
 }
