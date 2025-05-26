@@ -1,9 +1,13 @@
 package org.db_poultry.db.flockDetailsDAO;
 
+import org.db_poultry.db.flockDAO.ReadFlock;
+import org.db_poultry.pojo.FlockComplete;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
@@ -24,6 +28,21 @@ public class CreateFlockDetails {
             generateErrorMessage("Error in `createFlockDetails()`.", "Depleted amount is less than 0.", "", null);
             return null;
         }
+
+        else if((flockID < 1) || (date == null)) {
+            return null;
+        }
+
+        HashMap<Integer, FlockComplete> flocks = ReadFlock.allByID(connect);
+        try{
+            FlockComplete flockChosen = flocks.get(flockID);
+            int flockStartingCount = flockChosen.getFlock().getStartingCount();
+
+            if ((DepletedCount.cumulativeDepletedCount(connect, flockID) + depleted) > flockStartingCount) {
+                return null;
+            }
+        } catch (NullPointerException e) {}
+
 
         String completeQuery = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (" + flockID + ", " + date + ", " + depleted + ")"; // Query filled in to be returned
         String incompleteQuery = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (?, ?, ?)"; // Query to be used in preparedStatement
