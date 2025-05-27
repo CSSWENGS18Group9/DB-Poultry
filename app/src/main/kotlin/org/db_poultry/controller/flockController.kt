@@ -9,7 +9,7 @@ import java.sql.Date
 fun recordFlock(connection: Connection?, startCount: Int, inputDate: Date?): Int {
     if (connection == null) {
         generateErrorMessage(
-            "Error at `recordFlock()` in `flockDetailsController`.",
+            "Error at `recordFlock()` in `flockController`.",
             "Connection is null",
             "Ensure that the connection has been established."
         )
@@ -18,7 +18,7 @@ fun recordFlock(connection: Connection?, startCount: Int, inputDate: Date?): Int
 
     if (startCount <= 0) {
         generateErrorMessage(
-            "Error at `recordFlock()` in `flockDetailsController`.",
+            "Error at `recordFlock()` in `flockController`.",
             "Invalid starting count: $startCount",
             "Starting count must be greater than 0."
         )
@@ -33,7 +33,7 @@ fun recordFlock(connection: Connection?, startCount: Int, inputDate: Date?): Int
     if (flocksByDate.containsKey(startDate)) {
         // check if a flock with the same starting date already exists
         generateErrorMessage(
-            "Error at `recordFlock()` in `flockDetailsController`.",
+            "Error at `recordFlock()` in `flockController`.",
             "Duplicate starting date: $startDate",
             "A flock already exists for this date."
         )

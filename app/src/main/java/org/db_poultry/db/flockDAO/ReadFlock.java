@@ -32,11 +32,11 @@ public class ReadFlock {
                 // Flock columns
                 int flockId = rs.getInt("flock_id");
                 int startingCount = rs.getInt("starting_count");
-                Timestamp startingDate = rs.getTimestamp("starting_date");
+                Date startingDate = rs.getDate("starting_date");
 
                 // Flock Details columns
                 int fdId = rs.getInt("flock_details_id");
-                Timestamp fdDate = rs.getTimestamp("fd_date");
+                Date fdDate = rs.getDate("fd_date");
                 int depletedCount = rs.getInt("depleted_count");
 
                 Flock flock = new Flock(flockId, startingCount, startingDate);
