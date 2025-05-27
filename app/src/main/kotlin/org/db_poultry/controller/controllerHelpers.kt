@@ -28,7 +28,7 @@ fun <K> validateAndRead(
         return null
     }
 
-    return flocks
+    return flocks;
 }
 
 fun validateAndReadByID(connection: Connection?) =
