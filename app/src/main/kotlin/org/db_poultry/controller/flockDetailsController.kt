@@ -2,6 +2,7 @@ package org.db_poultry.controller
 
 import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
 import org.db_poultry.db.flockDetailsDAO.DepletedCount
+import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
 import org.db_poultry.pojo.FlockComplete
 import java.sql.Connection
 
@@ -44,6 +45,18 @@ fun recordFlockDetails(
         // if it would, reject the input to prevent invalid data
         return 0
     }
+
+    val recentFD = ReadFlockDetails.getMostRecent(connection,flockSelectedDate)
+    val recentFDdate: java.sql.Date = recentFD.fdDate
+
+    if (recentFDdate.compareTo(detailDate) >= 0) {
+        // check if the date for the flock_detail is before or the exact date as the recent flock detail in the db
+        return 0
+    }
+
+
+
+
 
 
     // FIXME: add more input validations here
