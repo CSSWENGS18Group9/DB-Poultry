@@ -6,6 +6,7 @@ import org.db_poultry.pojo.FlockDetails;
 
 import java.sql.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Function;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
@@ -73,6 +74,38 @@ public class ReadFlock {
      */
     public static HashMap<Date, FlockComplete> allByDate(Connection con) {
         return queryAll(con, flock -> new Date(flock.getStartingDate().getTime()));
+    }
+
+    public static Flock getFlockFromDate(Connection conn, Date startDate){
+        String incompleteQuery = "SELECT * FROM Flock WHERE Starting_Date = ?"; // Query to be used in preparedStatement
+
+        try {
+            PreparedStatement preppedStatement = conn.prepareStatement(incompleteQuery); // preparedStatement for SQL stuff
+
+            // Sets the values to be added
+            preppedStatement.setDate(1, startDate);
+
+            ResultSet result = preppedStatement.executeQuery(); // Executes query and stores it into a ResultSet
+
+            while (result.next()) { // Gets results per row from the SQL output
+                int flockID = result.getInt("Flock_ID"); // Gets the output from the column named Flock_ID
+                int startingCount = result.getInt("Starting_Count"); // Gets the output from the column named Starting_Count
+                Date startingDate = result.getDate("Starting_Date"); // Gets the output from the column named Starting_Date
+
+                Flock returnedFlock = new Flock(flockID, startingCount, startingDate); // Creates a flock object to be returned
+
+                result.close(); // CLoses result
+                preppedStatement.close(); // Closes preparedStatement
+
+                return returnedFlock; // Returns the total depleted count
+            }
+
+            return null;
+
+        } catch (SQLException e) {
+            generateErrorMessage("Error in `getFlockFromDate()`.", "SQLException occurred.", "", e);
+            return null;
+        }
     }
 }
 
