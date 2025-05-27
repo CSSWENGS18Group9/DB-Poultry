@@ -1,6 +1,7 @@
 package org.db_poultry.Controller
 
 import org.db_poultry.Util.SceneSwitcher
+import org.db_poultry.Util.GeneralUtil
 
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
@@ -38,38 +39,17 @@ class HomeController {
 
     @FXML
     private fun navigateToHome() {
-        loadContentView("/fxml/content_home.fxml")
+        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home.fxml")
     }
     
     @FXML
     private fun navigateToCreate() {
-        loadContentView("/fxml/content_create.fxml")
+        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_create.fxml")
     }
     
     @FXML
     private fun navigateToView() {
-        loadContentView("/fxml/content_view.fxml")
+        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_view.fxml")
     }
-
-    private fun loadContentView(fxmlPath: String) {
-        try {
-            val loader = FXMLLoader(javaClass.getResource(fxmlPath))
-            // loader.controllerFactory = ControllerManager.controllerFactory
-            val view = loader.load<Parent>()
-            
-            homeAnchorPane.children.clear()
-            homeAnchorPane.children.add(view)
-            
-            // Set AnchorPane constraints to fill the entire area
-            AnchorPane.setTopAnchor(view, 0.0)
-            AnchorPane.setRightAnchor(view, 0.0)
-            AnchorPane.setBottomAnchor(view, 0.0)
-            AnchorPane.setLeftAnchor(view, 0.0)
-            
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
 
 }
