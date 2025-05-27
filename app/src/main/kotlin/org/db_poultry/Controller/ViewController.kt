@@ -22,6 +22,6 @@ class ViewController {
     @FXML
     fun switchToViewFlockDetails() {
         println("Switching to view flock details")
-        SceneSwitcher.switchContent(viewConfirmBtn, "/fxml/content_view_flock_details.fxml")
+        
     }
 }

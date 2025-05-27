@@ -6,7 +6,6 @@ import javafx.scene.Scene
 import javafx.stage.Stage
 import javafx.scene.Node
 
-import javafx.scene.layout.BorderPane
 
 
 /**
@@ -21,8 +20,7 @@ import javafx.scene.layout.BorderPane
 object SceneSwitcher {
     /**
      * Switches the entire scene (use only for login/logout screens).
-     * WARNING: This will remove the sidebar. For navigation within the main app,
-     * use switchContent() instead.
+     * WARNING: This will remove the sidebar.
      */
     fun switchTo(node: Node, fxml: String) {
         try {
@@ -30,6 +28,10 @@ object SceneSwitcher {
             val loader = FXMLLoader(javaClass.getResource(fxml))
             loader.controllerFactory = ControllerManager.controllerFactory
             val root: Parent = loader.load()
+            
+            val controller = loader.getController<Any>()
+            println("Controller for $fxml: ${controller.javaClass.name} (${System.identityHashCode(controller)})")
+            
             stage.scene = Scene(root)
         } catch (e: Exception) {
             println("Error switching scene: ${e.message}")

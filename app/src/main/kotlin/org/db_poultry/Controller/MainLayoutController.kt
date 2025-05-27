@@ -71,10 +71,16 @@ class MainLayoutController : Initializable {
 
     private fun loadContentView(fxmlPath: String) {
         try {
+            println("Loading content view: $fxmlPath")
+
             val loader = FXMLLoader(javaClass.getResource(fxmlPath))
-            // loader.controllerFactory = ControllerManager.controllerFactory
+            loader.controllerFactory = ControllerManager.controllerFactory
             val view = loader.load<Parent>()
             
+            // DEBUGGING
+            val controller = loader.getController<Any>()
+            println("Controller for $fxmlPath: ${controller.javaClass.name} (${System.identityHashCode(controller)})")
+
             contentAnchorPane.children.clear()
             contentAnchorPane.children.add(view)
             
