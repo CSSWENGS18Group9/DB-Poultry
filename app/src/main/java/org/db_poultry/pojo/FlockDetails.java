@@ -1,6 +1,7 @@
 package org.db_poultry.pojo;
 
-import java.sql.Timestamp;
+import java.sql.Date;
+import java.sql.Date;
 
 /**
  * this is a pojo for the Flock Details table
@@ -8,7 +9,7 @@ import java.sql.Timestamp;
 public class FlockDetails {
     private final int flockDetailsId;
     private final int flockId;
-    private final Timestamp fdDate;
+    private final Date fdDate;
     private final int depletedCount;
 
     /**
@@ -19,7 +20,7 @@ public class FlockDetails {
      * @param fdDate         the date of the flock details
      * @param depletedCount  the depleted count of the flock (number of chickens dead)
      */
-    public FlockDetails(int flockDetailsId, int flockId, Timestamp fdDate, int depletedCount) {
+    public FlockDetails(int flockDetailsId, int flockId, Date fdDate, int depletedCount) {
         this.flockDetailsId = flockDetailsId;
         this.flockId = flockId;
         this.fdDate = fdDate;
@@ -49,7 +50,7 @@ public class FlockDetails {
      *
      * @return flock details date
      */
-    public Timestamp getFdDate() {
+    public Date getFdDate() {
         return fdDate;
     }
 

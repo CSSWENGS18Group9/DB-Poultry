@@ -1,6 +1,6 @@
 package org.db_poultry.pojo;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 /**
  * this is a pojo for the Flock table
@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 public class Flock {
     private final int flockId;
     private final int startingCount;
-    private final Timestamp startingDate;
+    private final Date startingDate;
 
     /**
      * constructor for the flock
@@ -16,7 +16,7 @@ public class Flock {
      * @param flockId      the id of the flock
      * @param startingDate the starting date of the flock
      */
-    public Flock(int flockId, int startingCount, Timestamp startingDate) {
+    public Flock(int flockId, int startingCount, Date startingDate) {
         this.flockId = flockId;
         this.startingCount = startingCount;
         this.startingDate = startingDate;
@@ -45,7 +45,7 @@ public class Flock {
      *
      * @return starting date
      */
-    public Timestamp getStartingDate() {
+    public Date getStartingDate() {
         return startingDate;
     }
 }

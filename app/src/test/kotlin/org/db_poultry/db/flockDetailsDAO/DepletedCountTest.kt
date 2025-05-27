@@ -25,7 +25,7 @@ class DepletedCountTest {
     }
 
     @Test
-    fun testDepletedCount() {
+    fun testDepletedCountValidInput() {
         val dateOne = Date.valueOf("1000-05-01")
         val dateTwo = Date.valueOf("1000-06-01")
         val dateThree = Date.valueOf("1000-07-01")
