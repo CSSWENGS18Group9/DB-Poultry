@@ -21,6 +21,9 @@ class Sample : Application() {
             val scene = Scene(root)
             primaryStage.scene = scene
             primaryStage.title = "JavaFX SceneBuilder Demo"
+
+            
+
             primaryStage.show()
 
             println("JavaFX application started successfully.")
