@@ -25,10 +25,6 @@ gradle-app.setting
 # Ignore Gradle build output directory
 build
 
-# Environment file
-app/.env
-.env
-
 # VS Code
 .vscode/
 .kotlin/

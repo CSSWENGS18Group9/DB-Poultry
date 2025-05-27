@@ -1,10 +1,8 @@
-package org.db_poultry.gui
+package org.db_poultry.GUI
 
 import org.db_poultry.Util.ControllerManager
 
 import javafx.application.Application
-import javafx.scene.Scene
-import javafx.stage.Stage
 import javafx.fxml.FXMLLoader
 import javafx.stage.Stage
 import javafx.scene.Parent
@@ -12,8 +10,7 @@ import javafx.scene.Scene
 
 import javafx.scene.text.Font
 
-
-class MainFrame : Application() {
+class Sample : Application() {
     override fun start(primaryStage: Stage) {
         loadCustomFonts()
 
