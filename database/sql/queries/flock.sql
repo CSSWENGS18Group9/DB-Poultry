@@ -12,7 +12,5 @@ SELECT f.flock_id,
        fd.fd_date,
        fd.depleted_count
 FROM Flock f
-         INNER JOIN
-     Flock_Details fd
-     ON
-         f.flock_id = fd.flock_id
+         INNER JOIN Flock_Details fd
+                    ON f.flock_id = fd.flock_id
