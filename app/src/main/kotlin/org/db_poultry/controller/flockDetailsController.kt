@@ -71,6 +71,16 @@ fun recordFlockDetails(
         return 0
     }
 
+    val flockSelectedDate = flockSelected.flock.startingDate
+    if (flockSelectedDate.compareTo(detailDate) > 0) {
+        generateErrorMessage("Error at 'recordFlockDetails()' in 'flockDetailsController'.",
+            "Date $detailDate happens before the flock was entered in the Database $flockSelectedDate",
+            "Use a date that happens after the most recent flock detail."
+        )
+        // check if the date for the flock_detail is before the flock was entered in the Database
+        return 0
+    }
+
     // FIXME: add more input validations here
     // i don't think there's any more inputs that could be checked
 
