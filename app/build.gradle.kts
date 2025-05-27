@@ -8,9 +8,8 @@
 plugins {
     application
     kotlin("jvm") version "2.1.10"
-    id("org.openjfx.javafxplugin") version "0.1.0"
     java
- 
+
 }
 
 group = "org.example"
@@ -28,11 +27,6 @@ val platform = when (System.getProperty("os.name").lowercase()) {
     else -> "win"
 }
 
-javafx {
-    version = "17.0.2"
-    modules = listOf("javafx.controls", "javafx.fxml")
-}
-
 dependencies {
     // Add any other dependencies here
     // Put the dependency below the comment where that dependency 
@@ -48,25 +42,21 @@ dependencies {
     // If unsure, message @zrygan
 
     // Dependencies for Dev
-    // Dependencies for Kotlin
-    // Kotlin STDLIB
-    implementation(kotlin("stdlib"))
-    testImplementation(kotlin("test"))
-
-
-    // Dependencies for UI/UX
-    // val javafxModules = listOf("base", "graphics", "controls", "fxml")
-
-    // javafxModules.forEach {
-    //     implementation("org.openjfx:javafx-$it:$javafxVersion:$platform")
-    // }
-
-    // Dependencies for Database
-    // PostgreSQL
-    implementation("org.postgresql:postgresql:42.7.3")
-
     // Kotlin
     implementation(kotlin("stdlib"))
+
+    // Dependencies for UI/UX
+    val javafxModules = listOf("base", "graphics", "controls", "fxml")
+    javafxModules.forEach {
+        implementation("org.openjfx:javafx-$it:$javafxVersion:$platform")
+    }
+
+    // Dependencies for Database
+    // PostgresSQL
+    implementation("org.postgresql:postgresql:42.7.3")
+
+    // Dot Env (.env file)
+    implementation("io.github.cdimascio:dotenv-java:3.0.0")
 
     // Dependencies for QA
     // JUnit 
