@@ -18,13 +18,21 @@ class Sample : Application() {
             val loader = FXMLLoader(javaClass.getResource("/fxml/login.fxml"))
             loader.controllerFactory = ControllerManager.controllerFactory
             val root = loader.load<Parent>()
-            val scene = Scene(root)
-            primaryStage.scene = scene
-            primaryStage.title = "JavaFX SceneBuilder Demo"
+            val mainScene = Scene(root)
 
-            
+            primaryStage.apply {
+                scene = mainScene
+                title = "DB Poultry"
 
-            primaryStage.show()
+                setMinWidth(600.0)
+                setMinHeight(400.0)
+
+                // setMaxWidth(600.0)
+                // setMaxHeight(400.0)
+
+                // setResizable(false)
+                show()
+            }
 
             println("JavaFX application started successfully.")
         } catch (e: Exception) {
