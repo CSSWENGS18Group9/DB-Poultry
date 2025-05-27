@@ -24,7 +24,7 @@
             <Font name="HelveticaNowDisplay-Bold" size="36.0" />
          </font>
       </Text>
-      <Button layoutX="165.0" layoutY="165.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="270.0" style="-fx-background-color: white; -fx-background-radius: 15px;" text="Create New Flock" textFill="#8f250c">
+      <Button layoutX="165.0" layoutY="165.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="270.0" style="-fx-background-color: white; -fx-background-radius: 15px;" text="Create New Flock" textFill="#8f250c" onAction="#navigateToCreateNewFlock">
          <font>
             <Font name="HelveticaNowDisplay-Bold" size="22.0" />
          </font>
@@ -36,7 +36,7 @@
             </DropShadow>
          </effect>
       </Button>
-      <Button layoutX="165.0" layoutY="263.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="270.0" style="-fx-background-color: white; -fx-background-radius: 15px;" text="Create Flock Details" textFill="#8f250c">
+      <Button layoutX="165.0" layoutY="263.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="270.0" style="-fx-background-color: white; -fx-background-radius: 15px;" text="Create Flock Details" textFill="#8f250c" onAction="#navigateToCreateFlockDetails">
          <font>
             <Font name="HelveticaNowDisplay-Bold" size="22.0" />
          </font>

@@ -9,7 +9,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FEFAE0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle fx:id="shapeBg" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="310.0" layoutX="35.0" layoutY="45.0" stroke="TRANSPARENT" strokeType="INSIDE" width="530.0">
@@ -21,7 +20,7 @@
             </DropShadow>
          </effect>
       </Rectangle>
-      <Text fx:id="textHeader" fill="#8f250c" layoutX="135.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create New Flock" textAlignment="CENTER" wrappingWidth="328.126953125">
+      <Text fx:id="textHeader" fill="#8f250c" layoutX="123.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Flock Details" textAlignment="CENTER" wrappingWidth="353.7269287109375">
          <font>
             <Font name="HelveticaNowDisplay-Bold" size="36.0" />
          </font>
