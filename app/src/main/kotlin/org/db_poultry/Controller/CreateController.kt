@@ -1,7 +1,5 @@
 package org.db_poultry.Controller
 
-import org.db_poultry.Util.GeneralUtil
-
 import javafx.fxml.FXML
 import javafx.scene.layout.AnchorPane
 import javafx.scene.text.Text
@@ -22,11 +20,32 @@ class CreateController {
 
     @FXML
     private fun navigateToCreateFlockDetails() {
-        GeneralUtil.loadContentView(anchorPaneCreate, "/fxml/content_createFlockDetails.fxml")
+        loadContentView("/fxml/content_createFlockDetails.fxml")
     }
 
     @FXML
     private fun navigateToCreateNewFlock() {
-        GeneralUtil.loadContentView(anchorPaneCreate, "/fxml/content_createNewFlock.fxml")
+        loadContentView("/fxml/content_createNewFlock.fxml")
     }
+
+    private fun loadContentView(fxmlPath: String) {
+        try {
+            val loader = FXMLLoader(javaClass.getResource(fxmlPath))
+            // loader.controllerFactory = ControllerManager.controllerFactory
+            val view = loader.load<Parent>()
+            
+            anchorPaneCreate.children.clear()
+            anchorPaneCreate.children.add(view)
+            
+            // Set AnchorPane constraints to fill the entire area
+            AnchorPane.setTopAnchor(view, 0.0)
+            AnchorPane.setRightAnchor(view, 0.0)
+            AnchorPane.setBottomAnchor(view, 0.0)
+            AnchorPane.setLeftAnchor(view, 0.0)
+            
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
 }
