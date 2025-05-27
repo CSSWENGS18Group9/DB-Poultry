@@ -1,0 +1,30 @@
+package org.db_poultry.Controller
+
+import org.db_poultry.Util.GeneralUtil
+
+import javafx.fxml.FXML
+import javafx.scene.layout.AnchorPane
+import javafx.scene.text.Text
+import javafx.scene.shape.Rectangle
+
+class CreateController {
+
+    @FXML
+    private lateinit var anchorPaneCreate: AnchorPane
+
+    @FXML
+    private lateinit var createHeader: Text
+
+    @FXML
+    private lateinit var insideFrame: Rectangle
+
+    @FXML
+    private fun navigateToCreateFlockDetails() {
+        GeneralUtil.loadContentView(anchorPaneCreate, "/fxml/content_createFlockDetails.fxml")
+    }
+
+    @FXML
+    private fun navigateToCreateNewFlock() {
+        GeneralUtil.loadContentView(anchorPaneCreate, "/fxml/content_createNewFlock.fxml")
+    }
+}
