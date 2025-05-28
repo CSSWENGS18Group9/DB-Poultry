@@ -1,7 +1,6 @@
 package org.db_poultry.pojo;
 
 import java.sql.Date;
-import java.sql.Date;
 
 /**
  * this is a pojo for the Flock Details table
