@@ -88,6 +88,11 @@ public class ReadFlock {
     public static List<Flock> getFlockFromDate(Connection conn, Date startDate, Date endDate) {
         String incompleteQuery = "SELECT * FROM Flock WHERE Starting_Date BETWEEN ? AND ?"; // Query to be used in preparedStatement
 
+        if(startDate.after(endDate)) {
+            generateErrorMessage("Error in `getFlockFromDate()`.", "End date happens before start date.", "", null);
+            return null;
+        }
+
         try {
             PreparedStatement preppedStatement = conn.prepareStatement(incompleteQuery); // preparedStatement for SQL stuff
 
@@ -121,7 +126,7 @@ public class ReadFlock {
     }
 
     /**
-     * Returns a list of flocks between two dates
+     * Returns a list of a flock's flock details between two dates
      *
      * @param conn              the sql connection
      * @param flockDate         the starting date of a flock
@@ -131,6 +136,11 @@ public class ReadFlock {
      */
     public static List<FlockDetails> getFlockDetailsFromDate(Connection conn, Date flockDate, Date fdStartDate, Date fdEndDate) {
         String incompleteQuery = "SELECT * FROM Flock_Details LEFT JOIN Flock ON Flock.Flock_ID = Flock_Details.Flock_ID WHERE (Flock.Starting_Date = ?) AND (Flock_Details.FD_Date BETWEEN ? AND ?)"; // Query to be used in preparedStatement
+
+        if(fdStartDate.after(fdEndDate)) {
+            generateErrorMessage("Error in `getFlockDetailsFromDate()`.", "End date happens before start date.", "", null);
+            return null;
+        }
 
         try {
             PreparedStatement preppedStatement = conn.prepareStatement(incompleteQuery); // preparedStatement for SQL stuff
