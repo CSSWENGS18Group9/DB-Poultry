@@ -1,4 +1,4 @@
-package org.db_poultry.controller
+package org.db_poultry.gui
 
 import javafx.fxml.FXML
 import javafx.scene.text.Text
