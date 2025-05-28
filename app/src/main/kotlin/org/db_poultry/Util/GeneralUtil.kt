@@ -15,7 +15,8 @@ class GeneralUtil {
             try {
                 println("Loading content view: $fxmlPath")
 
-                val loader = FXMLLoader(javaClass.getResource(fxmlPath))
+                val loader = FXMLLoader(GeneralUtil::class.java.getResource(fxmlPath))
+
                 loader.controllerFactory = ControllerManager.controllerFactory
                 val view = loader.load<Parent>()
                 

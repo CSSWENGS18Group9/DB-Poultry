@@ -74,7 +74,7 @@ class ControllerHelpersTest {
         val connection = conn.getConnection()
         cleanTables(connection)
         CreateFlock.createFlock(connection, 100, Date.valueOf("2025-01-01"))
-        val overlap = checkDateInbetween(connection, Date.valueOf("2024-12-31"))
+        val overlap = connection?.let { checkDateInbetween(it, Date.valueOf("2024-12-31")) }
         assertEquals(0, overlap)
     }
 
@@ -83,15 +83,15 @@ class ControllerHelpersTest {
         val connection = conn.getConnection()
         cleanTables(connection)
         CreateFlock.createFlock(connection, 100, Date.valueOf("2025-01-01"))
-        val overlap = checkDateInbetween(connection, Date.valueOf("2025-01-01"))
-        assertTrue(overlap > 0)
+        val overlap = connection?.let { checkDateInbetween(it, Date.valueOf("2025-01-01")) }
+        overlap?.let { assertTrue(it > 0) }
     }
 
     @Test
     fun testCheckDateInbetweenSQLException() {
         val connection = conn.getConnection()
         connection?.close() // force SQLException
-        val overlap = checkDateInbetween(connection, Date.valueOf("2025-01-01"))
+        val overlap = connection?.let { checkDateInbetween(it, Date.valueOf("2025-01-01")) }
         assertEquals(-1, overlap)
     }
 }
