@@ -46,7 +46,7 @@ public class Flock {
      *
      * @return starting date
      */
-    public Timestamp getStartingDate() {
+    public Date getStartingDate() {
         return startingDate;
     }
 }
