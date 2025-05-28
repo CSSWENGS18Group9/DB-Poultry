@@ -7,7 +7,7 @@
 
 plugins {
     application
-    kotlin("jvm") version "2.1.10"
+    kotlin("jvm") version "2.1.21"
     java
 
 }
@@ -29,16 +29,16 @@ val platform = when (System.getProperty("os.name").lowercase()) {
 
 dependencies {
     // Add any other dependencies here
-    // Put the dependency below the comment where that dependency 
+    // Put the dependency below the comment where that dependency
     // belongs
     // Example, we add the JUnit dependency under the header
     // "Dependencies for QA" since JUnit will be used by the QAs
     //
     // Follow the format:
-    //   
+    //
     //      // <name of dependency>
     //      implementation("...")
-    // 
+    //
     // If unsure, message @zrygan
 
     // Dependencies for Dev
@@ -59,7 +59,7 @@ dependencies {
     implementation("io.github.cdimascio:dotenv-java:3.0.0")
 
     // Dependencies for QA
-    // JUnit 
+    // JUnit
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
     testImplementation(kotlin("test"))
 }

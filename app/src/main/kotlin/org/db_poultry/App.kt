@@ -6,6 +6,7 @@ import org.db_poultry.controller.recordFlock
 import org.db_poultry.controller.recordFlockDetails
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
+import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.gui.MainFrame
 import java.sql.Connection
@@ -89,7 +90,6 @@ fun main() {
 
     // Open MainFrame (index GUI)
     app.openMainFrame()
-
 
 
 }

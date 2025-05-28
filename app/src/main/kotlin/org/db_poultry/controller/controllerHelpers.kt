@@ -39,14 +39,9 @@ fun validateAndReadByID(connection: Connection?) =
 fun validateAndReadByDates(connection: Connection?) =
     validateAndRead(connection, ReadFlock::allByDate, "validateAndReadByDates")
 
-fun checkDateInbetween(connect: Connection?, inputtedDate: Date): Int {
+fun checkDateInbetween(connect: Connection, inputtedDate: Date): Int {
     val incompleteQuery = "SELECT COUNT(*) AS overlaps FROM Flock LEFT JOIN (SELECT Flock_ID, MAX(FD_Date) as endDate FROM Flock_Details GROUP BY Flock_ID) Details ON Flock.Flock_ID = Details.Flock_ID WHERE ? BETWEEN Flock.Starting_Date AND COALESCE(Details.endDate, Flock.Starting_Date)" // Query to be used in preparedStatement
     // If it returns anything other than a 0 then there's overlap
-
-    if (connect == null) {
-        generateErrorMessage("Error in checkDateInbetween().", "Connection is null.", "Ensure that the connection has been established.")
-        return -1
-    }
 
     try {
         val preppedStatement = connect.prepareStatement(incompleteQuery) // preparedStatement for SQL stuff
