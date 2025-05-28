@@ -9,6 +9,7 @@ plugins {
     application
     kotlin("jvm") version "2.1.21"
     java
+
 }
 
 group = "org.example"
@@ -18,13 +19,49 @@ repositories {
     mavenCentral()
 }
 
+// JavaFX
+val javafxVersion = "17.0.2"
+val platform = when (System.getProperty("os.name").lowercase()) {
+    "mac os x", "macos" -> "mac"
+    "linux" -> "linux"
+    else -> "win"
+}
+
 dependencies {
+    // Add any other dependencies here
+    // Put the dependency below the comment where that dependency
+    // belongs
+    // Example, we add the JUnit dependency under the header
+    // "Dependencies for QA" since JUnit will be used by the QAs
+    //
+    // Follow the format:
+    //
+    //      // <name of dependency>
+    //      implementation("...")
+    //
+    // If unsure, message @zrygan
+
+    // Dependencies for Dev
+    // Kotlin
+    implementation(kotlin("stdlib"))
+
+    // Dependencies for UI/UX
+    val javafxModules = listOf("base", "graphics", "controls", "fxml")
+    javafxModules.forEach {
+        implementation("org.openjfx:javafx-$it:$javafxVersion:$platform")
+    }
+
+    // Dependencies for Database
+    // PostgresSQL
+    implementation("org.postgresql:postgresql:42.7.3")
+
+    // Dot Env (.env file)
+    implementation("io.github.cdimascio:dotenv-java:3.0.0")
+
+    // Dependencies for QA
+    // JUnit
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
     testImplementation(kotlin("test"))
-
-    implementation(kotlin("stdlib"))
-    // Add any other dependencies here
-    // ...
 }
 
 sourceSets {
@@ -48,9 +85,8 @@ sourceSets {
 }
 
 application {
-    mainClass.set("org.DBPoultry.AppKt")
+    mainClass.set("org.db_poultry.AppKt")
 }
-
 
 kotlin {
     jvmToolchain {
