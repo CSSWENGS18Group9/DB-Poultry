@@ -46,6 +46,9 @@ class CreateFlockDetailsController {
     private lateinit var textBody2: Text
 
     @FXML
+    private lateinit var textBody3: Text
+
+    @FXML
     private lateinit var textField: TextField
 
     @FXML
@@ -58,7 +61,7 @@ class CreateFlockDetailsController {
     private lateinit var cFDDatePicker: DatePicker
 
     @FXML
-    private lateinit var btnConfirm: Button
+    private lateinit var confirmBtn: Button
 
     @FXML
     fun confirm() {
