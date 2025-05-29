@@ -1,4 +1,4 @@
-package org.db_poultry.Controller
+package org.db_poultry.gui
 
 import javafx.fxml.FXML
 import javafx.scene.control.DatePicker
@@ -7,7 +7,7 @@ import javafx.scene.layout.AnchorPane
 import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
 
-class CreateFlockDetails {
+class CreateFlockDetailsController {
 
     @FXML
     private lateinit var anchorPane: AnchorPane

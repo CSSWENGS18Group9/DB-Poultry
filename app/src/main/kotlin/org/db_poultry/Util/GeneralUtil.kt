@@ -27,6 +27,8 @@ class GeneralUtil {
                 contentAnchorPane.children.clear()
                 contentAnchorPane.children.add(view)
                 
+                
+
                 // Set AnchorPane constraints to fill the entire area
                 AnchorPane.setTopAnchor(view, 0.0)
                 AnchorPane.setRightAnchor(view, 0.0)
@@ -34,6 +36,7 @@ class GeneralUtil {
                 AnchorPane.setLeftAnchor(view, 0.0)
                 
             } catch (e: Exception) {
+                println("Error loading content view: $fxmlPath")
                 e.printStackTrace()
             }
         }
