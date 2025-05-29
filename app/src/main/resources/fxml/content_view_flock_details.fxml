@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="viewFlockDetailsAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: fefae0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.Controller.ViewFlockDetailsController">
+<Pane fx:id="viewFlockDetailsAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: fefae0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.gui.ViewFlockDetailsController">
    <children>
       <Rectangle fx:id="rectFlockDetails" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="321.0" layoutX="46.0" layoutY="40.0" stroke="#8f250d00" strokeType="INSIDE" style="-fx-arc-height: 15; -fx-arc-width: 15;" width="509.0">
          <effect>
