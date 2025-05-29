@@ -6,8 +6,28 @@ import javafx.scene.control.TextField
 import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
 import javafx.scene.layout.AnchorPane
+import javafx.scene.control.Button
+import org.db_poultry.App
+import org.db_poultry.controller.recordFlock
+import org.db_poultry.db.DBConnect
+import org.db_poultry.db.cleanTables
+import java.sql.Date
 
 class CreateNewFlockController {
+    private var jdbcURL: String
+    private var conn: DBConnect
+
+    init {
+        val app = App()
+
+        app.getDotEnv()
+
+        jdbcURL = "jdbc:postgresql://localhost:${app.databasePort}/${app.databaseName}"
+        conn = DBConnect(jdbcURL, app.databaseName, app.databasePass)
+        cleanTables(conn.getConnection())
+    }
+
+    val connection = conn.getConnection()
 
     @FXML
     private lateinit var anchorPane: AnchorPane
@@ -29,5 +49,24 @@ class CreateNewFlockController {
 
     @FXML
     private lateinit var textHeader: Text
+
+    @FXML
+    private lateinit var btnConfirm: Button
+
+    @FXML
+    fun confirm() {
+        // still need to pass connection. will leave alone for now
+
+        val startCount = textField.text.toInt()
+        val date = Date.valueOf(datePicker.value)
+
+        val feedback = recordFlock(connection, startCount, date)
+
+        when (feedback) {
+            1 -> println("Successfully created new flock")
+            0, -1 -> println("Error creating new flock")
+        }
+
+    }
 
 }
