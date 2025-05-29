@@ -1,4 +1,4 @@
-package org.db_poultry.gui
+package org.db_poultry.controller
 
 import javafx.fxml.FXML
 import javafx.scene.control.DatePicker
@@ -8,7 +8,7 @@ import javafx.scene.text.Text
 import javafx.scene.layout.AnchorPane
 import javafx.scene.control.Button
 import org.db_poultry.App
-import org.db_poultry.controller.recordFlock
+import org.db_poultry.controller.util.recordFlock
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import java.sql.Date
