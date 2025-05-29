@@ -1,4 +1,4 @@
-package org.db_poultry.controller
+package org.db_poultry.controller.util
 
 import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
 import org.db_poultry.db.flockDetailsDAO.DepletedCount
