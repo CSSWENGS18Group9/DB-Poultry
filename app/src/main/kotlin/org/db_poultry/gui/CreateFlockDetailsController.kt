@@ -7,7 +7,7 @@ import javafx.scene.layout.AnchorPane
 import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
 
-class CreateFlockDetails {
+class CreateFlockDetailsController {
 
     @FXML
     private lateinit var anchorPane: AnchorPane
