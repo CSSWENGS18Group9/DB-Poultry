@@ -1,5 +1,11 @@
 package org.db_poultry.controller
 
+import org.db_poultry.db.flockDAO.ReadFlock
+import org.db_poultry.App
+import org.db_poultry.controller.util.recordFlock
+import org.db_poultry.db.DBConnect
+import org.db_poultry.db.cleanTables
+
 import javafx.fxml.FXML
 import javafx.scene.control.DatePicker
 import javafx.scene.control.TextField
@@ -7,24 +13,10 @@ import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
 import javafx.scene.layout.AnchorPane
 import javafx.scene.control.Button
-import org.db_poultry.App
-import org.db_poultry.controller.util.recordFlock
-import org.db_poultry.db.DBConnect
-import org.db_poultry.db.cleanTables
 import java.sql.Date
 
 class CreateNewFlockController {
-    // private var jdbcURL: String
-
-    init {
-        // val app = App()
-
-        // app.getDotEnv()
-
-        // jdbcURL = "jdbc:postgresql://localhost:${app.databasePort}/${app.databaseName}"
-        cleanTables(DBConnect.getConnection())
-    }
-    
+    // private var jdbcURL: String    
 
     @FXML
     private lateinit var anchorPane: AnchorPane
@@ -50,6 +42,15 @@ class CreateNewFlockController {
     @FXML
     private lateinit var btnConfirm: Button
 
+    init {
+        // val app = App()
+
+        // app.getDotEnv()
+
+        // jdbcURL = "jdbc:postgresql://localhost:${app.databasePort}/${app.databaseName}"
+        cleanTables(DBConnect.getConnection())
+    }
+
     @FXML
     fun confirm() {
         // still need to pass connection. will leave alone for now
@@ -61,7 +62,7 @@ class CreateNewFlockController {
         println("Date: $date")
 
         val feedback = recordFlock(DBConnect.getConnection(), startCount, date)
-
+       
         when (feedback) {
             1 -> println("Successfully created new flock")
             0, -1 -> println("Error creating new flock")
