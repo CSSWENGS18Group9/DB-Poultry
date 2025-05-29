@@ -16,7 +16,6 @@ class App {
     lateinit var databaseName: String
     lateinit var databasePass: String
     lateinit var databasePort: String
-    lateinit var databaseObjc: DBConnect
 
     fun getDotEnv(): Boolean {
         try {
@@ -74,14 +73,11 @@ class App {
         val jdbcUrl = "jdbc:postgresql://localhost:$databasePort/$databaseName"
 
         // Connect to the PostgresSQL DB
-        databaseObjc = DBConnect(
-            jdbcUrl,
-            databaseName,
-            databasePass
-        )
+        DBConnect.init(jdbcUrl, databaseName, databasePass)
+
     }
 
-    fun getConnection(): Connection? = databaseObjc.getConnection()
+    fun getConnection(): Connection? = DBConnect.getConnection()
 }
 
 fun main() {

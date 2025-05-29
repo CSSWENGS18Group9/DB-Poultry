@@ -5,14 +5,10 @@ import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
 
-class DBConnect(
-    jdbcURL: String,
-    username: String,
-    password: String
-) {
+object DBConnect {
     private var connection: Connection? = null
 
-    init {
+    fun init(jdbcURL: String, username: String, password: String) {
         try {
             connection = DriverManager.getConnection(jdbcURL, username, password)
             println("Welcome to DBPoultry's DBMS")

@@ -15,20 +15,10 @@ import java.time.LocalDate
 import javafx.scene.control.Button
 
 class CreateFlockDetailsController {
-    private var jdbcURL: String
-    private var conn: DBConnect
 
     init {
-        val app = App()
-
-        app.getDotEnv()
-
-        jdbcURL = "jdbc:postgresql://localhost:${app.databasePort}/${app.databaseName}"
-        conn = DBConnect(jdbcURL, app.databaseName, app.databasePass)
-        cleanTables(conn.getConnection())
+        cleanTables(DBConnect.getConnection())
     }
-
-    val connection = conn.getConnection()
 
     @FXML
     private lateinit var anchorPane: AnchorPane
@@ -76,7 +66,7 @@ class CreateFlockDetailsController {
 
         val detailDate = Date.valueOf(LocalDate.now())
 
-        val feedback = recordFlockDetails(connection, flockDate, detailDate, depletedCount)
+        val feedback = recordFlockDetails(DBConnect.getConnection(), flockDate, detailDate, depletedCount)
 
         when (feedback) {
             1 -> println("Successfully created new flock")

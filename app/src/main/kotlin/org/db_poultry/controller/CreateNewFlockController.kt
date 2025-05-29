@@ -14,20 +14,17 @@ import org.db_poultry.db.cleanTables
 import java.sql.Date
 
 class CreateNewFlockController {
-    private var jdbcURL: String
-    private var conn: DBConnect
+    // private var jdbcURL: String
 
     init {
-        val app = App()
+        // val app = App()
 
-        app.getDotEnv()
+        // app.getDotEnv()
 
-        jdbcURL = "jdbc:postgresql://localhost:${app.databasePort}/${app.databaseName}"
-        conn = DBConnect(jdbcURL, app.databaseName, app.databasePass)
-        cleanTables(conn.getConnection())
+        // jdbcURL = "jdbc:postgresql://localhost:${app.databasePort}/${app.databaseName}"
+        cleanTables(DBConnect.getConnection())
     }
-
-    val connection = conn.getConnection()
+    
 
     @FXML
     private lateinit var anchorPane: AnchorPane
@@ -63,7 +60,7 @@ class CreateNewFlockController {
         println("\nStart Count: $startCount")
         println("Date: $date")
 
-        val feedback = recordFlock(connection, startCount, date)
+        val feedback = recordFlock(DBConnect.getConnection(), startCount, date)
 
         when (feedback) {
             1 -> println("Successfully created new flock")
