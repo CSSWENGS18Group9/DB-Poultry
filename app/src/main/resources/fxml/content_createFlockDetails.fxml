@@ -49,7 +49,7 @@
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <DatePicker fx:id="datePickerCFD" prefHeight="30.0" prefWidth="228.0" />
+                  <DatePicker fx:id="cFDDatePicker" prefHeight="30.0" prefWidth="228.0" />
                   <TextField fx:id="depleteCountCFDtextField" prefHeight="30.0" prefWidth="177.0">
                      <VBox.margin>
                         <Insets right="70.0" top="30.0" />
@@ -62,7 +62,7 @@
                   <Font name="HelveticaNowDisplay-Bold" size="36.0" />
                </font>
             </Text>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" style="-fx-background-color: #283618;" text="Confirm" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" onAction="#confirm">
+            <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#confirm" prefHeight="25.0" prefWidth="82.0" style="-fx-background-color: #283618;" text="Confirm" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <font>
                   <Font name="HelveticaNowDisplay-Bold" size="13.0" />
                </font>

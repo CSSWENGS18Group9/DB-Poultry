@@ -33,7 +33,7 @@ class CreateNewFlockController {
     private lateinit var anchorPane: AnchorPane
 
     @FXML
-    private lateinit var datePicker: DatePicker
+    private lateinit var createNewFlockDatePicker: DatePicker
 
     @FXML
     private lateinit var shapeBg: Rectangle
@@ -45,7 +45,7 @@ class CreateNewFlockController {
     private lateinit var textBody2: Text
 
     @FXML
-    private lateinit var textField: TextField
+    private lateinit var createNewFlockTextField: TextField
 
     @FXML
     private lateinit var textHeader: Text
@@ -57,8 +57,11 @@ class CreateNewFlockController {
     fun confirm() {
         // still need to pass connection. will leave alone for now
 
-        val startCount = textField.text.toInt()
-        val date = Date.valueOf(datePicker.value)
+        val startCount = createNewFlockTextField.text.toInt()
+        val date = Date.valueOf(createNewFlockDatePicker.value)
+
+        println("\nStart Count: $startCount")
+        println("Date: $date")
 
         val feedback = recordFlock(connection, startCount, date)
 

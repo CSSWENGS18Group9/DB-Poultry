@@ -12,6 +12,7 @@ import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import java.sql.Date
 import java.time.LocalDate
+import javafx.scene.control.Button
 
 class CreateFlockDetailsController {
     private var jdbcURL: String
@@ -51,17 +52,24 @@ class CreateFlockDetailsController {
     private lateinit var textHeader: Text
 
     @FXML
-    lateinit var depleteCountCFDtextField: TextField
+    private lateinit var depleteCountCFDtextField: TextField
 
     @FXML
-    lateinit var datePickerCFD: DatePicker
+    private lateinit var cFDDatePicker: DatePicker
+
+    @FXML
+    private lateinit var btnConfirm: Button
 
     @FXML
     fun confirm() {
         // still need to pass connection. will leave alone for now
 
-        val flockDate = Date.valueOf(datePickerCFD.value)
+        val flockDate = Date.valueOf(cFDDatePicker.value)
         val depletedCount = depleteCountCFDtextField.text.toInt()
+
+        println("Flock Date: $flockDate")
+        println("Depleted Count: $depletedCount")
+
 
         val detailDate = Date.valueOf(LocalDate.now())
 
