@@ -14,29 +14,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FEFAE0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FEFAE0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.Controller.CreateFlockDetailsController">
    <children>
-      <Text fx:id="textHeader" fill="#8f250c" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Flock Details" textAlignment="CENTER" wrappingWidth="353.7269287109375">
-         <font>
-            <Font name="HelveticaNowDisplay-Bold" size="36.0" />
-         </font>
-      </Text>
-      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" style="-fx-background-color: #283618;" text="Confirm" textFill="WHITE">
-         <font>
-            <Font name="HelveticaNowDisplay-Bold" size="13.0" />
-         </font>
-         <effect>
-            <DropShadow>
-               <color>
-                  <Color opacity="0.14000000059604645" />
-               </color>
-            </DropShadow>
-         </effect>
-      </Button>
       <GridPane layoutX="200.0" layoutY="155.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="320.0" minWidth="10.0" prefWidth="302.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="306.0" minWidth="10.0" prefWidth="298.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -66,14 +49,31 @@
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <DatePicker fx:id="datePicker" prefHeight="30.0" prefWidth="228.0" />
-                  <TextField fx:id="textField" prefHeight="30.0" prefWidth="177.0">
+                  <DatePicker fx:id="datePickerCFD" prefHeight="30.0" prefWidth="228.0" />
+                  <TextField fx:id="depleteCountCFDtextField" prefHeight="30.0" prefWidth="177.0">
                      <VBox.margin>
                         <Insets right="70.0" top="30.0" />
                      </VBox.margin>
                   </TextField>
                </children>
             </VBox>
+            <Text fx:id="textHeader" fill="#8f250c" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Flock Details" textAlignment="CENTER" wrappingWidth="353.7269287109375" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+               <font>
+                  <Font name="HelveticaNowDisplay-Bold" size="36.0" />
+               </font>
+            </Text>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" style="-fx-background-color: #283618;" text="Confirm" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <font>
+                  <Font name="HelveticaNowDisplay-Bold" size="13.0" />
+               </font>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color opacity="0.14000000059604645" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Button>
          </children>
       </GridPane>
    </children>

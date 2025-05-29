@@ -6,6 +6,7 @@ import javafx.fxml.FXML
 import javafx.scene.layout.AnchorPane
 import javafx.scene.text.Text
 import javafx.scene.shape.Rectangle
+import javafx.scene.control.Button
 
 class CreateController {
 
@@ -14,6 +15,12 @@ class CreateController {
 
     @FXML
     private lateinit var createHeader: Text
+
+    @FXML
+    private lateinit var createNewFlockBtn: Button
+
+    @FXML
+    private lateinit var createFlockDetailsBtn: Button
 
     @FXML
     private lateinit var insideFrame: Rectangle
