@@ -7,9 +7,11 @@ import javafx.scene.control.ChoiceBox
 import javafx.scene.layout.AnchorPane
 import javafx.scene.text.Text
 import org.db_poultry.Util.GeneralUtil
+import org.db_poultry.controller.util.flockDateSingleton
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDAO.ReadFlock
 import java.net.URL
+import java.sql.Date
 import java.util.ResourceBundle
 import kotlin.collections.isNotEmpty
 
@@ -28,8 +30,12 @@ class ViewController: Initializable {
     @FXML
     private lateinit var viewConfirmBtn: Button
 
+    val data = flockDateSingleton.instance
+
     @FXML
     fun switchToViewFlockDetails() {
+        data.setDate(Date.valueOf(viewSelectFlockChoiceBox.value as String))
+
         println("Switching to view flock details")
         GeneralUtil.loadContentView(selectFlockAnchorPane, "/fxml/content_view_flock_details.fxml")
     }
