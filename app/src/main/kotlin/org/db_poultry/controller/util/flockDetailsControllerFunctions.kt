@@ -60,16 +60,19 @@ fun recordFlockDetails(
     }
 
     val recentFD = ReadFlockDetails.getMostRecent(connection,flockSelectedDate)
-    val recentFDdate: java.sql.Date = recentFD.fdDate
+    if (recentFD != null) {
+        val recentFDdate: java.sql.Date = recentFD.fdDate
 
-    if (recentFDdate.compareTo(detailDate) >= 0) {
-        generateErrorMessage("Error at 'recordFlockDetails()' in 'flockDetailsController'.",
-            "Date $detailDate happens on or before the latest flock detail $recentFDdate",
-            "Use a date that happens after the most recent flock detail."
-        )
-        // check if the date for the flock_detail is before or the exact date as the recent flock detail in the db
-        return 0
+        if (recentFDdate.compareTo(detailDate) >= 0) {
+            generateErrorMessage("Error at 'recordFlockDetails()' in 'flockDetailsController'.",
+                "Date $detailDate happens on or before the latest flock detail $recentFDdate",
+                "Use a date that happens after the most recent flock detail."
+            )
+            // check if the date for the flock_detail is before or the exact date as the recent flock detail in the db
+            return 0
+        }
     }
+
 
     val flockSelectedDate = flockSelected.flock.startingDate
     if (flockSelectedDate.compareTo(detailDate) > 0) {

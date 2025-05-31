@@ -23,10 +23,6 @@ import java.util.ResourceBundle
 
 class CreateFlockDetailsController: Initializable {
 
-    init {
-        cleanTables(DBConnect.getConnection())
-    }
-
     @FXML
     private lateinit var anchorPane: AnchorPane
 
