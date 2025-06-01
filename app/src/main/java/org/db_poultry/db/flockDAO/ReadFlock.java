@@ -135,7 +135,7 @@ public class ReadFlock {
      * @return a List of FlockDetails objects
      */
     public static List<FlockDetails> getFlockDetailsFromDate(Connection conn, Date flockDate, Date fdStartDate, Date fdEndDate) {
-        String incompleteQuery = "SELECT * FROM Flock_Details LEFT JOIN Flock ON Flock.Flock_ID = Flock_Details.Flock_ID WHERE (Flock.Starting_Date = ?) AND (Flock_Details.FD_Date BETWEEN ? AND ?)"; // Query to be used in preparedStatement
+        String incompleteQuery = "SELECT * FROM Flock_Details LEFT JOIN Flock ON Flock.Flock_ID = Flock_Details.Flock_ID WHERE (Flock.Starting_Date = ?) AND (Flock_Details.FD_Date BETWEEN ? AND ?) ORDER BY Flock_Details.FD_Date"; // Query to be used in preparedStatement
 
         if(fdStartDate.after(fdEndDate)) {
             generateErrorMessage("Error in `getFlockDetailsFromDate()`.", "End date happens before start date.", "", null);
