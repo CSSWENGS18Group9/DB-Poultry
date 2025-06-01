@@ -1,10 +1,13 @@
 package org.db_poultry.controller.util
 
+import org.db_poultry.db.DBConnect
+import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
 import org.db_poultry.db.flockDetailsDAO.DepletedCount
 import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.pojo.FlockComplete
+import org.db_poultry.pojo.FlockDetails
 import java.sql.Connection
 
 
@@ -60,16 +63,21 @@ fun recordFlockDetails(
     }
 
     val recentFD = ReadFlockDetails.getMostRecent(connection,flockSelectedDate)
+
     if (recentFD != null) {
         val recentFDdate: java.sql.Date = recentFD.fdDate
 
-        if (recentFDdate.compareTo(detailDate) >= 0) {
-            generateErrorMessage("Error at 'recordFlockDetails()' in 'flockDetailsController'.",
-                "Date $detailDate happens on or before the latest flock detail $recentFDdate",
-                "Use a date that happens after the most recent flock detail."
-            )
-            // check if the date for the flock_detail is before or the exact date as the recent flock detail in the db
-            return 0
+        val flockDetailsList: List<FlockDetails> = ReadFlock.getFlockDetailsFromDate(DBConnect.getConnection(), flockSelectedDate, flockSelectedDate,recentFDdate)
+
+        for (i in flockDetailsList) {
+            if (i.fdDate == detailDate) {
+                generateErrorMessage("Error at 'recordFlockDetails()' in 'flockDetailsController'.",
+                    "Date $detailDate happens on or before the latest flock detail $recentFDdate",
+                    "Use a date that happens after the most recent flock detail."
+                )
+                // check if the date for the flock_detail is before or the exact date as the recent flock detail in the db
+                return 0
+            }
         }
     }
 
