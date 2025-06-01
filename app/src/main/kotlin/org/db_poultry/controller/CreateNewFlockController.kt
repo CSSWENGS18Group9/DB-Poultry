@@ -42,19 +42,8 @@ class CreateNewFlockController {
     @FXML
     private lateinit var btnConfirm: Button
 
-    init {
-        // val app = App()
-
-        // app.getDotEnv()
-
-        // jdbcURL = "jdbc:postgresql://localhost:${app.databasePort}/${app.databaseName}"
-        cleanTables(DBConnect.getConnection())
-    }
-
     @FXML
     fun confirm() {
-        // still need to pass connection. will leave alone for now
-
         val startCount = createNewFlockTextField.text.toInt()
         val date = Date.valueOf(createNewFlockDatePicker.value)
 
