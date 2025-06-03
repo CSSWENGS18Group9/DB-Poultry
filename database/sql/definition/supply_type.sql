@@ -1,6 +1,2 @@
-CREATE TABLE Supply_Type
-(
-    Supply_Type_ID INT PRIMARY KEY,
-
-    NAME           TEXT
-);
+CREATE TABLE
+    Supply_Type (Supply_Type_ID INT PRIMARY KEY, Supply_Name TEXT);
