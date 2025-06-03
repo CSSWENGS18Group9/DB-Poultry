@@ -38,12 +38,22 @@
             </DropShadow>
          </effect>
       </TableView>
-      <Text fx:id="lblDateStarted" fill="#283618" layoutX="140.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Started">
+      <Text fx:id="lblDateStarted" fill="#283618" layoutX="140.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Started">
          <font>
             <Font name="HelveticaNowDisplay-Bold" size="15.0" />
          </font>
       </Text>
-      <Text fx:id="lblQuantityStaretd" fill="#283618" layoutX="364.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity Started">
+      <Text fx:id="lblDateStartedValue" fill="#283618" layoutX="140.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Started">
+         <font>
+            <Font name="HelveticaNowDisplay-Bold" size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="lblQuantityStarted" fill="#283618" layoutX="364.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity Started">
+         <font>
+            <Font name="HelveticaNowDisplay-Bold" size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="lblQuantityStartedValue" fill="#283618" layoutX="410.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity Started">
          <font>
             <Font name="HelveticaNowDisplay-Bold" size="15.0" />
          </font>

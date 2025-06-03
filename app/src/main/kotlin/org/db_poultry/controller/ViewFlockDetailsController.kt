@@ -15,6 +15,7 @@ import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
 import org.db_poultry.errors.generateErrorMessage
+import org.db_poultry.pojo.Flock
 import org.db_poultry.pojo.FlockDetails
 import java.net.URL
 import java.sql.Date
@@ -26,10 +27,16 @@ class ViewFlockDetailsController: Initializable {
     lateinit var viewFlockDetailsAnchorPane: Pane
 
     @FXML
-    lateinit var lblQuantityStaretd: Text
+    lateinit var lblQuantityStarted: Text
+
+    @FXML
+    lateinit var lblQuantityStartedValue: Text
 
     @FXML
     lateinit var lblDateStarted: Text
+
+    @FXML
+    lateinit var lblDateStartedValue: Text
 
     @FXML
     lateinit var tableView: TableView<FlockDetails>
@@ -49,8 +56,14 @@ class ViewFlockDetailsController: Initializable {
     val data = flockDateSingleton.instance
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
+
         var date = data.getDate()
         var latestDetail = ReadFlockDetails.getMostRecent(DBConnect.getConnection(), date)
+
+        lblDateStartedValue.text = date.toString()
+
+        val flockList: List<Flock> = ReadFlock.getFlockFromDate(DBConnect.getConnection(), date, date)
+        lblQuantityStartedValue.text = flockList[0].startingCount.toString()
 
         colDate.cellValueFactory = PropertyValueFactory("fdDate")
         colDepletions.cellValueFactory = PropertyValueFactory("depletedCount")
