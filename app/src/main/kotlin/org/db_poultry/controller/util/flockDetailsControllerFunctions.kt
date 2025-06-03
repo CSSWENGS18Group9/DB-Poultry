@@ -83,7 +83,16 @@ fun recordFlockDetails(
         // check if the date for the flock_detail is before the flock was entered in the Database
         return 0
     }
-
+    if(connection?.let {
+        checkDateInbetween(it, detailDate)
+        } != 0){
+        generateErrorMessage(
+            "Error at 'checkDateInbetween()' in `flockDetailsController`.",
+            "Starting date: $detailDate is in between a time span of another Flock",
+            "Change flock detail date to a date not in between a time span of another Flock"
+        )
+        return 0
+    }
     // FIXME: add more input validations here
     // i don't think there's any more inputs that could be checked
 
