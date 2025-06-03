@@ -45,3 +45,11 @@ WHERE
         -- sr.Supply_Name = ? 
         sr.Supply_Type_ID = ?
         AND sr.SR_Date = ?;
+
+-- Update Retrieved column of a specific record
+UPDATE Supply_Record
+SET
+        Retrieved = TRUE
+WHERE
+        Retrieved = FALSE
+        AND Supply_Type_ID = ?;
