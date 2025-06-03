@@ -21,11 +21,11 @@ class App {
         try {
             val dotenv = Dotenv.configure()
                 .ignoreIfMissing()
-o                .load()
+                .load()
 
-            databaseName = dotenv["DATABASE_NAME"] ?: "Missing DATABASE_NAME"
-            databasePass = dotenv["DATABASE_PASS"] ?: "Missing DATABASE_PASS"
-            databasePort = dotenv["DATABASE_PORT"] ?: "Missing DATABASE_PORT"
+            databaseName = (dotenv["DATABASE_NAME"] ?: "Missing DATABASE_NAME")
+            databasePass = (dotenv["DATABASE_PASS"] ?: "Missing DATABASE_PASS")
+            databasePort = (dotenv["DATABASE_PORT"] ?: "Missing DATABASE_PORT")
 
             println("database name: $databaseName")
             println("database pass: $databasePass")
