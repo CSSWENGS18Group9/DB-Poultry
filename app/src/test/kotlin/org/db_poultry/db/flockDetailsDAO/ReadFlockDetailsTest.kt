@@ -11,7 +11,7 @@ import java.sql.Date
 
 class ReadFlockDetailsTest {
     private var jdbcURL: String
-    private lateinit var conn: Connection
+    private var conn: Connection
 
     init {
         val app = App()
