@@ -21,12 +21,11 @@ class App {
         try {
             val dotenv = Dotenv.configure()
                 .ignoreIfMissing()
-                .directory("./app")
-                .load()
+o                .load()
 
-            databaseName = dotenv["DATABASE_NAME"] ?: System.getenv("DB_NAME") ?: error("Missing DATABASE_NAME")
-            databasePass = dotenv["DATABASE_PASS"] ?: System.getenv("DB_PASS") ?: error("Missing DATABASE_PASS")
-            databasePort = dotenv["DATABASE_PORT"] ?: System.getenv("DB_PORT") ?: error("Missing DATABASE_PORT")
+            databaseName = dotenv["DATABASE_NAME"] ?: "Missing DATABASE_NAME"
+            databasePass = dotenv["DATABASE_PASS"] ?: "Missing DATABASE_PASS"
+            databasePort = dotenv["DATABASE_PORT"] ?: "Missing DATABASE_PORT"
 
             println("database name: $databaseName")
             println("database pass: $databasePass")
@@ -76,7 +75,6 @@ class App {
 
         // Connect to the PostgresSQL DB
         DBConnect.init(jdbcUrl, databaseName, databasePass)
-
     }
 
     fun getConnection(): Connection? = DBConnect.getConnection()
