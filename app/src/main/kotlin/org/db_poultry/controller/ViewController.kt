@@ -28,8 +28,11 @@ class ViewController: Initializable {
     @FXML
     private lateinit var viewConfirmBtn: Button
 
+    val data = flockDateSingleton.instance
+
     @FXML
     fun switchToViewFlockDetails() {
+        data.setDate(Date.valueOf(viewSelectFlockChoiceBox.value as String))
         println("Switching to view flock details")
         GeneralUtil.loadContentView(selectFlockAnchorPane, "/fxml/content_view_flock_details.fxml")
     }
