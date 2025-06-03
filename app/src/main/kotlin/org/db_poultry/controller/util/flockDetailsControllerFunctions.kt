@@ -1,10 +1,13 @@
 package org.db_poultry.controller.util
 
+import org.db_poultry.db.DBConnect
+import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
 import org.db_poultry.db.flockDetailsDAO.DepletedCount
 import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.pojo.FlockComplete
+import org.db_poultry.pojo.FlockDetails
 import java.sql.Connection
 
 
@@ -17,7 +20,7 @@ fun recordFlockDetails(
 ): Int {
     val flocks = validateAndReadByDates(connection)
 
-    if (flocks == null){
+    if (flocks == null) {
         return -1
     }
 
@@ -31,7 +34,8 @@ fun recordFlockDetails(
     val flockSelected: FlockComplete? = flocks.get<java.sql.Date, FlockComplete>(selectedDate)
 
     if (flockSelected == null) {
-        generateErrorMessage("Error at 'recordFlockDetails()' in 'flockDetailsController'.",
+        generateErrorMessage(
+            "Error at 'recordFlockDetails()' in 'flockDetailsController'.",
             "A flock does not exist on this date: $selectedDate",
             "Select a flock that exists on this date."
         )
@@ -40,7 +44,8 @@ fun recordFlockDetails(
     }
 
     if ((depletedCount < 0) || (depletedCount > flockSelected.flock.startingCount)) {
-        generateErrorMessage("Error at 'recordFlockDetails()' in 'flockDetailsController'.",
+        generateErrorMessage(
+            "Error at 'recordFlockDetails()' in 'flockDetailsController'.",
             "Depleted count ($depletedCount) is negative or is greater than the starting flock count",
             "Use a valid depleted count."
         )
@@ -49,9 +54,19 @@ fun recordFlockDetails(
         return 0
     }
 
-    if (DepletedCount.getCumulativeDepletedCount(connection, flockSelected.flock.flockId) > flockSelected.flock.startingCount) {
-        generateErrorMessage("Error at 'recordFlockDetails()' in 'flockDetailsController'.",
-            "Total depleted count (${DepletedCount.getCumulativeDepletedCount(connection, flockSelected.flock.flockId)}) would be greater than the starting flock count",
+    if (DepletedCount.getCumulativeDepletedCount(
+            connection,
+            flockSelected.flock.flockId
+        ) > flockSelected.flock.startingCount
+    ) {
+        generateErrorMessage(
+            "Error at 'recordFlockDetails()' in 'flockDetailsController'.",
+            "Total depleted count (${
+                DepletedCount.getCumulativeDepletedCount(
+                    connection,
+                    flockSelected.flock.flockId
+                )
+            }) would be greater than the starting flock count",
             "Use a valid depleted count."
         )
         // check if adding the current depletedCount would exceed the starting count
@@ -59,33 +74,44 @@ fun recordFlockDetails(
         return 0
     }
 
-    val recentFD = ReadFlockDetails.getMostRecent(connection,flockSelectedDate)
+
+    val recentFD = ReadFlockDetails.getMostRecent(connection, flockSelectedDate)
     if (recentFD != null) {
         val recentFDdate: java.sql.Date = recentFD.fdDate
 
-        if (recentFDdate.compareTo(detailDate) >= 0) {
-            generateErrorMessage("Error at 'recordFlockDetails()' in 'flockDetailsController'.",
-                "Date $detailDate happens on or before the latest flock detail $recentFDdate",
-                "Use a date that happens after the most recent flock detail."
-            )
-            // check if the date for the flock_detail is before or the exact date as the recent flock detail in the db
-            return 0
+        val flockDetailsList: List<FlockDetails> = ReadFlock.getFlockDetailsFromDate(
+            DBConnect.getConnection(),
+            flockSelectedDate,
+            flockSelectedDate,
+            recentFDdate
+        )
+        for (i in flockDetailsList) {
+            if (i.fdDate == detailDate) {
+                generateErrorMessage(
+                    "Error at 'recordFlockDetails()' in 'flockDetailsController'.",
+                    "Date $detailDate happens on or before the latest flock detail $recentFDdate",
+                    "Use a date that happens after the most recent flock detail."
+                )
+                // check if the date for the flock_detail is before or the exact date as the recent flock detail in the db
+                return 0
+            }
         }
     }
 
 
     val flockSelectedDate = flockSelected.flock.startingDate
     if (flockSelectedDate.compareTo(detailDate) > 0) {
-        generateErrorMessage("Error at 'recordFlockDetails()' in 'flockDetailsController'.",
+        generateErrorMessage(
+            "Error at 'recordFlockDetails()' in 'flockDetailsController'.",
             "Date $detailDate happens before the flock was entered in the Database $flockSelectedDate",
             "Use a date that happens after the most recent flock detail."
         )
         // check if the date for the flock_detail is before the flock was entered in the Database
         return 0
     }
-    if(connection?.let {
-        checkDateInbetween(it, detailDate)
-        } != 0){
+    if (connection?.let {
+            checkDateInbetween(it, detailDate)
+        } != 0) {
         generateErrorMessage(
             "Error at 'checkDateInbetween()' in `flockDetailsController`.",
             "Starting date: $detailDate is in between a time span of another Flock",
