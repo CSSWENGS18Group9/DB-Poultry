@@ -6,11 +6,12 @@ import org.db_poultry.db.cleanTables
 import org.db_poultry.db.flockDAO.CreateFlock
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import java.sql.Connection
 import java.sql.Date
 
 class ReadFlockDetailsTest {
     private var jdbcURL: String
-    private var conn: DBConnect
+    private lateinit var conn: Connection
 
     init {
         val app = App()
@@ -18,9 +19,10 @@ class ReadFlockDetailsTest {
         app.getDotEnv()
 
         jdbcURL = "jdbc:postgresql://localhost:${app.databasePort}/${app.databaseName}"
-        conn = DBConnect(jdbcURL, app.databaseName, app.databasePass)
 
-        cleanTables(conn.getConnection())
+        DBConnect.init(jdbcURL, app.databaseName, app.databasePass)
+        conn = DBConnect.getConnection()!!
+        cleanTables(conn)
     }
 
     @Test
@@ -31,13 +33,13 @@ class ReadFlockDetailsTest {
         val dateThree = Date.valueOf("1000-04-01")
 
 
-        CreateFlock.createFlock(conn.getConnection(), 100, dateFlock)
+        CreateFlock.createFlock(conn, 100, dateFlock)
 
-        CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateOne, 5)
-        CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateTwo, 10)
-        CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateThree, 15)
+        CreateFlockDetails.createFlockDetails(conn, 1, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, 1, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, 1, dateThree, 15)
 
-        val result = ReadFlockDetails.getMostRecent(conn.getConnection(), dateFlock)
+        val result = ReadFlockDetails.getMostRecent(conn, dateFlock)
 
 
         Assertions.assertEquals(1, result.flockId)
@@ -49,7 +51,7 @@ class ReadFlockDetailsTest {
     fun testReadFlockDetailsWithNoData() {
         val dateFlock = Date.valueOf("1000-01-01")
 
-        val result = ReadFlockDetails.getMostRecent(conn.getConnection(), dateFlock)
+        val result = ReadFlockDetails.getMostRecent(conn, dateFlock)
 
         Assertions.assertNull(result)
     }

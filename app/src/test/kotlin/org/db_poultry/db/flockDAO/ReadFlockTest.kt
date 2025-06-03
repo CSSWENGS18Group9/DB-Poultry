@@ -6,11 +6,12 @@ import org.db_poultry.db.DBConnect
 import org.db_poultry.App
 import org.db_poultry.db.cleanTables
 import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
+import java.sql.Connection
 import java.sql.Date
 
 class ReadFlockTest {
     private var jdbcURL: String
-    private var conn: DBConnect
+    private lateinit var conn: Connection
 
     init {
         val app = App()
@@ -18,13 +19,15 @@ class ReadFlockTest {
         app.getDotEnv()
 
         jdbcURL = "jdbc:postgresql://localhost:${app.databasePort}/${app.databaseName}"
-        conn = DBConnect(jdbcURL, app.databaseName, app.databasePass)
-        cleanTables(conn.getConnection())
+
+        DBConnect.init(jdbcURL, app.databaseName, app.databasePass)
+        conn = DBConnect.getConnection()!!
+        cleanTables(conn)
     }
 
     @Test
     fun testAllByIDValidData() {
-        val connection = conn.getConnection()
+        val connection = conn
 
         // Ensure the connection is non-null before proceeding
         requireNotNull(connection) { "Database connection is null" }
@@ -51,7 +54,7 @@ class ReadFlockTest {
 
     @Test
     fun testAllByIDEmptyResultSet() {
-        val connection = conn.getConnection()
+        val connection = conn
 
         // Call the allByID method without inserting any data
         val result = ReadFlock.allByID(connection)
@@ -63,7 +66,7 @@ class ReadFlockTest {
 
     @Test
     fun testAllByDateValidData() {
-        val connection = conn.getConnection()
+        val connection = conn
 
         // Ensure the connection is non-null before proceeding
         requireNotNull(connection) { "Database connection is null" }
@@ -85,7 +88,7 @@ class ReadFlockTest {
 
     @Test
     fun testAllByDateEmptyResultSet() {
-        val connection = conn.getConnection()
+        val connection = conn
 
         // Call the allByDate method without inserting any data
         val result = ReadFlock.allByDate(connection)
@@ -97,7 +100,7 @@ class ReadFlockTest {
 
     @Test
     fun testQueryAllHandlesSQLException() {
-        val connection = conn.getConnection()
+        val connection = conn
 
         // Ensure the connection is non-null before proceeding
         requireNotNull(connection) { "Database connection is null" }
@@ -119,9 +122,9 @@ class ReadFlockTest {
         val dateFlockOne = Date.valueOf("1000-05-01")
         val dateEnd = Date.valueOf("1000-06-01")
 
-        CreateFlock.createFlock(conn.getConnection(), 100, dateFlockOne)
+        CreateFlock.createFlock(conn, 100, dateFlockOne)
 
-        val flockList = ReadFlock.getFlockFromDate(conn.getConnection(), dateFlockOne, dateEnd)
+        val flockList = ReadFlock.getFlockFromDate(conn, dateFlockOne, dateEnd)
 
         val first = flockList[0]
 
@@ -136,10 +139,10 @@ class ReadFlockTest {
         val dateFlockOne = Date.valueOf("1000-05-01")
         val dateEnd = Date.valueOf("1000-06-01")
 
-        CreateFlock.createFlock(conn.getConnection(), 100, dateFlockOne)
-        CreateFlock.createFlock(conn.getConnection(), 1000, dateEnd)
+        CreateFlock.createFlock(conn, 100, dateFlockOne)
+        CreateFlock.createFlock(conn, 1000, dateEnd)
 
-        val flockList = ReadFlock.getFlockFromDate(conn.getConnection(), dateFlockOne, dateEnd)
+        val flockList = ReadFlock.getFlockFromDate(conn, dateFlockOne, dateEnd)
 
         val first = flockList[0]
         val second = flockList[1]
@@ -157,9 +160,9 @@ class ReadFlockTest {
         val dateFlockOne = Date.valueOf("1000-05-01")
         val dateEnd = Date.valueOf("1000-06-01")
 
-        CreateFlock.createFlock(conn.getConnection(), 100, dateFlockOne)
+        CreateFlock.createFlock(conn, 100, dateFlockOne)
 
-        val flockList = ReadFlock.getFlockFromDate(conn.getConnection(), dateEnd, dateEnd)
+        val flockList = ReadFlock.getFlockFromDate(conn, dateEnd, dateEnd)
 
         assertEquals(0, flockList.size)
     }
@@ -169,9 +172,9 @@ class ReadFlockTest {
         val dateFlockOne = Date.valueOf("1000-05-01")
         val dateEnd = Date.valueOf("1000-06-01")
 
-        CreateFlock.createFlock(conn.getConnection(), 100, dateFlockOne)
+        CreateFlock.createFlock(conn, 100, dateFlockOne)
 
-        val flockList = ReadFlock.getFlockFromDate(conn.getConnection(), dateEnd, dateFlockOne)
+        val flockList = ReadFlock.getFlockFromDate(conn, dateEnd, dateFlockOne)
 
         assertNull(flockList)
     }
@@ -184,13 +187,13 @@ class ReadFlockTest {
         val dateFDTwo = Date.valueOf("1000-07-01")
         val dateFDThree = Date.valueOf("1000-08-01")
 
-        CreateFlock.createFlock(conn.getConnection(), 100, dateFlockOne)
+        CreateFlock.createFlock(conn, 100, dateFlockOne)
 
-        CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateFDOne, 0)
-        CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateFDTwo, 1)
-        CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateFDThree, 2)
+        CreateFlockDetails.createFlockDetails(conn, 1, dateFDOne, 0)
+        CreateFlockDetails.createFlockDetails(conn, 1, dateFDTwo, 1)
+        CreateFlockDetails.createFlockDetails(conn, 1, dateFDThree, 2)
 
-        val flockDetailsList = ReadFlock.getFlockDetailsFromDate(conn.getConnection(), dateFlockOne, dateFDOne, dateFDThree)
+        val flockDetailsList = ReadFlock.getFlockDetailsFromDate(conn, dateFlockOne, dateFDOne, dateFDThree)
 
         val first = flockDetailsList[0]
         val second = flockDetailsList[1]
@@ -224,16 +227,16 @@ class ReadFlockTest {
         val dateFlockTwo = Date.valueOf("1000-09-01")
         val dateFDFour = Date.valueOf("1000-10-01")
 
-        CreateFlock.createFlock(conn.getConnection(), 100, dateFlockOne)
-        CreateFlock.createFlock(conn.getConnection(), 1000, dateFlockTwo)
+        CreateFlock.createFlock(conn, 100, dateFlockOne)
+        CreateFlock.createFlock(conn, 1000, dateFlockTwo)
 
-        CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateFDOne, 0)
-        CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateFDTwo, 1)
-        CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateFDThree, 2)
+        CreateFlockDetails.createFlockDetails(conn, 1, dateFDOne, 0)
+        CreateFlockDetails.createFlockDetails(conn, 1, dateFDTwo, 1)
+        CreateFlockDetails.createFlockDetails(conn, 1, dateFDThree, 2)
 
-        CreateFlockDetails.createFlockDetails(conn.getConnection(), 2, dateFDFour, 0)
+        CreateFlockDetails.createFlockDetails(conn, 2, dateFDFour, 0)
 
-        val flockDetailsList = ReadFlock.getFlockDetailsFromDate(conn.getConnection(), dateFlockOne, dateFDOne, dateFDFour)
+        val flockDetailsList = ReadFlock.getFlockDetailsFromDate(conn, dateFlockOne, dateFDOne, dateFDFour)
 
         val first = flockDetailsList[0]
         val second = flockDetailsList[1]
@@ -266,16 +269,16 @@ class ReadFlockTest {
         val dateFlockTwo = Date.valueOf("1000-09-01")
         val dateFDFour = Date.valueOf("1000-10-01")
 
-        CreateFlock.createFlock(conn.getConnection(), 100, dateFlockOne)
-        CreateFlock.createFlock(conn.getConnection(), 1000, dateFlockTwo)
+        CreateFlock.createFlock(conn, 100, dateFlockOne)
+        CreateFlock.createFlock(conn, 1000, dateFlockTwo)
 
-        CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateFDOne, 0)
-        CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateFDTwo, 1)
-        CreateFlockDetails.createFlockDetails(conn.getConnection(), 1, dateFDThree, 2)
+        CreateFlockDetails.createFlockDetails(conn, 1, dateFDOne, 0)
+        CreateFlockDetails.createFlockDetails(conn, 1, dateFDTwo, 1)
+        CreateFlockDetails.createFlockDetails(conn, 1, dateFDThree, 2)
 
-        CreateFlockDetails.createFlockDetails(conn.getConnection(), 2, dateFDFour, 0)
+        CreateFlockDetails.createFlockDetails(conn, 2, dateFDFour, 0)
 
-        val flockDetailsList = ReadFlock.getFlockDetailsFromDate(conn.getConnection(), dateFlockOne, dateFlockOne, dateFDTwo)
+        val flockDetailsList = ReadFlock.getFlockDetailsFromDate(conn, dateFlockOne, dateFlockOne, dateFDTwo)
 
         val first = flockDetailsList[0]
         val second = flockDetailsList[1]
@@ -299,9 +302,9 @@ class ReadFlockTest {
         val dateFDOne = Date.valueOf("1000-06-01")
         val dateFDTwo = Date.valueOf("1000-07-01")
 
-        CreateFlock.createFlock(conn.getConnection(), 100, dateFlockOne)
+        CreateFlock.createFlock(conn, 100, dateFlockOne)
 
-        val flockDetailsList = ReadFlock.getFlockDetailsFromDate(conn.getConnection(), dateFlockOne, dateFDOne, dateFDTwo)
+        val flockDetailsList = ReadFlock.getFlockDetailsFromDate(conn, dateFlockOne, dateFDOne, dateFDTwo)
 
         assertEquals(0, flockDetailsList.size)
     }
@@ -312,9 +315,9 @@ class ReadFlockTest {
         val dateFDOne = Date.valueOf("1000-06-01")
         val dateFDTwo = Date.valueOf("1000-07-01")
 
-        CreateFlock.createFlock(conn.getConnection(), 100, dateFlockOne)
+        CreateFlock.createFlock(conn, 100, dateFlockOne)
 
-        val flockDetailsList = ReadFlock.getFlockDetailsFromDate(conn.getConnection(), dateFlockOne, dateFDTwo, dateFDOne)
+        val flockDetailsList = ReadFlock.getFlockDetailsFromDate(conn, dateFlockOne, dateFDTwo, dateFDOne)
 
         assertNull(flockDetailsList)
     }
