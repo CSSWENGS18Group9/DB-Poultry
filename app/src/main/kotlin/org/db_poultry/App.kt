@@ -19,29 +19,31 @@ class App {
 
     fun getDotEnv(): Boolean {
         try {
-            val dotenv = Dotenv.load()
+            val dotenv = Dotenv.configure()
+                .ignoreIfMissing()
+                .directory("./app")
+                .load()
 
-            databaseName = (dotenv["DATABASE_NAME"] ?: "Missing DATABASE_NAME")
-            databasePass = (dotenv["DATABASE_PASS"] ?: "Missing DATABASE_PASS")
-            databasePort = (dotenv["DATABASE_PORT"] ?: "Missing DATABASE_PORT")
+            databaseName = dotenv["DATABASE_NAME"] ?: System.getenv("DB_NAME") ?: error("Missing DATABASE_NAME")
+            databasePass = dotenv["DATABASE_PASS"] ?: System.getenv("DB_PASS") ?: error("Missing DATABASE_PASS")
+            databasePort = dotenv["DATABASE_PORT"] ?: System.getenv("DB_PORT") ?: error("Missing DATABASE_PORT")
 
-            println("database name:$databaseName")
-            println("database pass:$databasePass")
-            println("database port:$databasePort")
+            println("database name: $databaseName")
+            println("database pass: $databasePass")
+            println("database port: $databasePort")
 
             return true
         } catch (e: Exception) {
             generateErrorMessage(
                 "Error at `getDotEnv()` in `App.kt`",
-                "Failed to load environment variables; not found",
-                "If environment variables does exist make sure it is in `app/`. Otherwise, create one in `app/`.",
+                "Failed to load environment variables",
+                "In local dev, ensure .env exists in `app/`. In GitHub Actions, add secrets: `DB_NAME`, `DB_PASS`, `DB_PORT`.",
                 e
             )
-
             return false
         }
-
     }
+
 
     fun openMainFrame(): Boolean {
         try {
