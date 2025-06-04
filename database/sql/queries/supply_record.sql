@@ -2,20 +2,17 @@
 INSERT INTO
         Supply_Record (
                 Supply_Type_ID,
-                Current_Quantity,
-                Deleted,
-                Added,
-                Unit,
                 SR_Date,
+                Added,
+                Consumed,
                 Retrieved
         )
 VALUES
-        (?, ?, ?, ?, ?, ?, ?);
+        (?, ?, ?, ?, ?);
 
 -- View all Supply Records for a specific date
 SELECT
         st.Supply_Name,
-        sr.Current_Quantity,
         sr.Deleted,
         sr.Added,
         sr.Unit,
@@ -31,7 +28,6 @@ WHERE
 -- View all Supply Records for a specific supply type and date
 SELECT
         st.Supply_Name,
-        sr.Current_Quantity,
         sr.Deleted,
         sr.Added,
         sr.Unit,
