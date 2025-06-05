@@ -15,8 +15,9 @@ public class createSupplyRecord {
         // TODO: Add checker later on if the SupplyType DOES exist
         // ---
 
-        String filledQuery = "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (" + supplyType + ", " + srDate + ", " + added + ", " + consumed + ", Retrieved);";
         String query = "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (?, ?, ?, ?, ?)";
+        String filledQuery = String.format("INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (%d, '%s', %.2f, %.2f, %b);",
+                supplyType, srDate, added, consumed, false);
 
         try {
             PreparedStatement preparedStatement = connect.prepareStatement(query);
