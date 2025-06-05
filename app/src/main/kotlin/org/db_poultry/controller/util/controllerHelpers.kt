@@ -39,7 +39,38 @@ fun validateAndReadByID(connection: Connection?) =
 fun validateAndReadByDates(connection: Connection?) =
     validateAndRead(connection, ReadFlock::allByDate, "validateAndReadByDates")
 
-fun checkDateInbetween(connect: Connection, inputtedDate: Date): Int {
+fun checkDateInbetween(connect: Connection, inputtedDate: Date, flockDate: Date): Int {
+    val incompleteQuery = "SELECT COUNT(*) AS overlaps FROM Flock LEFT JOIN (SELECT Flock_ID, MAX(FD_Date) as endDate FROM Flock_Details GROUP BY Flock_ID) Details ON Flock.Flock_ID = Details.Flock_ID WHERE ? BETWEEN Flock.Starting_Date AND COALESCE(Details.endDate, Flock.Starting_Date)" // Query to be used in preparedStatement
+    // If it returns anything other than a 0 then there's overlap
+
+    try {
+        val preppedStatement = connect.prepareStatement(incompleteQuery) // preparedStatement for SQL stuff
+
+        // Sets the values to be added
+        preppedStatement.setDate(1, inputtedDate)
+
+        val result = preppedStatement.executeQuery() // Executes query and stores it into a ResultSet
+
+        var overlap = 0 // Gets number of overlap
+
+        if (inputtedDate != flockDate) {
+            while (result.next()) { // Gets results per row from the SQL output
+                overlap = result.getInt("overlaps") // Gets the output from the column I named Total_Count_Depleted
+            }
+        }
+
+
+        result.close() // CLoses result
+        preppedStatement.close() // Closes preparedStatement
+
+        return overlap // Returns the total depleted count
+    } catch (e: SQLException) {
+        generateErrorMessage("Error in checkDateInbetween().", "SQLException occurred.", "", e)
+        return -1
+    }
+}
+
+fun checkFlockDateInbetween(connect: Connection, inputtedDate: Date): Int {
     val incompleteQuery = "SELECT COUNT(*) AS overlaps FROM Flock LEFT JOIN (SELECT Flock_ID, MAX(FD_Date) as endDate FROM Flock_Details GROUP BY Flock_ID) Details ON Flock.Flock_ID = Details.Flock_ID WHERE ? BETWEEN Flock.Starting_Date AND COALESCE(Details.endDate, Flock.Starting_Date)" // Query to be used in preparedStatement
     // If it returns anything other than a 0 then there's overlap
 
@@ -56,6 +87,7 @@ fun checkDateInbetween(connect: Connection, inputtedDate: Date): Int {
         while (result.next()) { // Gets results per row from the SQL output
             overlap = result.getInt("overlaps") // Gets the output from the column I named Total_Count_Depleted
         }
+
 
         result.close() // CLoses result
         preppedStatement.close() // Closes preparedStatement
