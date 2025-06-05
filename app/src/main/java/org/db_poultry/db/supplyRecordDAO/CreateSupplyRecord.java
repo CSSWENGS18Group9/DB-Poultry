@@ -38,7 +38,7 @@ public class CreateSupplyRecord {
             return filledQuery;
         } catch (SQLException e) {
             generateErrorMessage("Error in `createSupplyRecord()` in `createSupplyRecord.",
-                    "SQL Exception error occured",
+                    "SQL Exception error occurred",
                     "",
                     e);
 
