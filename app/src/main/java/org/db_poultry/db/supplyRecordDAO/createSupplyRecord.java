@@ -39,6 +39,8 @@ public class createSupplyRecord {
                     "SQL Exception error occured",
                     "",
                     e);
+
+            return null;
         }
     }
 }
