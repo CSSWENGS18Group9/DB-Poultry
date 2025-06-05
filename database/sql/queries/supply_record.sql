@@ -12,11 +12,11 @@ VALUES
 
 -- View all Supply Records for a specific date
 SELECT
-        st.Supply_Name,
-        sr.Deleted,
-        sr.Added,
-        sr.Unit,
         sr.SR_Date,
+        st.Supply_Name,
+        sr.Added,
+        sr.Consumed,
+        st.Unit,
         sr.Retrieved
 FROM
         Supply_Record sr
@@ -27,11 +27,11 @@ WHERE
 -- View all Supply Records for a specific date and type (id)
 -- View all Supply Records for a specific supply type and date
 SELECT
-        st.Supply_Name,
-        sr.Deleted,
-        sr.Added,
-        sr.Unit,
         sr.SR_Date,
+        st.Supply_Name,
+        sr.Added,
+        sr.Consumed,
+        st.Unit,
         sr.Retrieved
 FROM
         Supply_Record sr
@@ -48,4 +48,4 @@ SET
         Retrieved = TRUE
 WHERE
         Retrieved = FALSE
-        AND Supply_Type_ID = ?;
+        AND sr.SR_Date = ?;
