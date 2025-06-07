@@ -41,7 +41,7 @@ fun recordFlock(connection: Connection?, startCount: Int, inputDate: Date?): Int
     }
 
     //NOTE: connection is of type Connection? and not Connection
-    if (checkDateInbetween(connection, startDate) != 0){
+    if (checkDateInbetween(connection, startDate, forNewFlock = true) != 0){
         generateErrorMessage(
             "Error at 'checkDateInbetween()' in `flockController`.",
             "Starting date: $startDate is in between a time span of another Flock",
