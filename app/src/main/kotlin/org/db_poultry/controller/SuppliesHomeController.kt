@@ -26,4 +26,9 @@ class SuppliesHomeController {
     @FXML
     private lateinit var txtHomeMenu1: Text
 
+    @FXML
+    fun switchToMenu(event: ActionEvent) {
+        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home.fxml")
+    }
+
 }

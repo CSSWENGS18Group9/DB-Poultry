@@ -30,7 +30,7 @@
                   <Font name="HelveticaNowDisplay-Regular" size="22.0" />
                </font>
             </Text>
-            <Button fx:id="homeFlockBtn1" onAction="#goToCreate" maxHeight="1.7976931348623157E308" mnemonicParsing="false" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" text="Create" textFill="#8f250c" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Button fx:id="homeFlockBtn1" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToCreate" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" text="Create" textFill="#8f250c" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="HelveticaNowDisplay-Bold" size="30.0" />
                </font>
@@ -60,7 +60,7 @@
                   <Insets bottom="10.0" />
                </padding>
             </Button>
-            <Button fx:id="homeFlockBtn2" onAction="#goToView" maxHeight="1.7976931348623157E308" mnemonicParsing="false" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" text="View" textFill="#8f250c" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <Button fx:id="homeFlockBtn2" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToView" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" text="View" textFill="#8f250c" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <font>
                   <Font name="HelveticaNowDisplay-Bold" size="30.0" />
                </font>
@@ -74,6 +74,21 @@
                <padding>
                   <Insets bottom="10.0" />
                </padding>
+            </Button>
+            <Button fx:id="menuReturnLoginBtn" onAction="#switchToMenu" mnemonicParsing="false" style="-fx-background-radius: 15px; -fx-background-color: white;" text="Back to Menu" GridPane.rowIndex="4">
+               <font>
+                  <Font name="HelveticaNowDisplay-Regular" size="12.0" />
+               </font>
+               <effect>
+                  <DropShadow offsetY="1.5">
+                     <color>
+                        <Color opacity="0.4000000059604645" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <GridPane.margin>
+                  <Insets left="30.0" />
+               </GridPane.margin>
             </Button>
             <Text mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" text="new flock, flock details" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>

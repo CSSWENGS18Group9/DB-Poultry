@@ -99,6 +99,21 @@
                   <Insets top="45.0" />
                </GridPane.margin>
             </Text>
+            <Button fx:id="menuReturnLoginBtn" onAction="#switchToMenu" mnemonicParsing="false" style="-fx-background-radius: 15px; -fx-background-color: white;" text="Back to Menu" GridPane.rowIndex="4">
+               <font>
+                  <Font name="HelveticaNowDisplay-Regular" size="12.0" />
+               </font>
+               <effect>
+                  <DropShadow offsetY="1.5">
+                     <color>
+                        <Color opacity="0.4000000059604645" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <GridPane.margin>
+                  <Insets left="30.0" />
+               </GridPane.margin>
+            </Button>
          </children>
       </GridPane>
    </children>

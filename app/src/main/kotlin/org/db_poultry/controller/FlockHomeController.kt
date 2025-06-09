@@ -36,4 +36,9 @@ class FlockHomeController {
         GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_view.fxml")
     }
 
+    @FXML
+    fun switchToMenu(event: ActionEvent) {
+        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home.fxml")
+    }
+
 }
