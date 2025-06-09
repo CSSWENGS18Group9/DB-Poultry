@@ -1,26 +1,47 @@
 package org.db_poultry.db.supplyRecordDAO;
 
-import org.db_poultry.pojo.SupplyRecord;
+import org.db_poultry.pojo.SupplyComplete;
 
 import java.sql.*;
 import java.util.ArrayList;
 
+import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
+
 public class ReadSupplyRecord {
-    public static ArrayList<SupplyRecord> getFromDate(Connection conn, Date date) {
-        String sql = "SELECT sr.SR_Date, st.Supply_Name, sr.Added, sr.Consumed, st.Unit," + "sr.Retrieved FROM Supply_Record sr JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID" + "WHERE sr.SR_Date = ?";
+    public static ArrayList<SupplyComplete> getFromDate(Connection conn, Date date) {
+
+        String sql = "SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, st.Supply_Name, st.Unit, " +
+                "sr.Added, sr.Consumed, sr.Retrieved " +
+                "FROM Supply_Record sr " +
+                "JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID " +
+                "WHERE sr.SR_Date = ?";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setDate(1, date);
             try (ResultSet rs = pstmt.executeQuery()) {
-                ArrayList<SupplyRecord> records = new ArrayList<>();
+                ArrayList<SupplyComplete> records = new ArrayList<>();
 
                 while (rs.next()) {
+                    int supply_id = rs.getInt("Supply_ID");
+                    int supply_type_id = rs.getInt("Supply_Type_ID");
+                    Date srDate = rs.getDate("SR_Date");
+                    String supply_name = rs.getString("Supply_Name");
+                    String unit = rs.getString("Unit");
+                    float added = rs.getFloat("Added");
+                    float consumed = rs.getFloat("Consumed");
+                    boolean retrieved = rs.getBoolean("Retrieved");
+
+                    records.add(new SupplyComplete(supply_id, supply_type_id, srDate, supply_name, unit, added, consumed, retrieved));
                 }
+                return records;
             }
 
-
         } catch (SQLException e) {
-
+            generateErrorMessage("Error in `getFromDate()` in `ReadSupplyRecord`.",
+                    "SQL Exception error occurred",
+                    "",
+                    e);
+            return null;
         }
     }
 }
