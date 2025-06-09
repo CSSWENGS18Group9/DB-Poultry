@@ -33,9 +33,10 @@ fun cleanTables(conn: Connection?) {
             Depleted_Count INTEGER CHECK (Depleted_Count >= 0),
             FOREIGN KEY (Flock_ID) REFERENCES Flock(Flock_ID) ON DELETE CASCADE
         """.trimIndent(),
+
         "Supply_Type" to """
             Supply_Type_ID SERIAL PRIMARY KEY,
-            Supply_Name TEXT,
+            Supply_Name TEXT UNIQUE,
             Unit VARCHAR(12)
         """.trimIndent(),
 
