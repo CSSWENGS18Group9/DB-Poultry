@@ -60,10 +60,13 @@ WHERE
   AND sr.SR_Date = ?;
 
 -- Update Retrieved column of a specific record
-UPDATE Supply_Record
+UPDATE Supply_Record sr
 SET
   Retrieved = TRUE
+FROM
+  Supply_Type st
 WHERE
-  Retrieved = FALSE
+  sr.Supply_Type_ID = st.Supply_Type_ID
+  AND sr.Retrieved = FALSE
   AND sr.SR_Date = ?
   AND st.Supply_Name = ?;
