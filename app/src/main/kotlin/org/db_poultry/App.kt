@@ -2,15 +2,10 @@ package org.db_poultry
 
 import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
-import org.db_poultry.controller.CreateNewFlockController
-import org.db_poultry.controller.CreateFlockDetailsController
-import org.db_poultry.db.DBConnect
-import org.db_poultry.db.cleanTables
-import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
-import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.controller.MainFrame
+import org.db_poultry.db.DBConnect
+import org.db_poultry.errors.generateErrorMessage
 import java.sql.Connection
-import java.sql.Date
 
 class App {
     lateinit var databaseName: String
@@ -86,6 +81,4 @@ fun main() {
 
     // Open MainFrame (index GUI)
     app.openMainFrame()
-
-
 }

@@ -1,4 +1,4 @@
-package org.db_poultry.Util
+package org.db_poultry.util
 
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent

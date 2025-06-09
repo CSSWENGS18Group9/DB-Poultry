@@ -1,6 +1,6 @@
 package org.db_poultry.controller
 
-import org.db_poultry.Util.ControllerManager
+import org.db_poultry.util.ControllerManager
 
 import javafx.application.Application
 import javafx.fxml.FXMLLoader
