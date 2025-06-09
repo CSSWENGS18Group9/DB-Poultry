@@ -12,11 +12,13 @@ VALUES
 
 -- View all Supply Records for a specific date
 SELECT
+        sr.Supply_ID,
+        sr.Supply_Type_ID
         sr.SR_Date,
         st.Supply_Name,
+        st.Unit,
         sr.Added,
         sr.Consumed,
-        st.Unit,
         sr.Retrieved
 FROM
         Supply_Record sr
@@ -27,11 +29,13 @@ WHERE
 -- View all Supply Records for a specific date and type (id)
 -- View all Supply Records for a specific supply type and date
 SELECT
+        sr.Supply_ID,
+        sr.Supply_Type_ID
         sr.SR_Date,
         st.Supply_Name,
+        st.Unit,
         sr.Added,
         sr.Consumed,
-        st.Unit,
         sr.Retrieved
 FROM
         Supply_Record sr
