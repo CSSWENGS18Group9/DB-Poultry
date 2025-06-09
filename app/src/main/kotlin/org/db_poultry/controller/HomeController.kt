@@ -5,6 +5,7 @@ import org.db_poultry.Util.GeneralUtil
 
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
+
 import javafx.scene.control.Button
 import javafx.scene.layout.AnchorPane
 import javafx.scene.text.Text
@@ -12,22 +13,19 @@ import javafx.scene.text.Text
 class HomeController {
 
     @FXML
-    private lateinit var homeReturnLoginBtn: Button
-
-    @FXML
-    private lateinit var homeCreateBtn: Button
-
-    @FXML
-    private lateinit var homeViewBtn: Button
-
-    @FXML
-    private lateinit var homeGenerateBtn: Button
-
-    @FXML
     private lateinit var homeAnchorPane: AnchorPane
 
     @FXML
-    private lateinit var txtHomeMenu: Text
+    private lateinit var homeFlockBtn1: Button
+
+    @FXML
+    private lateinit var homeReturnLoginBtn: Button
+
+    @FXML
+    private lateinit var homeSuppliesBtn1: Button
+
+    @FXML
+    private lateinit var txtHomeMenu1: Text
 
     @FXML
     fun switchToLogin(event: ActionEvent) {
@@ -39,15 +37,25 @@ class HomeController {
     private fun navigateToHome() {
         GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home.fxml")
     }
-    
-    @FXML
-    private fun navigateToCreate() {
-        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_create.fxml")
+
+    @FXML 
+    fun switchToFlock() {
+        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home_flock.fxml")
+    }
+
+    @FXML 
+    fun switchToSupplies() {
+        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home_supplies.fxml")
     }
     
-    @FXML
-    private fun navigateToView() {
-        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_view.fxml")
-    }
+    // @FXML
+    // private fun navigateToCreate() {
+    //     GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_create.fxml")
+    // }
+    
+    // @FXML
+    // private fun navigateToView() {
+    //     GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_view.fxml")
+    // }
 
 }
