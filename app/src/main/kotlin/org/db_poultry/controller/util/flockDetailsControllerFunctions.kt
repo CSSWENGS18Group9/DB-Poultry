@@ -110,7 +110,7 @@ fun recordFlockDetails(
         return 0
     }
     if (connection?.let {
-            checkDateInbetween(it, detailDate)
+            checkDateInbetween(it, detailDate, selectedDate)
         } != 0) {
         generateErrorMessage(
             "Error at 'checkDateInbetween()' in `flockDetailsController`.",
