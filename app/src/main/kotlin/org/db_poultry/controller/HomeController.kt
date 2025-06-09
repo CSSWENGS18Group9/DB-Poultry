@@ -47,7 +47,7 @@ class HomeController {
     fun switchToSupplies() {
         GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home_supplies.fxml")
     }
-    
+
     // @FXML
     // private fun navigateToCreate() {
     //     GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_create.fxml")

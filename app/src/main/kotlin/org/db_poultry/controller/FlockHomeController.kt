@@ -41,4 +41,9 @@ class FlockHomeController {
         GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home.fxml")
     }
 
+    @FXML 
+    fun switchToGenerate() {
+        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_generate_report.fxml")
+    }
+
 }
