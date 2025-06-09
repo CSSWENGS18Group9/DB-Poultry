@@ -32,6 +32,6 @@ class CreateController {
 
     @FXML
     private fun navigateToCreateNewFlock() {
-        GeneralUtil.loadContentView(anchorPaneCreate, "/fxml/content_create_new_flock")
+        GeneralUtil.loadContentView(anchorPaneCreate, "/fxml/content_create_new_flock.fxml")
     }
 }
