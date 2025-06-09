@@ -1,8 +1,5 @@
-package org.db_poultry.Util
+package org.db_poultry.util
 
-import org.db_poultry.Util.ControllerManager
-
-import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 

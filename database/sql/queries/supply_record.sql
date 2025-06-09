@@ -24,8 +24,21 @@ FROM
 WHERE
         sr.SR_Date = ?;
 
--- View all Supply Records for a specific date and type (id)
--- View all Supply Records for a specific supply type and date
+-- View all Supply Records for a specific supply type name
+SELECT
+    sr.SR_Date,
+    st.Supply_Name,
+    sr.Added,
+    sr.Consumed,
+    st.Unit,
+    sr.Retrieved
+FROM
+    Supply_Record sr
+        JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID
+WHERE
+    st.Supply_Name = ?;
+
+-- View a SINGLE Supply Records for a specific supply name and date
 SELECT
         sr.SR_Date,
         st.Supply_Name,
@@ -37,9 +50,7 @@ FROM
         Supply_Record sr
         JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID
 WHERE
-        -- for supply name
-        -- sr.Supply_Name = ? 
-        sr.Supply_Type_ID = ?
+        st.Supply_Name = ?
         AND sr.SR_Date = ?;
 
 -- Update Retrieved column of a specific record
@@ -48,4 +59,5 @@ SET
         Retrieved = TRUE
 WHERE
         Retrieved = FALSE
-        AND sr.SR_Date = ?;
+        AND sr.SR_Date = ?
+        AND st.Supply_Name = ?;
