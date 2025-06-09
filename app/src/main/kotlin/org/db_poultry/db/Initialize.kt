@@ -36,8 +36,8 @@ fun cleanTables(conn: Connection?) {
 
         "Supply_Type" to """
             Supply_Type_ID SERIAL PRIMARY KEY,
-            Supply_Name TEXT UNIQUE,
-            Unit VARCHAR(12)
+            Supply_Name TEXT UNIQUE NOT NULL CHECK (Supply_Name <> ''),
+            Unit VARCHAR(12) NOT NULL CHECK (Unit <> '')
         """.trimIndent(),
 
         "Supply_Record" to """            
