@@ -4,6 +4,8 @@ import org.db_poultry.pojo.FlockDetails;
 
 import java.sql.*;
 
+import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
+
 public class ReadFlockDetails {
 
     public static FlockDetails getMostRecent(Connection conn, Date flockDate) {
@@ -27,6 +29,10 @@ public class ReadFlockDetails {
                 }
             }
         } catch (Exception e) {
+            generateErrorMessage("Error in `getMostRecent()` in `ReadFlockDetails`.",
+                    "SQL Exception error occurred",
+                    "",
+                    e);
             return null;
         }
     }
