@@ -85,7 +85,7 @@ fun main() {
     app.start()
 
     // Open MainFrame (index GUI)
-    app.openMainFrame()
-
+//    app.openMainFrame()
+    cleanTables(app.getConnection())
 
 }

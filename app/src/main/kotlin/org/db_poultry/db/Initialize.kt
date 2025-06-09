@@ -32,9 +32,23 @@ fun cleanTables(conn: Connection?) {
             FD_Date DATE UNIQUE NOT NULL,
             Depleted_Count INTEGER CHECK (Depleted_Count >= 0),
             FOREIGN KEY (Flock_ID) REFERENCES Flock(Flock_ID) ON DELETE CASCADE
+        """.trimIndent(),
+        "Supply_Type" to """
+            Supply_Type_ID SERIAL PRIMARY KEY,
+            Supply_Name TEXT,
+            Unit VARCHAR(12)
+        """.trimIndent(),
+
+        "Supply_Record" to """            
+            Supply_ID SERIAL PRIMARY KEY,
+            Supply_Type_ID INT NOT NULL,
+            SR_Date DATE,
+            Added NUMERIC(9, 4),
+            Consumed NUMERIC(9, 4),
+            Retrieved BOOLEAN,
+            FOREIGN KEY (Supply_Type_ID) REFERENCES Supply_Type (Supply_Type_ID) ON DELETE CASCADE
         """.trimIndent()
     )
-
     try {
         // drop tables in reverse order (dependents first)
         for (table in databaseTables.keys.reversed()) {
