@@ -9,6 +9,8 @@ import org.db_poultry.db.cleanTables
 import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.controller.MainFrame
+import org.db_poultry.db.suppleTypeDAO.CreateSupplyType
+import org.db_poultry.db.suppleTypeDAO.CreateSupplyType.createSupplyType
 import java.sql.Connection
 import java.sql.Date
 
@@ -86,6 +88,5 @@ fun main() {
 
     // Open MainFrame (index GUI)
     app.openMainFrame()
-
 
 }
