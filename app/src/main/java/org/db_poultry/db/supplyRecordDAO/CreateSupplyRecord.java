@@ -17,9 +17,9 @@ public class CreateSupplyRecord {
             
         String query = "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (?, ?, ?, ?, ?)";
         String filledQuery = String.format(
-                "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (%d, '%s', %.2f, %.2f, %b);",
+                "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (%d, '%s', %f, %f, %b);",
                 supplyType, srDate, added, consumed, false);
-
+                
         try {
             PreparedStatement preparedStatement = connect.prepareStatement(query);
 
