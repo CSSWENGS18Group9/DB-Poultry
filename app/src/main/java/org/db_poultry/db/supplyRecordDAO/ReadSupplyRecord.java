@@ -4,6 +4,7 @@ import org.db_poultry.pojo.SupplyComplete;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
@@ -70,6 +71,32 @@ public class ReadSupplyRecord {
             return readList(conn, pstmt);
         } catch (SQLException e) {
             generateErrorMessage("Error in `getFromName()` in `ReadSupplyRecord`.",
+                    "SQL Exception error occurred",
+                    "",
+                    e);
+            return null;
+        }
+    }
+
+    public static SupplyComplete getOneByDateAndName(Connection conn, Date date, String supplyName) {
+        String sql = "SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, st.Supply_Name, st.Unit, " +
+                "sr.Added, sr.Consumed, sr.Retrieved " +
+                "FROM Supply_Record sr " +
+                "JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID " +
+                "WHERE st.Supply_Name = ? AND sr.SR_Date = ?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, supplyName);
+            pstmt.setDate(2, date);
+
+            ArrayList<SupplyComplete> result = readList(conn, pstmt);
+            if (result != null && !result.isEmpty()) {
+                return result.getFirst();
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            generateErrorMessage("Error in `getOneByDateAndName()` in `ReadSupplyRecord`.",
                     "SQL Exception error occurred",
                     "",
                     e);
