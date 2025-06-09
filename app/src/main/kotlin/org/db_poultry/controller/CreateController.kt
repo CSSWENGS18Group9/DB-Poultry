@@ -27,11 +27,11 @@ class CreateController {
 
     @FXML
     private fun navigateToCreateFlockDetails() {
-        GeneralUtil.loadContentView(anchorPaneCreate, "/fxml/content_createFlockDetails.fxml")
+        GeneralUtil.loadContentView(anchorPaneCreate, "/fxml/content_create_flock_details.fxml")
     }
 
     @FXML
     private fun navigateToCreateNewFlock() {
-        GeneralUtil.loadContentView(anchorPaneCreate, "/fxml/content_createNewFlock.fxml")
+        GeneralUtil.loadContentView(anchorPaneCreate, "/fxml/content_create_new_flock")
     }
 }
