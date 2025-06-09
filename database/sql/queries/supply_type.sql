@@ -5,4 +5,4 @@ VALUES
     (?, ?);
 
 -- View all Supply Types
-SELECT * FROM Supply_Type;
+SELECT Supply_Type_ID, Supply_Name, Unit FROM Supply_Type;
