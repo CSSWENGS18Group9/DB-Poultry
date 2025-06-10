@@ -10,19 +10,10 @@ import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 public class CreateSupplyRecord {
 
-    public static String createSupplyRecord(Connection connect, int supplyType, Date srDate, float added,
-            float consumed) {
+    public static String createSupplyRecord(Connection connect, int supplyType, Date srDate, float added, float consumed) {
         // TODO: Add checker later on if the SupplyType DOES exist
         // ---
-            
-        String query = "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (?, ?, ?, ?, ?)";
-        String filledQuery = String.format(
-                "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (%d, '%s', %f, %f, %b);",
-                supplyType, srDate, added, consumed, false);
-                
-        try {
-            PreparedStatement preparedStatement = connect.prepareStatement(query);
-
+        try (PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (?, ?, ?, ?, ?)")) {
             BigDecimal addedDecimal = BigDecimal.valueOf(added);
             BigDecimal consumedDecimal = BigDecimal.valueOf(consumed);
 
@@ -33,15 +24,9 @@ public class CreateSupplyRecord {
             preparedStatement.setBoolean(5, false); // always assumes Retrieved is False at creation
 
             preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            return filledQuery;
+            return String.format("INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (%d, '%s', %f, %f, %b);", supplyType, srDate, added, consumed, false);
         } catch (SQLException e) {
-            generateErrorMessage("Error in `createSupplyRecord()` in `createSupplyRecord.",
-                    "SQL Exception error occurred",
-                    "",
-                    e);
-
+            generateErrorMessage("Error in `createSupplyRecord()` in `createSupplyRecord.", "SQL Exception error occurred", "", e);
             return null;
         }
     }
