@@ -24,12 +24,11 @@ public class ReadFlock {
     private static <K> HashMap<K, FlockComplete> queryAll(Connection con, Function<Flock, K> keyMapper) {
         HashMap<K, FlockComplete> result = new HashMap<>();
 
-        String sql =    "SELECT f.flock_id, f.starting_count, f.starting_date, " +
-                        "fd.flock_details_id, fd.fd_date, fd.depleted_count " +
-                        "FROM Flock f LEFT JOIN Flock_Details fd ON f.flock_id = fd.flock_id";
-
-        try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
-
+        try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery("""
+                SELECT f.flock_id, f.starting_count, f.starting_date,
+                fd.flock_details_id, fd.fd_date, fd.depleted_count 
+                FROM Flock f LEFT JOIN Flock_Details fd ON f.flock_id = fd.flock_id
+                """.stripIndent())) {
             while (rs.next()) {
                 // Flock columns
                 int flockId = rs.getInt("flock_id");
@@ -66,7 +65,6 @@ public class ReadFlock {
         return queryAll(con, Flock::getFlockId);
     }
 
-
     /**
      * Uses the generic function above to get all table entries and relates it by Date
      *
@@ -80,45 +78,34 @@ public class ReadFlock {
     /**
      * Returns a list of flocks between two dates
      *
-     * @param conn          the sql connection
-     * @param startDate     the start date of range
-     * @param endDate       the end date of range
+     * @param conn      the sql connection
+     * @param startDate the start date of range
+     * @param endDate   the end date of range
      * @return a List of Flock objects
      */
     public static List<Flock> getFlocksFromDate(Connection conn, Date startDate, Date endDate) {
-        String incompleteQuery = "SELECT * FROM Flock WHERE Starting_Date BETWEEN ? AND ?"; // Query to be used in preparedStatement
-
-        if(startDate.after(endDate)) {
+        if (startDate.after(endDate)) {
             generateErrorMessage("Error in `getFlockFromDate()`.", "End date happens before start date.", "", null);
             return null;
         }
 
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(incompleteQuery); // preparedStatement for SQL stuff
-
-            // Sets the values to be added
+        try (PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM Flock WHERE Starting_Date BETWEEN ? AND ?")) {
             pstmt.setDate(1, startDate);
             pstmt.setDate(2, endDate);
-
-            ResultSet result = pstmt.executeQuery(); // Executes query and stores it into a ResultSet
-
             List<Flock> flocks = new ArrayList<>();
 
-            while (result.next()) { // Gets results per row from the SQL output
-                int flockID = result.getInt("Flock_ID"); // Gets the output from the column named Flock_ID
-                int startingCount = result.getInt("Starting_Count"); // Gets the output from the column named Starting_Count
-                Date startingDate = result.getDate("Starting_Date"); // Gets the output from the column named Starting_Date
+            try (ResultSet result = pstmt.executeQuery()) {
+                while (result.next()) {
+                    int flockID = result.getInt("Flock_ID");
+                    int startingCount = result.getInt("Starting_Count");
+                    Date startingDate = result.getDate("Starting_Date");
 
-                Flock returnedFlock = new Flock(flockID, startingCount, startingDate); // Creates a flock object to be returned
-
-                flocks.add(returnedFlock);
+                    // Creates a flock object and add to the list
+                    Flock returnedFlock = new Flock(flockID, startingCount, startingDate);
+                    flocks.add(returnedFlock);
+                }
             }
-
-            result.close(); // CLoses result
-            pstmt.close(); // Closes preparedStatement
-
-            return flocks; // Returns the List of Flock
-
+            return flocks;
         } catch (SQLException e) {
             generateErrorMessage("Error in `getFlockFromDate()`.", "SQLException occurred.", "", e);
             return null;

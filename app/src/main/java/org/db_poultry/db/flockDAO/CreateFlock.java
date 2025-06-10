@@ -18,20 +18,13 @@ public class CreateFlock {
     public static String createFlock(Connection connect, int startCount, Date startDate) {
         // validate the data first, if at least one fails, don't create
         if (validate_startCountPositiveOrZero(startCount) == -1 || validate_dateIsValid(connect, startDate) == null) {
-            generateErrorMessage(
-                    "Error in `createFlock()` in `CreateFlock`.",
-                    "There is an invalid parameter in creating a flock. ",
-                    "Verify that startDate is 0 or a positive integer and startDate is valid",
-                    null
-            );
+            generateErrorMessage("Error in `createFlock()` in `CreateFlock`.", "There is an invalid parameter in creating a flock. ", "Verify that startDate is 0 or a positive integer and startDate is valid", null);
 
             return null;
         }
 
         try {
-            PreparedStatement preppedStatement = connect.prepareStatement(
-                    "INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (?, ?)"
-            );
+            PreparedStatement preppedStatement = connect.prepareStatement("INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (?, ?)");
 
             preppedStatement.setInt(1, startCount);
             preppedStatement.setDate(2, startDate);
