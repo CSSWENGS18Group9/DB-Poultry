@@ -5,6 +5,7 @@ import javafx.application.Application
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
 import org.db_poultry.errors.generateErrorMessage
+import org.db_poultry.theLifesaver.TL.*
 import java.sql.Connection
 
 class App {
@@ -79,6 +80,15 @@ fun main() {
     val app = App()
     app.start()
 
+    // theLifesaver (backup stuff)
+    TL_firstOpen(app.getConnection())
+    TL_checkLastBackupDate()
+
     // Open MainFrame (index GUI)
-//    app.openMainFrame()
+    app.openMainFrame()
+
+    // ==================================================
+    // Keep this here but remove before shipping or every release
+    // ==================================================
+    TL_cleanAll()
 }
