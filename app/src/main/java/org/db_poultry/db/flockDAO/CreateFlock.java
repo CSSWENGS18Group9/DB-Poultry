@@ -1,6 +1,7 @@
 package org.db_poultry.db.flockDAO;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
@@ -15,8 +16,8 @@ public class CreateFlock {
      * @return a String which is the query with filled-in values
      */
     public static String createFlock(Connection connect, int startCount, Date startDate) {
-        if (validate_startCount(startCount) == -1 ||
-                validate_date(connect, startDate) == null) {
+        if (validate_startCountPositiveOrZero(startCount) == -1 ||
+                validate_dateIsValid(connect, startDate) == null) {
 
             generateErrorMessage("Error in `createFlock()` in `CreateFlock`.",
                     "There is an invalid parameter in creating a flock. ",
@@ -53,7 +54,7 @@ public class CreateFlock {
      * @param startCount the start count
      * @return {startCount} is it meets constraints; {-1} otherwise
      */
-    private static int validate_startCount(int startCount) {
+    private static int validate_startCountPositiveOrZero(int startCount) {
         return startCount >= 0 ? startCount : -1;
     }
 
@@ -63,9 +64,9 @@ public class CreateFlock {
      * @param startDate the start date (may be null)
      * @return {startDate} if it meets the criteria, {null} otherwise
      */
-    private static Date validate_date(Connection conn, Date startDate) {
+    private static Date validate_dateIsValid(Connection conn, Date startDate) {
         // check if the startDate is null, if it is then set it as the default value
-        Date actualDate = startDate != null ? startDate : Date.valueOf(java.time.LocalDate.now());
+        Date actualDate = startDate != null ? startDate : Date.valueOf(LocalDate.now());
 
         // check if the inserted date is not overlapping with another flock range
         // we defn a flock range as the date range from [Flock.startDate, Flock.(last)Flock Detail.detail_date]
@@ -73,7 +74,7 @@ public class CreateFlock {
                 SELECT COUNT(*) AS overlaps FROM Flock LEFT JOIN (SELECT Flock_ID, MAX(FD_Date) as endDate
                 FROM Flock_Details GROUP BY Flock_ID) Details ON Flock.Flock_ID = Details.Flock_ID WHERE ?
                 BETWEEN Flock.Starting_Date AND COALESCE(Details.endDate, Flock.Starting_Date)
-                """.trimIndent();
+                """.stripIndent();
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(checkOverlapQuery);
