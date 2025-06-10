@@ -18,9 +18,9 @@ import org.db_poultry.pojo.FlockPOJO.Flock
 import org.db_poultry.pojo.FlockPOJO.FlockDetails
 import java.net.URL
 import java.sql.Date
-import java.util.ResourceBundle
+import java.util.*
 
-class ViewFlockDetailsController: Initializable {
+class ViewFlockDetailsController : Initializable {
 
     @FXML
     lateinit var viewFlockDetailsAnchorPane: Pane
@@ -56,19 +56,19 @@ class ViewFlockDetailsController: Initializable {
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
 
-        var date = data.getDate()
-        var latestDetail = ReadFlockDetails.getMostRecent(DBConnect.getConnection(), date)
+        val date = data.getDate()
+        val latestDetail = ReadFlockDetails.getMostRecent(DBConnect.getConnection(), date)
 
         lblDateStartedValue.text = date.toString()
-
-        val flockList: List<Flock> = ReadFlock.getFlockFromDate(DBConnect.getConnection(), date, date)
-        lblQuantityStartedValue.text = flockList[0].startingCount.toString()
+        val flockList: Flock = ReadFlock.getFlockFromADate(DBConnect.getConnection(), date)
+        lblQuantityStartedValue.text = flockList.startingCount.toString()
 
         colDate.cellValueFactory = PropertyValueFactory("fdDate")
         colDepletions.cellValueFactory = PropertyValueFactory("depletedCount")
 
         if (latestDetail != null) {
-            val flockDetailsList: List<FlockDetails> = ReadFlock.getFlockDetailsFromDate(DBConnect.getConnection(), date, date,latestDetail.fdDate)
+            val flockDetailsList: List<FlockDetails> =
+                ReadFlockDetails.getFlockDetailsFromDate(DBConnect.getConnection(), date, date, latestDetail.fdDate)
             val observableList = FXCollections.observableArrayList(flockDetailsList)
 
             tableView.items = observableList
