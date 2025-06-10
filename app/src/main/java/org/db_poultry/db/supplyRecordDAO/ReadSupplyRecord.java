@@ -27,64 +27,35 @@ public class ReadSupplyRecord {
             }
             return records;
         } catch (SQLException e) {
-            generateErrorMessage("Error in `readList()` in `ReadSupplyRecord`.",
-                    "SQL Exception error occurred",
-                    "",
-                    e);
+            generateErrorMessage("Error in `readList()` in `ReadSupplyRecord`.", "SQL Exception error occurred", "", e);
             return null;
         }
     }
 
     public static ArrayList<SupplyComplete> getFromDate(Connection conn, Date date) {
-
-        String sql = "SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, st.Supply_Name, st.Unit, " +
-                "sr.Added, sr.Consumed, sr.Retrieved " +
-                "FROM Supply_Record sr " +
-                "JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID " +
-                "WHERE sr.SR_Date = ?";
-
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = conn.prepareStatement("SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, st.Supply_Name, st.Unit, sr.Added, sr.Consumed, sr.Retrieved FROM Supply_Record sr JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID WHERE sr.SR_Date = ?")) {
             pstmt.setDate(1, date);
 
             return readList(conn, pstmt);
-
         } catch (SQLException e) {
-            generateErrorMessage("Error in `getFromDate()` in `ReadSupplyRecord`.",
-                    "SQL Exception error occurred",
-                    "",
-                    e);
+            generateErrorMessage("Error in `getFromDate()` in `ReadSupplyRecord`.", "SQL Exception error occurred", "", e);
             return null;
         }
     }
 
     public static ArrayList<SupplyComplete> getFromName(Connection conn, String supplyName) {
-        String sql = "SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, st.Supply_Name, st.Unit, " +
-                "sr.Added, sr.Consumed, sr.Retrieved " +
-                "FROM Supply_Record sr " +
-                "JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID " +
-                "WHERE st.Supply_Name = ?;";
-
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = conn.prepareStatement("SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, st.Supply_Name, st.Unit, sr.Added, sr.Consumed, sr.Retrieved FROM Supply_Record sr JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID WHERE st.Supply_Name = ?;")) {
             pstmt.setString(1, supplyName);
 
             return readList(conn, pstmt);
         } catch (SQLException e) {
-            generateErrorMessage("Error in `getFromName()` in `ReadSupplyRecord`.",
-                    "SQL Exception error occurred",
-                    "",
-                    e);
+            generateErrorMessage("Error in `getFromName()` in `ReadSupplyRecord`.", "SQL Exception error occurred", "", e);
             return null;
         }
     }
 
     public static SupplyComplete getOneByDateAndName(Connection conn, Date date, String supplyName) {
-        String sql = "SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, st.Supply_Name, st.Unit, " +
-                "sr.Added, sr.Consumed, sr.Retrieved " +
-                "FROM Supply_Record sr " +
-                "JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID " +
-                "WHERE st.Supply_Name = ? AND sr.SR_Date = ?";
-
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = conn.prepareStatement("SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, st.Supply_Name, st.Unit, sr.Added, sr.Consumed, sr.Retrieved FROM Supply_Record sr JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID WHERE st.Supply_Name = ? AND sr.SR_Date = ?")) {
             pstmt.setString(1, supplyName);
             pstmt.setDate(2, date);
 
@@ -95,10 +66,7 @@ public class ReadSupplyRecord {
                 return null;
             }
         } catch (SQLException e) {
-            generateErrorMessage("Error in `getOneByDateAndName()` in `ReadSupplyRecord`.",
-                    "SQL Exception error occurred",
-                    "",
-                    e);
+            generateErrorMessage("Error in `getOneByDateAndName()` in `ReadSupplyRecord`.", "SQL Exception error occurred", "", e);
             return null;
         }
     }
