@@ -11,7 +11,7 @@ public class CreateSupplyType {
     public static String createSupplyType(Connection conn, String supplyName, String unit) {
         // TODO: remember that the unit is MAXIMUM of 12
         // TODO: also remember that supplyName and unit is not the empty string (lambda; monkaW)
-        try (PreparedStatement psmt = conn.prepareStatement("INSERT INTO supply_type (supply_name, unit) VALUES (?, ?)");) {
+        try (PreparedStatement psmt = conn.prepareStatement("INSERT INTO supply_type (supply_name, unit) VALUES (?, ?)")) {
             psmt.setString(1, supplyName);
             psmt.setString(2, unit);
             psmt.executeUpdate();
