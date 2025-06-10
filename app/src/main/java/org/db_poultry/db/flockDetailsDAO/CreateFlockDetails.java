@@ -94,7 +94,7 @@ public class CreateFlockDetails {
 
         // if the actualDate is out of scope (that is, it is in another Flock not in the Flock that we want)
         // say the Date is invalid
-        if (nextStartDate != null && actualDate.after(nextStartDate) || actualDate.equals(nextStartDate)) return null;
+        if (nextStartDate != null && (actualDate.after(nextStartDate) || actualDate.equals(nextStartDate))) return null;
 
         // check if the inserted date is not overlapping with another flock range or another detail
         // we defn a flock range as the date range from [Flock.startDate, Flock.(last)Flock Detail.detail_date]
