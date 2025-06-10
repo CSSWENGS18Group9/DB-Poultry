@@ -31,7 +31,7 @@ class App {
             generateErrorMessage(
                 "Error at `getDotEnv()` in `App.kt`",
                 "Failed to load environment variables",
-                "In local dev, ensure .env exists in `app/`. In GitHub Actions, add secrets: `DB_NAME`, `DB_PASS`, `DB_PORT`.",
+                "In local dev, ensure .env exists in `app/src/main/resources`.",
                 e
             )
             return false
@@ -80,5 +80,5 @@ fun main() {
     app.start()
 
     // Open MainFrame (index GUI)
-    app.openMainFrame()
+//    app.openMainFrame()
 }
