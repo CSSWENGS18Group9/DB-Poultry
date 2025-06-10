@@ -1,7 +1,7 @@
 package org.db_poultry.db.flockDetailsDAO;
 
 import org.db_poultry.db.flockDAO.ReadFlock;
-import org.db_poultry.pojo.FlockComplete;
+import org.db_poultry.pojo.FlockPOJO.FlockComplete;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -38,7 +38,7 @@ public class CreateFlockDetails {
             FlockComplete flockChosen = flocks.get(flockID);
             int flockStartingCount = flockChosen.getFlock().getStartingCount();
 
-            if ((DepletedCount.getCumulativeDepletedCount(connect, flockID) + depleted) > flockStartingCount) {
+            if ((ReadFlockDetails.getCumulativeDepletedCount(connect, flockID) + depleted) > flockStartingCount) {
                 return null;
             }
         } catch (NullPointerException e) {}

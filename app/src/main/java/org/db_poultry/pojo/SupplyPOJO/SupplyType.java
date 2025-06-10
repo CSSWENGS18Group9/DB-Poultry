@@ -1,4 +1,4 @@
-package org.db_poultry.pojo;
+package org.db_poultry.pojo.SupplyPOJO;
 
 public class SupplyType {
     private final int supplyTypeId;

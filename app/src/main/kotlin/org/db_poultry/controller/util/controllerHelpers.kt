@@ -2,7 +2,7 @@ package org.db_poultry.controller.util
 
 import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.errors.generateErrorMessage
-import org.db_poultry.pojo.FlockComplete
+import org.db_poultry.pojo.FlockPOJO.FlockComplete
 import java.sql.Connection
 import java.sql.Date
 import java.sql.ResultSet
