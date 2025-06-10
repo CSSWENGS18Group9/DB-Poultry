@@ -36,22 +36,14 @@ public class CreateFlockDetails {
         if (!validate_depletedCountIsPossible(conn, flock, depleted)) return null;
 
         int flockID = flock.getFlockId();
-        String completeQuery = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (" + flockID + ", " + actualDetailDate + ", " + depleted + ")"; // Query filled in to be returned
-        String incompleteQuery = "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (?, ?, ?)"; // Query to be used in preparedStatement
-
-        try {
-            PreparedStatement preppedStatement = conn.prepareStatement(incompleteQuery); // preparedStatement for SQL stuff
-
+        try (PreparedStatement preppedStatement = conn.prepareStatement("INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (?, ?, ?)")) {
             // Sets the values to be added
             preppedStatement.setInt(1, flockID);
             preppedStatement.setDate(2, actualDetailDate);
             preppedStatement.setInt(3, depleted);
-
             preppedStatement.executeUpdate(); // Executes query
 
-            preppedStatement.close(); // Closes preparedStatement
-
-            return completeQuery; // Returns the filled-in query
+            return "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (" + flockID + ", " + actualDetailDate + ", " + depleted + ")"; // Returns the filled-in query
         } catch (SQLException e) {
             generateErrorMessage("Error in `createFlockDetails()`.", "SQLException occurred.", "", e);
             return null;
@@ -88,9 +80,8 @@ public class CreateFlockDetails {
         // we will use this to see the total range of a Flock since its range is given by
         // [i_Flock.startingDate, j_Flock.startingDate] where i < j (i comes before j)
         Date nextStartDate = null;
-        String dateRangeQuery = "SELECT MIN(Starting_Date) AS nextStartDate FROM Flock WHERE Starting_Date > ?";
 
-        try (PreparedStatement drStmt = conn.prepareStatement(dateRangeQuery)) {
+        try (PreparedStatement drStmt = conn.prepareStatement("SELECT MIN(Starting_Date) AS nextStartDate FROM Flock WHERE Starting_Date > ?")) {
             drStmt.setDate(1, flock.getStartingDate());
             try (ResultSet rs = drStmt.executeQuery()) {
                 if (rs.next()) {
@@ -98,7 +89,7 @@ public class CreateFlockDetails {
                 }
             }
         } catch (SQLException e) {
-            // TODO
+            return null;
         }
 
         // if the actualDate is out of scope (that is, it is in another Flock not in the Flock that we want)
@@ -125,12 +116,9 @@ public class CreateFlockDetails {
                 }
             }
         } catch (SQLException ex) {
-
             return null;
         }
 
-        if (overlaps == 0) return null;
-
-        return actualDate;
+        return overlaps == 0 ? null : actualDate;
     }
 }
