@@ -16,8 +16,9 @@ public class CreateFlock {
      * @return a String which is the query with filled-in values
      */
     public static String createFlock(Connection connect, int startCount, Date startDate) {
+        Date actualDate = validate_dateIsValid(connect, startDate);
         // validate the data first, if at least one fails, don't create
-        if (validate_startCountPositiveOrZero(startCount) == -1 || validate_dateIsValid(connect, startDate) == null) {
+        if (validate_startCountPositiveOrZero(startCount) == -1 || actualDate == null) {
             generateErrorMessage("Error in `createFlock()` in `CreateFlock`.", "There is an invalid parameter in creating a flock. ", "Verify that startDate is 0 or a positive integer and startDate is valid", null);
 
             return null;
@@ -27,10 +28,10 @@ public class CreateFlock {
             PreparedStatement preppedStatement = connect.prepareStatement("INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (?, ?)");
 
             preppedStatement.setInt(1, startCount);
-            preppedStatement.setDate(2, startDate);
+            preppedStatement.setDate(2, actualDate);
             preppedStatement.executeUpdate(); // Executes query
 
-            return "INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (" + startCount + ", " + startDate + ")";
+            return "INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (" + startCount + ", " + actualDate + ")";
         } catch (SQLException e) {
             generateErrorMessage("Error in `createFlock()`.", "SQLException occurred.", "", e);
             return null;
