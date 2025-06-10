@@ -112,9 +112,9 @@ public class ReadFlock {
         }
     }
 
-    public static Flock getFlockFromADate(Connection conn, Date startDate) {
+    public static Flock getFlockFromADate(Connection conn, Date date) {
         // simply call `getFlocksFromDate` but use the same startDate and endDate
-        List<Flock> ret = getFlocksFromDate(conn, startDate, startDate);
+        List<Flock> ret = getFlocksFromDate(conn, date, date);
 
         return ret != null && !ret.isEmpty() ? ret.getFirst() : null;
     }

@@ -1,18 +1,15 @@
 package org.db_poultry.controller
 
-import org.db_poultry.db.flockDAO.ReadFlock
-import org.db_poultry.App
-import org.db_poultry.controller.util.recordFlock
-import org.db_poultry.db.DBConnect
-import org.db_poultry.db.cleanTables
-
 import javafx.fxml.FXML
+import javafx.scene.control.Button
 import javafx.scene.control.DatePicker
 import javafx.scene.control.TextField
+import javafx.scene.layout.AnchorPane
 import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
-import javafx.scene.layout.AnchorPane
-import javafx.scene.control.Button
+import org.db_poultry.db.DBConnect
+import org.db_poultry.db.DBConnect.getConnection
+import org.db_poultry.db.flockDAO.CreateFlock.createFlock
 import java.sql.Date
 
 class CreateNewFlockController {
@@ -52,13 +49,11 @@ class CreateNewFlockController {
         println("\nStart Count: $startCount")
         println("Date: $date")
 
-        val feedback = recordFlock(DBConnect.getConnection(), startCount, date)
-       
-        when (feedback) {
-            1 -> println("Successfully created new flock")
-            0, -1 -> println("Error creating new flock")
+        if (createFlock(getConnection(), startCount, date) != null) {
+            println("Successfully created Flock.")
+        } else {
+            println("Failed to create Flock.")
         }
-
     }
 
 }

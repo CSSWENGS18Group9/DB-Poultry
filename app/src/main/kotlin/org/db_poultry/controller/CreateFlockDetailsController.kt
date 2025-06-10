@@ -1,27 +1,22 @@
 package org.db_poultry.controller
 
-import org.db_poultry.db.flockDAO.ReadFlock
-import org.db_poultry.App
-import org.db_poultry.controller.util.recordFlockDetails
-import org.db_poultry.db.DBConnect
-import org.db_poultry.db.cleanTables
-
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
+import javafx.scene.control.Button
+import javafx.scene.control.ComboBox
 import javafx.scene.control.DatePicker
 import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
 import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
-import java.sql.Date
-import java.time.LocalDate
-import javafx.scene.control.Button
-import javafx.scene.control.ComboBox
-
+import org.db_poultry.db.DBConnect.getConnection
+import org.db_poultry.db.flockDAO.ReadFlock
+import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails.createFlockDetails
 import java.net.URL
-import java.util.ResourceBundle
+import java.sql.Date
+import java.util.*
 
-class CreateFlockDetailsController: Initializable {
+class CreateFlockDetailsController : Initializable {
 
     @FXML
     private lateinit var anchorPane: AnchorPane
@@ -60,8 +55,8 @@ class CreateFlockDetailsController: Initializable {
     private lateinit var confirmBtn: Button
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        
-        val flockMap = ReadFlock.allByID(DBConnect.getConnection())
+
+        val flockMap = ReadFlock.allByID(getConnection())
 
         val dateList = mutableListOf<String>()
 
@@ -72,7 +67,7 @@ class CreateFlockDetailsController: Initializable {
         } else {
             println("No data found.")
         }
-        
+
         cFDComboBox.items.clear()
         cFDComboBox.items.addAll(dateList)
         cFDComboBox.value = "Select a flock"
@@ -98,13 +93,11 @@ class CreateFlockDetailsController: Initializable {
         println("Detail Date: $detailDate")
         println("Depleted Count: $depletedCount")
 
-        val feedback = recordFlockDetails(DBConnect.getConnection(), flockDate, detailDate, depletedCount)
-
-        when (feedback) {
-            1 -> println("Successfully created new flock")
-            0, -1 -> println("Error creating new flock")
+        if (createFlockDetails(getConnection(), flockDate, detailDate, depletedCount) != null) {
+            println("Successfully created Flock.")
+        } else {
+            println("Failed to create Flock.")
         }
-
     }
 
 }
