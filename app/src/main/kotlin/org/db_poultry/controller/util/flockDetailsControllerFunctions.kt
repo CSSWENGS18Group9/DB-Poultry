@@ -3,11 +3,10 @@ package org.db_poultry.controller.util
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
-import org.db_poultry.db.flockDetailsDAO.DepletedCount
 import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
 import org.db_poultry.errors.generateErrorMessage
-import org.db_poultry.pojo.FlockComplete
-import org.db_poultry.pojo.FlockDetails
+import org.db_poultry.pojo.FlockPOJO.FlockComplete
+import org.db_poultry.pojo.FlockPOJO.FlockDetails
 import java.sql.Connection
 
 
@@ -54,7 +53,7 @@ fun recordFlockDetails(
         return 0
     }
 
-    if (DepletedCount.getCumulativeDepletedCount(
+    if (ReadFlockDetails.getCumulativeDepletedCount(
             connection,
             flockSelected.flock.flockId
         ) > flockSelected.flock.startingCount
@@ -62,7 +61,7 @@ fun recordFlockDetails(
         generateErrorMessage(
             "Error at 'recordFlockDetails()' in 'flockDetailsController'.",
             "Total depleted count (${
-                DepletedCount.getCumulativeDepletedCount(
+                ReadFlockDetails.getCumulativeDepletedCount(
                     connection,
                     flockSelected.flock.flockId
                 )

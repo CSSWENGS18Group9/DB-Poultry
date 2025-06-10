@@ -1,6 +1,6 @@
 package org.db_poultry.db.supplyTypeDAO;
 
-import org.db_poultry.pojo.SupplyType;
+import org.db_poultry.pojo.SupplyPOJO.SupplyType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

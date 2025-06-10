@@ -14,9 +14,8 @@ import org.db_poultry.controller.util.flockDateSingleton
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
-import org.db_poultry.errors.generateErrorMessage
-import org.db_poultry.pojo.Flock
-import org.db_poultry.pojo.FlockDetails
+import org.db_poultry.pojo.FlockPOJO.Flock
+import org.db_poultry.pojo.FlockPOJO.FlockDetails
 import java.net.URL
 import java.sql.Date
 import java.util.ResourceBundle

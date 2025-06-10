@@ -1,4 +1,4 @@
-package org.db_poultry.pojo;
+package org.db_poultry.pojo.SupplyPOJO;
 
 import java.sql.Date;
 

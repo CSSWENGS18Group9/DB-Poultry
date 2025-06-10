@@ -1,10 +1,9 @@
 package org.db_poultry.db.supplyRecordDAO;
 
-import org.db_poultry.pojo.SupplyComplete;
+import org.db_poultry.pojo.SupplyPOJO.SupplyComplete;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
