@@ -4,6 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -16,7 +17,7 @@
 
 <AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: FEFAE0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.MainLayoutController">
    <children>
-      <GridPane fx:id="mainGridPane" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane fx:id="mainGridPane" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: FEFAE0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -26,10 +27,11 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-          <AnchorPane fx:id="sidebarAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="397.0" prefWidth="129.0" style="-fx-border-color: black; -fx-border-radius: 0 20 20 0;">
+          <AnchorPane fx:id="sidebarAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="397.0" prefWidth="129.0" style="-fx-background-color: FEFAE0;">
                <children>
                   <GridPane fx:id="sideBarGridPane" alignment="TOP_CENTER" prefHeight="397.3333333333333" prefWidth="146.0" vgap="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
                      <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                      </columnConstraints>
                      <rowConstraints>
@@ -41,12 +43,12 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <ImageView fx:id="sideBarImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
+                        <ImageView fx:id="sideBarImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER">
                            <image>
                               <Image url="@../img/CSSWENG_DB%20Poultry%20Logo.png" />
                            </image>
                         </ImageView>
-                        <Button fx:id="sidebarHomeBtn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#navigateToHome" prefHeight="41.0" prefWidth="145.0" style="-fx-background-color: white; -fx-background-radius: 10;" styleClass="h1_button" text="Home" textAlignment="CENTER" GridPane.rowIndex="1">
+                        <Button fx:id="sidebarHomeBtn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#navigateToHome" prefHeight="41.0" prefWidth="145.0" style="-fx-background-color: white; -fx-background-radius: 10;" styleClass="h1_button" text="Home" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="1">
                            <effect>
                               <DropShadow offsetY="1.5">
                                  <color>
@@ -57,8 +59,11 @@
                            <font>
                               <Font name="HelveticaNowDisplay-Bold" size="18.0" />
                            </font>
+                           <GridPane.margin>
+                              <Insets bottom="5.0" top="5.0" />
+                           </GridPane.margin>
                         </Button>
-                        <Button fx:id="sidebarCreateBtn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#navigateToCreate" prefHeight="50.0" prefWidth="117.0" style="-fx-background-color: white; -fx-background-radius: 10;" styleClass="h1_button" text="Create" GridPane.rowIndex="2">
+                        <Button fx:id="sidebarCreateBtn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#navigateToCreate" prefHeight="50.0" prefWidth="117.0" style="-fx-background-color: white; -fx-background-radius: 10;" styleClass="h1_button" text="Create" GridPane.columnSpan="2" GridPane.rowIndex="2">
                            <effect>
                               <DropShadow offsetY="1.5">
                                  <color>
@@ -69,8 +74,11 @@
                            <font>
                               <Font name="HelveticaNowDisplay-Bold" size="18.0" />
                            </font>
+                           <GridPane.margin>
+                              <Insets bottom="5.0" top="5.0" />
+                           </GridPane.margin>
                         </Button>
-                        <Button fx:id="sidebarViewBtn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#navigateToView" prefHeight="55.0" prefWidth="218.0" style="-fx-background-color: white; -fx-background-radius: 10;" styleClass="h1_button" text="View" GridPane.rowIndex="3">
+                        <Button fx:id="sidebarViewBtn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#navigateToView" prefHeight="55.0" prefWidth="218.0" style="-fx-background-color: white; -fx-background-radius: 10;" styleClass="h1_button" text="View" GridPane.columnSpan="2" GridPane.rowIndex="3">
                            <effect>
                               <DropShadow offsetY="1.5">
                                  <color>
@@ -81,8 +89,11 @@
                            <font>
                               <Font name="HelveticaNowDisplay-Bold" size="18.0" />
                            </font>
+                           <GridPane.margin>
+                              <Insets bottom="5.0" top="5.0" />
+                           </GridPane.margin>
                         </Button>
-                        <Button fx:id="sidebarGenerateBtn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="68.0" prefWidth="473.0" style="-fx-background-color: white; -fx-background-radius: 10;" styleClass="h1_button" text="Generate" textAlignment="RIGHT" GridPane.rowIndex="4">
+                        <Button fx:id="sidebarGenerateBtn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="68.0" prefWidth="473.0" style="-fx-background-color: white; -fx-background-radius: 10;" styleClass="h1_button" text="Generate" textAlignment="RIGHT" GridPane.columnSpan="2" GridPane.rowIndex="4">
                            <effect>
                               <DropShadow offsetY="1.5">
                                  <color>
@@ -93,8 +104,11 @@
                            <font>
                               <Font name="HelveticaNowDisplay-Bold" size="18.0" />
                            </font>
+                           <GridPane.margin>
+                              <Insets bottom="5.0" top="5.0" />
+                           </GridPane.margin>
                         </Button>
-                        <Label fx:id="sideBarDateLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="108.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="Label" textAlignment="CENTER" GridPane.rowIndex="5">
+                        <Label fx:id="sideBarDateLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="35.0" style="-fx-background-color: white; -fx-background-radius: 10;" styleClass="h2" text="Label" textAlignment="CENTER" GridPane.rowIndex="5">
                            <font>
                               <Font name="HelveticaNowDisplay-Bold" size="14.0" />
                            </font>
@@ -107,6 +121,9 @@
                            </effect>
                         </Label>
                      </children>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
                   </GridPane>
                </children>
                <GridPane.margin>
@@ -116,7 +133,15 @@
                   <Insets />
                </opaqueInsets>
             </AnchorPane>
-          <AnchorPane fx:id="contentAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="297.0" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+          <AnchorPane fx:id="contentAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="297.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin></AnchorPane>
+            <Separator maxWidth="-Infinity" orientation="VERTICAL" prefHeight="200.0" style="-fx-background-color: black;" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </GridPane.margin>
+            </Separator>
          </children>
       </GridPane>
    </children>

@@ -5,15 +5,28 @@ import org.db_poultry.Util.GeneralUtil
 
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
+import javafx.fxml.Initializable
 
 import javafx.scene.control.Button
 import javafx.scene.layout.AnchorPane
+import javafx.scene.layout.StackPane
 import javafx.scene.text.Text
 
-class HomeController {
+import javafx.scene.image.ImageView
+
+import java.net.URL
+import java.util.ResourceBundle
+
+class HomeController: Initializable {
 
     @FXML
     private lateinit var homeAnchorPane: AnchorPane
+
+    @FXML
+    private lateinit var homeStackPane: StackPane
+
+    @FXML
+    private lateinit var homeBackgroundImageView: ImageView
 
     @FXML
     private lateinit var homeFlockBtn1: Button
@@ -24,8 +37,10 @@ class HomeController {
     @FXML
     private lateinit var homeSuppliesBtn1: Button
 
-    @FXML
-    private lateinit var txtHomeMenu1: Text
+    override fun initialize(url: URL?, rb: ResourceBundle?) {
+        homeBackgroundImageView.fitWidthProperty().bind(homeStackPane.widthProperty())
+        homeBackgroundImageView.fitHeightProperty().bind(homeStackPane.heightProperty())
+    }
 
     @FXML
     fun switchToLogin(event: ActionEvent) {

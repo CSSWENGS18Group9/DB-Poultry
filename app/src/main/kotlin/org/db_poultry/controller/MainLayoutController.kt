@@ -61,7 +61,12 @@ class MainLayoutController : Initializable {
 
         GeneralUtil.initializeFontSizeManager(mainAnchorPane)
 
-
+        mainAnchorPane.sceneProperty().addListener { _, _, scene ->
+            if (scene != null) {
+                sideBarImageView.fitWidthProperty().bind(scene.widthProperty().multiply(0.15))
+                sideBarImageView.fitHeightProperty().bind(scene.heightProperty().multiply(0.2))
+            }
+        }      
 
         GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home.fxml")
     }

@@ -3,94 +3,122 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="homeAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FEFAE0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.HomeController">
+<AnchorPane fx:id="homeAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #FEFAE0;" stylesheets="@../styles/root.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.HomeController">
    <children>
-      <GridPane alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <StackPane fx:id="homeStackPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Text fx:id="txtHomeMenu1" strokeType="OUTSIDE" strokeWidth="0.0" text="Home Menu" textAlignment="CENTER" wrappingWidth="153.13671875" GridPane.halignment="CENTER">
-               <font>
-                  <Font name="HelveticaNowDisplay-Regular" size="22.0" />
-               </font>
-            </Text>
-            <Button fx:id="homeSuppliesBtn1" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToSupplies" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" text="Supplies" textFill="#8f250c" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-               <font>
-                  <Font name="HelveticaNowDisplay-Bold" size="30.0" />
-               </font>
+            <ImageView fx:id="homeBackgroundImageView" pickOnBounds="true">
+               <image>
+                  <Image url="@../img/main_bg.jpg" />
+               </image>
                <effect>
-                  <DropShadow offsetY="1.5">
-                     <color>
-                        <Color opacity="0.4000000059604645" />
-                     </color>
-                  </DropShadow>
+                  <Lighting diffuseConstant="0.66">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
                </effect>
-               <padding>
-                  <Insets bottom="10.0" />
-               </padding>
-            </Button>
-            <Button fx:id="homeFlockBtn1" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToFlock" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" text="Flock" textFill="#8f250c" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-               <font>
-                  <Font name="HelveticaNowDisplay-Bold" size="30.0" />
-               </font>
-               <effect>
-                  <DropShadow offsetY="1.5">
-                     <color>
-                        <Color opacity="0.4000000059604645" />
-                     </color>
-                  </DropShadow>
-               </effect>
-               <padding>
-                  <Insets bottom="10.0" />
-               </padding>
-            </Button>
-            <Button fx:id="homeReturnLoginBtn" mnemonicParsing="false" onAction="#switchToLogin" style="-fx-background-radius: 15px; -fx-background-color: white;" text="Back to Login" GridPane.rowIndex="3">
-               <font>
-                  <Font name="HelveticaNowDisplay-Regular" size="12.0" />
-               </font>
-               <effect>
-                  <DropShadow offsetY="1.5">
-                     <color>
-                        <Color opacity="0.4000000059604645" />
-                     </color>
-                  </DropShadow>
-               </effect>
-               <GridPane.margin>
-                  <Insets left="30.0" />
-               </GridPane.margin>
-            </Button>
-            <Text mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" text="Create, Delete, Update, View " GridPane.halignment="CENTER" GridPane.rowIndex="1">
-               <font>
-                  <Font name="HelveticaNowDisplay-Light" size="12.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets top="45.0" />
-               </GridPane.margin>
-            </Text>
-            <Text mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" text="Create, View, Generate" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-               <font>
-                  <Font name="HelveticaNowDisplay-Light" size="12.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets top="45.0" />
-               </GridPane.margin>
-            </Text>
+            </ImageView>
+            <GridPane alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" vgap="10.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="homeSuppliesBtn1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToSupplies" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" styleClass="h1" text="Supplies" textFill="#8f250c" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Bold" size="30.0" />
+                     </font>
+                     <effect>
+                        <DropShadow offsetY="1.5">
+                           <color>
+                              <Color opacity="0.4000000059604645" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button fx:id="homeFlockBtn1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToFlock" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" styleClass="h1" text="Flock" textFill="#8f250c" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Bold" size="30.0" />
+                     </font>
+                     <effect>
+                        <DropShadow offsetY="1.5">
+                           <color>
+                              <Color opacity="0.4000000059604645" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button fx:id="homeReturnLoginBtn" mnemonicParsing="false" onAction="#switchToLogin" style="-fx-background-radius: 15px; -fx-background-color: white;" text="Back to Login" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Regular" size="12.0" />
+                     </font>
+                     <effect>
+                        <DropShadow offsetY="1.5">
+                           <color>
+                              <Color opacity="0.4000000059604645" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                     <GridPane.margin>
+                        <Insets left="30.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Text mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h4" text="Create, Delete, Update, View " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Light" size="12.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets top="45.0" />
+                     </GridPane.margin>
+                  </Text>
+                  <Text mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h4" text="Create, View, Generate" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Light" size="12.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets top="45.0" />
+                     </GridPane.margin>
+                  </Text>
+               </children>
+            </GridPane>
          </children>
-      </GridPane>
+      </StackPane>
    </children>
 </AnchorPane>
