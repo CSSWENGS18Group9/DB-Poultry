@@ -85,7 +85,7 @@ public class ReadFlock {
      * @param endDate       the end date of range
      * @return a List of Flock objects
      */
-    public static List<Flock> getFlockFromDate(Connection conn, Date startDate, Date endDate) {
+    public static List<Flock> getFlocksFromDate(Connection conn, Date startDate, Date endDate) {
         String incompleteQuery = "SELECT * FROM Flock WHERE Starting_Date BETWEEN ? AND ?"; // Query to be used in preparedStatement
 
         if(startDate.after(endDate)) {
@@ -94,13 +94,13 @@ public class ReadFlock {
         }
 
         try {
-            PreparedStatement preppedStatement = conn.prepareStatement(incompleteQuery); // preparedStatement for SQL stuff
+            PreparedStatement pstmt = conn.prepareStatement(incompleteQuery); // preparedStatement for SQL stuff
 
             // Sets the values to be added
-            preppedStatement.setDate(1, startDate);
-            preppedStatement.setDate(2, endDate);
+            pstmt.setDate(1, startDate);
+            pstmt.setDate(2, endDate);
 
-            ResultSet result = preppedStatement.executeQuery(); // Executes query and stores it into a ResultSet
+            ResultSet result = pstmt.executeQuery(); // Executes query and stores it into a ResultSet
 
             List<Flock> flocks = new ArrayList<>();
 
@@ -115,7 +115,7 @@ public class ReadFlock {
             }
 
             result.close(); // CLoses result
-            preppedStatement.close(); // Closes preparedStatement
+            pstmt.close(); // Closes preparedStatement
 
             return flocks; // Returns the List of Flock
 
@@ -125,58 +125,12 @@ public class ReadFlock {
         }
     }
 
-    /**
-     * Returns a list of a flock's flock details between two dates
-     *
-     * @param conn              the sql connection
-     * @param flockDate         the starting date of a flock
-     * @param fdStartDate       the start date of range (flock details)
-     * @param fdEndDate         the end date of range (flock details)
-     * @return a List of FlockDetails objects
-     */
-    public static List<FlockDetails> getFlockDetailsFromDate(Connection conn, Date flockDate, Date fdStartDate, Date fdEndDate) {
-        String incompleteQuery = "SELECT * FROM Flock_Details LEFT JOIN Flock ON Flock.Flock_ID = Flock_Details.Flock_ID WHERE (Flock.Starting_Date = ?) AND (Flock_Details.FD_Date BETWEEN ? AND ?) ORDER BY Flock_Details.FD_Date"; // Query to be used in preparedStatement
+    public static Flock getFlockFromADate(Connection conn, Date startDate) {
+        // simply call `getFlocksFromDate` but use the same startDate and endDate
+        List<Flock> ret = getFlocksFromDate(conn, startDate, startDate);
 
-        if(fdStartDate.after(fdEndDate)) {
-            generateErrorMessage("Error in `getFlockDetailsFromDate()`.", "End date happens before start date.", "", null);
-            return null;
-        }
-
-        try {
-            PreparedStatement preppedStatement = conn.prepareStatement(incompleteQuery); // preparedStatement for SQL stuff
-
-            // Sets the values to be added
-            preppedStatement.setDate(1, flockDate);
-            preppedStatement.setDate(2, fdStartDate);
-            preppedStatement.setDate(3, fdEndDate);
-
-            ResultSet result = preppedStatement.executeQuery(); // Executes query and stores it into a ResultSet
-
-            List<FlockDetails> flockDetails = new ArrayList<>();
-
-            while (result.next()) { // Gets results per row from the SQL output
-                int flockDetailsID = result.getInt("Flock_Details_ID"); // Gets the output from the column named Flock_Details_ID
-                int flockID = result.getInt("Flock_ID"); // Gets the output from the column named Flock_ID
-                Date flockDetailsDate = result.getDate("FD_Date"); // Gets the output from the column named FD_Date
-                int depletedCount = result.getInt("Depleted_Count"); // Gets the output from the column named Depleted_Count
-
-
-                FlockDetails returnedFlockDetails = new FlockDetails(flockDetailsID, flockID, flockDetailsDate, depletedCount); // Creates a flock object to be returned
-
-                flockDetails.add(returnedFlockDetails);
-            }
-
-            result.close(); // CLoses result
-            preppedStatement.close(); // Closes preparedStatement
-
-            return flockDetails; // Returns the List of Flock
-
-        } catch (SQLException e) {
-            generateErrorMessage("Error in `getFlockDetailsFromDate()`.", "SQLException occurred.", "", e);
-            return null;
-        }
+        return ret != null && !ret.isEmpty() ? ret.getFirst() : null;
     }
-
 }
 
 // Sample execution in App.kt
