@@ -55,4 +55,56 @@ class ReadFlockDetailsTest {
 
         Assertions.assertNull(result)
     }
+
+    @Test
+    fun testDepletedCountValidInput() {
+        val dateOne = Date.valueOf("1000-05-01")
+        val dateTwo = Date.valueOf("1000-06-01")
+        val dateThree = Date.valueOf("1000-07-01")
+
+        CreateFlock.createFlock(
+            conn, 100, dateOne
+        )
+
+        CreateFlockDetails.createFlockDetails(
+            conn, 1, dateOne, 5
+        )
+        CreateFlockDetails.createFlockDetails(
+            conn, 1, dateTwo, 10
+        )
+        CreateFlockDetails.createFlockDetails(
+            conn, 1, dateThree, 15
+        )
+
+        val result = ReadFlockDetails.getCumulativeDepletedCount(
+            conn, 1
+        )
+        Assertions.assertEquals(30, result)
+    }
+
+    @Test
+    fun testDepletedCountOverStartCount() {
+        val dateOne = Date.valueOf("1000-08-01")
+        val dateTwo = Date.valueOf("1000-09-01")
+        val dateThree = Date.valueOf("1000-10-01")
+
+        CreateFlock.createFlock(
+            conn, 15, dateOne
+        )
+
+        CreateFlockDetails.createFlockDetails(
+            conn, 1, dateOne, 5
+        )
+        CreateFlockDetails.createFlockDetails(
+            conn, 1, dateTwo, 10
+        )
+        CreateFlockDetails.createFlockDetails(
+            conn, 1, dateThree, 15
+        )
+
+        val result = ReadFlockDetails.getCumulativeDepletedCount(
+            conn, 1
+        )
+        Assertions.assertEquals(15, result)
+    }
 }
