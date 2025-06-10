@@ -8,6 +8,9 @@ import javafx.scene.Parent
 
 import javafx.scene.layout.AnchorPane
 
+import javafx.beans.binding.Bindings
+import javafx.beans.property.SimpleDoubleProperty
+
 class GeneralUtil {
     companion object {
         @JvmStatic
@@ -38,6 +41,29 @@ class GeneralUtil {
             } catch (e: Exception) {
                 println("Error loading content view: $fxmlPath")
                 e.printStackTrace()
+            }
+        }
+
+        /**
+         * Initializes the font size manager for the main pane.
+         * This will adjust the font size based on the scene dimensions.
+         * mainPane should be the root of your layout.
+         * Credits to https://stackoverflow.com/a/51948875
+         */
+        @JvmStatic
+        fun initializeFontSizeManager(mainPane: AnchorPane) {
+            mainPane.sceneProperty().addListener { _, oldScene, newScene ->
+                if (oldScene == null && newScene != null) {
+                    val fontSize = SimpleDoubleProperty(0.0)
+                    fontSize.bind(
+                        newScene.widthProperty().add(newScene.heightProperty())
+                            .divide(1280.0 + 720.0)
+                            .multiply(100)
+                    )
+                    mainPane.styleProperty().bind(
+                        Bindings.concat("-fx-font-size: ", fontSize.asString("%.0f"), "%;")
+                    )
+                }
             }
         }
     }

@@ -14,8 +14,18 @@ import javafx.scene.control.Label
 import javafx.scene.control.SplitPane
 import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.GridPane
+import javafx.scene.image.ImageView
 
 class MainLayoutController : Initializable {
+
+    @FXML
+    private lateinit var mainAnchorPane: AnchorPane
+
+    @FXML
+    private lateinit var sidebarAnchorPane: AnchorPane
+
+    @FXML
+    private lateinit var sideBarGridPane: GridPane
 
     @FXML
     private lateinit var contentAnchorPane: AnchorPane
@@ -25,6 +35,9 @@ class MainLayoutController : Initializable {
 
     @FXML
     private lateinit var mainGridPane: GridPane
+
+    @FXML
+    private lateinit var sideBarImageView: ImageView
 
     @FXML
     private lateinit var sidebarHomeBtn: Button
@@ -46,9 +59,15 @@ class MainLayoutController : Initializable {
         val today = LocalDate.now()
         sideBarDateLabel.text = today.toString()
 
+        GeneralUtil.initializeFontSizeManager(mainAnchorPane)
+
+
+
         GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home.fxml")
     }
     
+
+
     @FXML
     private fun navigateToHome() {
         GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home.fxml")

@@ -1,0 +1,14 @@
+.h1 {
+    -fx-font-size: 3em;
+    -fx-font-weight: bold;
+}
+
+.h1_button {
+    -fx-font-size: 3em;
+    -fx-font-weight: bold;
+}
+
+.h2 {
+    -fx-font-size: 2em;
+    -fx-font-weight: bold;
+}
