@@ -1,9 +1,6 @@
 package org.db_poultry.db.flockDAO;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
@@ -18,8 +15,14 @@ public class CreateFlock {
      * @return a String which is the query with filled-in values
      */
     public static String createFlock(Connection connect, int startCount, Date startDate) {
-        if (startCount < 1) {
-            generateErrorMessage("Error in `createFlock()`.", "Starting count cannot be less than 1.", "", null);
+        if (validate_startCount(startCount) == -1 ||
+                validate_date(connect, startDate) == null) {
+
+            generateErrorMessage("Error in `createFlock()` in `CreateFlock`.",
+                    "There is an invalid parameter in creating a flock. ",
+                    "Verify that startDate is 0 or a positive integer and startDate is valid",
+                    null
+            );
             return null;
         }
 
@@ -42,5 +45,54 @@ public class CreateFlock {
             generateErrorMessage("Error in `createFlock()`.", "SQLException occurred.", "", e);
             return null;
         }
+    }
+
+    /**
+     * Validate that startCount is not negative
+     *
+     * @param startCount the start count
+     * @return {startCount} is it meets constraints; {-1} otherwise
+     */
+    private static int validate_startCount(int startCount) {
+        return startCount >= 0 ? startCount : -1;
+    }
+
+    /**
+     * Validate date is UNIQUE and if it's null then default it to TODAY
+     *
+     * @param startDate the start date (may be null)
+     * @return {startDate} if it meets the criteria, {null} otherwise
+     */
+    private static Date validate_date(Connection conn, Date startDate) {
+        // check if the startDate is null, if it is then set it as the default value
+        Date actualDate = startDate != null ? startDate : Date.valueOf(java.time.LocalDate.now());
+
+        // check if the inserted date is not overlapping with another flock range
+        // we defn a flock range as the date range from [Flock.startDate, Flock.(last)Flock Detail.detail_date]
+        String checkOverlapQuery = """
+                SELECT COUNT(*) AS overlaps FROM Flock LEFT JOIN (SELECT Flock_ID, MAX(FD_Date) as endDate
+                FROM Flock_Details GROUP BY Flock_ID) Details ON Flock.Flock_ID = Details.Flock_ID WHERE ?
+                BETWEEN Flock.Starting_Date AND COALESCE(Details.endDate, Flock.Starting_Date)
+                """.trimIndent();
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(checkOverlapQuery);
+            pstmt.setDate(1, actualDate);
+
+            // check the number of overlaps (either 0 or 1). if it overlaps then the date is invalid!
+            int overlaps = 0;
+            ResultSet result = pstmt.executeQuery();
+            while (result.next()) overlaps = result.getInt("overlaps");
+
+            result.close();
+            pstmt.close();
+
+            if (overlaps != 0) return null;
+        } catch (SQLException e) {
+            return null;
+        }
+
+        // check if there is a flock at that date already. If there is, return null. If there is NOT, return the date
+        return ReadFlock.getFlockFromADate(conn, actualDate) == null ? actualDate : null;
     }
 }
