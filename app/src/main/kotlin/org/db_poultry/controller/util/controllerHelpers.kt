@@ -31,7 +31,6 @@ fun checkDateInbetween(connect: Connection, inputtedDate: Date, flockDate: Date?
         var dateRangeResult: ResultSet?
 
         if (!forNewFlock) { // for New Flock Detail
-            print("rightarea1")
             val preppedStatement1 = connect.prepareStatement(dateRangeQuery)
             preppedStatement1.setDate(1, flockDate)
             dateRangeResult = preppedStatement1.executeQuery()
