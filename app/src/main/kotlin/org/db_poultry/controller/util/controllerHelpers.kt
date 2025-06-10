@@ -8,39 +8,6 @@ import java.sql.Date
 import java.sql.ResultSet
 import java.sql.SQLException
 
-fun <K> validateAndRead(
-    connection: Connection?, reader: (Connection) -> HashMap<K, FlockComplete>?, callerName: String
-): HashMap<K, FlockComplete>? {
-    if (connection == null) {
-        generateErrorMessage(
-            "Error at `$callerName` in `flockDetailsController`.",
-            "Connection is null",
-            "Ensure that the connection has been established."
-        )
-        return null
-    }
-
-    val flocks = reader(connection)
-
-    if (flocks == null || flocks.isEmpty()) {
-        generateErrorMessage(
-            "Error at `$callerName` in `flockDetailsController`.",
-            "Returned data is null or empty.",
-            "Ensure that there is data in the database."
-        )
-        return null
-    }
-
-    return flocks
-}
-
-fun validateAndReadByID(connection: Connection?) =
-    validateAndRead(connection, ReadFlock::allByID, "validateAndReadByID")
-
-fun validateAndReadByDates(connection: Connection?) =
-    validateAndRead(connection, ReadFlock::allByDate, "validateAndReadByDates")
-
-
 /**
  * Checks date in between a Starting Date and the last Flock Detail date
  *
