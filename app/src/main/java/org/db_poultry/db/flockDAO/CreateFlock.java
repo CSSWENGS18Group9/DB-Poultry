@@ -16,32 +16,28 @@ public class CreateFlock {
      * @return a String which is the query with filled-in values
      */
     public static String createFlock(Connection connect, int startCount, Date startDate) {
-        if (validate_startCountPositiveOrZero(startCount) == -1 ||
-                validate_dateIsValid(connect, startDate) == null) {
-
-            generateErrorMessage("Error in `createFlock()` in `CreateFlock`.",
+        // validate the data first, if at least one fails, don't create
+        if (validate_startCountPositiveOrZero(startCount) == -1 || validate_dateIsValid(connect, startDate) == null) {
+            generateErrorMessage(
+                    "Error in `createFlock()` in `CreateFlock`.",
                     "There is an invalid parameter in creating a flock. ",
                     "Verify that startDate is 0 or a positive integer and startDate is valid",
                     null
             );
+
             return null;
         }
 
-        String completeQuery = "INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (" + startCount + ", " + startDate + ")"; // Query filled in to be returned
-        String incompleteQuery = "INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (?, ?)"; // Query to be used in preparedStatement
-
         try {
-            PreparedStatement preppedStatement = connect.prepareStatement(incompleteQuery); // preparedStatement for SQL stuff
+            PreparedStatement preppedStatement = connect.prepareStatement(
+                    "INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (?, ?)"
+            );
 
-            // Sets the values to be added
             preppedStatement.setInt(1, startCount);
             preppedStatement.setDate(2, startDate);
-
             preppedStatement.executeUpdate(); // Executes query
 
-            preppedStatement.close(); // Closes preparedStatement
-
-            return completeQuery; // Returns the filled-in query
+            return "INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (" + startCount + ", " + startDate + ")";
         } catch (SQLException e) {
             generateErrorMessage("Error in `createFlock()`.", "SQLException occurred.", "", e);
             return null;
@@ -61,6 +57,7 @@ public class CreateFlock {
     /**
      * Validate date is UNIQUE and if it's null then default it to TODAY
      *
+     * @param conn      the db connection
      * @param startDate the start date (may be null)
      * @return {startDate} if it meets the criteria, {null} otherwise
      */
@@ -70,26 +67,22 @@ public class CreateFlock {
 
         // check if the inserted date is not overlapping with another flock range
         // we defn a flock range as the date range from [Flock.startDate, Flock.(last)Flock Detail.detail_date]
-        String checkOverlapQuery = """
+        try (PreparedStatement pstmt = conn.prepareStatement("""
                 SELECT COUNT(*) AS overlaps FROM Flock LEFT JOIN (SELECT Flock_ID, MAX(FD_Date) as endDate
                 FROM Flock_Details GROUP BY Flock_ID) Details ON Flock.Flock_ID = Details.Flock_ID WHERE ?
                 BETWEEN Flock.Starting_Date AND COALESCE(Details.endDate, Flock.Starting_Date)
-                """.stripIndent();
-
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(checkOverlapQuery);
+                """.stripIndent())) {
             pstmt.setDate(1, actualDate);
 
             // check the number of overlaps (either 0 or 1). if it overlaps then the date is invalid!
             int overlaps = 0;
-            ResultSet result = pstmt.executeQuery();
-            while (result.next()) overlaps = result.getInt("overlaps");
-
-            result.close();
-            pstmt.close();
+            try (ResultSet result = pstmt.executeQuery()) {
+                while (result.next()) overlaps = result.getInt("overlaps");
+            }
 
             if (overlaps != 0) return null;
         } catch (SQLException e) {
+            generateErrorMessage("Error in `validate_dateIsValid()`.", "SQLException occurred.", "", e);
             return null;
         }
 
