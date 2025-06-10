@@ -15,16 +15,16 @@ public class ReadFlockDetails {
     /**
      * Returns a list of a flock's flock details between two dates
      *
-     * @param conn              the sql connection
-     * @param flockDate         the starting date of a flock
-     * @param fdStartDate       the start date of range (flock details)
-     * @param fdEndDate         the end date of range (flock details)
+     * @param conn        the sql connection
+     * @param flockDate   the starting date of a flock
+     * @param fdStartDate the start date of range (flock details)
+     * @param fdEndDate   the end date of range (flock details)
      * @return a List of FlockDetails objects
      */
     public static List<FlockDetails> getFlockDetailsFromDate(Connection conn, Date flockDate, Date fdStartDate, Date fdEndDate) {
         String incompleteQuery = "SELECT * FROM Flock_Details LEFT JOIN Flock ON Flock.Flock_ID = Flock_Details.Flock_ID WHERE (Flock.Starting_Date = ?) AND (Flock_Details.FD_Date BETWEEN ? AND ?) ORDER BY Flock_Details.FD_Date"; // Query to be used in preparedStatement
 
-        if(fdStartDate.after(fdEndDate)) {
+        if (fdStartDate.after(fdEndDate)) {
             generateErrorMessage("Error in `getFlockDetailsFromDate()`.", "End date happens before start date.", "", null);
             return null;
         }
@@ -60,6 +60,35 @@ public class ReadFlockDetails {
 
         } catch (SQLException e) {
             generateErrorMessage("Error in `getFlockDetailsFromDate()`.", "SQLException occurred.", "", e);
+            return null;
+        }
+    }
+
+    public static List<FlockDetails> getFlockDetailsFromFlock(Connection conn, Date flockDate) {
+        String query = "SELECT" +
+                "fd.Flock_Details_ID, fd.Flock_ID, fd.FD_Date, fd.Depleted_Count" +
+                "FROM Flock_Details fd JOIN Flock f ON fd.Flock_ID = f.Flock_ID" +
+                "WHERE f.Starting_Date = ?";
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+
+            pstmt.setDate(1, flockDate);
+            ResultSet result = pstmt.executeQuery();
+            List<FlockDetails> flockDetails = new ArrayList<>();
+
+            while (result.next()) {
+                int flockDetailsID = result.getInt("Flock_Details_ID");
+                int flockID = result.getInt("Flock_ID");
+                Date flockDetailsDate = result.getDate("FD_Date");
+                int depletedCount = result.getInt("Depleted_Count");
+
+                flockDetails.add(new FlockDetails(flockDetailsID, flockID, flockDetailsDate, depletedCount));
+            }
+
+            return flockDetails;
+        } catch (SQLException e) {
+            generateErrorMessage("Error in `getFlockDetailsFromFlock()`.", "SQLException occurred.", "", e);
             return null;
         }
     }
@@ -111,7 +140,6 @@ public class ReadFlockDetails {
             PreparedStatement preppedStatement = connect.prepareStatement(incompleteQuery); // preparedStatement for SQL stuff
 
 
-
             // Sets the values to be added
             preppedStatement.setInt(1, flockID);
 
@@ -126,7 +154,7 @@ public class ReadFlockDetails {
             result.close(); // CLoses result
             preppedStatement.close(); // Closes preparedStatement
 
-            if(flockStartingCount < sum) {
+            if (flockStartingCount < sum) {
                 return -1;
             }
 
