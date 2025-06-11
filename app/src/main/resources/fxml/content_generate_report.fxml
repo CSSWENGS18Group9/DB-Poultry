@@ -9,7 +9,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: A4AE81;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.FlockHomeController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fefae0" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="600.0" />
@@ -44,7 +43,7 @@
       </Text>
       <ImageView fitHeight="170.0" fitWidth="184.0" layoutX="96.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Downloads/7BB7CF7C-E708-4647-8552-03DBB3494743.png" />
+            <Image url="@../img/chicken_sample.png" />
          </image>
       </ImageView>
    </children>
