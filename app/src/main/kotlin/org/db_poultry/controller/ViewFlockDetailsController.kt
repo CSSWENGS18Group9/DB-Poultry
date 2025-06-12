@@ -10,7 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.layout.Pane
 import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
-import org.db_poultry.controller.util.flockDateSingleton
+import org.db_poultry.util.flockDateSingleton
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
