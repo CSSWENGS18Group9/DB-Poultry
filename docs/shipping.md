@@ -59,7 +59,7 @@ jpackage \
   --dest shipping \                   <- shipment dir [2]
 
 [1] Notice that we will create an `.exe` file, so this becomes a native WINDOWS application!
-Question: "but we used Java to WORO?", this does not necessarily break WORO. By replacing
+Question: "but we used Java to WORA?", this does not necessarily break WORA. By replacing
 the `type` attribute we still get a fully functioning executable file!
 
 [side note to 1] Quite frankly, given that we use JavaFX which only works on a single Architecture
