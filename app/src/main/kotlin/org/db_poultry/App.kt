@@ -4,6 +4,8 @@ import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
+import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
+import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.theLifesaver.TL.*
 import java.sql.Connection
@@ -85,7 +87,13 @@ fun main() {
     TL_checkLastBackupDate()
 
     // Open MainFrame (index GUI)
-    app.openMainFrame()
+//    app.openMainFrame()
+    CreateSupplyType.createSupplyType(app.getConnection(), "Hello", "Hello");
+    CreateSupplyType.createSupplyType(app.getConnection(), "World", "World");
+    CreateSupplyType.createSupplyType(app.getConnection(), "Hello", "Hello");
+
+    val x = ReadSupplyType.getAllSupplyTypes(app.getConnection())
+    for (t in x) println(t.name)
 
     // ==================================================
     // Keep this here but remove before shipping or every release
