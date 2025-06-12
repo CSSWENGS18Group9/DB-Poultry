@@ -86,7 +86,7 @@ sourceSets {
 }
 
 application {
-    mainClass.set("/")
+    mainClass.set("org.db_poultry.AppKt")
 }
 
 kotlin {
