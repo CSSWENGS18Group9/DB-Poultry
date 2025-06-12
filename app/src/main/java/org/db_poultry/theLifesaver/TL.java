@@ -107,7 +107,7 @@ public class TL {
         String[] script = {
                 "CREATE USER %s WITH %s;".formatted(username, password),
                 "CREATE DATABASE %s OWNER %s;".formatted(username, username),
-                "GRANT ALL PRIVILEGES %s ON  %sDATABASE;".formatted(username, username),
+                "GRANT ALL PRIVILEGES ON DATABASE %s TO %s;".formatted(username, username),
                 "ALTER USER %s WITH SUPERUSER;".formatted(username)
         };
 
