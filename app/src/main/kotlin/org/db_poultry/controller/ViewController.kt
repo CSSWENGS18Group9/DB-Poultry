@@ -6,7 +6,7 @@ import javafx.scene.control.Button
 import javafx.scene.control.ChoiceBox
 import javafx.scene.layout.AnchorPane
 import javafx.scene.text.Text
-import org.db_poultry.Util.GeneralUtil
+import org.db_poultry.util.GeneralUtil
 import org.db_poultry.controller.util.flockDateSingleton
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDAO.ReadFlock

@@ -1,4 +1,4 @@
-package org.db_poultry.Util
+package org.db_poultry.util
 
 import javafx.util.Callback
 import java.lang.reflect.Constructor
