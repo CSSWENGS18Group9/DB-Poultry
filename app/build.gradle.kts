@@ -13,8 +13,8 @@ plugins {
 
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+group = "org.db_poultry"
+version = "1.0"
 
 repositories {
     mavenCentral()
