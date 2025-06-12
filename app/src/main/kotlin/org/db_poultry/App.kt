@@ -90,5 +90,5 @@ fun main() {
     // ==================================================
     // Keep this here but remove before shipping or every release
     // ==================================================
-    TL_cleanAll()
+    wipe()
 }
