@@ -58,9 +58,12 @@ jpackage \
   --icon installer/app-icon.png \     <- app icon
   --dest shipping \                   <- shipment dir [2]
 
-[1] Notice that we will create an `.exe` file, so this becomes a native WINDOWS application! Question: "but we used Java to WORO?", this does not necessarily break WORO. By replacing the `type` attribute we still get a fully functioning executable file!
+[1] Notice that we will create an `.exe` file, so this becomes a native WINDOWS application!
+Question: "but we used Java to WORO?", this does not necessarily break WORO. By replacing
+the `type` attribute we still get a fully functioning executable file!
 
-[side note to 1] Quite frankly, given that we use JavaFX which only works on a single Architecture at a time (this is why it doesn't work on Apple Silicon), creating an `exe` file is rendered moot.
+[side note to 1] Quite frankly, given that we use JavaFX which only works on a single Architecture
+at a time (this is why it doesn't work on Apple Silicon), creating an `exe` file is rendered moot.
 
 [2] This will contain the shipping executable--that is, the `exe` file here is what we will give the client.
 ```
