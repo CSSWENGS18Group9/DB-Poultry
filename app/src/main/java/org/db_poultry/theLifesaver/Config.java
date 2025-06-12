@@ -24,7 +24,7 @@ public class Config {
                 fw.write("backup_interval " + Variables.getBackupIntervals() + "\n");
             }
         } catch (IOException e) {
-            generateErrorMessage("Error at `TL_writeDotConfig` in `TL`", "FATAL. Cannot config file, due to IOException.", "", e);
+            generateErrorMessage("Error at `TL_writeDotConfig` in `Config`", "FATAL. Cannot config file, due to IOException.", "", e);
         }
     }
 
