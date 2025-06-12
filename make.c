@@ -1,3 +1,9 @@
+/*
+ * Automatic (class and fat jar) building, running, and shipping
+ * REQUIRES: WiX Toolset v3.14
+ *  available via: https://github.com/wixtoolset/wix3/releases/tag/wix314rtm
+ */
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -30,7 +36,7 @@ void ship()
         "--main-jar app-1.0.jar "
         "--main-class org.db_poultry.AppKt "
         "--type exe "
-        // "--icon installer/app-icon.png "
+        "--icon installer/app-icon.png "
         "--dest shipping";
 
     if (system(pack) != 0) exit(1);

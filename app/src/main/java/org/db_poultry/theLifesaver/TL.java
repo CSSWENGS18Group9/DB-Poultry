@@ -78,7 +78,7 @@ public class TL {
         System.out.println("=================== IMPORTANT! " + "===================");
     }
 
-    private static void TL_init_postgres(String username, String password) {
+    private static void TL_initPostgres(String username, String password) {
         // check if postgres exists
         try {
             Process p = new ProcessBuilder("cmd", "/c", "where " + "psql").redirectErrorStream(true).start();
@@ -140,7 +140,7 @@ public class TL {
         }
 
         // initialize postgresql
-        TL_init_postgres(app.getDatabaseName(), app.getDatabasePass());
+        TL_initPostgres(app.getDatabaseName(), app.getDatabasePass());
 
         // make the backup folder
         Backup.TL_makeBackupFolder();

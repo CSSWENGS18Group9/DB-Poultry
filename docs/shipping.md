@@ -1,6 +1,8 @@
 # Shipping
 
+For Java dependencies Gradle and GradleUp Shadow will be used to handle all of these. By the end, we will get a **fat jar** file that will contain all dependencies. So no external installation is required.
 
+We will be using `jpackage` to bundle all external dependencies. The bulk of the content will be regarding this.
 
 ## Configuring `jpackage`
 
@@ -65,11 +67,20 @@ jpackage \
 
 Another cool thing is that they also don't need to download Java since `jpackage` handles that as well. Furthermore they get the correct JDK version as the JDK version `jpackage` bundles is the version of the JDK that called `jpackage`. That is, since we're using `jdk-21.0.7+6` the JDK version that `jpackage` include in the budle is `jdk-21.0.7+6`.
 
+To execute the command for shipping I made `make.c` and `make.exe` to automatically run this long command. Simply,
+```
+.\make.exe ship
+```
+
 **Summary**: `jpackage`
 
 - Bundles the correct JDK;
 - create an executable file that runs the `.jar` file; and
 - runs the installation steps of the external dependencies at start.
+
+> `jpackage` creating a Windows executable (`.exe`) requires WiX Toolset v3.14. This is only for building, so once the file is built, there is no need for this dependency (it is not used anywhere else!)
+> 
+> It's available via: https://github.com/wixtoolset/wix3/releases/tag/wix314rtm
 
 ## Configuring PostgreSQL
 
@@ -85,4 +96,4 @@ In that case, we will create the config file, make the backup directory, install
 
 Doing so, the user wouldn't need to download PostgreSQL and run preliminary SQL commands to give permisions and create the schema.
 
-This routine is implemented inside
+This routine is implemented inside `theLifesaver/TL.java` through the function `TL_initPostgres()`.
