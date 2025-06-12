@@ -9,11 +9,17 @@ import java.sql.SQLException;
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 public class CreateSupplyRecord {
+    public static String createSupplyRecord(Connection connect, int supplyType, Date srDate, float added,
+                                            float consumed) {
+        if (verify_precision(added) || verify_precision(consumed)) {
+            generateErrorMessage("Error at `createSupplyRecord()` in CreateSupplyRecord.", "The precision of added " +
+                    "and/or consumed is greater than 4.", "Ensure that the precision of added and consumed is at most" +
+                    " 4.", null);
+            return null;
+        }
 
-    public static String createSupplyRecord(Connection connect, int supplyType, Date srDate, float added, float consumed) {
-        // TODO: Add checker later on if the SupplyType DOES exist
-        // ---
-        try (PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (?, ?, ?, ?, ?)")) {
+        try (PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO Supply_Record " +
+                "(Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (?, ?, ?, ?, ?)")) {
             BigDecimal addedDecimal = BigDecimal.valueOf(added);
             BigDecimal consumedDecimal = BigDecimal.valueOf(consumed);
 
@@ -24,10 +30,20 @@ public class CreateSupplyRecord {
             preparedStatement.setBoolean(5, false); // always assumes Retrieved is False at creation
 
             preparedStatement.executeUpdate();
-            return String.format("INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (%d, '%s', %f, %f, %b);", supplyType, srDate, added, consumed, false);
+            return String.format("INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) " +
+                    "VALUES (%d, '%s', %f, %f, %b);", supplyType, srDate, added, consumed, false);
         } catch (SQLException e) {
-            generateErrorMessage("Error in `createSupplyRecord()` in `createSupplyRecord.", "SQL Exception error occurred", "", e);
+            generateErrorMessage("Error in `createSupplyRecord()` in `createSupplyRecord.", "SQL Exception error " +
+                    "occurred", "", e);
             return null;
         }
+    }
+
+    private static boolean verify_precision(float value) {
+        BigDecimal lf = new BigDecimal(value);
+        lf = lf.stripTrailingZeros();
+
+        // check if the number of decimal places is at most 4
+        return lf.scale() > 4;
     }
 }
