@@ -1,4 +1,4 @@
-package org.db_poultry.controller.util
+package org.db_poultry.util
 
 import java.sql.Date
 
