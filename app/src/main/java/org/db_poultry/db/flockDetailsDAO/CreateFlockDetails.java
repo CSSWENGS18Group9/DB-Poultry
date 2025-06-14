@@ -36,7 +36,10 @@ public class CreateFlockDetails {
         if (!validate_depletedCountIsPossible(conn, flock, depleted)) return null;
 
         int flockID = flock.getFlockId();
-        try (PreparedStatement preppedStatement = conn.prepareStatement("INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (?, ?, ?)")) {
+        try (PreparedStatement preppedStatement = conn.prepareStatement("""
+                INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (?, ?, ?)
+                """)) {
+
             // Sets the values to be added
             preppedStatement.setInt(1, flockID);
             preppedStatement.setDate(2, actualDetailDate);
@@ -45,7 +48,11 @@ public class CreateFlockDetails {
 
             return "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (" + flockID + ", " + actualDetailDate + ", " + depleted + ")"; // Returns the filled-in query
         } catch (SQLException e) {
-            generateErrorMessage("Error in `createFlockDetails()`.", "SQLException occurred.", "", e);
+            generateErrorMessage(
+                    "Error in `createFlockDetails()`.",
+                    "SQLException occurred.",
+                    "",
+                    e);
             return null;
         }
     }
