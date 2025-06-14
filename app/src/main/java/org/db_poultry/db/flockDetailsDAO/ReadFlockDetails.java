@@ -21,13 +21,24 @@ public class ReadFlockDetails {
      * @param fdEndDate   the end date of range (flock details)
      * @return a List of FlockDetails objects
      */
-    public static List<FlockDetails> getFlockDetailsFromDate(Connection conn, Date flockDate, Date fdStartDate, Date fdEndDate) {
+    public static List<FlockDetails> getFlockDetailsFromDate(Connection conn, Date flockDate, Date fdStartDate,
+                                                             Date fdEndDate) {
         if (fdStartDate.after(fdEndDate)) {
-            generateErrorMessage("Error in `getFlockDetailsFromDate()`.", "End date happens before start date.", "", null);
+            generateErrorMessage(
+                    "Error in `getFlockDetailsFromDate()`.",
+                    "End date happens before start date.",
+                    "",
+                    null
+            );
+
             return null;
         }
 
-        try (PreparedStatement preppedStatement = conn.prepareStatement("SELECT * FROM Flock_Details LEFT JOIN Flock ON Flock.Flock_ID = Flock_Details.Flock_ID WHERE (Flock.Starting_Date = ?) AND (Flock_Details.FD_Date BETWEEN ? AND ?) ORDER BY Flock_Details.FD_Date")) {
+        try (PreparedStatement preppedStatement = conn.prepareStatement("""
+                SELECT * FROM Flock_Details LEFT JOIN Flock ON Flock.Flock_ID = Flock_Details.Flock_ID 
+                WHERE (Flock.Starting_Date = ?) AND (Flock_Details.FD_Date BETWEEN ? AND ?) ORDER BY Flock_Details.
+                """)) {
+
             preppedStatement.setDate(1, flockDate);
             preppedStatement.setDate(2, fdStartDate);
             preppedStatement.setDate(3, fdEndDate);
@@ -36,13 +47,16 @@ public class ReadFlockDetails {
             try (ResultSet result = preppedStatement.executeQuery()) {
                 while (result.next()) {
                     // Gets results per row from the SQL output
-                    int flockDetailsID = result.getInt("Flock_Details_ID"); // Gets the output from the column named Flock_Details_ID
+                    int flockDetailsID = result.getInt("Flock_Details_ID"); // Gets the output from the column named
+                    // Flock_Details_ID
                     int flockID = result.getInt("Flock_ID"); // Gets the output from the column named Flock_ID
                     Date flockDetailsDate = result.getDate("FD_Date"); // Gets the output from the column named FD_Date
-                    int depletedCount = result.getInt("Depleted_Count"); // Gets the output from the column named Depleted_Count
+                    int depletedCount = result.getInt("Depleted_Count"); // Gets the output from the column named
+                    // Depleted_Count
 
 
-                    FlockDetails returnedFlockDetails = new FlockDetails(flockDetailsID, flockID, flockDetailsDate, depletedCount); // Creates a flock object to be returned
+                    FlockDetails returnedFlockDetails = new FlockDetails(flockDetailsID, flockID, flockDetailsDate,
+                            depletedCount); // Creates a flock object to be returned
 
                     flockDetails.add(returnedFlockDetails);
                 }
@@ -50,13 +64,31 @@ public class ReadFlockDetails {
 
             return flockDetails;
         } catch (SQLException e) {
-            generateErrorMessage("Error in `getFlockDetailsFromDate()`.", "SQLException occurred.", "", e);
+            generateErrorMessage(
+                    "Error in `getFlockDetailsFromDate()`.",
+                    "SQLException occurred.",
+                    "",
+                    e);
             return null;
         }
     }
 
+    /**
+     * returns a list of all flock details for a specific flock record
+     * @param conn the JDBC connection
+     * @param flockDate the date of the flock. We use this to determine which Flock we're going to use to limit our
+     *                  search scope. Recall that only a single FLOCK record can exist per time so the range of FDs of
+     *                  a specific flock is given by [Flock.date, Flock.next.date]
+     * @return a list of all flock details within that flock record
+     */
     public static List<FlockDetails> getFlockDetailsFromFlock(Connection conn, Date flockDate) {
-        try (PreparedStatement pstmt = conn.prepareStatement("SELECT fd.Flock_Details_ID, fd.Flock_ID, fd.FD_Date, fd.Depleted_Count FROM Flock_Details fd JOIN Flock f ON fd.Flock_ID = f.Flock_ID WHERE f.Starting_Date = ?")) {
+        try (PreparedStatement pstmt = conn.prepareStatement("""
+                SELECT fd.Flock_Details_ID, fd.Flock_ID, fd.FD_Date, fd.Depleted_Count
+                FROM Flock_Details fd
+                JOIN Flock f ON fd.Flock_ID = f.Flock_ID
+                WHERE f.Starting_Date = ?
+                """)) {
+
             pstmt.setDate(1, flockDate);
             ResultSet result = pstmt.executeQuery();
             List<FlockDetails> flockDetails = new ArrayList<>();
@@ -72,13 +104,34 @@ public class ReadFlockDetails {
 
             return flockDetails;
         } catch (SQLException e) {
-            generateErrorMessage("Error in `getFlockDetailsFromFlock()`.", "SQLException occurred.", "", e);
+            generateErrorMessage(
+                    "Error in `getFlockDetailsFromFlock()`.",
+                    "SQLException occurred.",
+                    "",
+                    e
+            );
+
             return null;
         }
     }
 
+    /**
+     * Gets the most recent Flock Details date for a specific flock
+     *
+     * @param conn the JDBC connection
+     * @param flockDate the flock date (the selector for the flock)
+     * @return a FlockDetails POJO is there exists, null otherwise
+     */
     public static FlockDetails getMostRecent(Connection conn, Date flockDate) {
-        try (PreparedStatement pstmt = conn.prepareStatement("SELECT fd.flock_details_id, fd.flock_id, fd.fd_date, fd.depleted_count FROM Flock_Details fd JOIN Flock f ON fd.Flock_ID = f.Flock_ID WHERE f.Starting_Date = ? ORDER BY fd.FD_Date DESC LIMIT 1")) {
+        try (PreparedStatement pstmt = conn.prepareStatement("""
+                SELECT fd.flock_details_id, fd.flock_id, fd.fd_date, fd.depleted_count
+                FROM Flock_Details fd
+                JOIN Flock f ON fd.flock_id = f.flock_id
+                WHERE f.starting_date = ?
+                ORDER BY fd.fd_date DESC
+                LIMIT 1
+                """)) {
+
             pstmt.setDate(1, flockDate);
 
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -89,12 +142,18 @@ public class ReadFlockDetails {
                     int depleted_count = rs.getInt("depleted_count");
 
                     return new FlockDetails(flock_details_id, flock_id, fd_date, depleted_count);
-                } else {
-                    return null; // No matching record found
                 }
+
+                return null; // No matching record found
             }
         } catch (Exception e) {
-            generateErrorMessage("Error in `getMostRecent()` in `ReadFlockDetails`.", "SQL Exception error occurred", "", e);
+            generateErrorMessage(
+                    "Error in `getMostRecent()` in `ReadFlockDetails`.",
+                    "SQL Exception error occurred",
+                    "",
+                    e
+            );
+
             return null;
         }
     }
@@ -111,7 +170,12 @@ public class ReadFlockDetails {
         FlockComplete flockChosen = flocks.get(flockID);
         int flockStartingCount = flockChosen.getFlock().getStartingCount();
 
-        try (PreparedStatement preppedStatement = connect.prepareStatement("SELECT SUM(Depleted_Count) AS Total_Count_Depleted FROM Flock_Details WHERE Flock_ID = ?")) {
+        try (PreparedStatement preppedStatement = connect.prepareStatement("""
+                SELECT SUM(Depleted_Count) AS Total_Count_Depleted
+                FROM Flock_Details
+                WHERE Flock_ID = ?
+                """)) {
+
             preppedStatement.setInt(1, flockID);
 
             int sum = 0; // Gets total depleted count
@@ -122,7 +186,13 @@ public class ReadFlockDetails {
             return sum; // Returns the total depleted count
 
         } catch (SQLException e) {
-            generateErrorMessage("Error in `cumulativeDepletedCount()`.", "SQLException occurred.", "", e);
+            generateErrorMessage(
+                    "Error in `cumulativeDepletedCount()`.",
+                    "SQLException occurred.",
+                    "",
+                    e
+            );
+
             return -1;
         }
 
