@@ -7,6 +7,7 @@ import org.db_poultry.db.DBConnect
 import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 import org.db_poultry.errors.generateErrorMessage
+import org.db_poultry.theLifesaver.Backup.TL_checkLastBackupDate
 import org.db_poultry.theLifesaver.TL.*
 import java.sql.Connection
 
@@ -87,13 +88,7 @@ fun main() {
     TL_checkLastBackupDate()
 
     // Open MainFrame (index GUI)
-//    app.openMainFrame()
-    CreateSupplyType.createSupplyType(app.getConnection(), "Hello", "Hello");
-    CreateSupplyType.createSupplyType(app.getConnection(), "World", "World");
-    CreateSupplyType.createSupplyType(app.getConnection(), "Hello", "Hello");
-
-    val x = ReadSupplyType.getAllSupplyTypes(app.getConnection())
-    for (t in x) println(t.name)
+    app.openMainFrame()
 
     // ==================================================
     // Keep this here but remove before shipping or every release
