@@ -4,11 +4,10 @@ import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
-import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
-import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.theLifesaver.Backup.TL_checkLastBackupDate
-import org.db_poultry.theLifesaver.TL.*
+import org.db_poultry.theLifesaver.TL.TL_firstOpen
+import org.db_poultry.theLifesaver.TL.wipe
 import java.sql.Connection
 
 class App {
@@ -84,7 +83,7 @@ fun main() {
     app.start()
 
     // theLifesaver (backup stuff)
-    TL_firstOpen(app.getConnection())
+    TL_firstOpen(app)
     TL_checkLastBackupDate()
 
     // Open MainFrame (index GUI)
