@@ -10,13 +10,14 @@ import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 public class CreateSupplyRecord {
     public static String createSupplyRecord(Connection connect, int supplyType, Date srDate, float added,
-                                            float consumed) {
+                                            float consumed, boolean retrieved) {
         if (verify_precision(added) || verify_precision(consumed)) {
             generateErrorMessage("Error at `createSupplyRecord()` in CreateSupplyRecord.", "The precision of added " +
                     "and/or consumed is greater than 4.", "Ensure that the precision of added and consumed is at most" +
                     " 4.", null);
             return null;
         }
+
 
         try (PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO Supply_Record " +
                 "(Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (?, ?, ?, ?, ?)")) {
@@ -27,17 +28,19 @@ public class CreateSupplyRecord {
             preparedStatement.setDate(2, srDate);
             preparedStatement.setBigDecimal(3, addedDecimal);
             preparedStatement.setBigDecimal(4, consumedDecimal);
-            preparedStatement.setBoolean(5, false); // always assumes Retrieved is False at creation
+            preparedStatement.setBoolean(5, retrieved);
 
             preparedStatement.executeUpdate();
-            return String.format("INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) " +
-                    "VALUES (%d, '%s', %f, %f, %b);", supplyType, srDate, added, consumed, false);
+            return String.format("INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved)" +
+                    " " +
+                    "VALUES (%d, '%s', %f, %f, %b);", supplyType, srDate, added, consumed, retrieved);
         } catch (SQLException e) {
             generateErrorMessage("Error in `createSupplyRecord()` in `createSupplyRecord.", "SQL Exception error " +
                     "occurred", "", e);
             return null;
         }
     }
+
 
     private static boolean verify_precision(float value) {
         BigDecimal lf = new BigDecimal(value);
