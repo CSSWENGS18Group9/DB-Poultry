@@ -1,6 +1,7 @@
 package org.db_poultry.db.supplyTypeDAO;
 
 import org.db_poultry.pojo.SupplyPOJO.SupplyType;
+import org.jetbrains.annotations.Nullable;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,22 +36,38 @@ public class ReadSupplyType {
         try (PreparedStatement pstmt = conn.prepareStatement("SELECT supply_type_id, supply_name, unit FROM Supply_Types WHERE supple_name = ?")) {
             pstmt.setString(1, name);
 
-            try (ResultSet rs = pstmt.executeQuery()) {
-                SupplyType supplyType = null;
-
-                while (rs.next()) {
-                    int supplyTypeId = rs.getInt("supply_type_id");
-                    String supplyTypeName = rs.getString("supply_name");
-                    String unit = rs.getString("unit");
-                    supplyType = new SupplyType(supplyTypeId, supplyTypeName, unit);
-                }
-
-                return supplyType;
-            }
+            return getSupplyType(pstmt);
 
         } catch (SQLException e){
             generateErrorMessage("Error in `getSupplyType()` in `ReadSupplyType`.", "SQL Exception error occurred", "", e);
             return null;
+        }
+    }
+
+    public static SupplyType getSupplyTypeById(Connection conn, int id) {
+        try (PreparedStatement pstmt = conn.prepareStatement("SELECT supply_type_id, supply_name, unit FROM Supply_Types WHERE supple_type_id = ?")){
+            pstmt.setInt(1, id);
+
+            return getSupplyType(pstmt);
+        } catch (SQLException e) {
+            generateErrorMessage("Error in `getSupplyTypeByID() in `ReadSupplyType`.", "SQL Exception error occurred", "", e);
+            return null;
+        }
+    }
+
+    @Nullable
+    private static SupplyType getSupplyType(PreparedStatement pstmt) throws SQLException {
+        try (ResultSet rs = pstmt.executeQuery()) {
+            SupplyType supplyType = null;
+
+            while (rs.next()) {
+                int supplyTypeId = rs.getInt("supply_type_id");
+                String supplyTypeName = rs.getString("supply_name");
+                String unit = rs.getString("unit");
+                supplyType = new SupplyType(supplyTypeId, supplyTypeName, unit);
+            }
+
+            return supplyType;
         }
     }
 }
