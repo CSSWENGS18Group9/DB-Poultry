@@ -36,7 +36,7 @@ public class ReadFlockDetails {
 
         try (PreparedStatement preppedStatement = conn.prepareStatement("""
                 SELECT * FROM Flock_Details LEFT JOIN Flock ON Flock.Flock_ID = Flock_Details.Flock_ID 
-                WHERE (Flock.Starting_Date = ?) AND (Flock_Details.FD_Date BETWEEN ? AND ?) ORDER BY Flock_Details.
+                WHERE (Flock.Starting_Date = ?) AND (Flock_Details.FD_Date BETWEEN ? AND ?) ORDER BY Flock_Details.FD_Date
                 """)) {
 
             preppedStatement.setDate(1, flockDate);
