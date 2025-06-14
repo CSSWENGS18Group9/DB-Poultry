@@ -11,6 +11,12 @@ import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 public class ReadSupplyRecord {
 
+    /**
+     * Returns a supply complete object from a result set. Not to be used out of scope
+     *
+     * @param rs the result set
+     * @return the supply complete object from the values of the sr
+     */
     private static SupplyComplete getFromRS(ResultSet rs) throws SQLException {
         int supply_id = rs.getInt("Supply_ID");
         int supply_type_id = rs.getInt("Supply_Type_ID");
@@ -26,6 +32,12 @@ public class ReadSupplyRecord {
 
     }
 
+    /**
+     * Returns an ArrayList of supply complete objects given some prepared statement. Not to be used out of scope
+     *
+     * @param pstmt the prepared statement
+     * @return the array list of supple complete objects
+     */
     private static ArrayList<SupplyComplete> readList(PreparedStatement pstmt) {
         try (ResultSet rs = pstmt.executeQuery()) {
             ArrayList<SupplyComplete> records = new ArrayList<>();
@@ -34,40 +46,95 @@ public class ReadSupplyRecord {
                 records.add(getFromRS(rs));
             }
             return records;
+
         } catch (SQLException e) {
-            generateErrorMessage("Error in `readList()` in `ReadSupplyRecord`.", "SQL Exception error occurred", "", e);
+            generateErrorMessage(
+                    "Error in `readList()` in `ReadSupplyRecord`.",
+                    "SQL Exception error occurred",
+                    "",
+                    e
+            );
+
             return null;
         }
     }
 
+    /**
+     * Returns an array list of supply objects given some date
+     *
+     * @param conn the JDBC connection
+     * @param date the date
+     * @return ArrayList of supply objects, {null} when something is caught
+     */
     public static ArrayList<SupplyComplete> getFromDate(Connection conn, Date date) {
-        try (PreparedStatement pstmt =
-                     conn.prepareStatement("SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, st" + ".Supply_Name, " +
-                             "st.Unit, sr.Added, sr.Consumed, sr.Retrieved FROM Supply_Record sr JOIN Supply_Type st" + " ON sr.Supply_Type_ID = st.Supply_Type_ID WHERE sr.SR_Date = ?")) {
+        try (PreparedStatement pstmt = conn.prepareStatement("""
+                SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, st.Supply_Name, st.Unit, sr.Added, 
+                sr.Consumed, sr.Retrieved FROM Supply_Record sr JOIN Supply_Type st 
+                ON sr.Supply_Type_ID = st.Supply_Type_ID WHERE sr.SR_Date = ?
+                """)) {
+
             pstmt.setDate(1, date);
 
             return readList(pstmt);
         } catch (SQLException e) {
-            generateErrorMessage("Error in `getFromDate()` in `ReadSupplyRecord`.", "SQL Exception error occurred",
-                    "", e);
+            generateErrorMessage(
+                    "Error in `getFromDate()` in `ReadSupplyRecord`.",
+                    "SQL Exception error occurred",
+                    "",
+                    e
+            );
+
             return null;
         }
     }
 
+    /**
+     * Returns an array list of supply objects given some supply name
+     *
+     * @param conn       the JDBC connection
+     * @param supplyName the supply name
+     * @return ArrayList of supply objects, {null} when something is caught
+     */
     public static ArrayList<SupplyComplete> getFromName(Connection conn, String supplyName) {
-        try (PreparedStatement pstmt =
-                     conn.prepareStatement("SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, st" + ".Supply_Name, " +
-                             "st.Unit, sr.Added, sr.Consumed, sr.Retrieved FROM Supply_Record sr JOIN Supply_Type st" + " ON sr.Supply_Type_ID = st.Supply_Type_ID WHERE st.Supply_Name = ?;")) {
+        try (PreparedStatement pstmt = conn.prepareStatement("""
+                    SELECT
+                        sr.Supply_ID,
+                        sr.Supply_Type_ID,
+                        sr.SR_Date,
+                        st.Supply_Name,
+                        st.Unit,
+                        sr.Added,
+                        sr.Consumed,
+                        sr.Retrieved
+                    FROM Supply_Record sr
+                    JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID
+                    WHERE st.Supply_Name = ?;
+                """)) {
+
             pstmt.setString(1, supplyName);
 
             return readList(pstmt);
+
         } catch (SQLException e) {
-            generateErrorMessage("Error in `getFromName()` in `ReadSupplyRecord`.", "SQL Exception error occurred",
-                    "", e);
+            generateErrorMessage(
+                    "Error in `getFromName()` in `ReadSupplyRecord`.",
+                    "SQL Exception error occurred",
+                    "",
+                    e
+            );
+
             return null;
         }
     }
 
+    /**
+     * Gets a single supply complete object (if it exists) given some date and supply name
+     *
+     * @param conn       the JDBC connection
+     * @param date       the date
+     * @param supplyName the supply name
+     * @return the supply object, {null} if it doesn't exist
+     */
     public static SupplyComplete getOneByDateAndName(Connection conn, Date date, String supplyName) {
         try (PreparedStatement pstmt =
                      conn.prepareStatement("SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, st" + ".Supply_Name, " +
@@ -78,9 +145,9 @@ public class ReadSupplyRecord {
             ArrayList<SupplyComplete> result = readList(pstmt);
             if (result != null && !result.isEmpty()) {
                 return result.getFirst();
-            } else {
-                return null;
             }
+
+            return null;
         } catch (SQLException e) {
             generateErrorMessage("Error in `getOneByDateAndName()` in `ReadSupplyRecord`.", "SQL Exception error " +
                     "occurred", "", e);
@@ -88,11 +155,30 @@ public class ReadSupplyRecord {
         }
     }
 
+    /**
+     * Get the most recent record from a supply name
+     *
+     * @param conn       the JDBC connection
+     * @param supplyName the supple name
+     * @return the mist recent supply object, {null} if it doesn't exist
+     */
     public static SupplyComplete getMostRecentFromName(Connection conn, String supplyName) {
-        try (PreparedStatement pstmt = conn.prepareStatement("SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, st" +
-                ".Supply_Name, st.Unit, sr.Added, sr.Consumed, sr.Retrieved FROM Supply_Record sr JOIN" +
-                " Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID WHERE sr.Supply_Name = ? ORDER BY sr" +
-                ".SR_Date DESC LIMIT 1")) {
+        try (PreparedStatement pstmt = conn.prepareStatement("""
+                    SELECT
+                        sr.Supply_ID,
+                        sr.Supply_Type_ID,
+                        sr.SR_Date,
+                        st.Supply_Name,
+                        st.Unit,
+                        sr.Added,
+                        sr.Consumed,
+                        sr.Retrieved
+                    FROM Supply_Record sr
+                    JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID
+                    WHERE st.Supply_Name = ?
+                    ORDER BY sr.SR_Date DESC
+                    LIMIT 1
+                """)) {
 
             pstmt.setString(1, supplyName);
 
@@ -104,17 +190,41 @@ public class ReadSupplyRecord {
                 return null;
             }
         } catch (SQLException e) {
-            generateErrorMessage("Error in `getMostRecentFromName()` in `ReadSupplyRecord`.", "SQL Exception error " +
-                    "occurred", "", e);
+            generateErrorMessage(
+                    "Error in `getMostRecentFromName()` in `ReadSupplyRecord`.",
+                    "SQL Exception error occurred",
+                    "",
+                    e
+            );
+
             return null;
         }
     }
 
+    /**
+     * Get the most recent record from a supply ID
+     *
+     * @param conn the JDBC connection
+     * @param ID   the supply ID
+     * @return the mist recent supply object, {null} if it doesn't exist
+     */
     public static SupplyComplete getMostRecentFromID(Connection conn, int ID) {
-        try (PreparedStatement pstmt = conn.prepareStatement("SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, st" +
-                ".Supply_Name, st.Unit, sr.Added, sr.Consumed, sr.Retrieved FROM Supply_Record sr JOIN" +
-                " Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID WHERE sr.Supply_Type_ID = ? ORDER BY sr" +
-                ".SR_Date DESC LIMIT 1")) {
+        try (PreparedStatement pstmt = conn.prepareStatement("""
+                    SELECT
+                        sr.Supply_ID,
+                        sr.Supply_Type_ID,
+                        sr.SR_Date,
+                        st.Supply_Name,
+                        st.Unit,
+                        sr.Added,
+                        sr.Consumed,
+                        sr.Retrieved
+                    FROM Supply_Record sr
+                    JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID
+                    WHERE sr.Supply_Type_ID = ?
+                    ORDER BY sr.SR_Date DESC
+                    LIMIT 1
+                """)) {
 
             pstmt.setInt(1, ID);
 
@@ -126,13 +236,26 @@ public class ReadSupplyRecord {
                 return null;
             }
         } catch (SQLException e) {
-            generateErrorMessage("Error in `getMostRecentFromName()` in `ReadSupplyRecord`.", "SQL Exception error " +
-                    "occurred", "", e);
+            generateErrorMessage(
+                    "Error in `getMostRecentFromName()` in `ReadSupplyRecord`.",
+                    "SQL Exception error occurred",
+                    "",
+                    e
+            );
+
             return null;
         }
     }
 
 
+    /**
+     * Gets the current count of a supply given some date and supply type id. More on this on the database wiki
+     *
+     * @param conn         the JDBC connection
+     * @param supplyTypeID the supply type id
+     * @param currentDate  the current date
+     * @return
+     */
     public static BigDecimal getCurrentCountForDate(Connection conn, int supplyTypeID, Date currentDate) {
         try (PreparedStatement pstmt = conn.prepareStatement("""
                 WITH last_retrieved AS (
@@ -164,6 +287,7 @@ public class ReadSupplyRecord {
                 SELECT COALESCE(SUM(Added) - SUM(Consumed), 0) AS currentCount
                 FROM range_records
                 """)) {
+
             pstmt.setInt(1, supplyTypeID);
             pstmt.setDate(2, currentDate);
             pstmt.setInt(3, supplyTypeID);
@@ -174,12 +298,17 @@ public class ReadSupplyRecord {
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getBigDecimal("currentCount").setScale(4, RoundingMode.HALF_UP);
-            } else {
-                return null;
             }
+
+            return null;
         } catch (SQLException e) {
-            generateErrorMessage("Error in `getCurrentCountForDate()` in `ReadSupplyRecord`.",
-                    "SQL Exception occurred", "", e);
+            generateErrorMessage(
+                    "Error in `getCurrentCountForDate()` in `ReadSupplyRecord`.",
+                    "SQL Exception occurred",
+                    "",
+                    e
+            );
+
             return null;
         }
     }
