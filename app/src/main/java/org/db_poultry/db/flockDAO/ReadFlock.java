@@ -134,6 +134,13 @@ public class ReadFlock {
         }
     }
 
+    /**
+     * Get a single flock record from a specified date
+     *
+     * @param conn the JDBC connection
+     * @param date the date
+     * @return returns the flock if it exists, otherwise null
+     */
     public static Flock getFlockFromADate(Connection conn, Date date) {
         // simply call `getFlocksFromDate` but use the same startDate and endDate
         List<Flock> ret = getFlocksFromDate(conn, date, date);
