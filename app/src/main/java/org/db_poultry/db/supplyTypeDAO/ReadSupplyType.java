@@ -33,7 +33,7 @@ public class ReadSupplyType {
     }
 
     public static SupplyType getSupplyTypeByName(Connection conn, String name) {
-        try (PreparedStatement pstmt = conn.prepareStatement("SELECT supply_type_id, supply_name, unit FROM Supply_Types WHERE supple_name = ?")) {
+        try (PreparedStatement pstmt = conn.prepareStatement("SELECT supply_type_id, supply_name, unit FROM Supply_Type WHERE supply_name = ?")) {
             pstmt.setString(1, name);
 
             return getSupplyType(pstmt);
@@ -45,7 +45,7 @@ public class ReadSupplyType {
     }
 
     public static SupplyType getSupplyTypeById(Connection conn, int id) {
-        try (PreparedStatement pstmt = conn.prepareStatement("SELECT supply_type_id, supply_name, unit FROM Supply_Types WHERE supple_type_id = ?")){
+        try (PreparedStatement pstmt = conn.prepareStatement("SELECT supply_type_id, supply_name, unit FROM Supply_Type WHERE supply_type_id = ?")){
             pstmt.setInt(1, id);
 
             return getSupplyType(pstmt);
@@ -56,7 +56,7 @@ public class ReadSupplyType {
     }
 
     @Nullable
-    private static SupplyType getSupplyType(PreparedStatement pstmt) throws SQLException {
+    private static SupplyType getSupplyType(PreparedStatement pstmt) {
         try (ResultSet rs = pstmt.executeQuery()) {
             SupplyType supplyType = null;
 
@@ -68,6 +68,9 @@ public class ReadSupplyType {
             }
 
             return supplyType;
+        } catch (SQLException e) {
+            generateErrorMessage("Error in `getSupplyType() in `ReadSupplyType`.", "SQL Exception error occurred", "", e);
+            return null;
         }
     }
 }
