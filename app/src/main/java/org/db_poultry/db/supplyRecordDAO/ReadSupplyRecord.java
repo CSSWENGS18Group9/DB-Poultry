@@ -137,8 +137,13 @@ public class ReadSupplyRecord {
      */
     public static SupplyComplete getOneByDateAndName(Connection conn, Date date, String supplyName) {
         try (PreparedStatement pstmt =
-                     conn.prepareStatement("SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, st" + ".Supply_Name, " +
-                             "st.Unit, sr.Added, sr.Consumed, sr.Retrieved FROM Supply_Record sr JOIN Supply_Type st" + " ON sr.Supply_Type_ID = st.Supply_Type_ID WHERE st.Supply_Name = ? AND sr.SR_Date = ?")) {
+                     conn.prepareStatement("""
+                             SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, 
+                                    st.Supply_Name, st.Unit, sr.Added, sr.Consumed, sr.Retrieved 
+                             FROM Supply_Record sr JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID 
+                             WHERE st.Supply_Name = ? AND sr.SR_Date = ?
+                             """)) {
+
             pstmt.setString(1, supplyName);
             pstmt.setDate(2, date);
 
@@ -149,8 +154,13 @@ public class ReadSupplyRecord {
 
             return null;
         } catch (SQLException e) {
-            generateErrorMessage("Error in `getOneByDateAndName()` in `ReadSupplyRecord`.", "SQL Exception error " +
-                    "occurred", "", e);
+            generateErrorMessage(
+                    "Error in `getOneByDateAndName()` in `ReadSupplyRecord`.",
+                    "SQL Exception error occurred",
+                    "",
+                    e
+            );
+
             return null;
         }
     }

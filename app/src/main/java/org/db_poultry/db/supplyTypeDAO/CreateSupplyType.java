@@ -17,6 +17,7 @@ public class CreateSupplyType {
      * @return the SQL query as a string if it worked, null otherwise
      */
     public static String createSupplyType(Connection conn, String supplyName, String unit) {
+        // transform the unit to a valid unit (no whitespace and stuff). If its null, then the unit is invalid
         String validUnit = validation_unitIsValid(unit);
         if (validUnit == null) {
             generateErrorMessage(
@@ -27,7 +28,6 @@ public class CreateSupplyType {
             );
 
             return null;
-
         }
 
         if (validation_nameIsUnique(conn, supplyName)) {
@@ -41,7 +41,7 @@ public class CreateSupplyType {
             return null;
 
         }
-
+    
         try (PreparedStatement psmt = conn.prepareStatement("""
                 INSERT INTO supply_type (supply_name, unit) VALUES (?, ?)
                 """)) {

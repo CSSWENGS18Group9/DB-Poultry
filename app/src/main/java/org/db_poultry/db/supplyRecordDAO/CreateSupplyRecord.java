@@ -63,7 +63,6 @@ public class CreateSupplyRecord {
             );
 
             return null;
-
         }
 
         // if retrieved is true set added  to 0.0000 since we don't really care about this value
@@ -83,6 +82,8 @@ public class CreateSupplyRecord {
                 return null;
             }
         } else if (verify_numericValues(added, consumed, supplyTypeID, srDate, connect)) {
+            // if retrieved is false and the numeric values are INVALID
+
             generateErrorMessage(
                     "Error at `createSupplyRecord()` in `CreateSupplyRecord`.",
                     "Added and consumed values are invalid.",
@@ -93,6 +94,9 @@ public class CreateSupplyRecord {
             return null;
         }
 
+        // check the precision, recall that we have 12 total numerical positions, 4 of which are reserved for
+        // floating-point values. So (12-4) non-decimal digits, and 4 decimal digits
+        // check if this is the case, if at least one is invalid stop
         if (verify_precision(added) || verify_precision(consumed)) {
             generateErrorMessage(
                     "Error at `createSupplyRecord()` in CreateSupplyRecord.",
@@ -104,8 +108,11 @@ public class CreateSupplyRecord {
             return null;
         }
 
-        try (PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO Supply_Record " +
-                "(Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (?, ?, ?, ?, ?)")) {
+        // if all tests pass then run the query
+        try (PreparedStatement preparedStatement = connect.prepareStatement("""
+                INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (?, ?, ?, ?, ?)
+                """)) {
+
             preparedStatement.setInt(1, supplyTypeID);
             preparedStatement.setDate(2, srDate);
             preparedStatement.setBigDecimal(3, added);
@@ -116,15 +123,18 @@ public class CreateSupplyRecord {
             return String.format("INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved)" +
                     " VALUES (%d, '%s', %f, %f, %b);", supplyTypeID, srDate, added, consumed, retrieved);
         } catch (SQLException e) {
-            generateErrorMessage("Error in `createSupplyRecord()` in `createSupplyRecord.", "SQL Exception error " +
-                    "occurred", "", e);
+            generateErrorMessage(
+                    "Error in `createSupplyRecord()` in `createSupplyRecord.",
+                    "SQL Exception error occurred",
+                    "",
+                    e);
             return null;
         }
     }
 
     /**
      * Validation for the precision of the values, checks if there is MORE 4 decimal places. So, it checks if it's
-     * incorrect
+     * incorrect. Check if there's 4 digits pastthe decimal point.
      *
      * @param value the numeric value (added or consumed)
      * @return {true} if it is wrong, {false} otherwise
@@ -134,9 +144,10 @@ public class CreateSupplyRecord {
     }
 
     /**
-     * Validation if the supply type does exist, checks if it does not exist.
+     * Validate the supply type does exist.
+     * This returns TRUE if it does not exist, FALSE otherwise.
      *
-     * @param conn the JDBC connection
+     * @param conn         the JDBC connection
      * @param supplyTypeID the supply type to check
      * @return {true} if it does not exist, {false} otherwise
      */
@@ -145,18 +156,19 @@ public class CreateSupplyRecord {
     }
 
     /**
-     * Checks if the date of the SR to be inserted is BEFORE the MOST RECENT SR for that Supply Type. Since we want dates
-     * that are only after (it checks for the wrong case)
+     * Checks if the date of the SR to be inserted is BEFORE the MOST RECENT SR for that Supply Type. Since we want
+     * dates that are only after (it checks for the wrong case)
      *
-     * @param conn the JDBC connection
+     * @param conn         the JDBC connection
      * @param supplyTypeID the supply type of the sr
-     * @param srDate the date of the sr
+     * @param srDate       the date of the sr
      * @return {true} if the most recent is before the srDate, {false} otherwise
      */
     private static boolean verify_srDateAfterMostRecent(Connection conn, int supplyTypeID, Date srDate) {
         // get the most recent supply record using the date
         SupplyComplete sr = ReadSupplyRecord.getMostRecentFromID(conn, supplyTypeID);
 
+        // if the SR is null then return
         if (sr == null) {
             return false;
         }
@@ -166,14 +178,14 @@ public class CreateSupplyRecord {
 
     /**
      * Checks if the numerical values are invalid:
-     *  - Negative
-     *  - Consumed DOES NOT make sense; that is, it doesn't make the currentCount go negative
+     * - Negative
+     * - Consumed DOES NOT make sense; that is, it doesn't make the currentCount go negative
      *
-     * @param added the number of added supplies
-     * @param consumed the number of consumed supplied
+     * @param added        the number of added supplies
+     * @param consumed     the number of consumed supplied
      * @param supplyTypeID the supply id of the sr
-     * @param srDate the date of the sr
-     * @param connection the JDBC connection
+     * @param srDate       the date of the sr
+     * @param connection   the JDBC connection
      * @return {true} if the values are invalid, {false} otherwise
      */
     private static boolean verify_numericValues(BigDecimal added, BigDecimal consumed, int supplyTypeID, Date srDate,
@@ -183,8 +195,7 @@ public class CreateSupplyRecord {
             return true;
         }
 
-        BigDecimal currentCount = ReadSupplyRecord.getCurrentCountForDate(connection, supplyTypeID,
-                srDate);
+        BigDecimal currentCount = ReadSupplyRecord.getCurrentCountForDate(connection, supplyTypeID, srDate);
 
         // Check if consuming more than what's currently available
         return added.add(currentCount).subtract(consumed).compareTo(BigDecimal.ZERO) < 0;

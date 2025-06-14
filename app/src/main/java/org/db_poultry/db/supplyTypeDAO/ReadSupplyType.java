@@ -81,12 +81,15 @@ public class ReadSupplyType {
      * Gets a supply type by its id.
      *
      * @param conn the JDBC connection
-     * @param id the id of the supply
+     * @param id   the id of the supply
      * @return the Supply Type object (if it exists), {null} otherwise
      */
     public static SupplyType getSupplyTypeById(Connection conn, int id) {
-        try (PreparedStatement pstmt = conn.prepareStatement("SELECT supply_type_id, supply_name, unit FROM " +
-                "Supply_Type WHERE supply_type_id = ?")) {
+        try (PreparedStatement pstmt = conn.prepareStatement("""
+                SELECT supply_type_id, supply_name, unit FROM Supply_Type 
+                WHERE supply_type_id = ?"""
+        )) {
+
             pstmt.setInt(1, id);
 
             return getSupplyType(pstmt);
@@ -104,6 +107,7 @@ public class ReadSupplyType {
 
     /**
      * Gets the supply type object given some prepared statement. Not to be used outside of scope.
+     *
      * @param pstmt the prepared statement
      * @return the supply type object, {null} if it does not exist
      */
