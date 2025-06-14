@@ -46,7 +46,10 @@ public class CreateFlockDetails {
             preppedStatement.setInt(3, depleted);
             preppedStatement.executeUpdate(); // Executes query
 
-            return "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (" + flockID + ", " + actualDetailDate + ", " + depleted + ")"; // Returns the filled-in query
+            return String.format(
+                    "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (%d, '%s', %d)",
+                    flockID, actualDetailDate.toString(), depleted
+            );
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `createFlockDetails()`.",
@@ -57,6 +60,15 @@ public class CreateFlockDetails {
         }
     }
 
+    /**
+     * Validation for the depleted count, check if the depleted count makes pre-existing numeric values
+     * make sense
+     *
+     * @param conn the JDBC connection
+     * @param flock the flock
+     * @param depleted the depleted count
+     * @return {true} if it is possible, {false} otherwise
+     */
     private static boolean validate_depletedCountIsPossible(Connection conn, Flock flock, int depleted) {
         // check first if depleted is 0 or a positive integer
         if (depleted < 0) return false;
@@ -77,6 +89,14 @@ public class CreateFlockDetails {
         return flock.getStartingCount() - totalDepleted >= depleted;
     }
 
+    /**
+     * Validates if the date is valid.
+     *
+     * @param conn the JDBC connection
+     * @param flock the flock
+     * @param detailDate the date of the flock detail
+     * @return returns a valid date or null
+     */
     private static Date validate_dateIsValid(Connection conn, Flock flock, Date detailDate) {
         Date actualDate = detailDate != null ? detailDate : Date.valueOf(java.time.LocalDate.now());
 
