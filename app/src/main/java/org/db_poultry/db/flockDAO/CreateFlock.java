@@ -37,7 +37,10 @@ public class CreateFlock {
             preppedStatement.setDate(2, actualDate);
             preppedStatement.executeUpdate(); // Executes query
 
-            return "INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (" + startCount + ", " + actualDate + ")";
+            return String.format(
+                    "INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (%d, '%s')",
+                    startCount, actualDate.toString()
+            );
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `createFlock()`.",
