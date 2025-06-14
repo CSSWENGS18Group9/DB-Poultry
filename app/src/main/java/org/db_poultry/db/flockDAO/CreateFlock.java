@@ -19,21 +19,36 @@ public class CreateFlock {
         Date actualDate = validate_dateIsValid(connect, startDate);
         // validate the data first, if at least one fails, don't create
         if (validate_startCountPositiveOrZero(startCount) == -1 || actualDate == null) {
-            generateErrorMessage("Error in `createFlock()` in `CreateFlock`.", "There is an invalid parameter in creating a flock. ", "Verify that startDate is 0 or a positive integer and startDate is valid", null);
+            generateErrorMessage(
+                    "Error in `createFlock()` in `CreateFlock`.",
+                    "There is an invalid parameter in creating a flock. ",
+                    "Verify that startDate is 0 or a positive integer and startDate is valid",
+                    null);
 
             return null;
         }
 
         try {
-            PreparedStatement preppedStatement = connect.prepareStatement("INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (?, ?)");
+            PreparedStatement preppedStatement = connect.prepareStatement("""
+                    INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (?, ?)
+                    """);
 
             preppedStatement.setInt(1, startCount);
             preppedStatement.setDate(2, actualDate);
             preppedStatement.executeUpdate(); // Executes query
 
-            return "INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (" + startCount + ", " + actualDate + ")";
+            return String.format(
+                    "INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (%d, '%s')",
+                    startCount, actualDate.toString()
+            );
         } catch (SQLException e) {
-            generateErrorMessage("Error in `createFlock()`.", "SQLException occurred.", "", e);
+            generateErrorMessage(
+                    "Error in `createFlock()`.",
+                    "SQLException occurred.",
+                    "",
+                    e
+            );
+
             return null;
         }
     }
@@ -76,7 +91,13 @@ public class CreateFlock {
 
             if (overlaps != 0) return null;
         } catch (SQLException e) {
-            generateErrorMessage("Error in `validate_dateIsValid()`.", "SQLException occurred.", "", e);
+            generateErrorMessage(
+                    "Error in `validate_dateIsValid()`.",
+                    "SQLException occurred.",
+                    "",
+                    e
+            );
+
             return null;
         }
 
