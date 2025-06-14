@@ -88,7 +88,10 @@ public class CreateFlockDetails {
         // [i_Flock.startingDate, j_Flock.startingDate] where i < j (i comes before j)
         Date nextStartDate = null;
 
-        try (PreparedStatement drStmt = conn.prepareStatement("SELECT MIN(Starting_Date) AS nextStartDate FROM Flock WHERE Starting_Date > ?")) {
+        try (PreparedStatement drStmt = conn.prepareStatement("""
+                SELECT MIN(Starting_Date) AS nextStartDate FROM Flock WHERE Starting_Date > ?
+                """)) {
+
             drStmt.setDate(1, flock.getStartingDate());
             try (ResultSet rs = drStmt.executeQuery()) {
                 if (rs.next()) {
@@ -101,7 +104,8 @@ public class CreateFlockDetails {
 
         // if the actualDate is out of scope (that is, it is in another Flock not in the Flock that we want)
         // say the Date is invalid
-        if (nextStartDate != null && (actualDate.after(nextStartDate) || actualDate.equals(nextStartDate))) return null;
+        if (nextStartDate != null && (actualDate.after(nextStartDate) || actualDate.equals(nextStartDate)))
+            return null;
 
         // check if the inserted date is not overlapping with another flock range or another detail
         // we defn a flock range as the date range from [Flock.startDate, Flock.(last)Flock Detail.detail_date]
@@ -111,6 +115,7 @@ public class CreateFlockDetails {
                 BETWEEN Flock.Starting_Date AND COALESCE(Details.endDate, Flock.Starting_Date)
                 """.stripIndent();
         int overlaps = 0;
+
         try (PreparedStatement coStmt = conn.prepareStatement(checkOverlapQuery)) {
             coStmt.setDate(1, flock.getStartingDate());
             try (ResultSet rs = coStmt.executeQuery()) {
