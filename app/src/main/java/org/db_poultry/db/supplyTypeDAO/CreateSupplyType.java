@@ -16,7 +16,7 @@ public class CreateSupplyType {
             return null;
         }
 
-        String validName = validation_unitIsValid(supplyName);
+        String validName = validation_nameIsUnique(supplyName);
         if (validName == null) {
             generateErrorMessage("Error in `createSupplyType()` in `CreateSupplyTypr`", "Supply name is not unique",
                     "Make sure the new supply name is unique", null);
