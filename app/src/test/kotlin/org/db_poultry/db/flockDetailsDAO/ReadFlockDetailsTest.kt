@@ -58,7 +58,7 @@ class ReadFlockDetailsTest {
         val dateThree = Date.valueOf("1000-07-01")
 
         CreateFlock.createFlock(
-            conn, 100, dateOne
+            conn, 100, dateFlock
         )
 
         CreateFlockDetails.createFlockDetails(
@@ -85,15 +85,17 @@ class ReadFlockDetailsTest {
         val dateThree = Date.valueOf("1000-10-01")
 
         CreateFlock.createFlock(
-            conn, 15, dateOne
+            conn, 15, dateFlock
         )
 
         CreateFlockDetails.createFlockDetails(
             conn, dateFlock, dateOne, 5
         )
+
         CreateFlockDetails.createFlockDetails(
             conn, dateFlock, dateTwo, 10
         )
+
         CreateFlockDetails.createFlockDetails(
             conn, dateFlock, dateThree, 15
         )
@@ -101,6 +103,7 @@ class ReadFlockDetailsTest {
         val result = ReadFlockDetails.getCumulativeDepletedCount(
             conn, 1
         )
+
         Assertions.assertEquals(15, result)
     }
 
