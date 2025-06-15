@@ -36,7 +36,7 @@ class CreateFlockDetailsTest {
 
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 15)
 
-        assertEquals(result, "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, 1000-01-03, 15)")
+        assertEquals(result, "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, '1000-01-03', 15)")
     }
 
     @Test
@@ -47,8 +47,7 @@ class CreateFlockDetailsTest {
         CreateFlock.createFlock(conn, 999, flockDate)
 
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 0)
-
-        assertEquals(result, "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, 1000-01-03, 0)")
+        assertEquals(result, "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, '1000-01-03', 0)")
     }
 
     @Test
@@ -165,7 +164,7 @@ class CreateFlockDetailsTest {
 
         val result = CreateFlockDetails.createFlockDetails(conn, flockOneDate, fdDateTwo, 20)
 
-        assertEquals(result, "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, 1000-03-01, 20)")
+        assertEquals(result, "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, '1000-03-01', 20)")
     }
 }
 

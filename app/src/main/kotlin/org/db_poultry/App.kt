@@ -4,11 +4,17 @@ import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
+import org.db_poultry.db.cleanTables
+import org.db_poultry.db.flockDAO.CreateFlock
+import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
+import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
+import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.theLifesaver.Backup.TL_checkLastBackupDate
 import org.db_poultry.theLifesaver.TL.TL_firstOpen
 import org.db_poultry.theLifesaver.TL.wipe
 import java.sql.Connection
+import java.sql.Date
 
 class App {
     lateinit var databaseName: String
@@ -89,7 +95,7 @@ fun main() {
      */
 
     // Open MainFrame (index GUI)
-    app.openMainFrame()
+//    app.openMainFrame()
 
     // ==================================================
     // Keep this here but remove before shipping or every release

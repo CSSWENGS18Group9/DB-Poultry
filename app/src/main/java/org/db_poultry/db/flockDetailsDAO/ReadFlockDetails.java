@@ -43,8 +43,8 @@ public class ReadFlockDetails {
             preppedStatement.setDate(2, fdStartDate);
             preppedStatement.setDate(3, fdEndDate);
 
-            List<FlockDetails> flockDetails = new ArrayList<>();
             try (ResultSet result = preppedStatement.executeQuery()) {
+                List<FlockDetails> flockDetails = new ArrayList<>();
                 while (result.next()) {
                     // Gets results per row from the SQL output
                     int flockDetailsID = result.getInt("Flock_Details_ID"); // Gets the output from the column named
@@ -60,9 +60,10 @@ public class ReadFlockDetails {
 
                     flockDetails.add(returnedFlockDetails);
                 }
-            }
 
-            return flockDetails;
+                // checks if the flockDetails is empty, if it is return null. Otherwise, return the List
+                return flockDetails.isEmpty() ? null : flockDetails;
+            }
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `getFlockDetailsFromDate()`.",
@@ -102,7 +103,7 @@ public class ReadFlockDetails {
                 flockDetails.add(new FlockDetails(flockDetailsID, flockID, flockDetailsDate, depletedCount));
             }
 
-            return flockDetails;
+            return flockDetails.isEmpty() ? null : flockDetails;
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `getFlockDetailsFromFlock()`.",
@@ -184,7 +185,6 @@ public class ReadFlockDetails {
                 if (flockStartingCount < sum) return -1;
             }
             return sum; // Returns the total depleted count
-
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `cumulativeDepletedCount()`.",

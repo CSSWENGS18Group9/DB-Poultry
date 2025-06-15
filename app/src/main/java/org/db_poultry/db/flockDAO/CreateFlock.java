@@ -18,11 +18,21 @@ public class CreateFlock {
     public static String createFlock(Connection connect, int startCount, Date startDate) {
         Date actualDate = validate_dateIsValid(connect, startDate);
         // validate the data first, if at least one fails, don't create
-        if (validate_startCountPositiveOrZero(startCount) == -1 || actualDate == null) {
+        if (validate_startCountPositiveOrZero(startCount)) {
             generateErrorMessage(
                     "Error in `createFlock()` in `CreateFlock`.",
-                    "There is an invalid parameter in creating a flock. ",
-                    "Verify that startDate is 0 or a positive integer and startDate is valid",
+                    "The start count is invalid, must be positive or zero.",
+                    "Verify that start count is 0 or a positive integer",
+                    null);
+
+            return null;
+        }
+
+        if (actualDate == null) {
+            generateErrorMessage(
+                    "Error in `createFlock()` in `CreateFlock`.",
+                    "The start date is invalid",
+                    "Verify that startDate is valid",
                     null);
 
             return null;
@@ -59,8 +69,8 @@ public class CreateFlock {
      * @param startCount the start count
      * @return {startCount} is it meets constraints; {-1} otherwise
      */
-    private static int validate_startCountPositiveOrZero(int startCount) {
-        return startCount >= 0 ? startCount : -1;
+    private static boolean validate_startCountPositiveOrZero(int startCount) {
+        return startCount < 0;
     }
 
     /**
