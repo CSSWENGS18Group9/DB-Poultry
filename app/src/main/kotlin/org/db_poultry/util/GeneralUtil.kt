@@ -3,7 +3,9 @@ package org.db_poultry.util
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 
+import javafx.scene.Node
 import javafx.scene.layout.AnchorPane
+import javafx.scene.image.ImageView
 
 import javafx.beans.binding.Bindings
 import javafx.beans.property.SimpleDoubleProperty
@@ -48,7 +50,7 @@ class GeneralUtil {
          * Credits to https://stackoverflow.com/a/51948875
          */
         @JvmStatic
-        fun initializeFontSizeManager(mainPane: AnchorPane) {
+        fun initializeFontSizeManager(mainPane: Node) {
             mainPane.sceneProperty().addListener { _, oldScene, newScene ->
                 if (oldScene == null && newScene != null) {
                     val fontSize = SimpleDoubleProperty(0.0)
@@ -60,6 +62,16 @@ class GeneralUtil {
                     mainPane.styleProperty().bind(
                         Bindings.concat("-fx-font-size: ", fontSize.asString("%.0f"), "%;")
                     )
+                }
+            }
+        }
+
+        @JvmStatic
+        fun resizeImageViewToFit(mainNode: Node, toResizeImage: ImageView, widthMultiplier: Double = 0.15, heightMultiplier: Double = 0.2) {
+            mainNode.sceneProperty().addListener { _, _, scene ->
+                if (scene != null) {
+                    toResizeImage.fitWidthProperty().bind(scene.widthProperty().multiply(widthMultiplier))
+                    toResizeImage.fitHeightProperty().bind(scene.heightProperty().multiply(heightMultiplier))
                 }
             }
         }

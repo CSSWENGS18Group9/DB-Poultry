@@ -16,6 +16,7 @@ import javafx.scene.control.SplitPane
 import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.GridPane
 import javafx.scene.image.ImageView
+import javafx.scene.shape.SVGPath
 
 class MainLayoutController : Initializable {
 
@@ -52,6 +53,15 @@ class MainLayoutController : Initializable {
     @FXML
     private lateinit var sideBarDateLabel: Label
     
+    @FXML
+    private lateinit var homeImageView: ImageView
+
+    @FXML
+    private lateinit var suppliesImageView: ImageView
+
+    @FXML
+    private lateinit var flockImageView: ImageView
+
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
         // Set today's date
         val today = LocalDate.now()
@@ -59,12 +69,10 @@ class MainLayoutController : Initializable {
 
         GeneralUtil.initializeFontSizeManager(mainAnchorPane)
 
-        mainAnchorPane.sceneProperty().addListener { _, _, scene ->
-            if (scene != null) {
-                sideBarImageView.fitWidthProperty().bind(scene.widthProperty().multiply(0.15))
-                sideBarImageView.fitHeightProperty().bind(scene.heightProperty().multiply(0.2))
-            }
-        }      
+        GeneralUtil.resizeImageViewToFit(mainAnchorPane, sideBarImageView)
+        GeneralUtil.resizeImageViewToFit(mainAnchorPane,  homeImageView, 0.05, 0.07)
+        GeneralUtil.resizeImageViewToFit(mainAnchorPane, suppliesImageView, 0.05, 0.07)
+        GeneralUtil.resizeImageViewToFit(mainAnchorPane, flockImageView, 0.05, 0.07)
 
         GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home.fxml")
     }
