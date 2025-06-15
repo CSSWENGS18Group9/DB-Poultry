@@ -1,13 +1,10 @@
 package org.db_poultry.controller
 
-import org.db_poultry.util.SceneSwitcher
-import org.db_poultry.util.GeneralUtil
-
 import javafx.fxml.FXML
 import javafx.scene.control.Button
+import javafx.scene.control.Label
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
-import javafx.scene.text.Text
 
 class ViewSuppliesController {
 
@@ -15,7 +12,7 @@ class ViewSuppliesController {
     private lateinit var currAmountCol: TableColumn<Any, Any>
 
     @FXML
-    private lateinit var currDateLbl: Text
+    private lateinit var currDateLbl: Label
 
     @FXML
     private lateinit var currHistoryBtn: Button
@@ -33,7 +30,7 @@ class ViewSuppliesController {
     private lateinit var supplyTypeCol: TableColumn<Any, Any>
 
     @FXML
-    private lateinit var viewSuppliesLbl: Text
+    private lateinit var viewSuppliesLbl: Label
 
     @FXML
     private lateinit var viewSuppliesTable: TableView<Any>
