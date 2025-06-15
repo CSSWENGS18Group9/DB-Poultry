@@ -83,8 +83,10 @@ fun main() {
     app.start()
 
     // theLifesaver (backup stuff)
+    /*
     TL_firstOpen(app.getConnection())
     TL_checkLastBackupDate()
+     */
 
     // Open MainFrame (index GUI)
 //    app.openMainFrame()
