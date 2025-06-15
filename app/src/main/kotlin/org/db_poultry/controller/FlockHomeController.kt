@@ -38,12 +38,12 @@ class FlockHomeController: Initializable {
 
     @FXML
     fun goToCreate(event: ActionEvent) {
-        GeneralUtil.loadContentView(flockHomeAnchorPane, "/fxml/content_create.fxml")
+        GeneralUtil.loadContentView(flockHomeAnchorPane, "/fxml/content_create_flock.fxml")
     }
 
     @FXML
     fun goToView(event: ActionEvent) {
-        GeneralUtil.loadContentView(flockHomeAnchorPane, "/fxml/content_view.fxml")
+        GeneralUtil.loadContentView(flockHomeAnchorPane, "/fxml/content_view_flock.fxml")
     }
 
     @FXML
