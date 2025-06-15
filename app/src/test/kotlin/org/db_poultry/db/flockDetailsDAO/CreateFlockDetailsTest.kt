@@ -47,7 +47,6 @@ class CreateFlockDetailsTest {
         CreateFlock.createFlock(conn, 999, flockDate)
 
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 0)
-
         assertEquals(result, "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, 1000-01-03, 0)")
     }
 

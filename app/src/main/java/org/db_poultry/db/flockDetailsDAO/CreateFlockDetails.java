@@ -43,7 +43,10 @@ public class CreateFlockDetails {
             preppedStatement.setInt(3, depleted);
             preppedStatement.executeUpdate(); // Executes query
 
-            return "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (" + flockID + ", " + actualDetailDate + ", " + depleted + ")"; // Returns the filled-in query
+            return String.format(
+                    "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (%d, %s, %d)",
+                    flockID, actualDetailDate, depleted
+            );
         } catch (SQLException e) {
             generateErrorMessage("Error in `createFlockDetails()`.", "SQLException occurred.", "", e);
             return null;

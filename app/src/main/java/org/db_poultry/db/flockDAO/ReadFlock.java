@@ -105,7 +105,7 @@ public class ReadFlock {
                     flocks.add(returnedFlock);
                 }
             }
-            return flocks;
+            return flocks.isEmpty() ? null : flocks;
         } catch (SQLException e) {
             generateErrorMessage("Error in `getFlockFromDate()`.", "SQLException occurred.", "", e);
             return null;
