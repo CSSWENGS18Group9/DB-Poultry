@@ -30,7 +30,7 @@ class CreateFlockTest {
 
         val result =    CreateFlock.createFlock(conn, 100, date)
 
-        assertEquals("INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (100, 1000-01-01)", result)
+        assertEquals("INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (100, '1000-01-01')", result)
     }
 
     @Test

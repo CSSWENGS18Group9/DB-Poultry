@@ -4,6 +4,7 @@ import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
+import org.db_poultry.db.cleanTables
 import org.db_poultry.db.flockDAO.CreateFlock
 import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
 import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
@@ -94,13 +95,7 @@ fun main() {
 
     // Open MainFrame (index GUI)
 //    app.openMainFrame()
-    val flockDate = Date.valueOf("1000-01-01")
-    val fdDate = Date.valueOf("1000-01-03")
 
-    CreateFlock.createFlock(app.getConnection(), 999, flockDate)
-
-    val result = CreateFlockDetails.createFlockDetails(app.getConnection(), flockDate, fdDate, 0)
-    println(result)
     // ==================================================
     // Keep this here but remove before shipping or every release
     // ==================================================
