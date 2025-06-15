@@ -4,6 +4,7 @@ import org.db_poultry.pojo.FlockPOJO.Flock;
 import org.db_poultry.pojo.FlockPOJO.FlockDetails;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.db_poultry.db.flockDAO.ReadFlock.getFlockFromADate;
@@ -22,10 +23,9 @@ public class CreateFlockDetails {
      */
     public static String createFlockDetails(Connection conn, Date flockDate, Date detailDate, int depleted) {
         // check first if flockDate is empty
-        Date actualFlockDate = flockDate != null ? flockDate : Date.valueOf(java.time.LocalDate.now());
+        Date actualFlockDate = flockDate != null ? flockDate : Date.valueOf(LocalDate.now());
 
-        // get the flock this flock detail belongs to, if it is null we cannot create a
-        // flock detail
+        // get the flock this flock detail belongs to, if it is null we cannot create a flock detail
         Flock flock = getFlockFromADate(conn, actualFlockDate);
         if (flock == null) {
             generateErrorMessage(
@@ -99,6 +99,10 @@ public class CreateFlockDetails {
     private static boolean validate_depletedCountIsPossible(Connection conn, Flock flock, int depleted) {
         // check first if depleted is 0 or a positive integer
         if (depleted < 0)
+            return true;
+
+        // does not really matter if depleted is 0
+        if (depleted == 0)
             return false;
 
         // check the flock's starting count and its pre-existing flock detail depleted
@@ -106,18 +110,15 @@ public class CreateFlockDetails {
         // and other depleted counts must make sense even after this new depleted count.
         List<FlockDetails> flockDetails = ReadFlockDetails.getFlockDetailsFromFlock(conn, flock.getStartingDate());
 
-        // there seems to be an SQL error that occured
         if (flockDetails == null)
-            return false;
+            return depleted > flock.getStartingCount();
 
         // get the totalDepleted (from all pre-existing flock details)
         int totalDepleted = 0;
-        if (!flockDetails.isEmpty()) {
-            for (FlockDetails flockDetail : flockDetails)
-                totalDepleted += flockDetail.getDepletedCount();
-        }
+        for (FlockDetails flockDetail : flockDetails)
+            totalDepleted += flockDetail.getDepletedCount();
 
-        return flock.getStartingCount() - totalDepleted + depleted < 0;
+        return totalDepleted + depleted > flock.getStartingCount();
     }
 
     /**
