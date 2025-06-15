@@ -115,16 +115,45 @@ class ReadFlockTest {
         assertNull(result)
     }
 
-    //TESTS FOR public static List<Flock> getFlockFromDate(Connection conn, Date startDate, Date endDate) {
+    //TESTs FOR public static Flock getFlockFromADate(Connection conn, Date flockDate) {}
 
     @Test
-    fun testGetFlockFromDateWithDataOne(){
+    fun testGetFlockFromADateWithDataOne(){
+        val dateFlockOne = Date.valueOf("1000-05-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlockOne)
+
+        val first = ReadFlock.getFlockFromADate(conn, dateFlockOne)
+
+        assertEquals(1, first.flockId)
+        assertEquals(100, first.startingCount)
+        assertEquals(dateFlockOne, first.startingDate)
+
+    }
+
+    @Test
+    fun testGetFlockFromADateNoData(){
         val dateFlockOne = Date.valueOf("1000-05-01")
         val dateEnd = Date.valueOf("1000-06-01")
 
         CreateFlock.createFlock(conn, 100, dateFlockOne)
 
-        val flockList = ReadFlock.getFlockFromDate(conn, dateFlockOne, dateEnd)
+        val flock = ReadFlock.getFlockFromADate(conn, dateEnd)
+
+        assertNull(flock)
+    }
+
+
+    //TESTS getFlockFromDate(Connection conn, Date flockDate, Date fdStartDate, Date fdEndDate) {}
+
+    @Test
+    fun testGetFlocksFromDateWithDataOne(){
+        val dateFlockOne = Date.valueOf("1000-05-01")
+        val dateEnd = Date.valueOf("1000-06-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlockOne)
+
+        val flockList = ReadFlock.getFlocksFromDate(conn, dateFlockOne, dateEnd)
 
         val first = flockList[0]
 
@@ -135,14 +164,14 @@ class ReadFlockTest {
     }
 
     @Test
-    fun testGetFlockFromDateWithDataTwo(){
+    fun testGetFlocksFromDateWithDataTwo(){
         val dateFlockOne = Date.valueOf("1000-05-01")
         val dateEnd = Date.valueOf("1000-06-01")
 
         CreateFlock.createFlock(conn, 100, dateFlockOne)
         CreateFlock.createFlock(conn, 1000, dateEnd)
 
-        val flockList = ReadFlock.getFlockFromDate(conn, dateFlockOne, dateEnd)
+        val flockList = ReadFlock.getFlocksFromDate(conn, dateFlockOne, dateEnd)
 
         val first = flockList[0]
         val second = flockList[1]
@@ -156,169 +185,26 @@ class ReadFlockTest {
     }
 
     @Test
-    fun testGetFlockFromDateNoData(){
+    fun testGetFlocksFromDateNoData(){
         val dateFlockOne = Date.valueOf("1000-05-01")
         val dateEnd = Date.valueOf("1000-06-01")
 
         CreateFlock.createFlock(conn, 100, dateFlockOne)
 
-        val flockList = ReadFlock.getFlockFromDate(conn, dateEnd, dateEnd)
+        val flock = ReadFlock.getFlocksFromDate(conn, dateEnd, dateEnd)
 
-        assertEquals(0, flockList.size)
+        assertNull(flock)
     }
 
     @Test
-    fun testGetFlockFromDateEndDateBeforeStartDate(){
+    fun testGetFlocksFromDateEndDateBeforeStartDate(){
         val dateFlockOne = Date.valueOf("1000-05-01")
         val dateEnd = Date.valueOf("1000-06-01")
 
         CreateFlock.createFlock(conn, 100, dateFlockOne)
 
-        val flockList = ReadFlock.getFlockFromDate(conn, dateEnd, dateFlockOne)
+        val flockList = ReadFlock.getFlocksFromDate(conn, dateEnd, dateFlockOne)
 
         assertNull(flockList)
-    }
-
-    // TEST FOR public static List<FlockDetails> getFlockDetailsFromDate(Connection conn, Date flockDate, Date fdStartDate, Date fdEndDate) {
-    @Test
-    fun testGetFlockDetailsFromDateWithDataOne(){
-        val dateFlockOne = Date.valueOf("1000-05-01")
-        val dateFDOne = Date.valueOf("1000-06-01")
-        val dateFDTwo = Date.valueOf("1000-07-01")
-        val dateFDThree = Date.valueOf("1000-08-01")
-
-        CreateFlock.createFlock(conn, 100, dateFlockOne)
-
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDOne, 0)
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDTwo, 1)
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDThree, 2)
-
-        val flockDetailsList = ReadFlock.getFlockDetailsFromDate(conn, dateFlockOne, dateFDOne, dateFDThree)
-
-        val first = flockDetailsList[0]
-        val second = flockDetailsList[1]
-        val third = flockDetailsList[2]
-
-        assertEquals(3, flockDetailsList.size)
-
-        assertEquals(1, first.flockDetailsId)
-        assertEquals(1, first.flockId)
-        assertEquals(dateFDOne, first.fdDate)
-        assertEquals(0, first.depletedCount)
-
-        assertEquals(2, second.flockDetailsId)
-        assertEquals(1, second.flockId)
-        assertEquals(dateFDTwo, second.fdDate)
-        assertEquals(1, second.depletedCount)
-
-        assertEquals(3, third.flockDetailsId)
-        assertEquals(1, third.flockId)
-        assertEquals(dateFDThree, third.fdDate)
-        assertEquals(2, third.depletedCount)
-    }
-
-
-    @Test
-    fun testGetFlockDetailsFromDateWithDataTwo(){
-        val dateFlockOne = Date.valueOf("1000-05-01")
-        val dateFDOne = Date.valueOf("1000-06-01")
-        val dateFDTwo = Date.valueOf("1000-07-01")
-        val dateFDThree = Date.valueOf("1000-08-01")
-        val dateFlockTwo = Date.valueOf("1000-09-01")
-        val dateFDFour = Date.valueOf("1000-10-01")
-
-        CreateFlock.createFlock(conn, 100, dateFlockOne)
-        CreateFlock.createFlock(conn, 1000, dateFlockTwo)
-
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDOne, 0)
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDTwo, 1)
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDThree, 2)
-
-        CreateFlockDetails.createFlockDetails(conn, 2, dateFDFour, 0)
-
-        val flockDetailsList = ReadFlock.getFlockDetailsFromDate(conn, dateFlockOne, dateFDOne, dateFDFour)
-
-        val first = flockDetailsList[0]
-        val second = flockDetailsList[1]
-        val third = flockDetailsList[2]
-
-        assertEquals(3, flockDetailsList.size)
-
-        assertEquals(1, first.flockDetailsId)
-        assertEquals(1, first.flockId)
-        assertEquals(dateFDOne, first.fdDate)
-        assertEquals(0, first.depletedCount)
-
-        assertEquals(2, second.flockDetailsId)
-        assertEquals(1, second.flockId)
-        assertEquals(dateFDTwo, second.fdDate)
-        assertEquals(1, second.depletedCount)
-
-        assertEquals(3, third.flockDetailsId)
-        assertEquals(1, third.flockId)
-        assertEquals(dateFDThree, third.fdDate)
-        assertEquals(2, third.depletedCount)
-    }
-
-    @Test
-    fun testGetFlockDetailsFromSelectSlice(){
-        val dateFlockOne = Date.valueOf("1000-05-01")
-        val dateFDOne = Date.valueOf("1000-06-01")
-        val dateFDTwo = Date.valueOf("1000-07-01")
-        val dateFDThree = Date.valueOf("1000-08-01")
-        val dateFlockTwo = Date.valueOf("1000-09-01")
-        val dateFDFour = Date.valueOf("1000-10-01")
-
-        CreateFlock.createFlock(conn, 100, dateFlockOne)
-        CreateFlock.createFlock(conn, 1000, dateFlockTwo)
-
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDOne, 0)
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDTwo, 1)
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDThree, 2)
-
-        CreateFlockDetails.createFlockDetails(conn, 2, dateFDFour, 0)
-
-        val flockDetailsList = ReadFlock.getFlockDetailsFromDate(conn, dateFlockOne, dateFlockOne, dateFDTwo)
-
-        val first = flockDetailsList[0]
-        val second = flockDetailsList[1]
-
-        assertEquals(2, flockDetailsList.size)
-
-        assertEquals(1, first.flockDetailsId)
-        assertEquals(1, first.flockId)
-        assertEquals(dateFDOne, first.fdDate)
-        assertEquals(0, first.depletedCount)
-
-        assertEquals(2, second.flockDetailsId)
-        assertEquals(1, second.flockId)
-        assertEquals(dateFDTwo, second.fdDate)
-        assertEquals(1, second.depletedCount)
-    }
-
-    @Test
-    fun testGetFlockDetailsNoData(){
-        val dateFlockOne = Date.valueOf("1000-05-01")
-        val dateFDOne = Date.valueOf("1000-06-01")
-        val dateFDTwo = Date.valueOf("1000-07-01")
-
-        CreateFlock.createFlock(conn, 100, dateFlockOne)
-
-        val flockDetailsList = ReadFlock.getFlockDetailsFromDate(conn, dateFlockOne, dateFDOne, dateFDTwo)
-
-        assertEquals(0, flockDetailsList.size)
-    }
-
-    @Test
-    fun testGetFlockDetailsFromDateEndDateBeforeStartDate(){
-        val dateFlockOne = Date.valueOf("1000-05-01")
-        val dateFDOne = Date.valueOf("1000-06-01")
-        val dateFDTwo = Date.valueOf("1000-07-01")
-
-        CreateFlock.createFlock(conn, 100, dateFlockOne)
-
-        val flockDetailsList = ReadFlock.getFlockDetailsFromDate(conn, dateFlockOne, dateFDTwo, dateFDOne)
-
-        assertNull(flockDetailsList)
     }
 }
