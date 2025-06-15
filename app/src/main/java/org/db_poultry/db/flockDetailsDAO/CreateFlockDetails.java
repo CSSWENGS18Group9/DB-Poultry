@@ -27,21 +27,47 @@ public class CreateFlockDetails {
         // get the flock this flock detail belongs to, if it is null we cannot create a
         // flock detail
         Flock flock = getFlockFromADate(conn, actualFlockDate);
-        if (flock == null)
+        if (flock == null) {
+            generateErrorMessage(
+                    "Error in `createFlockDetails()` in `CreateFlockDetails`.",
+                    "A flock does not exist using the provided date.",
+                    "Ensure the provided date has a pre-existing flock.",
+                    null
+            );
+
             return null;
+        }
 
         // validate the detailDate is possible
         Date actualDetailDate = validate_dateIsValid(conn, flock, detailDate);
-        if (actualDetailDate == null)
+        if (actualDetailDate == null) {
+            generateErrorMessage(
+                    "Error in `createFlockDetails()` in `CreateFlockDetails`.",
+                    "The detail date selected is invalid.",
+                    "Ensure that the detail date is possible.",
+                    null
+            );
+
             return null;
+        }
 
         // check if the depleted count is valid and makes sense
-        if (!validate_depletedCountIsPossible(conn, flock, depleted))
+        if (!validate_depletedCountIsPossible(conn, flock, depleted)) {
+            generateErrorMessage(
+                    "Error in `createFlockDetails()` in `CreateFlockDetails`.",
+                    "The depleted count is invalid.",
+                    "Ensure that the depleted count ensures that the TOTAL count is positive.",
+                    null
+            );
+
             return null;
+        }
 
         int flockID = flock.getFlockId();
-        try (PreparedStatement preppedStatement = conn
-                .prepareStatement("INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (?, ?, ?)")) {
+        try (PreparedStatement preppedStatement = conn.prepareStatement("""
+                INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (?, ?, ?)
+                """)) {
+
             // Sets the values to be added
             preppedStatement.setInt(1, flockID);
             preppedStatement.setDate(2, actualDetailDate);
