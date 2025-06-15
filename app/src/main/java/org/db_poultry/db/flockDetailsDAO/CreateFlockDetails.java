@@ -52,7 +52,7 @@ public class CreateFlockDetails {
         }
 
         // check if the depleted count is valid and makes sense
-        if (!validate_depletedCountIsPossible(conn, flock, depleted)) {
+        if (validate_depletedCountIsPossible(conn, flock, depleted)) {
             generateErrorMessage(
                     "Error in `createFlockDetails()` in `CreateFlockDetails`.",
                     "The depleted count is invalid.",
@@ -89,8 +89,7 @@ public class CreateFlockDetails {
 
     /**
      * Validation for the depleted count, check if the depleted count makes
-     * pre-existing numeric values
-     * make sense
+     * pre-existing numeric values make sense
      *
      * @param conn     the JDBC connection
      * @param flock    the flock
@@ -118,7 +117,7 @@ public class CreateFlockDetails {
                 totalDepleted += flockDetail.getDepletedCount();
         }
 
-        return flock.getStartingCount() - totalDepleted >= depleted;
+        return flock.getStartingCount() - totalDepleted + depleted < 0;
     }
 
     /**
