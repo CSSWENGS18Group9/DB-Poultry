@@ -6,8 +6,9 @@ import javafx.fxml.FXML
 import javafx.fxml.Initializable
 
 import java.util.ResourceBundle
-import java.time.LocalDate
 import java.net.URL
+
+import java.time.LocalDate
 
 import javafx.scene.control.Button
 import javafx.scene.control.Label
@@ -43,13 +44,10 @@ class MainLayoutController : Initializable {
     private lateinit var sidebarHomeBtn: Button
 
     @FXML
-    private lateinit var sidebarCreateBtn: Button
+    private lateinit var sidebarSuppliesBtn: Button
 
     @FXML
-    private lateinit var sidebarViewBtn: Button
-
-    @FXML
-    private lateinit var sidebarGenerateBtn: Button
+    private lateinit var sidebarFlockBtn: Button
 
     @FXML
     private lateinit var sideBarDateLabel: Label
@@ -79,12 +77,12 @@ class MainLayoutController : Initializable {
     }
     
     @FXML
-    private fun navigateToCreate() {
-        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_create.fxml")
+    private fun navigateToSupplies() {
+        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_supplies.fxml")
     }
     
     @FXML
-    private fun navigateToView() {
-        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_view.fxml")
+    private fun navigateToFlock() {
+        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_flock.fxml")
     }
 }
