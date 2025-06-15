@@ -14,6 +14,12 @@
 }
 
 .h4 {
-    -fx-font-size: 1em;
+    -fx-font-size: 1.2em;
     -fx-font-weight: bold;
+}
+
+.img-container {
+    -fx-background-image: url("../img/main_bg.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
 }

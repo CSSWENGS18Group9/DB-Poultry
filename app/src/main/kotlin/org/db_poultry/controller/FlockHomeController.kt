@@ -32,7 +32,7 @@ class FlockHomeController: Initializable {
 
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
 
-        GeneralUtil.initializeFontSizeManager(flockHomeAnchorPane)
+        // GeneralUtil.initializeFontSizeManager(flockHomeAnchorPane)
 
     }
 

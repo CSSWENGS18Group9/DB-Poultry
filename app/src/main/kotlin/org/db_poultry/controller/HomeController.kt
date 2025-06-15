@@ -26,6 +26,9 @@ class HomeController: Initializable {
     private lateinit var homeStackPane: StackPane
 
     @FXML
+    private lateinit var bgImageAnchorPane: AnchorPane
+
+    @FXML
     private lateinit var homeBackgroundImageView: ImageView
 
     @FXML
@@ -38,8 +41,8 @@ class HomeController: Initializable {
     private lateinit var homeSuppliesBtn1: Button
 
     override fun initialize(url: URL?, rb: ResourceBundle?) {
-        homeBackgroundImageView.fitWidthProperty().bind(homeStackPane.widthProperty())
-        homeBackgroundImageView.fitHeightProperty().bind(homeStackPane.heightProperty())
+        // homeBackgroundImageView.fitWidthProperty().bind(homeStackPane.widthProperty())
+        // homeBackgroundImageView.fitHeightProperty().bind(homeStackPane.heightProperty())
     }
 
     @FXML
