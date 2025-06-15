@@ -4,13 +4,10 @@ import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
-import org.db_poultry.db.cleanTables
-import org.db_poultry.db.flockDAO.CreateFlock
-import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
-import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
-import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 import org.db_poultry.errors.generateErrorMessage
-import org.db_poultry.theLifesaver.TL.*
+import org.db_poultry.theLifesaver.Backup.TL_checkLastBackupDate
+import org.db_poultry.theLifesaver.TL.TL_firstOpen
+import org.db_poultry.theLifesaver.TL.wipe
 import java.sql.Connection
 import java.sql.Date
 
@@ -94,13 +91,12 @@ fun main() {
 
     // Open MainFrame (index GUI)
 //    app.openMainFrame()
-    cleanTables(app.getConnection())
-    val flockDate = Date.valueOf("1000-01-01")
-    val fdDate = Date.valueOf("1000-01-03")
-    CreateFlock.createFlock(app.getConnection(), 999, flockDate)
+    CreateSupplyType.createSupplyType(app.getConnection(), "Hello", "Hello");
+    CreateSupplyType.createSupplyType(app.getConnection(), "World", "World");
+    CreateSupplyType.createSupplyType(app.getConnection(), "Hello", "Hello");
 
-    val result = CreateFlockDetails.createFlockDetails(app.getConnection(), flockDate, fdDate, 0)
-    println(result)
+    val x = ReadSupplyType.getAllSupplyTypes(app.getConnection())
+    for (t in x) println(t.name)
 
     // ==================================================
     // Keep this here but remove before shipping or every release
