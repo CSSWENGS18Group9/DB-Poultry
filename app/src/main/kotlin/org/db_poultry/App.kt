@@ -8,6 +8,8 @@ import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.theLifesaver.TL.*
+import org.db_poultry.theLifesaver.Backup
+
 import java.sql.Connection
 
 class App {
@@ -82,21 +84,23 @@ fun main() {
     val app = App()
     app.start()
 
-    // theLifesaver (backup stuff)
-    TL_firstOpen(app.getConnection())
-    TL_checkLastBackupDate()
+    app.openMainFrame() // DEBUGGING TEMPORARY PLACEMENT
 
-    // Open MainFrame (index GUI)
-//    app.openMainFrame()
-    CreateSupplyType.createSupplyType(app.getConnection(), "Hello", "Hello");
-    CreateSupplyType.createSupplyType(app.getConnection(), "World", "World");
-    CreateSupplyType.createSupplyType(app.getConnection(), "Hello", "Hello");
+//     // theLifesaver (backup stuff)
+//     TL_firstOpen(app)
+//     Backup.TL_checkLastBackupDate()
 
-    val x = ReadSupplyType.getAllSupplyTypes(app.getConnection())
-    for (t in x) println(t.name)
+//     // Open MainFrame (index GUI)
+// //    app.openMainFrame()
+//     CreateSupplyType.createSupplyType(app.getConnection(), "Hello", "Hello");
+//     CreateSupplyType.createSupplyType(app.getConnection(), "World", "World");
+//     CreateSupplyType.createSupplyType(app.getConnection(), "Hello", "Hello");
 
-    // ==================================================
-    // Keep this here but remove before shipping or every release
-    // ==================================================
-    wipe()
+//     val x = ReadSupplyType.getAllSupplyTypes(app.getConnection())
+//     for (t in x) println(t.name)
+
+//     // ==================================================
+//     // Keep this here but remove before shipping or every release
+//     // ==================================================
+//     wipe()
 }
