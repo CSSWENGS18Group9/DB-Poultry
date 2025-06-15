@@ -116,7 +116,6 @@ class ReadFlockTest {
     }
 
     //TESTs FOR public static Flock getFlockFromADate(Connection conn, Date flockDate) {}
-
     @Test
     fun testGetFlockFromADateWithDataOne(){
         val dateFlockOne = Date.valueOf("1000-05-01")

@@ -45,7 +45,7 @@ class CreateSupplyRecordTest {
     fun testCreateSupplyRecordValidInputs() {
         val date    = Date.valueOf("2025-01-01")
         val result  = CreateSupplyRecord.createSupplyRecord(conn, 1, date, 100.0f, 50.0f)
-        assertEquals("INSERT INTO Supply_Record (Supply_ID, SR_Date, Added, Consumed) VALUES (1, '2025-01-01', 100.0, 50.0)", result)
+        assertEquals("INSERT INTO Supply_Record (Supply_ID, SR_Date, Added, Consumed, Retrieved) VALUES (1, '2025-01-01', 100.0, 50.0, 0)", result)
     }
 
     @Test
@@ -70,14 +70,14 @@ class CreateSupplyRecordTest {
         val date    = Date.valueOf("2025-01-04")
         CreateSupplyRecord.createSupplyRecord(conn, 1, date, 100.0f, 50.0f)
         val result  = CreateSupplyRecord.createSupplyRecord(conn, 2, date, 200.0f, 100.0f)
-        assertEquals("INSERT INTO Supply_Record (Supply_ID, SR_Date, Added, Consumed) VALUES (2, '2025-01-04', 200.0, 100.0)", result)
+        assertEquals("INSERT INTO Supply_Record (Supply_ID, SR_Date, Added, Consumed, Retrieved) VALUES (2, '2025-01-04', 200.0, 100.0, 0)", result)
     }
 
     @Test
     fun testCreateSupplyRecordWithZeroAddedAndConsumed() {
         val date    = Date.valueOf("2025-01-03")
         val result  = CreateSupplyRecord.createSupplyRecord(conn, 1, date, 0.0f, 0.0f)
-        assertEquals("INSERT INTO Supply_Record (Supply_ID, SR_Date, Added, Consumed) VALUES (1, '2025-01-03', 0.0, 0.0)", result)
+        assertEquals("INSERT INTO Supply_Record (Supply_ID, SR_Date, Added, Consumed, Retrieved) VALUES (1, '2025-01-03', 0.0, 0.0, 0)", result)
     }
 
     @Test

@@ -190,6 +190,7 @@ class ReadFlockDetailsTest {
         CreateFlock.createFlock(conn, 100, dateFlockOne)
         CreateFlock.createFlock(conn, 1000, dateFlockTwo)
 
+
         CreateFlockDetails.createFlockDetails(conn, dateFlockOne, dateFDOne, 0)
         CreateFlockDetails.createFlockDetails(conn, dateFlockOne, dateFDTwo, 1)
         CreateFlockDetails.createFlockDetails(conn, dateFlockOne, dateFDThree, 2)
@@ -238,6 +239,7 @@ class ReadFlockDetailsTest {
         val second = flockDetailsList[1]
 
         assertEquals(2, flockDetailsList.size)
+
 
         assertEquals(dateFDOne, first.fdDate)
         assertEquals(0, first.depletedCount)
@@ -342,6 +344,5 @@ class ReadFlockDetailsTest {
 
         assertNull(flockDetailsList)
     }
-
 
 }
