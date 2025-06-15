@@ -1,7 +1,7 @@
 .h1_button {
+    -fx-font-family: "HelveticaNowDisplay-Bold";
     -fx-font-size: 3em;
-    -fx-font-weight: bold;
-    -fx-background-color: white;
+    -fx-background-color: none;
     -fx-text-fill: initial;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
@@ -11,4 +11,5 @@
 .h1_button:hover {
     -fx-background-color: #A4AE81;
     -fx-text-fill: white;
+    -fx-translate-y: -7;
 }

@@ -41,8 +41,7 @@ class HomeController: Initializable {
     private lateinit var homeSuppliesBtn1: Button
 
     override fun initialize(url: URL?, rb: ResourceBundle?) {
-        // homeBackgroundImageView.fitWidthProperty().bind(homeStackPane.widthProperty())
-        // homeBackgroundImageView.fitHeightProperty().bind(homeStackPane.heightProperty())
+        // GeneralUtil.initializeFontSizeManager(homeAnchorPane)
     }
 
     @FXML

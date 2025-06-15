@@ -8,9 +8,21 @@
     -fx-font-weight: bold;
 }
 
+.h3 {
+    -fx-font-size: 1.5em;
+    -fx-font-family: "HelveticaNowDisplay-Bold";
+}
+
 .h4 {
     -fx-font-size: 1.2em;
-    -fx-font-weight: bold;
+}
+
+.h5 {
+    -fx-font-size: 0.8em;
+}
+
+.h6 {
+    -fx-font-size: 0.5em;
 }
 
 .img-container {

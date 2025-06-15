@@ -10,6 +10,10 @@ import javafx.scene.image.ImageView
 import javafx.beans.binding.Bindings
 import javafx.beans.property.SimpleDoubleProperty
 
+import java.time.format.DateTimeFormatter
+import java.time.LocalDate
+import java.util.Locale
+
 class GeneralUtil {
     companion object {
         @JvmStatic
@@ -75,5 +79,11 @@ class GeneralUtil {
                 }
             }
         }
+
+        @JvmStatic
+        fun formatDatePretty(date: LocalDate): String {
+            val formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH)
+            return date.format(formatter)
+        } 
     }
 }

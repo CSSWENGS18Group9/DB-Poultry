@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -10,7 +12,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="homeAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #FEFAE0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.HomeController">
    <children>
@@ -29,7 +30,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="homeSuppliesBtn1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToSupplies" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" styleClass="h1" text="Supplies" textFill="#8f250c" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Button fx:id="homeSuppliesBtn1" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToSupplies" prefHeight="90.0" prefWidth="260.0" styleClass="h1_button" text="Supplies" textFill="#8f250c" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="HelveticaNowDisplay-Bold" size="30.0" />
                </font>
@@ -46,8 +47,19 @@
                <GridPane.margin>
                   <Insets bottom="10.0" top="10.0" />
                </GridPane.margin>
+               <graphic>
+                  <Label contentDisplay="BOTTOM" text="Create, Delete, Update, View ">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Black" size="8.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="button-graphic" />
+                        <String fx:value="h6" />
+                     </styleClass>
+                  </Label>
+               </graphic>
             </Button>
-            <Button fx:id="homeFlockBtn1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToFlock" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" styleClass="h1" text="Flock" textFill="#8f250c" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <Button fx:id="homeFlockBtn1" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToFlock" prefHeight="90.0" prefWidth="260.0" styleClass="h1_button" text="Flock" textFill="#8f250c" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <font>
                   <Font name="HelveticaNowDisplay-Bold" size="30.0" />
                </font>
@@ -64,6 +76,17 @@
                <GridPane.margin>
                   <Insets bottom="10.0" top="10.0" />
                </GridPane.margin>
+               <graphic>
+                  <Label contentDisplay="BOTTOM" text="Create, View, Generate">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Black" size="8.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="button-graphic" />
+                        <String fx:value="h6" />
+                     </styleClass>
+                  </Label>
+               </graphic>
             </Button>
             <Button fx:id="homeReturnLoginBtn" mnemonicParsing="false" onAction="#switchToLogin" style="-fx-background-radius: 15px; -fx-background-color: white;" text="Back to Login" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
@@ -80,22 +103,6 @@
                   <Insets left="30.0" />
                </GridPane.margin>
             </Button>
-            <Text mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h4" text="Create, Delete, Update, View " GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-               <font>
-                  <Font name="HelveticaNowDisplay-Light" size="12.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets top="60.0" />
-               </GridPane.margin>
-            </Text>
-            <Text mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h4" text="Create, View, Generate" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-               <font>
-                  <Font name="HelveticaNowDisplay-Light" size="12.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets top="60.0" />
-               </GridPane.margin>
-            </Text>
          </children>
       </GridPane>
    </children>
