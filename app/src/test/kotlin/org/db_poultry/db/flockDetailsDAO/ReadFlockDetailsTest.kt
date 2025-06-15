@@ -4,7 +4,10 @@ import org.db_poultry.App
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import org.db_poultry.db.flockDAO.CreateFlock
+import org.db_poultry.db.flockDAO.ReadFlock
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import java.sql.Connection
 import java.sql.Date
@@ -35,9 +38,9 @@ class ReadFlockDetailsTest {
 
         CreateFlock.createFlock(conn, 100, dateFlock)
 
-        CreateFlockDetails.createFlockDetails(conn, 1, dateOne, 5)
-        CreateFlockDetails.createFlockDetails(conn, 1, dateTwo, 10)
-        CreateFlockDetails.createFlockDetails(conn, 1, dateThree, 15)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateThree, 15)
 
         val result = ReadFlockDetails.getMostRecent(conn, dateFlock)
 
@@ -48,16 +51,8 @@ class ReadFlockDetailsTest {
     }
 
     @Test
-    fun testReadFlockDetailsWithNoData() {
-        val dateFlock = Date.valueOf("1000-01-01")
-
-        val result = ReadFlockDetails.getMostRecent(conn, dateFlock)
-
-        Assertions.assertNull(result)
-    }
-
-    @Test
     fun testDepletedCountValidInput() {
+        val dateFlock = Date.valueOf("1000-01-01")
         val dateOne = Date.valueOf("1000-05-01")
         val dateTwo = Date.valueOf("1000-06-01")
         val dateThree = Date.valueOf("1000-07-01")
@@ -67,13 +62,13 @@ class ReadFlockDetailsTest {
         )
 
         CreateFlockDetails.createFlockDetails(
-            conn, 1, dateOne, 5
+            conn, dateFlock, dateOne, 5
         )
         CreateFlockDetails.createFlockDetails(
-            conn, 1, dateTwo, 10
+            conn, dateFlock, dateTwo, 10
         )
         CreateFlockDetails.createFlockDetails(
-            conn, 1, dateThree, 15
+            conn, dateFlock, dateThree, 15
         )
 
         val result = ReadFlockDetails.getCumulativeDepletedCount(
@@ -84,6 +79,7 @@ class ReadFlockDetailsTest {
 
     @Test
     fun testDepletedCountOverStartCount() {
+        val dateFlock = Date.valueOf("1000-01-01")
         val dateOne = Date.valueOf("1000-08-01")
         val dateTwo = Date.valueOf("1000-09-01")
         val dateThree = Date.valueOf("1000-10-01")
@@ -93,19 +89,60 @@ class ReadFlockDetailsTest {
         )
 
         CreateFlockDetails.createFlockDetails(
-            conn, 1, dateOne, 5
+            conn, dateFlock, dateOne, 5
         )
         CreateFlockDetails.createFlockDetails(
-            conn, 1, dateTwo, 10
+            conn, dateFlock, dateTwo, 10
         )
         CreateFlockDetails.createFlockDetails(
-            conn, 1, dateThree, 15
+            conn, dateFlock, dateThree, 15
         )
 
         val result = ReadFlockDetails.getCumulativeDepletedCount(
             conn, 1
         )
         Assertions.assertEquals(15, result)
+    }
+
+    //Test getMostRecent(
+
+    @Test
+    fun testGetMostRecentWithValidInput() {
+        val dateFlock = Date.valueOf("1000-01-01")
+        val dateOne = Date.valueOf("1000-08-01")
+        val dateTwo = Date.valueOf("1000-09-01")
+        val dateThree = Date.valueOf("1000-10-01")
+
+        CreateFlock.createFlock(
+            conn, 999, dateFlock
+        )
+
+        CreateFlockDetails.createFlockDetails(
+            conn, dateFlock, dateOne, 5
+        )
+        CreateFlockDetails.createFlockDetails(
+            conn, dateFlock, dateTwo, 10
+        )
+        CreateFlockDetails.createFlockDetails(
+            conn, dateFlock, dateThree, 15
+        )
+
+        val result = ReadFlockDetails.getMostRecent(
+            conn, dateFlock
+        )
+
+        assertEquals(dateThree, result.fdDate)
+        assertEquals(15, result.depletedCount)
+    }
+
+
+    @Test
+    fun testGetMostRecentWithNoData() {
+        val dateFlock = Date.valueOf("1000-01-01")
+
+        val result = ReadFlockDetails.getMostRecent(conn, dateFlock)
+
+        Assertions.assertNull(result)
     }
 
     // TEST FOR public static List<FlockDetails> getFlockDetailsFromDate(Connection conn, Date flockDate, Date fdStartDate, Date fdEndDate) {
@@ -118,9 +155,9 @@ class ReadFlockDetailsTest {
 
         CreateFlock.createFlock(conn, 100, dateFlockOne)
 
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDOne, 0)
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDTwo, 1)
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDThree, 2)
+        CreateFlockDetails.createFlockDetails(conn, dateFlockOne, dateFDOne, 0)
+        CreateFlockDetails.createFlockDetails(conn, dateFlockOne, dateFDTwo, 1)
+        CreateFlockDetails.createFlockDetails(conn, dateFlockOne, dateFDThree, 2)
 
         val flockDetailsList = ReadFlockDetails.getFlockDetailsFromDate(conn, dateFlockOne, dateFDOne, dateFDThree)
 
@@ -130,18 +167,12 @@ class ReadFlockDetailsTest {
 
         assertEquals(3, flockDetailsList.size)
 
-        assertEquals(1, first.flockDetailsId)
-        assertEquals(1, first.flockId)
         assertEquals(dateFDOne, first.fdDate)
         assertEquals(0, first.depletedCount)
 
-        assertEquals(2, second.flockDetailsId)
-        assertEquals(1, second.flockId)
         assertEquals(dateFDTwo, second.fdDate)
         assertEquals(1, second.depletedCount)
 
-        assertEquals(3, third.flockDetailsId)
-        assertEquals(1, third.flockId)
         assertEquals(dateFDThree, third.fdDate)
         assertEquals(2, third.depletedCount)
     }
@@ -159,11 +190,12 @@ class ReadFlockDetailsTest {
         CreateFlock.createFlock(conn, 100, dateFlockOne)
         CreateFlock.createFlock(conn, 1000, dateFlockTwo)
 
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDOne, 0)
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDTwo, 1)
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDThree, 2)
 
-        CreateFlockDetails.createFlockDetails(conn, 2, dateFDFour, 0)
+        CreateFlockDetails.createFlockDetails(conn, dateFlockOne, dateFDOne, 0)
+        CreateFlockDetails.createFlockDetails(conn, dateFlockOne, dateFDTwo, 1)
+        CreateFlockDetails.createFlockDetails(conn, dateFlockOne, dateFDThree, 2)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlockTwo, dateFDFour, 0)
 
         val flockDetailsList = ReadFlockDetails.getFlockDetailsFromDate(conn, dateFlockOne, dateFDOne, dateFDFour)
 
@@ -173,18 +205,12 @@ class ReadFlockDetailsTest {
 
         assertEquals(3, flockDetailsList.size)
 
-        assertEquals(1, first.flockDetailsId)
-        assertEquals(1, first.flockId)
         assertEquals(dateFDOne, first.fdDate)
         assertEquals(0, first.depletedCount)
 
-        assertEquals(2, second.flockDetailsId)
-        assertEquals(1, second.flockId)
         assertEquals(dateFDTwo, second.fdDate)
         assertEquals(1, second.depletedCount)
 
-        assertEquals(3, third.flockDetailsId)
-        assertEquals(1, third.flockId)
         assertEquals(dateFDThree, third.fdDate)
         assertEquals(2, third.depletedCount)
     }
@@ -201,11 +227,11 @@ class ReadFlockDetailsTest {
         CreateFlock.createFlock(conn, 100, dateFlockOne)
         CreateFlock.createFlock(conn, 1000, dateFlockTwo)
 
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDOne, 0)
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDTwo, 1)
-        CreateFlockDetails.createFlockDetails(conn, 1, dateFDThree, 2)
+        CreateFlockDetails.createFlockDetails(conn, dateFlockOne, dateFDOne, 0)
+        CreateFlockDetails.createFlockDetails(conn, dateFlockOne, dateFDTwo, 1)
+        CreateFlockDetails.createFlockDetails(conn, dateFlockOne, dateFDThree, 2)
 
-        CreateFlockDetails.createFlockDetails(conn, 2, dateFDFour, 0)
+        CreateFlockDetails.createFlockDetails(conn, dateFlockTwo, dateFDFour, 0)
 
         val flockDetailsList = ReadFlockDetails.getFlockDetailsFromDate(conn, dateFlockOne, dateFlockOne, dateFDTwo)
 
@@ -214,19 +240,16 @@ class ReadFlockDetailsTest {
 
         assertEquals(2, flockDetailsList.size)
 
-        assertEquals(1, first.flockDetailsId)
-        assertEquals(1, first.flockId)
+
         assertEquals(dateFDOne, first.fdDate)
         assertEquals(0, first.depletedCount)
 
-        assertEquals(2, second.flockDetailsId)
-        assertEquals(1, second.flockId)
         assertEquals(dateFDTwo, second.fdDate)
         assertEquals(1, second.depletedCount)
     }
 
     @Test
-    fun testGetFlockDetailsNoData(){
+    fun testGetFlockDetailsFromDateNoData(){
         val dateFlockOne = Date.valueOf("1000-05-01")
         val dateFDOne = Date.valueOf("1000-06-01")
         val dateFDTwo = Date.valueOf("1000-07-01")
@@ -235,7 +258,7 @@ class ReadFlockDetailsTest {
 
         val flockDetailsList = ReadFlockDetails.getFlockDetailsFromDate(conn, dateFlockOne, dateFDOne, dateFDTwo)
 
-        assertEquals(0, flockDetailsList.size)
+        assertNull(flockDetailsList)
     }
 
     @Test
@@ -250,4 +273,76 @@ class ReadFlockDetailsTest {
 
         assertNull(flockDetailsList)
     }
+
+    @Test
+    fun testGetFlockDetailsFromDateDNEFlock(){
+        val dateFlockOne = Date.valueOf("1000-05-01")
+        val dateFlockTwo = Date.valueOf("1000-06-01")
+        val dateFDOne = Date.valueOf("1000-06-01")
+        val dateFDTwo = Date.valueOf("1000-07-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlockOne)
+
+        val flockDetailsList = ReadFlockDetails.getFlockDetailsFromDate(conn, dateFlockTwo, dateFDOne, dateFDTwo)
+
+        assertNull(flockDetailsList)
+    }
+
+    //TEST for getFlockDetailsFromFlock(Connection conn, Date flockDate)
+
+    @Test
+    fun testGetFlockDetailsFromFlockWithValidInput(){
+        val dateFlockOne = Date.valueOf("1000-05-01")
+        val dateFDOne = Date.valueOf("1000-06-01")
+        val dateFDTwo = Date.valueOf("1000-07-01")
+        val dateFDThree = Date.valueOf("1000-08-01")
+        val dateFlockTwo = Date.valueOf("1000-09-01")
+        val dateFDFour = Date.valueOf("1000-10-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlockOne)
+        CreateFlock.createFlock(conn, 1000, dateFlockTwo)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlockOne, dateFDOne, 0)
+        CreateFlockDetails.createFlockDetails(conn, dateFlockOne, dateFDTwo, 1)
+        CreateFlockDetails.createFlockDetails(conn, dateFlockOne, dateFDThree, 2)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlockTwo, dateFDFour, 0)
+
+        val flockDetailsList = ReadFlockDetails.getFlockDetailsFromFlock(conn, dateFlockOne)
+
+        val first = flockDetailsList[0]
+        val second = flockDetailsList[1]
+
+        assertEquals(3, flockDetailsList.size)
+
+        assertEquals(dateFDOne, first.fdDate)
+        assertEquals(0, first.depletedCount)
+
+        assertEquals(dateFDTwo, second.fdDate)
+        assertEquals(1, second.depletedCount)
+    }
+
+    @Test
+    fun testGetFlockDetailsFromFlockNoData(){
+        val dateFlockOne = Date.valueOf("1000-05-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlockOne)
+
+        val flockDetailsList = ReadFlockDetails.getFlockDetailsFromFlock(conn, dateFlockOne)
+
+        assertNull(flockDetailsList)
+    }
+
+    @Test
+    fun testGetFlockDetailsFromFlockDNEFlock(){
+        val dateFlockOne = Date.valueOf("1000-05-01")
+        val dateFlockTwo = Date.valueOf("1000-06-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlockOne)
+
+        val flockDetailsList = ReadFlockDetails.getFlockDetailsFromFlock(conn, dateFlockTwo)
+
+        assertNull(flockDetailsList)
+    }
+
 }
