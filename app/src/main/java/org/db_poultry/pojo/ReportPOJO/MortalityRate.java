@@ -19,6 +19,10 @@ public class MortalityRate {
         this.curCount = curCount;
     }
 
+    public MortalityRate(float mortalityRate, int flockId, Date startDate, int startCount, int curCount) {
+        this(mortalityRate, flockId, startDate, null, startCount, curCount);
+    }
+
     public float getMortalityRate() {
         return mortalityRate;
     }
