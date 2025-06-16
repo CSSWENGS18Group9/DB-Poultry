@@ -25,4 +25,4 @@ public class GetMortalityRate {
         return new MortalityRate(mortalityRate, flockID, flockDate, endDate, startingCount, curCount); // returns an instance of MortalityRate
     }
 
-}
+}//test
