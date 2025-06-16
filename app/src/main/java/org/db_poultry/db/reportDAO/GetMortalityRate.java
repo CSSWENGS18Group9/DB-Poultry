@@ -15,14 +15,14 @@ public class GetMortalityRate {
         Flock selectedFlock = ReadFlock.getFlockFromADate(conn, flockDate); // gets specified Flock POJO
         FlockDetails latestFlockDetail = ReadFlockDetails.getMostRecent(conn, flockDate); // latest Flock Detail
 
-        int flockID = selectedFlock.getFlockId();
+        int flockID = selectedFlock.getFlockId(); // gets ID of specified Flock
         int depleted = ReadFlockDetails.getCumulativeDepletedCount(conn, flockID); // gets cumulative depleted count from specified Flock
         int startingCount = selectedFlock.getStartingCount(); // gets starting count from specified Flock
         float mortalityRate = (float) startingCount / depleted * 100; // mortality rate of specified Flock
         int curCount = startingCount - depleted; // current count of specified Flock
         Date endDate = latestFlockDetail.getFdDate(); // gets Date of latest Flock Detail
 
-        return new MortalityRate(mortalityRate, flockID, flockDate, endDate, startingCount, curCount);
+        return new MortalityRate(mortalityRate, flockID, flockDate, endDate, startingCount, curCount); // returns an instance of MortalityRate
     }
 
 }
