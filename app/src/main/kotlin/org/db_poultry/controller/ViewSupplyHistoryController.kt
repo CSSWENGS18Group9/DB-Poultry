@@ -6,7 +6,7 @@ import javafx.scene.control.Label
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 
-class ViewSuppliesController {
+class ViewSupplyHistoryController {
 
     @FXML
     private lateinit var currAmountCol: TableColumn<Any, Any>

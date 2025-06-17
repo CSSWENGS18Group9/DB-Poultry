@@ -23,19 +23,19 @@
       </Rectangle>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fefae0" height="399.0" layoutX="204.0" layoutY="181.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" style="-fx-arc-height: 15; -fx-arc-width: 15;" width="874.0" />
       <TableView fx:id="viewSuppliesTable" layoutX="235.0" layoutY="213.0" prefHeight="337.0" prefWidth="813.0">
-        <columns>
-          <TableColumn fx:id="supplyTypeCol" prefWidth="176.0" text="Supply Type" />
-          <TableColumn fx:id="qtyAddedCol" prefWidth="208.0" text="Quantity Added" />
+         <columns>
+            <TableColumn fx:id="supplyTypeCol" prefWidth="176.0" text="Supply Type" />
+            <TableColumn fx:id="qtyAddedCol" prefWidth="208.0" text="Quantity Added" />
             <TableColumn fx:id="qtyDepletedCol" prefWidth="235.0" text="Quantity Depleted" />
             <TableColumn fx:id="currAmountCol" prefWidth="193.0" text="Current Amount" />
-        </columns>
+         </columns>
       </TableView>
-      <Button fx:id="dateHistoryBtn" onAction="#switchToViewDateHistory" layoutX="494.0" layoutY="606.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Date History" textFill="WHITE">
+      <Button fx:id="currHistoryBtn" layoutX="494.0" layoutY="606.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Current History" textFill="WHITE">
          <font>
             <Font name="HelveticaNowDisplay-Light" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="supplyHistoryBtn" onAction="#switchToViewSupplyHistory" layoutX="686.0" layoutY="606.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Supply History" textFill="WHITE">
+      <Button fx:id="supplyHistoryBtn" layoutX="686.0" layoutY="606.0" mnemonicParsing="false" onAction="#switchToViewSupplyHistory" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Supply History" textFill="WHITE">
          <font>
             <Font name="HelveticaNowDisplay-Light" size="15.0" />
          </font>
