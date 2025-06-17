@@ -10,6 +10,9 @@ import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
 import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
 import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
 import org.db_poultry.errors.generateErrorMessage
+import org.db_poultry.theLifesaver.Backup.TL_checkLastBackupDate
+import org.db_poultry.theLifesaver.TL.TL_firstOpen
+import org.db_poultry.theLifesaver.TL.wipe
 import java.sql.Connection
 import java.sql.Date
 
@@ -81,15 +84,19 @@ class App {
     fun getConnection(): Connection? = DBConnect.getConnection()
 }
 
+// checks if the developers are the ones running the code, if true then don't run TL
+// otherwise run TL (since the client is using it)
+// set this to true once we will shit it to the client
+val __DIRECT_CLIENT_: Boolean = false
+
 fun main() {
     val app = App()
     app.start()
 
-    // theLifesaver (backup stuff)
-    /*
-    TL_firstOpen(app.getConnection())
-    TL_checkLastBackupDate()
-     */
+    if (__DIRECT_CLIENT_){
+        TL_firstOpen(app)
+        TL_checkLastBackupDate()
+    }
 
     // Open MainFrame (index GUI)
     app.openMainFrame()
@@ -97,5 +104,7 @@ fun main() {
 //     // ==================================================
 //     // Keep this here but remove before shipping or every release
 //     // ==================================================
-//     wipe()
+    if (__DIRECT_CLIENT_){
+        wipe()
+    }
 }
