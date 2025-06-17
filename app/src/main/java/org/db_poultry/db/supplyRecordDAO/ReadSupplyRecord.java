@@ -1,5 +1,6 @@
 package org.db_poultry.db.supplyRecordDAO;
 
+import org.db_poultry.db.supplyTypeDAO.ReadSupplyType;
 import org.db_poultry.pojo.SupplyPOJO.SupplyComplete;
 
 import java.math.BigDecimal;
@@ -267,6 +268,17 @@ public class ReadSupplyRecord {
      * @return
      */
     public static BigDecimal getCurrentCountForDate(Connection conn, int supplyTypeID, Date currentDate) {
+        if (ReadSupplyType.getSupplyTypeById(conn, supplyTypeID) == null) {
+            generateErrorMessage(
+                    "Error in `getCurrentCountForDate()` in `ReadSupplyRecord`.",
+                    "Supply type ID does not exist.",
+                    "Verify that the ID provided exists",
+                    null
+            );
+            
+            return null;
+        }
+
         try (PreparedStatement pstmt = conn.prepareStatement("""
                 WITH last_retrieved AS (
                     SELECT MAX(SR_Date) AS last_retrieved_date
