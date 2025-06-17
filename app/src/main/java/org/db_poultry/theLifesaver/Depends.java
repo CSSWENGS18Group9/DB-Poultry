@@ -1,5 +1,7 @@
 package org.db_poultry.theLifesaver;
 
+import java.nio.file.Paths;
+
 public class Depends {
     // the filenames of the dependencies inside the app/installer directory
     // don't add the directory `installer/` as `installer\\` since we will append that
