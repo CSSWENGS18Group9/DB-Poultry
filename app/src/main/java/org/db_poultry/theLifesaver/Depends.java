@@ -7,6 +7,6 @@ public class Depends {
     private static final String postgres = "postgresql-17.5.exe";
 
     public static String getPostgres() {
-        return "installer\\" + postgres;
+        return Paths.get("installer", postgres).toString();
     }
 }
