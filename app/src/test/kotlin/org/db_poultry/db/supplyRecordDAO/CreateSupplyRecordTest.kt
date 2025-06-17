@@ -1,23 +1,5 @@
 package org.db_poultry.db.supplyRecordDAO
 
-/*
-CreateSupplyRecordTest.kt
-
-Restrictions:
-- Supply_ID must be a positive integer.
-- SR_Date must be a valid date.
-- Added and Consumed must be non-negative floats/integers.
-- You cannot create a supply record with the same date
-- You can create a supply record with zero Added and Consumed.
-
-TODO: Tests to implement with helper functions :
-- You cannot create a supply record with a date before the most recent supply record date with the same supply ID.
-- You can create a supply record with the same date as the most recent supply record if a supply record
-with the same supply ID does not already exist for that date.
-- You can create a supply record with the same date as the most recent supply record if the supply ID is different.
-- You cannot create a supply record with a higher consumed than the summation of all previous added values for that supply ID on that date.
-*/
-
 import org.db_poultry.App
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
