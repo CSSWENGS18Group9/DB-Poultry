@@ -1,5 +1,7 @@
 package org.db_poultry.pojo.SupplyPOJO;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Date;
 
 public class SupplyComplete {
@@ -8,18 +10,18 @@ public class SupplyComplete {
     final Date date;
     final String supply_name;
     final String unit;
-    final float added;
-    final float consumed;
+    final BigDecimal added;
+    final BigDecimal consumed;
     final boolean retrieved;
 
-    public SupplyComplete(int supply_id, int supply_type_id, Date date, String supply_name, String unit, float added, float consumed, boolean retrieved) {
+    public SupplyComplete(int supply_id, int supply_type_id, Date date, String supply_name, String unit, BigDecimal added, BigDecimal consumed, boolean retrieved) {
         this.supply_id = supply_id;
         this.supply_type_id = supply_type_id;
         this.date = date;
         this.supply_name = supply_name;
         this.unit = unit;
-        this.added = added;
-        this.consumed = consumed;
+        this.added = (added == null) ? null : added.setScale(4, RoundingMode.DOWN);
+        this.consumed = (consumed == null) ? null : consumed.setScale(4, RoundingMode.DOWN);
         this.retrieved = retrieved;
     }
 
@@ -43,11 +45,11 @@ public class SupplyComplete {
         return unit;
     }
 
-    public float getAdded() {
+    public BigDecimal getAdded() {
         return added;
     }
 
-    public float getConsumed() {
+    public BigDecimal getConsumed() {
         return consumed;
     }
 
