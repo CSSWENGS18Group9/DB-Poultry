@@ -11,9 +11,9 @@ public class CreateSupplyType {
     /**
      * Creates a supply type and does the validation before insertion
      *
-     * @param conn the JDBC connection
+     * @param conn       the JDBC connection
      * @param supplyName the name of the supply
-     * @param unit the unit of the supply
+     * @param unit       the unit of the supply
      * @return the SQL query as a string if it worked, null otherwise
      */
     public static String createSupplyType(Connection conn, String supplyName, String unit) {
@@ -30,7 +30,9 @@ public class CreateSupplyType {
             return null;
         }
 
-        if (validation_nameIsUnique(conn, supplyName)) {
+        // transform the name to a valid name. If its null then the name itself is not unique
+        String validName = validation_nameIsUniqueAndValid(conn, supplyName);
+        if (validName == null) {
             generateErrorMessage(
                     "Error in `createSupplyType()` in `CreateSupplyType`",
                     "Supply name is not unique",
@@ -41,16 +43,16 @@ public class CreateSupplyType {
             return null;
 
         }
-    
+
         try (PreparedStatement psmt = conn.prepareStatement("""
                 INSERT INTO supply_type (supply_name, unit) VALUES (?, ?)
                 """)) {
 
-            psmt.setString(1, supplyName);
-            psmt.setString(2, unit);
+            psmt.setString(1, validName);
+            psmt.setString(2, validUnit);
             psmt.executeUpdate();
 
-            return "INSERT INTO supply_type (supply_name, unit) VALUES(" + supplyName + ", " + unit + ")";
+            return String.format("INSERT INTO supply_type (supply_name, unit) VALUES('%s', '%s')", validName, validUnit);
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `createSupplyType()` in `CreateSupplyType`.",
@@ -69,21 +71,19 @@ public class CreateSupplyType {
      * @param name the name of the supply
      * @return {true} if it is not unique, {false} otherwise
      */
-    private static boolean validation_nameIsUnique(Connection conn, String name) {
-        return ReadSupplyType.getSupplyTypeByName(conn, name) != null;
+    private static String validation_nameIsUniqueAndValid(Connection conn, String name) {
+        name = name.strip().toLowerCase();
+        return ReadSupplyType.getSupplyTypeByName(conn, name) == null ? name : null;
     }
 
     /**
      * Validation that the unit is valid (the length of the unit is >12)
+     *
      * @param unit the unit
      * @return returns {null} if its invalid/unfixable, {String} the same/fixed unit string
      */
-    private static String validation_unitIsValid(String unit) {
-        if (unit.isEmpty()) return null;
-
-        String removeWhitespace = unit.replaceAll("\\s+", "");
-
-        if (removeWhitespace.isEmpty() || (removeWhitespace.length() > 12)) return null;
-        return removeWhitespace;
+    public static String validation_unitIsValid(String unit) {
+        unit = unit.strip().toLowerCase();
+        return unit.isEmpty() || unit.length() > 12 ? null : unit;
     }
 }
