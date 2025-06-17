@@ -9,23 +9,22 @@ plugins {
     application
     kotlin("jvm") version "2.1.21"
     java
+    id("com.gradleup.shadow") version "8.3.6"
 
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+group = "org.db_poultry"
+version = "1.0"
 
 repositories {
     mavenCentral()
 }
 
 // JavaFX
-val javafxVersion = "21.0.1"
-val platform = when {
-    System.getProperty("os.name").lowercase().contains("mac") -> {
-        if (System.getProperty("os.arch") == "aarch64") "mac-aarch64" else "mac"
-    }
-    System.getProperty("os.name").lowercase().contains("linux") -> "linux"
+val javafxVersion = "17.0.2"
+val platform = when (System.getProperty("os.name").lowercase()) {
+    "mac os x", "macos" -> "mac"
+    "linux" -> "linux"
     else -> "win"
 }
 
