@@ -4,13 +4,14 @@ import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
+import org.db_poultry.db.cleanTables
+import org.db_poultry.db.flockDAO.CreateFlock
+import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
+import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
 import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
-import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 import org.db_poultry.errors.generateErrorMessage
-import org.db_poultry.theLifesaver.TL.*
-import org.db_poultry.theLifesaver.Backup
-
 import java.sql.Connection
+import java.sql.Date
 
 class App {
     lateinit var databaseName: String
@@ -84,20 +85,14 @@ fun main() {
     val app = App()
     app.start()
 
-    app.openMainFrame() // DEBUGGING TEMPORARY PLACEMENT
+    // theLifesaver (backup stuff)
+    /*
+    TL_firstOpen(app.getConnection())
+    TL_checkLastBackupDate()
+     */
 
-//     // theLifesaver (backup stuff)
-//     TL_firstOpen(app)
-//     Backup.TL_checkLastBackupDate()
-
-//     // Open MainFrame (index GUI)
-// //    app.openMainFrame()
-//     CreateSupplyType.createSupplyType(app.getConnection(), "Hello", "Hello");
-//     CreateSupplyType.createSupplyType(app.getConnection(), "World", "World");
-//     CreateSupplyType.createSupplyType(app.getConnection(), "Hello", "Hello");
-
-//     val x = ReadSupplyType.getAllSupplyTypes(app.getConnection())
-//     for (t in x) println(t.name)
+    // Open MainFrame (index GUI)
+    app.openMainFrame()
 
 //     // ==================================================
 //     // Keep this here but remove before shipping or every release

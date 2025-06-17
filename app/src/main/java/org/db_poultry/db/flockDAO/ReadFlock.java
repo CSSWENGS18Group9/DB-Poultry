@@ -18,7 +18,8 @@ public class ReadFlock {
      *
      * @param con       the sql connection
      * @param keyMapper function that extracts a key from the FlockDetails pojo and uses it as the key of the hash map
-     * @param <K>       the generic; the type of the key in the hash map. See allByID and allByDate to see what <K> refers to
+     * @param <K>       the generic; the type of the key in the hash map. See allByID and allByDate to see what <K>
+     *           refers to
      * @return hashmap of the Flock and FlockDetails table
      */
     private static <K> HashMap<K, FlockComplete> queryAll(Connection con, Function<Flock, K> keyMapper) {
@@ -48,7 +49,13 @@ public class ReadFlock {
             }
 
         } catch (SQLException e) {
-            generateErrorMessage("Error in `queryFlocks()`.", "SQLException occurred.", "", e);
+            generateErrorMessage(
+                    "Error in `queryFlocks()`.",
+                    "SQLException occurred.",
+                    "",
+                    e
+            );
+
             return null;
         }
 
@@ -85,11 +92,20 @@ public class ReadFlock {
      */
     public static List<Flock> getFlocksFromDate(Connection conn, Date startDate, Date endDate) {
         if (startDate.after(endDate)) {
-            generateErrorMessage("Error in `getFlockFromDate()`.", "End date happens before start date.", "", null);
+            generateErrorMessage(
+                    "Error in `getFlockFromDate()`.",
+                    "End date happens before start date.",
+                    "",
+                    null
+            );
+
             return null;
         }
 
-        try (PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM Flock WHERE Starting_Date BETWEEN ? AND ?")) {
+        try (PreparedStatement pstmt = conn.prepareStatement("""
+                SELECT * FROM Flock WHERE Starting_Date BETWEEN ? AND ?
+                """)) {
+
             pstmt.setDate(1, startDate);
             pstmt.setDate(2, endDate);
             List<Flock> flocks = new ArrayList<>();
@@ -105,13 +121,26 @@ public class ReadFlock {
                     flocks.add(returnedFlock);
                 }
             }
-            return flocks;
+            return flocks.isEmpty() ? null : flocks;
         } catch (SQLException e) {
-            generateErrorMessage("Error in `getFlockFromDate()`.", "SQLException occurred.", "", e);
+            generateErrorMessage(
+                    "Error in `getFlockFromDate()`.",
+                    "SQLException occurred.",
+                    "",
+                    e
+            );
+
             return null;
         }
     }
 
+    /**
+     * Get a single flock record from a specified date
+     *
+     * @param conn the JDBC connection
+     * @param date the date
+     * @return returns the flock if it exists, otherwise null
+     */
     public static Flock getFlockFromADate(Connection conn, Date date) {
         // simply call `getFlocksFromDate` but use the same startDate and endDate
         List<Flock> ret = getFlocksFromDate(conn, date, date);
