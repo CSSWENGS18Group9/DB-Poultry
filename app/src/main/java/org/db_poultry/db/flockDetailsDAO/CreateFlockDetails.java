@@ -186,6 +186,6 @@ public class CreateFlockDetails {
             return null;
         }
 
-        return overlaps == 0 ? null : actualDate;
+        return overlaps == 0 ? actualDate : null;
     }
 }
