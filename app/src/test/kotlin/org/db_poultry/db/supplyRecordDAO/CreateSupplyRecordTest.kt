@@ -37,7 +37,7 @@ class CreateSupplyRecordTest {
                                                             BigDecimal("50.00"),
                                                             false)
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_ID, SR_Date, Added, Consumed, Retrieved) VALUES (1, '2025-01-01', 100.0000, 50.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (1, '2025-01-01', 100.0000, 50.0000, false)",
             result
         )
     }
@@ -105,7 +105,7 @@ class CreateSupplyRecordTest {
 
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_ID, SR_Date, Added, Consumed, Retrieved) VALUES (2, '2025-01-01', 100.0000, 50.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (2, '2025-01-02', 100.0000, 50.0000, false)",
             result
         )
     }
@@ -179,7 +179,7 @@ class CreateSupplyRecordTest {
             false)
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_ID, SR_Date, Added, Consumed, Retrieved) VALUES (1, '2025-01-01', 50.0000, 0.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (1, '2025-02-02', 50.0000, 0.0000, false)",
             resultOne
         )
 
@@ -192,8 +192,8 @@ class CreateSupplyRecordTest {
 
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_ID, SR_Date, Added, Consumed, Retrieved) VALUES (1, '2025-01-01', 0.0000, 50.0000, false)",
-            resultOne
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (1, '2025-02-03', 0.0000, 50.0000, false)",
+            resultTwo
         )
     }
 
@@ -297,7 +297,7 @@ class CreateSupplyRecordTest {
             false)
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_ID, SR_Date, Added, Consumed, Retrieved) VALUES (1, '2025-01-01', 100.0000, 50.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (1, '2025-01-01', 100.0000, 50.0000, false)",
             resultOne
         )
     }

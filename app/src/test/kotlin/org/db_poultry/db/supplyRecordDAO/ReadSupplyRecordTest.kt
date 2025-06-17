@@ -86,6 +86,8 @@ class ReadSupplyRecordTest {
     @Test
     fun testReadSupplyGetFromDateWithDateNoData(){
         val date = Date.valueOf("2025-02-02")
+
+        // this variable was UNUSED
         val oldDate = Date.valueOf("2025-01-02")
 
         CreateSupplyType.createSupplyType(conn, "Test_1", "kg")
@@ -106,7 +108,9 @@ class ReadSupplyRecordTest {
             BigDecimal("50.00"),
             false)
 
-        val supplyCompList = ReadSupplyRecord.getFromDate(conn, date)
+        // I changed this from (conn, date) to (conn, oldDate)
+        // I am assuming that's what you want @OutForMilks
+        val supplyCompList = ReadSupplyRecord.getFromDate(conn, oldDate)
 
         assertNull(supplyCompList)
     }
@@ -850,7 +854,7 @@ class ReadSupplyRecordTest {
 
         val currCount = ReadSupplyRecord.getCurrentCountForDate(conn, 1, date)
 
-        assertNull(currCount)
+        assertEquals(BigDecimal.ZERO.setScale(4), currCount)
     }
 
     @Test
