@@ -145,7 +145,7 @@ public class ReadFlock {
         // simply call `getFlocksFromDate` but use the same startDate and endDate
         List<Flock> ret = getFlocksFromDate(conn, date, date);
 
-        return ret != null && !ret.isEmpty() ? ret.getFirst() : null;
+        return ret != null && !ret.isEmpty() ? ret.get(0) : null;
     }
 }
 
