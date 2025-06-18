@@ -59,7 +59,6 @@ public class TL {
                 System.out.println("~ TL ../ Backup folder has been deleted.");
 
             } else {
-                System.out.println(">>> theLifesaver's backups " + "folder does not exist.");
                 System.out.println("~ TL ../ Backup folder does not exist.");
 
             }
@@ -99,7 +98,7 @@ public class TL {
         System.out.println("=================== IMPORTANT! " + "===================");
     }
 
-    public static void TL_initPostgres(String username, String password) {
+    public static void TL_initPostgres(String username) {
         System.out.println("~ TL ../ DB -- Checking if PostgreSQL exists.");
 
         boolean psqlExists = false;
@@ -118,7 +117,6 @@ public class TL {
                     System.out.println("~ TL ../ DB -- PostgreSQL already installed: " + line);
                 } else {
                     System.out.println("~ TL ../ DB -- PostgreSQL not installed: " + line);
-                    return;
                 }
             }
         } catch (IOException | InterruptedException e) {
@@ -130,7 +128,7 @@ public class TL {
         System.out.println("~ TL ../ DB -- Creating DB Admin user and privileges.");
 
         String[] script = {
-                "CREATE USER " + username + " WITH PASSWORD '" + password + "';",
+                "CREATE USER " + username + " WITH PASSWORD 'password';",
                 "CREATE DATABASE " + username + " OWNER " + username + ";",
                 "GRANT ALL PRIVILEGES ON DATABASE " + username + " TO " + username + ";",
                 "ALTER USER " + username + " WITH SUPERUSER;"
@@ -141,11 +139,19 @@ public class TL {
             Files.write(ts, List.of(script));
 
             ProcessBuilder pb = new ProcessBuilder("psql", "-U", "postgres", "-f", ts.toString());
-            pb.environment().put("PGPASSWORD", password);
+            pb.environment().put("PGPASSWORD", "password");
             pb.redirectErrorStream(true);
-            pb.inheritIO();
 
             Process psql = pb.start();
+
+            // Capture and print output
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(psql.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println("psql: " + line);
+                }
+            }
+
             int exitCode = psql.waitFor();
             if (exitCode == 0) {
                 System.out.println("~ TL ../ DB -- Job's done.");
@@ -162,6 +168,7 @@ public class TL {
 
             throw new RuntimeException(e);
         }
+
     }
 
     /**
@@ -182,7 +189,8 @@ public class TL {
 
         // initialize postgresql
         System.out.println("~ TL ../ Initialize -- DB.");
-        TL_initPostgres(app.getDatabaseName(), app.getDatabasePass());
+        // TL_initPostgres(app.getDatabaseName());
+        TL_initPostgres(app.getDatabaseName());
 
         // make the backup folder
         System.out.println("~ TL ../ Initialize -- Backups.");
