@@ -1,6 +1,10 @@
 package org.db_poultry.db.flockDAO;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
@@ -38,10 +42,9 @@ public class CreateFlock {
             return null;
         }
 
-        try {
-            PreparedStatement preppedStatement = connect.prepareStatement("""
+        try (PreparedStatement preppedStatement = connect.prepareStatement("""
                     INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (?, ?)
-                    """);
+                """)) {
 
             preppedStatement.setInt(1, startCount);
             preppedStatement.setDate(2, actualDate);
