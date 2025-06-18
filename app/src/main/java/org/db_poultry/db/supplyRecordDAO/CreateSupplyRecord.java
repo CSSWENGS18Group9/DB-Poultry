@@ -122,7 +122,7 @@ public class CreateSupplyRecord {
             preparedStatement.executeUpdate();
             return String.format(
                             "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES " +
-                            "(%d, '%s', %f, %f, %b);",
+                            "(%d, '%s', %.4f, %.4f, %b)",
                     supplyTypeID, srDate, added, consumed, retrieved);
         } catch (SQLException e) {
             generateErrorMessage(
