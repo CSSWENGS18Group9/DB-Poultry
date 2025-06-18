@@ -78,7 +78,7 @@ public class TL {
             }
         } catch (IOException e) {
             generateErrorMessage(
-                    "Error at `TL_murder` in `TL`",
+                    "Error at `wipe` in `TL`",
                     "Failed to delete config file.",
                     "",
                     e
