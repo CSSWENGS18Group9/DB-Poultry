@@ -83,7 +83,12 @@ public class CreateSupplyType {
      * @return returns {null} if its invalid/unfixable, {String} the same/fixed unit string
      */
     public static String validation_unitIsValid(String unit) {
-        unit = unit.strip().toLowerCase();
+        // (1) remove spaces in between, if a space or a list of spaces does exist replace it with a single space
+        //  hello###world (denote # as " ") ===> hello#world
+        // (2) remove preceding and trailing spaces
+        // (3) convert to lower case
+        unit = unit.replaceAll("\s+", " ").strip().toLowerCase();
+
         return unit.isEmpty() || unit.length() > 12 ? null : unit;
     }
 }
