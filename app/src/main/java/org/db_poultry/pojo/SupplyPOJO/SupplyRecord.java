@@ -1,26 +1,32 @@
 package org.db_poultry.pojo.SupplyPOJO;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 
 public class SupplyRecord {
     private final int supplyRecordId;
     private final int supplyTypeId;
-    private final double currentQuantity;
-    private final double deleted;
-    private final double added;
+    private final BigDecimal currentQuantity;
+    private final BigDecimal deleted;
+    private final BigDecimal added;
     private final String unit;
     private final Date date;
     private final boolean retrieved;
 
-    public SupplyRecord(int supplyRecordId, int supplyTypeId, double currentQuantity, double deleted, double added, String unit, Date date, boolean retrieved) {
+    public SupplyRecord(int supplyRecordId, int supplyTypeId, BigDecimal currentQuantity, BigDecimal deleted, BigDecimal added, String unit, Date date, boolean retrieved) {
         this.supplyRecordId = supplyRecordId;
         this.supplyTypeId = supplyTypeId;
-        this.currentQuantity = currentQuantity;
-        this.deleted = deleted;
-        this.added = added;
+        this.currentQuantity = scale(currentQuantity);
+        this.deleted = scale(deleted);
+        this.added = scale(added);
         this.unit = unit;
         this.date = date;
         this.retrieved = retrieved;
+    }
+
+    private static BigDecimal scale(BigDecimal value) {
+        return value == null ? null : value.setScale(4, RoundingMode.DOWN);
     }
 
     public int getSupplyRecordId() {
@@ -31,15 +37,15 @@ public class SupplyRecord {
         return supplyTypeId;
     }
 
-    public double getCurrentQuantity() {
+    public BigDecimal getCurrentQuantity() {
         return currentQuantity;
     }
 
-    public double getDeleted() {
+    public BigDecimal getDeleted() {
         return deleted;
     }
 
-    public double getAdded() {
+    public BigDecimal getAdded() {
         return added;
     }
 

@@ -68,7 +68,7 @@ public class CreateSupplyRecord {
         // if retrieved is true set added  to 0.0000 since we don't really care about this value
         // and set the consumed to tbe the total of the added for this range - total of the consumed for this range
         if (retrieved) {
-            added = BigDecimal.ZERO.setScale(4, RoundingMode.HALF_UP);
+            added = BigDecimal.ZERO.setScale(4, RoundingMode.DOWN);
             consumed = ReadSupplyRecord.getCurrentCountForDate(connect, supplyTypeID, srDate);
 
             if (consumed == null) {

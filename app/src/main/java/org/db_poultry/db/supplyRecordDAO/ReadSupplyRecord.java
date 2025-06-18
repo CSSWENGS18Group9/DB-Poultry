@@ -1,11 +1,13 @@
 package org.db_poultry.db.supplyRecordDAO;
 
+import org.db_poultry.db.supplyTypeDAO.ReadSupplyType;
 import org.db_poultry.pojo.SupplyPOJO.SupplyComplete;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
@@ -23,14 +25,22 @@ public class ReadSupplyRecord {
         Date srDate = rs.getDate("SR_Date");
         String supply_name = rs.getString("Supply_Name");
         String unit = rs.getString("Unit");
-        float added = rs.getFloat("Added");
-        float consumed = rs.getFloat("Consumed");
+
+        BigDecimal added = rs.getBigDecimal("Added");
+        if (added != null) {
+            added = added.setScale(4, RoundingMode.DOWN);
+        }
+
+        BigDecimal consumed = rs.getBigDecimal("Consumed");
+        if (consumed != null) {
+            consumed = consumed.setScale(4, RoundingMode.DOWN);
+        }
+
         boolean retrieved = rs.getBoolean("Retrieved");
 
-        return new SupplyComplete(supply_id, supply_type_id, srDate, supply_name, unit, added, consumed,
-                retrieved);
-
+        return new SupplyComplete(supply_id, supply_type_id, srDate, supply_name, unit, added, consumed, retrieved);
     }
+
 
     /**
      * Returns an ArrayList of supply complete objects given some prepared statement. Not to be used out of scope
@@ -75,7 +85,7 @@ public class ReadSupplyRecord {
 
             pstmt.setDate(1, date);
 
-            return readList(pstmt);
+            return Objects.requireNonNull(readList(pstmt)).isEmpty() ? null : readList(pstmt);
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `getFromDate()` in `ReadSupplyRecord`.",
@@ -113,8 +123,9 @@ public class ReadSupplyRecord {
 
             pstmt.setString(1, supplyName);
 
-            return readList(pstmt);
+            ArrayList<SupplyComplete> ret = readList(pstmt);
 
+            return Objects.requireNonNull(ret).isEmpty() ? null : ret;
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `getFromName()` in `ReadSupplyRecord`.",
@@ -267,6 +278,17 @@ public class ReadSupplyRecord {
      * @return
      */
     public static BigDecimal getCurrentCountForDate(Connection conn, int supplyTypeID, Date currentDate) {
+        if (ReadSupplyType.getSupplyTypeById(conn, supplyTypeID) == null) {
+            generateErrorMessage(
+                    "Error in `getCurrentCountForDate()` in `ReadSupplyRecord`.",
+                    "Supply type ID does not exist.",
+                    "Verify that the ID provided exists",
+                    null
+            );
+
+            return null;
+        }
+
         try (PreparedStatement pstmt = conn.prepareStatement("""
                 WITH last_retrieved AS (
                     SELECT MAX(SR_Date) AS last_retrieved_date
@@ -307,7 +329,7 @@ public class ReadSupplyRecord {
 
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                return rs.getBigDecimal("currentCount").setScale(4, RoundingMode.HALF_UP);
+                return rs.getBigDecimal("currentCount").setScale(4, RoundingMode.DOWN);
             }
 
             return null;
