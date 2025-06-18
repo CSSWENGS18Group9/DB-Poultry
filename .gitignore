@@ -37,4 +37,4 @@ app/.env
 .idea/
 
 # DB-Poultry
-.🐔
+*.🐔
