@@ -160,7 +160,7 @@ public class ReadSupplyRecord {
 
             ArrayList<SupplyComplete> result = readList(pstmt);
             if (result != null && !result.isEmpty()) {
-                return result.getFirst();
+                return result.get(0);
             }
 
             return null;
