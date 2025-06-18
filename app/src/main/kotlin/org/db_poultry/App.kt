@@ -86,7 +86,7 @@ class App {
 // set this to true once we will shit it to the client
 val __DIRECT_CLIENT_: Boolean = true
 var __FIRST_LAUNCHED: Boolean = false
-val __DO_WIPE: Boolean = true
+val __DO_WIPE: Boolean = false
 
 fun main() {
     val app = App()
