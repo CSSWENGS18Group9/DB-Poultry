@@ -10,7 +10,11 @@ import javafx.scene.text.Text
 import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.CreateSupplyType.createSupplyType
 
-class CreateSuppliesController {
+import javafx.fxml.Initializable
+import java.net.URL
+import java.util.ResourceBundle
+
+class CreateSuppliesController: Initializable {
 
     @FXML
     private lateinit var anchorPane: AnchorPane
@@ -35,6 +39,10 @@ class CreateSuppliesController {
 
     @FXML
     private lateinit var textHeader: Text
+
+    override fun initialize(location: URL?, resources: ResourceBundle?) {
+        // Initialization logic if needed
+    }
 
     @FXML
     fun confirm() {
