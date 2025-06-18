@@ -65,18 +65,18 @@ class ReadSupplyTypeTest {
     // - Reading a supply type with an existing ID should return the correct supply type.
     @Test
     fun testGetSupplyTypeByIdExisting() {
-        CreateSupplyType.createSupplyType(conn, "Feed", "kg")
+        CreateSupplyType.createSupplyType(conn, "feed", "kg")
         val result = ReadSupplyType.getSupplyTypeById(conn, 1)
-        assertEquals("Feed", result?.name)
+        assertEquals("feed", result?.name)
         assertEquals("kg", result?.unit)
     }
 
     // - getSupplyTypeByName should return the correct supply type if the name exists.
     @Test
     fun testGetSupplyTypeByNameExisting() {
-        CreateSupplyType.createSupplyType(conn, "Water", "liters")
-        val result = ReadSupplyType.getSupplyTypeByName(conn, "Water")
-        assertEquals("Water", result?.name)
+        CreateSupplyType.createSupplyType(conn, "water", "liters")
+        val result = ReadSupplyType.getSupplyTypeByName(conn, "water")
+        assertEquals("water", result?.name)
         assertEquals("liters", result?.unit)
     }
 
