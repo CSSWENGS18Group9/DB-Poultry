@@ -85,7 +85,8 @@ public class ReadSupplyRecord {
 
             pstmt.setDate(1, date);
 
-            return Objects.requireNonNull(readList(pstmt)).isEmpty() ? null : readList(pstmt);
+            ArrayList<SupplyComplete> records = readList(pstmt);
+            return Objects.requireNonNull(records).isEmpty() ? null : records;
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `getFromDate()` in `ReadSupplyRecord`.",
@@ -160,7 +161,7 @@ public class ReadSupplyRecord {
 
             ArrayList<SupplyComplete> result = readList(pstmt);
             if (result != null && !result.isEmpty()) {
-                return result.getFirst();
+                return result.get(0);
             }
 
             return null;

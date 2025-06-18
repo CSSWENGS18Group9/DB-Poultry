@@ -78,7 +78,7 @@ public class TL {
             }
         } catch (IOException e) {
             generateErrorMessage(
-                    "Error at `TL_murder` in `TL`",
+                    "Error at `wipe` in `TL`",
                     "Failed to delete config file.",
                     "",
                     e
@@ -135,8 +135,6 @@ public class TL {
 
     public static void TL_initPostgres(String username, String password) {
         System.out.println("~ TL ../ DB -- Checking if PostgreSQL exists.");
-
-        boolean psqlExists = false;
 
         // Check if psql exists
         try {
