@@ -2,7 +2,7 @@ package org.db_poultry.theLifesaver;
 
 public class Variables {
     // ================ DOT CONFIG VARIABLES ============
-    private static final String DOT_CONFIG_PATH = ".config.dbpoultry";
+    private static final String DOT_CONFIG_PATH = ".🐔";
 
     // ================ BACKUP VARIABLES ================
     private static final String BACKUP_FOLDER_PATH = "dbp_backups";
