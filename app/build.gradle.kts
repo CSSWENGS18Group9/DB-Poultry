@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "org.db_poultry"
-version = "1.0"
+version = "2.0"
 
 repositories {
     mavenCentral()
@@ -103,4 +103,22 @@ java {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+// Shadow JAR configuration for creating fat JAR
+tasks.shadowJar {
+    archiveBaseName.set("db-poultry")
+    archiveClassifier.set(version.toString())
+    archiveVersion.set("")
+
+    // Ensure the main class is set in the manifest
+    manifest {
+        attributes["Main-Class"] = "org.db_poultry.AppKt"
+    }
+
+    // Include all runtime dependencies
+    configurations = listOf(project.configurations.runtimeClasspath.get())
+
+    // Merge service files to avoid conflicts
+    mergeServiceFiles()
 }
