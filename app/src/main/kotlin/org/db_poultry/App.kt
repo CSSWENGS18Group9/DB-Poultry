@@ -5,16 +5,11 @@ import javafx.application.Application
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
-import org.db_poultry.db.flockDAO.CreateFlock
-import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
-import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
-import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.theLifesaver.Backup.TL_checkLastBackupDate
 import org.db_poultry.theLifesaver.TL.TL_firstOpen
 import org.db_poultry.theLifesaver.TL.wipe
 import java.sql.Connection
-import java.sql.Date
 
 class App {
     lateinit var databaseName: String
@@ -74,7 +69,9 @@ class App {
 
             return
         }
+    }
 
+    fun connect() {
         val jdbcUrl = "jdbc:postgresql://localhost:$databasePort/$databaseName"
 
         // Connect to the PostgresSQL DB
@@ -88,24 +85,34 @@ class App {
 // otherwise run TL (since the client is using it)
 // set this to true once we will shit it to the client
 val __DIRECT_CLIENT_: Boolean = true
+var __FIRST_LAUNCHED: Boolean = false
 val __DO_WIPE: Boolean = true
 
 fun main() {
     val app = App()
     app.start()
 
-    if (__DIRECT_CLIENT_){
+    if (__DIRECT_CLIENT_) {
         TL_firstOpen(app)
         TL_checkLastBackupDate()
+        __FIRST_LAUNCHED = true
+    }
+
+    app.connect()
+
+    if (__FIRST_LAUNCHED) {
+        // if it is the first open, we will clean all tables
+        cleanTables(app.getConnection())
     }
 
     // Open MainFrame (index GUI)
-//    app.openMainFrame()
+    app.openMainFrame()
 
-     // ==================================================
-     // Keep this here but remove before shipping or every release
-     // ==================================================
-    if (__DO_WIPE){
-        wipe()
+    // ==================================================
+    // Keep this here but remove before shipping or every release
+    // ==================================================
+    if (__DO_WIPE) {
+        app.getConnection()?.close()
+        wipe(app.databaseName)
     }
 }
