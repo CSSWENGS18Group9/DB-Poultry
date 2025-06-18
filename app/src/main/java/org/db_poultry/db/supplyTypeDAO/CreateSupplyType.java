@@ -52,7 +52,8 @@ public class CreateSupplyType {
             psmt.setString(2, validUnit);
             psmt.executeUpdate();
 
-            return String.format("INSERT INTO supply_type (supply_name, unit) VALUES('%s', '%s')", validName, validUnit);
+            return String.format("INSERT INTO supply_type (supply_name, unit) VALUES('%s', '%s')", validName,
+                    validUnit);
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `createSupplyType()` in `CreateSupplyType`.",
