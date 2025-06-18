@@ -136,8 +136,6 @@ public class TL {
     public static void TL_initPostgres(String username, String password) {
         System.out.println("~ TL ../ DB -- Checking if PostgreSQL exists.");
 
-        boolean psqlExists = false;
-
         // Check if psql exists
         try {
             Process check = new ProcessBuilder("psql", "--version")
