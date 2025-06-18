@@ -37,8 +37,8 @@ class CreateSupplyTypeTest {
 
     @Test
     fun testCreateSupplyTypeValidInputs() {
-        val result = CreateSupplyType.createSupplyType(conn, "Feed", "kg")
-        assertEquals("INSERT INTO supply_type (supply_name, unit) VALUES(Feed, kg)", result)
+        val result = CreateSupplyType.createSupplyType(conn, "feed", "kg")
+        assertEquals("INSERT INTO supply_type (supply_name, unit) VALUES('feed', 'kg')", result)
     }
 
     @Test
