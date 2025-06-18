@@ -87,7 +87,8 @@ class App {
 // checks if the developers are the ones running the code, if true then don't run TL
 // otherwise run TL (since the client is using it)
 // set this to true once we will shit it to the client
-val __DIRECT_CLIENT_: Boolean = false
+val __DIRECT_CLIENT_: Boolean = true
+val __DO_WIPE: Boolean = true
 
 fun main() {
     val app = App()
@@ -99,12 +100,12 @@ fun main() {
     }
 
     // Open MainFrame (index GUI)
-    app.openMainFrame()
+//    app.openMainFrame()
 
-//     // ==================================================
-//     // Keep this here but remove before shipping or every release
-//     // ==================================================
-    if (__DIRECT_CLIENT_){
+     // ==================================================
+     // Keep this here but remove before shipping or every release
+     // ==================================================
+    if (__DO_WIPE){
         wipe()
     }
 }
