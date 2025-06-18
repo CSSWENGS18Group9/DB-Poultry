@@ -87,7 +87,7 @@ public class CreateSupplyType {
         //  hello###world (denote # as " ") ===> hello#world
         // (2) remove preceding and trailing spaces
         // (3) convert to lower case
-        unit = unit.replaceAll("\s+", " ").strip().toLowerCase();
+        unit = unit.replaceAll("\\s+", " ").strip().toLowerCase();
 
         return unit.isEmpty() || unit.length() > 12 ? null : unit;
     }
