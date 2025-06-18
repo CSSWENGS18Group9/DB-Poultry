@@ -163,7 +163,7 @@ class ReadSupplyRecordTest {
             false
         )
 
-        val supplyCompList = ReadSupplyRecord.getFromName(conn, "Test_1")
+        val supplyCompList = ReadSupplyRecord.getFromName(conn, "test_1")
 
         val first = supplyCompList[0]
         val second = supplyCompList[1]
@@ -273,7 +273,7 @@ class ReadSupplyRecordTest {
             false
         )
 
-        val supplyComp = ReadSupplyRecord.getOneByDateAndName(conn, date, "Test_1")
+        val supplyComp = ReadSupplyRecord.getOneByDateAndName(conn, date, "test_1")
 
         assertEquals(1, supplyComp.supply_type_id)
         assertEquals(date, supplyComp.date)
@@ -327,7 +327,7 @@ class ReadSupplyRecordTest {
             false
         )
 
-        val supplyComp = ReadSupplyRecord.getOneByDateAndName(conn, date, "Test_1")
+        val supplyComp = ReadSupplyRecord.getOneByDateAndName(conn, date, "test_1")
 
         assertEquals(1, supplyComp.supply_type_id)
         assertEquals(date, supplyComp.date)
@@ -435,7 +435,7 @@ class ReadSupplyRecordTest {
             false
         )
 
-        val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "Test_1")
+        val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "test_1")
 
         assertEquals(1, supplyComp.supply_type_id)
         assertEquals(date, supplyComp.date)
@@ -489,7 +489,7 @@ class ReadSupplyRecordTest {
             false
         )
 
-        val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "Test_1")
+        val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "test_1")
 
         assertEquals(1, supplyComp.supply_type_id)
         assertEquals(date, supplyComp.date)
@@ -503,7 +503,7 @@ class ReadSupplyRecordTest {
 
         CreateSupplyType.createSupplyType(conn, "Test_1", "kg")
 
-        val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "Test_1")
+        val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "test_1")
 
         assertNull(supplyComp)
     }
@@ -511,7 +511,7 @@ class ReadSupplyRecordTest {
     @Test
     fun testGetMostRecentFromNameWithDNESupplyType() {
 
-        val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "Test_1")
+        val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "test_1")
 
         assertNull(supplyComp)
     }
