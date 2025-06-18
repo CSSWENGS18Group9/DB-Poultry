@@ -3,14 +3,11 @@ package org.db_poultry.theLifesaver;
 import org.db_poultry.App;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 
-import static org.db_poultry.db.InitializeKt.cleanTables;
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 /*
@@ -29,7 +26,7 @@ public class TL {
      * it so that the next open of the DBMS is the first
      * open
      */
-    public static void wipe() {
+    public static void wipe(String dbName) {
         System.out.println("~ TL ../ Wiping...");
 
         // Delete the backup folder recursively
@@ -60,11 +57,10 @@ public class TL {
 
             } else {
                 System.out.println("~ TL ../ Backup folder does not exist.");
-
             }
         } catch (IOException e) {
             generateErrorMessage(
-                    "Error at `TL_murder` in `TL`",
+                    "Error at `wipe` in `TL`",
                     "Failed to delete backup folder.",
                     "",
                     e);
@@ -89,6 +85,45 @@ public class TL {
             );
         }
 
+        // drop the database and user
+        System.out.println("~ TL ../ Dropping database and user: " + dbName);
+        String dropDatabaseCommand = "DROP DATABASE IF EXISTS " + dbName + ";";
+        String dropUserCommand = "DROP USER IF EXISTS " + dbName + ";";
+
+        try {
+            ProcessBuilder pb = new ProcessBuilder("psql", "-U", "postgres");
+            pb.environment().put("PGPASSWORD", "password");
+            pb.redirectErrorStream(true);
+
+            Process psql = pb.start();
+
+            // run commands
+            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(psql.getOutputStream()))) {
+                writer.write(dropDatabaseCommand);
+                writer.newLine();
+                writer.flush();
+
+                writer.write(dropUserCommand);
+                writer.newLine();
+                writer.flush();
+            }
+
+            int exitCode = psql.waitFor();
+            if (exitCode == 0) {
+                System.out.println("~ TL ../ Database and user successfully dropped.");
+            } else {
+                System.out.println("~ TL ../ Failed to drop database/user. Exit code: " + exitCode);
+            }
+
+        } catch (IOException | InterruptedException e) {
+            generateErrorMessage(
+                    "Error at `wipe` in `TL`",
+                    "Failed to drop PostgreSQL user and database.",
+                    "",
+                    e
+            );
+        }
+
         System.out.println("=================== IMPORTANT! " + "===================");
         System.out.println("=== IF YOU SEE THIS IN SHIPPED CODE    " + "        ===");
         System.out.println("=== THEN SOMEBODY MESSED UP            " + "        ===");
@@ -98,7 +133,7 @@ public class TL {
         System.out.println("=================== IMPORTANT! " + "===================");
     }
 
-    public static void TL_initPostgres(String username) {
+    public static void TL_initPostgres(String username, String password) {
         System.out.println("~ TL ../ DB -- Checking if PostgreSQL exists.");
 
         boolean psqlExists = false;
@@ -128,7 +163,7 @@ public class TL {
         System.out.println("~ TL ../ DB -- Creating DB Admin user and privileges.");
 
         String[] script = {
-                "CREATE USER " + username + " WITH PASSWORD 'password';",
+                "CREATE USER " + username + " WITH PASSWORD '" + password + "';",
                 "CREATE DATABASE " + username + " OWNER " + username + ";",
                 "GRANT ALL PRIVILEGES ON DATABASE " + username + " TO " + username + ";",
                 "ALTER USER " + username + " WITH SUPERUSER;"
@@ -143,14 +178,6 @@ public class TL {
             pb.redirectErrorStream(true);
 
             Process psql = pb.start();
-
-            // Capture and print output
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(psql.getInputStream()))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    System.out.println("psql: " + line);
-                }
-            }
 
             int exitCode = psql.waitFor();
             if (exitCode == 0) {
@@ -190,14 +217,13 @@ public class TL {
         // initialize postgresql
         System.out.println("~ TL ../ Initialize -- DB.");
         // TL_initPostgres(app.getDatabaseName());
-        TL_initPostgres(app.getDatabaseName());
+        TL_initPostgres(app.getDatabaseName(), app.getDatabasePass());
 
         // make the backup folder
         System.out.println("~ TL ../ Initialize -- Backups.");
         Backup.TL_makeBackupFolder();
 
         // if it is the first open, we will clean all tables
-        cleanTables(app.getConnection());
     }
 }
 
