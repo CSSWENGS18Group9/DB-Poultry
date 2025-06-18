@@ -84,21 +84,28 @@ class App {
     fun getConnection(): Connection? = DBConnect.getConnection()
 }
 
+// checks if the developers are the ones running the code, if true then don't run TL
+// otherwise run TL (since the client is using it)
+// set this to true once we will shit it to the client
+val __DIRECT_CLIENT_: Boolean = true
+val __DO_WIPE: Boolean = true
+
 fun main() {
     val app = App()
     app.start()
 
-    // theLifesaver (backup stuff)
-    /*
-    TL_firstOpen(app.getConnection())
-    TL_checkLastBackupDate()
-     */
+    if (__DIRECT_CLIENT_){
+        TL_firstOpen(app)
+        TL_checkLastBackupDate()
+    }
 
     // Open MainFrame (index GUI)
 //    app.openMainFrame()
 
-    // ==================================================
-    // Keep this here but remove before shipping or every release
-    // ==================================================
-    wipe()
+     // ==================================================
+     // Keep this here but remove before shipping or every release
+     // ==================================================
+    if (__DO_WIPE){
+        wipe()
+    }
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: FEFAE0; -fx-pref-height: 720; -fx-pref-width: 1280;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.ViewSupplyHistoryController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="618.0" layoutX="95.0" layoutY="51.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 15; -fx-arc-width: 15;" width="1091.0">
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.4000000059604645" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fefae0" height="399.0" layoutX="204.0" layoutY="181.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" style="-fx-arc-height: 15; -fx-arc-width: 15;" width="874.0" />
+      <TableView fx:id="viewSuppliesTable" layoutX="235.0" layoutY="213.0" prefHeight="337.0" prefWidth="813.0">
+         <columns>
+            <TableColumn fx:id="supplyTypeCol" prefWidth="176.0" text="Supply Type" />
+            <TableColumn fx:id="qtyAddedCol" prefWidth="208.0" text="Quantity Added" />
+            <TableColumn fx:id="qtyDepletedCol" prefWidth="235.0" text="Quantity Depleted" />
+            <TableColumn fx:id="currAmountCol" prefWidth="193.0" text="Current Amount" />
+         </columns>
+      </TableView>
+      <Button fx:id="currentHistoryBtn" layoutX="494.0" layoutY="606.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Current History" textFill="WHITE">
+         <font>
+            <Font name="HelveticaNowDisplay-Light" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="dateHistoryBtn" layoutX="686.0" layoutY="606.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Date History" textFill="WHITE">
+         <font>
+            <Font name="HelveticaNowDisplay-Light" size="15.0" />
+         </font>
+      </Button>
+      <Label fx:id="viewSuppliesLbl" layoutX="538.0" layoutY="83.0" text="View Supplies" textFill="#8f250c">
+         <font>
+            <Font name="HelveticaNowDisplay-Bold" size="32.0" />
+         </font>
+      </Label>
+      <Label fx:id="currDateLbl" layoutX="585.0" layoutY="132.0" text="DATE TODAY" textFill="#bc6c25">
+         <font>
+            <Font name="HelveticaNowDisplay-Light" size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

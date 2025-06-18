@@ -130,7 +130,7 @@ public class CreateFlockDetails {
      * @return returns a valid date or null
      */
     private static Date validate_dateIsValid(Connection conn, Flock flock, Date detailDate) {
-        Date actualDate = detailDate != null ? detailDate : Date.valueOf(java.time.LocalDate.now());
+        Date actualDate = (detailDate != null) ? detailDate : Date.valueOf(java.time.LocalDate.now());
 
         // check if the detail date is after the starting date of the flock
         if (actualDate.before(flock.getStartingDate()))
@@ -141,25 +141,20 @@ public class CreateFlockDetails {
         // by
         // [i_Flock.startingDate, j_Flock.startingDate] where i < j (i comes before j)
         Date nextStartDate = null;
-
         try (PreparedStatement drStmt = conn.prepareStatement("""
-                SELECT MIN(Starting_Date) AS nextStartDate FROM Flock WHERE Starting_Date > ?
+                    SELECT MIN(Starting_Date) AS nextStartDate FROM Flock WHERE Starting_Date > ?
                 """)) {
-
             drStmt.setDate(1, flock.getStartingDate());
             try (ResultSet rs = drStmt.executeQuery()) {
                 if (rs.next()) {
-                    nextStartDate = rs.getDate(1);
+                    nextStartDate = rs.getDate("nextStartDate");
                 }
             }
         } catch (SQLException e) {
             return null;
         }
 
-        // if the actualDate is out of scope (that is, it is in another Flock not in the
-        // Flock that we want)
-        // say the Date is invalid
-        if (nextStartDate != null && (actualDate.after(nextStartDate) || actualDate.equals(nextStartDate)))
+        if (nextStartDate != null && !actualDate.before(nextStartDate))
             return null;
 
         // check if the inserted date is not overlapping with another flock range or
@@ -167,25 +162,32 @@ public class CreateFlockDetails {
         // we defn a flock range as the date range from [Flock.startDate,
         // Flock.(last)Flock Detail.detail_date]
         String checkOverlapQuery = """
-                SELECT COUNT(*) AS overlaps FROM Flock LEFT JOIN (SELECT Flock_ID, MAX(FD_Date) as endDate
-                FROM Flock_Details GROUP BY Flock_ID) Details ON Flock.Flock_ID = Details.Flock_ID WHERE ?
-                BETWEEN Flock.Starting_Date AND COALESCE(Details.endDate, Flock.Starting_Date)
-                """.stripIndent();
-        int overlaps = 0;
+                SELECT COUNT(*) AS overlaps
+                FROM Flock
+                LEFT JOIN (
+                    SELECT Flock_ID, MAX(FD_Date) AS endDate
+                    FROM Flock_Details
+                    GROUP BY Flock_ID
+                ) Details ON Flock.Flock_ID = Details.Flock_ID
+                WHERE Flock.Flock_ID != ?
+                  AND ? BETWEEN Flock.Starting_Date AND COALESCE(Details.endDate, Flock.Starting_Date)
+                """;
 
+        int overlaps = 0;
         try (PreparedStatement coStmt = conn.prepareStatement(checkOverlapQuery)) {
-            coStmt.setDate(1, flock.getStartingDate());
+            coStmt.setInt(1, flock.getFlockId());
+            coStmt.setDate(2, actualDate);
+
             try (ResultSet rs = coStmt.executeQuery()) {
-                if (actualDate != flock.getStartingDate()) {
-                    while (rs.next()) {
-                        overlaps += rs.getInt(1);
-                    }
+                if (rs.next()) {
+                    overlaps = rs.getInt("overlaps");
                 }
             }
         } catch (SQLException ex) {
             return null;
         }
 
-        return overlaps == 0 ? null : actualDate;
+        return overlaps > 0 ? null : actualDate;
     }
+
 }

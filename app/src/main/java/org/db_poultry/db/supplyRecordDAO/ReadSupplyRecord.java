@@ -258,7 +258,7 @@ public class ReadSupplyRecord {
             }
         } catch (SQLException e) {
             generateErrorMessage(
-                    "Error in `getMostRecentFromName()` in `ReadSupplyRecord`.",
+                    "Error in `getMostRecentFromID()` in `ReadSupplyRecord`.",
                     "SQL Exception error occurred",
                     "",
                     e
