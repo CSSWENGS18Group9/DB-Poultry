@@ -18,11 +18,24 @@ public class Backup {
     public static void TL_makeBackupFolder() {
         try {
             Files.createDirectories(Paths.get(Variables.getBackupFolderPath()));
-            System.out.println(">>> theLifesaver has created the backups folder.");
+            System.out.println("~ TL ../ Backup -- Created backup folder.");
+
         } catch (FileAlreadyExistsException e) {
-            generateErrorMessage("Error at `TL_makeBackupFolder` in `TL`", "Cannot make backup folder since it exists already.", "", e);
+            generateErrorMessage(
+                    "Error at `TL_makeBackupFolder` in `TL`",
+                    "Cannot make backup folder since it exists already.",
+                    "",
+                    e
+            );
+
         } catch (IOException e) {
-            generateErrorMessage("Error at `TL_makeBackupFolder` in `TL`", "FATAL. Cannot make backup folder, due to IOException.", "", e);
+            generateErrorMessage(
+                    "Error at `TL_makeBackupFolder` in `TL`",
+                    "FATAL. Cannot make backup folder, due to IOException.",
+                    "",
+                    e
+            );
+
         }
     }
 
@@ -36,7 +49,13 @@ public class Backup {
         if (config != null) {
             lastBackUpDate = config.get("last_backup_date");
         } else {
-            generateErrorMessage("Error at `TL_checkLastBackupDate` in `TL`.", "FATAL. Cannot get last_backup_date", "", null);
+            generateErrorMessage(
+                    "Error at `TL_checkLastBackupDate` in `TL`.",
+                    "FATAL. Cannot get last_backup_date",
+                    "",
+                    null
+            );
+
             return;
         }
 

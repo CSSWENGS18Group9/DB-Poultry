@@ -26,6 +26,9 @@ class HomeController: Initializable {
     private lateinit var homeStackPane: StackPane
 
     @FXML
+    private lateinit var bgImageAnchorPane: AnchorPane
+
+    @FXML
     private lateinit var homeBackgroundImageView: ImageView
 
     @FXML
@@ -38,8 +41,7 @@ class HomeController: Initializable {
     private lateinit var homeSuppliesBtn1: Button
 
     override fun initialize(url: URL?, rb: ResourceBundle?) {
-        homeBackgroundImageView.fitWidthProperty().bind(homeStackPane.widthProperty())
-        homeBackgroundImageView.fitHeightProperty().bind(homeStackPane.heightProperty())
+        // GeneralUtil.initializeFontSizeManager(homeAnchorPane)
     }
 
     @FXML
@@ -62,15 +64,4 @@ class HomeController: Initializable {
     fun switchToSupplies() {
         GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home_supplies.fxml")
     }
-
-    // @FXML
-    // private fun navigateToCreate() {
-    //     GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_create.fxml")
-    // }
-    
-    // @FXML
-    // private fun navigateToView() {
-    //     GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_view.fxml")
-    // }
-
 }

@@ -24,7 +24,12 @@ public class Config {
                 fw.write("backup_interval " + Variables.getBackupIntervals() + "\n");
             }
         } catch (IOException e) {
-            generateErrorMessage("Error at `TL_writeDotConfig` in `Config`", "FATAL. Cannot config file, due to IOException.", "", e);
+            generateErrorMessage(
+                    "Error at `TL_writeDotConfig` in `Config`",
+                    "FATAL. Cannot config file, due to IOException.",
+                    "",
+                    e
+            );
         }
     }
 
@@ -51,7 +56,13 @@ public class Config {
                 } // add the else clause here if needed
             }
         } catch (IOException e) {
-            generateErrorMessage("Error at `TL_loadConfig` in `TL`.", "FATAL. Cannot load file, due to IOException.", "", e);
+            generateErrorMessage(
+                    "Error at `TL_loadConfig` in `TL`.",
+                    "FATAL. Cannot load file, due to IOException.",
+                    "",
+                    e
+            );
+
             return null;
         }
 

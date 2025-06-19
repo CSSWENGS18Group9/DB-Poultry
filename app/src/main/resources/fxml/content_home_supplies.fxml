@@ -45,7 +45,7 @@
                   <Insets bottom="10.0" />
                </padding>
             </Button>
-            <Button fx:id="homeSuppliesBtn3" maxHeight="1.7976931348623157E308" mnemonicParsing="false" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" text="View" textFill="#8f250c" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <Button fx:id="homeSuppliesBtn3" onAction="#switchToView" maxHeight="1.7976931348623157E308" mnemonicParsing="false" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" text="View" textFill="#8f250c" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <font>
                   <Font name="HelveticaNowDisplay-Bold" size="30.0" />
                </font>

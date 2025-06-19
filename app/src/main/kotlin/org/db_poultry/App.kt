@@ -4,10 +4,11 @@ import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
-import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
-import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
+import org.db_poultry.db.cleanTables
 import org.db_poultry.errors.generateErrorMessage
-import org.db_poultry.theLifesaver.TL.*
+import org.db_poultry.theLifesaver.Backup.TL_checkLastBackupDate
+import org.db_poultry.theLifesaver.TL.TL_firstOpen
+import org.db_poultry.theLifesaver.TL.wipe
 import java.sql.Connection
 
 class App {
@@ -68,7 +69,9 @@ class App {
 
             return
         }
+    }
 
+    fun connect() {
         val jdbcUrl = "jdbc:postgresql://localhost:$databasePort/$databaseName"
 
         // Connect to the PostgresSQL DB
@@ -78,25 +81,38 @@ class App {
     fun getConnection(): Connection? = DBConnect.getConnection()
 }
 
+// checks if the developers are the ones running the code, if true then don't run TL
+// otherwise run TL (since the client is using it)
+// set this to true once we will shit it to the client
+val __DIRECT_CLIENT_: Boolean = true
+var __FIRST_LAUNCHED: Boolean = false
+val __DO_WIPE: Boolean = false
+
 fun main() {
     val app = App()
     app.start()
 
-    // theLifesaver (backup stuff)
-    TL_firstOpen(app.getConnection())
-    TL_checkLastBackupDate()
+    if (__DIRECT_CLIENT_) {
+        TL_firstOpen(app)
+        TL_checkLastBackupDate()
+        __FIRST_LAUNCHED = true
+    }
+
+    app.connect()
+
+    if (__FIRST_LAUNCHED) {
+        // if it is the first open, we will clean all tables
+        cleanTables(app.getConnection())
+    }
 
     // Open MainFrame (index GUI)
-//    app.openMainFrame()
-    CreateSupplyType.createSupplyType(app.getConnection(), "Hello", "Hello");
-    CreateSupplyType.createSupplyType(app.getConnection(), "World", "World");
-    CreateSupplyType.createSupplyType(app.getConnection(), "Hello", "Hello");
-
-    val x = ReadSupplyType.getAllSupplyTypes(app.getConnection())
-    for (t in x) println(t.name)
+    app.openMainFrame()
 
     // ==================================================
     // Keep this here but remove before shipping or every release
     // ==================================================
-    wipe()
+    if (__DO_WIPE) {
+        app.getConnection()?.close()
+        wipe(app.databaseName)
+    }
 }

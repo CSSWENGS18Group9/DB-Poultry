@@ -29,78 +29,142 @@ class CreateFlockDetailsTest {
 
     @Test
     fun testCreateFlockDetailsValidInput() {
-        val date = Date.valueOf("1000-01-01")
+        val flockDate = Date.valueOf("1000-01-01")
+        val fdDate = Date.valueOf("1000-01-03")
 
-        CreateFlock.createFlock(conn, 999, date)
+        CreateFlock.createFlock(conn, 999, flockDate)
 
-        val result = CreateFlockDetails.createFlockDetails(conn, 1, date, 0)
+        val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 15)
 
-        assertEquals("INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, 1000-01-01, 0)", result)
+        assertEquals(result, "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, '1000-01-03', 15)")
     }
 
     @Test
-    fun testCreateFlockDetailsWithNegativeFlockID() {
-        val date = Date.valueOf("1000-01-02")
+    fun testCreateFlockDetailsZeroDepletedCount() {
+        val flockDate = Date.valueOf("1000-01-01")
+        val fdDate = Date.valueOf("1000-01-03")
 
-        val result = CreateFlockDetails.createFlockDetails(conn, -1, date, 0)
-        assertNull(result)
+        CreateFlock.createFlock(conn, 999, flockDate)
+
+        val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 0)
+        assertEquals(result, "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, '1000-01-03', 0)")
     }
 
     @Test
     fun testCreateFlockDetailsWithNegativeDepletedCount() {
-        val date = Date.valueOf("1000-01-03")
+        val flockDate = Date.valueOf("1000-01-01")
+        val fdDate = Date.valueOf("1000-01-03")
 
-        val result = CreateFlockDetails.createFlockDetails(conn, 1, date, -1)
+        CreateFlock.createFlock(conn, 999, flockDate)
+
+        val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, -1)
         assertNull(result)
     }
 
     @Test
-    fun testCreateFlockDetailsWithNegativeFlockIDAndDepletedCount() {
-        val date = Date.valueOf("1000-01-04")
+    fun testCreateFlockDetailsWithDepletedGreaterThanStartingCountOne() {
+        val flockDate = Date.valueOf("1000-01-01")
+        val fdDate = Date.valueOf("1000-01-03")
 
-        val result = CreateFlockDetails.createFlockDetails(conn, -1, date, -1)
+        CreateFlock.createFlock(conn, 999, flockDate)
+
+        val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 1000)
         assertNull(result)
     }
 
     @Test
-    fun testCreateFlockDetailsWithSameDateInSameFlockID() {
-        val date = Date.valueOf("1000-01-05")
+    fun testCreateFlockDetailsWithDepletedGreaterThanStartingCountTwo() {
+        val flockDate = Date.valueOf("1000-01-01")
+        val fdDateOne = Date.valueOf("1000-01-03")
+        val fdDateTwo = Date.valueOf("1000-01-05")
 
-        CreateFlockDetails.createFlockDetails(conn, 1, date, 1)
-        val result = CreateFlockDetails.createFlockDetails(conn, 1, date, 1)
+        CreateFlock.createFlock(conn, 999, flockDate)
+
+        CreateFlockDetails.createFlockDetails(conn, flockDate, fdDateOne, 500)
+        val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDateTwo, 600)
         assertNull(result)
     }
 
     @Test
-    fun testCreateFlockDetailsWithSameDateInDifferentFlockID() {
-        val date = Date.valueOf("1000-01-06")
+    fun testCreateFlockDetailsWithSameDate() {
+        val flockDate = Date.valueOf("1000-01-01")
+        val fdDate = Date.valueOf("1000-01-03")
 
-        CreateFlockDetails.createFlockDetails(conn, 1, date, 1)
-        val result = CreateFlockDetails.createFlockDetails(conn, 2, date, 1)
+        CreateFlock.createFlock(conn, 999, flockDate)
+
+        CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 100)
+        val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 100)
         assertNull(result)
     }
 
     @Test
-    fun testCreateFlockDetailsWithDNEFlockID() {
-        val date = Date.valueOf("1000-01-07")
+    fun testCreateFlockDetailsBeforeFlockStartDate() {
+        val flockDate = Date.valueOf("1000-02-01")
+        val fdDate = Date.valueOf("1000-01-03")
 
-        val result = CreateFlockDetails.createFlockDetails(conn, 1000, date, 1)
+        CreateFlock.createFlock(conn, 999, flockDate)
+
+        CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 100)
+        val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 100)
         assertNull(result)
     }
 
     @Test
-    fun testCreateFlockDetailsWithDepletedCountOverStartCount() {
-        val dateOne = Date.valueOf("1000-08-01")
-        val dateTwo = Date.valueOf("1000-09-01")
-        val dateThree = Date.valueOf("1000-10-01")
+    fun testCreateFlockDetailsWithSameDateInDifferentFlock() {
+        val flockOneDate = Date.valueOf("1000-01-01")
+        val flockTwoDate = Date.valueOf("1000-06-01")
+        val fdDateOne = Date.valueOf("1000-01-01")
+        val fdDateTwo = Date.valueOf("1000-03-01")
+        val fdDateThree = Date.valueOf("1000-04-01")
+        val fdDateFour = Date.valueOf("1000-07-01")
+        val fdDateOverlad = Date.valueOf("1000-06-05")
 
-        CreateFlock.createFlock(conn, 15, dateOne)
+        CreateFlock.createFlock(conn, 999, flockOneDate)
+        CreateFlock.createFlock(conn, 999, flockTwoDate)
 
-        CreateFlockDetails.createFlockDetails(conn, 1, dateOne, 5)
-        CreateFlockDetails.createFlockDetails(conn, 1, dateTwo, 10)
-        val result = CreateFlockDetails.createFlockDetails(conn, 1, dateThree, 15)
+        CreateFlockDetails.createFlockDetails(conn, flockOneDate, fdDateOne, 10)
+        CreateFlockDetails.createFlockDetails(conn, flockOneDate, fdDateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, flockOneDate, fdDateThree, 10)
 
+        val resultOne = CreateFlockDetails.createFlockDetails(conn, flockOneDate, fdDateFour, 10)
+        assertNull(resultOne)
+
+        CreateFlockDetails.createFlockDetails(conn, flockTwoDate, fdDateFour, 10)
+
+        val resultTwo = CreateFlockDetails.createFlockDetails(conn, flockOneDate, fdDateOverlad, 10)
+        assertNull(resultTwo)
+
+        val resultThree = CreateFlockDetails.createFlockDetails(conn, flockOneDate, flockTwoDate, 10)
+        assertNull(resultThree)
+    }
+
+    @Test
+    fun testCreateFlockDetailsWithDNEFlockDate() {
+        val flockOneDate = Date.valueOf("1000-01-01")
+        val flockTwoDate = Date.valueOf("1000-06-01")
+        val fdDate = Date.valueOf("1000-01-03")
+
+        CreateFlock.createFlock(conn, 999, flockOneDate)
+
+        val result = CreateFlockDetails.createFlockDetails(conn, flockTwoDate, fdDate, 100)
         assertNull(result)
+    }
+
+    @Test
+    fun testCreateFlockDetailsInbetween() {
+        val flockOneDate = Date.valueOf("1000-01-01")
+        val fdDateOne = Date.valueOf("1000-01-01")
+        val fdDateTwo = Date.valueOf("1000-03-01")
+        val fdDateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 999, flockOneDate)
+
+        CreateFlockDetails.createFlockDetails(conn, flockOneDate, fdDateOne, 10)
+        CreateFlockDetails.createFlockDetails(conn, flockOneDate, fdDateThree, 15)
+
+        val result = CreateFlockDetails.createFlockDetails(conn, flockOneDate, fdDateTwo, 20)
+
+        assertEquals(result, "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, '1000-03-01', 20)")
     }
 }
 
