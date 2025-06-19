@@ -2,15 +2,14 @@ package org.db_poultry
 
 import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
-import org.db_poultry.controller.CreateNewFlockController
-import org.db_poultry.controller.CreateFlockDetailsController
+import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
-import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
 import org.db_poultry.errors.generateErrorMessage
-import org.db_poultry.controller.MainFrame
+import org.db_poultry.theLifesaver.Backup.TL_checkLastBackupDate
+import org.db_poultry.theLifesaver.TL.TL_firstOpen
+import org.db_poultry.theLifesaver.TL.wipe
 import java.sql.Connection
-import java.sql.Date
 
 class App {
     lateinit var databaseName: String
@@ -21,12 +20,11 @@ class App {
         try {
             val dotenv = Dotenv.configure()
                 .ignoreIfMissing()
-                .directory("./app")
                 .load()
 
-            databaseName = dotenv["DATABASE_NAME"] ?: System.getenv("DB_NAME") ?: error("Missing DATABASE_NAME")
-            databasePass = dotenv["DATABASE_PASS"] ?: System.getenv("DB_PASS") ?: error("Missing DATABASE_PASS")
-            databasePort = dotenv["DATABASE_PORT"] ?: System.getenv("DB_PORT") ?: error("Missing DATABASE_PORT")
+            databaseName = (dotenv["DATABASE_NAME"] ?: "Missing DATABASE_NAME")
+            databasePass = (dotenv["DATABASE_PASS"] ?: "Missing DATABASE_PASS")
+            databasePort = (dotenv["DATABASE_PORT"] ?: "Missing DATABASE_PORT")
 
             println("database name: $databaseName")
             println("database pass: $databasePass")
@@ -37,7 +35,7 @@ class App {
             generateErrorMessage(
                 "Error at `getDotEnv()` in `App.kt`",
                 "Failed to load environment variables",
-                "In local dev, ensure .env exists in `app/`. In GitHub Actions, add secrets: `DB_NAME`, `DB_PASS`, `DB_PORT`.",
+                "In local dev, ensure .env exists in `app/src/main/resources`.",
                 e
             )
             return false
@@ -71,23 +69,50 @@ class App {
 
             return
         }
+    }
 
+    fun connect() {
         val jdbcUrl = "jdbc:postgresql://localhost:$databasePort/$databaseName"
 
         // Connect to the PostgresSQL DB
         DBConnect.init(jdbcUrl, databaseName, databasePass)
-
     }
 
     fun getConnection(): Connection? = DBConnect.getConnection()
 }
 
+// checks if the developers are the ones running the code, if true then don't run TL
+// otherwise run TL (since the client is using it)
+// set this to true once we will shit it to the client
+val __DIRECT_CLIENT_: Boolean = true
+var __FIRST_LAUNCHED: Boolean = false
+val __DO_WIPE: Boolean = false
+
 fun main() {
     val app = App()
     app.start()
 
+    if (__DIRECT_CLIENT_) {
+        TL_firstOpen(app)
+        TL_checkLastBackupDate()
+        __FIRST_LAUNCHED = true
+    }
+
+    app.connect()
+
+    if (__FIRST_LAUNCHED) {
+        // if it is the first open, we will clean all tables
+        cleanTables(app.getConnection())
+    }
+
     // Open MainFrame (index GUI)
     app.openMainFrame()
 
-
+    // ==================================================
+    // Keep this here but remove before shipping or every release
+    // ==================================================
+    if (__DO_WIPE) {
+        app.getConnection()?.close()
+        wipe(app.databaseName)
+    }
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: A4AE81;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.FlockHomeController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fefae0" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="600.0" />
+      <Text fill="#8f250c" layoutX="139.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Flock Mortality Report">
+         <font>
+            <Font name="HelveticaNowDisplay-Bold" size="32.0" />
+         </font>
+      </Text>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="223.0" layoutX="45.0" layoutY="117.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="510.0">
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.4000000059604645" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Rectangle>
+      <Text layoutX="302.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Flock Start Date: -">
+         <font>
+            <Font name="HelveticaNowDisplay-Light" size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="300.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity Started: -">
+         <font>
+            <Font name="HelveticaNowDisplay-Light" size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="302.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mortality Rate: -">
+         <font>
+            <Font name="HelveticaNowDisplay-Light" size="21.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="170.0" fitWidth="184.0" layoutX="96.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/chicken_sample.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

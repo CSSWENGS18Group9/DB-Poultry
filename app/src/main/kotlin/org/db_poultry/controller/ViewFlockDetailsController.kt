@@ -10,26 +10,32 @@ import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.layout.Pane
 import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
-import org.db_poultry.controller.util.flockDateSingleton
+import org.db_poultry.util.flockDateSingleton
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
-import org.db_poultry.errors.generateErrorMessage
-import org.db_poultry.pojo.FlockDetails
+import org.db_poultry.pojo.FlockPOJO.Flock
+import org.db_poultry.pojo.FlockPOJO.FlockDetails
 import java.net.URL
 import java.sql.Date
-import java.util.ResourceBundle
+import java.util.*
 
-class ViewFlockDetailsController: Initializable {
+class ViewFlockDetailsController : Initializable {
 
     @FXML
     lateinit var viewFlockDetailsAnchorPane: Pane
 
     @FXML
-    lateinit var lblQuantityStaretd: Text
+    lateinit var lblQuantityStarted: Text
+
+    @FXML
+    lateinit var lblQuantityStartedValue: Text
 
     @FXML
     lateinit var lblDateStarted: Text
+
+    @FXML
+    lateinit var lblDateStartedValue: Text
 
     @FXML
     lateinit var tableView: TableView<FlockDetails>
@@ -49,14 +55,20 @@ class ViewFlockDetailsController: Initializable {
     val data = flockDateSingleton.instance
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        var date = data.getDate()
-        var latestDetail = ReadFlockDetails.getMostRecent(DBConnect.getConnection(), date)
+
+        val date = data.getDate()
+        val latestDetail = ReadFlockDetails.getMostRecent(DBConnect.getConnection(), date)
+
+        lblDateStartedValue.text = date.toString()
+        val flockList: Flock = ReadFlock.getFlockFromADate(DBConnect.getConnection(), date)
+        lblQuantityStartedValue.text = flockList.startingCount.toString()
 
         colDate.cellValueFactory = PropertyValueFactory("fdDate")
         colDepletions.cellValueFactory = PropertyValueFactory("depletedCount")
 
         if (latestDetail != null) {
-            val flockDetailsList: List<FlockDetails> = ReadFlock.getFlockDetailsFromDate(DBConnect.getConnection(), date, date,latestDetail.fdDate)
+            val flockDetailsList: List<FlockDetails> =
+                ReadFlockDetails.getFlockDetailsFromDate(DBConnect.getConnection(), date, date, latestDetail.fdDate)
             val observableList = FXCollections.observableArrayList(flockDetailsList)
 
             tableView.items = observableList

@@ -1,0 +1,32 @@
+.h1 {
+    -fx-font-size: 3em;
+    -fx-font-weight: bold;
+}
+
+.h2 {
+    -fx-font-size: 2em;
+    -fx-font-weight: bold;
+}
+
+.h3 {
+    -fx-font-size: 1.5em;
+    -fx-font-family: "HelveticaNowDisplay-Bold";
+}
+
+.h4 {
+    -fx-font-size: 1.2em;
+}
+
+.h5 {
+    -fx-font-size: 0.8em;
+}
+
+.h6 {
+    -fx-font-size: 0.5em;
+}
+
+.img-container {
+    -fx-background-image: url("../img/main_bg.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}

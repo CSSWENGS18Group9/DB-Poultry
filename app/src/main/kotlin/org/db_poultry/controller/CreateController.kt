@@ -1,6 +1,6 @@
 package org.db_poultry.controller
 
-import org.db_poultry.Util.GeneralUtil
+import org.db_poultry.util.GeneralUtil
 
 import javafx.fxml.FXML
 import javafx.scene.layout.AnchorPane
@@ -27,11 +27,11 @@ class CreateController {
 
     @FXML
     private fun navigateToCreateFlockDetails() {
-        GeneralUtil.loadContentView(anchorPaneCreate, "/fxml/content_createFlockDetails.fxml")
+        GeneralUtil.loadContentView(anchorPaneCreate, "/fxml/content_create_flock_details.fxml")
     }
 
     @FXML
     private fun navigateToCreateNewFlock() {
-        GeneralUtil.loadContentView(anchorPaneCreate, "/fxml/content_createNewFlock.fxml")
+        GeneralUtil.loadContentView(anchorPaneCreate, "/fxml/content_create_new_flock.fxml")
     }
 }
