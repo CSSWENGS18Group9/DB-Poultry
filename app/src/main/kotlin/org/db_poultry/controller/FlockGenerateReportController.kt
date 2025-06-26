@@ -2,6 +2,9 @@ package org.db_poultry.controller
 
 import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.flockDAO.ReadFlock
+import org.db_poultry.db.reportDAO.GetMortalityRate
+
+import org.db_poultry.errors.generateErrorMessage
 
 import javafx.fxml.FXML
 import javafx.scene.control.ComboBox
@@ -73,7 +76,6 @@ class FlockGenerateReportController: Initializable {
             
             if (flockComplete != null) {
                 val flock = flockComplete.flock
-                val flockDetails = flockComplete.flockDetails
                 
                 // Set flock start date
                 flockStartDateLbl.text = "${flock.startingDate}"
@@ -81,42 +83,45 @@ class FlockGenerateReportController: Initializable {
                 // Set quantity started
                 quantityStartedLbl.text = "${flock.startingCount}"
                 
-                // Calculate total deaths from flock details
-                val totalDeaths = flockDetails.sumOf { it.depletedCount }
+                // Use GetMortalityRate for calculation
+                val mortalityRateData = GetMortalityRate.calculateMortalityRateForFlock(
+                    getConnection(), 
+                    selectedDate
+                )
                 
-                // Calculate mortality rate
-                val mortalityRate = if (flock.startingCount > 0) {
-                    (totalDeaths.toDouble() / flock.startingCount.toDouble()) * 100
+                if (mortalityRateData != null) {
+                    // Set mortality rate using the calculated value
+                    mortalityRateLbl.text = "${"%.2f".format(mortalityRateData.mortalityRate)}%"
+                    
+                    // Set remaining chicken count using the current count from MortalityRate
+                    remChickenCountLbl.text = "${mortalityRateData.curCount}"
+                    
+                    println("Updated labels for flock starting on: $selectedDateStr")
                 } else {
-                    0.0
+                    // Clear labels if calculation fails
+                    clearLabels()
+                    println("Failed to calculate mortality rate for flock starting on: $selectedDateStr")
                 }
-                mortalityRateLbl.text = "${"%.2f".format(mortalityRate)}%"
-
-                // Calculate remaining chicken count
-                val remainingCount = flock.startingCount - totalDeaths
-                remChickenCountLbl.text = "$remainingCount"
-                
-                println("Updated labels for flock starting on: $selectedDateStr")
             } else {
                 println("No flock data found for date: $selectedDateStr")
                 clearLabels()
             }
         } catch (e: Exception) {
-            println("Error updating flock report labels: ${e.message}")
-            e.printStackTrace()
+            generateErrorMessage(
+                "Error at `updateFlockReportLabels()` in `FlockGenerateReportController`",
+                "Failed to update flock report labels for selected date: $selectedDateStr",
+                "Check if the selected date is valid and flock data exists in the database",
+                e
+            )
             clearLabels()
         }
     }
     
     private fun clearLabels() {
-        flockStartDateLbl.text = "Start Date: -"
-        quantityStartedLbl.text = "Starting Count: -"
-        remChickenCountLbl.text = "Remaining: -"
-        mortalityRateLbl.text = "Mortality Rate: -"
+        flockStartDateLbl.text = ""
+        quantityStartedLbl.text = ""
+        remChickenCountLbl.text = ""
+        mortalityRateLbl.text = ""
     }
-
-
-
-
 
 }
