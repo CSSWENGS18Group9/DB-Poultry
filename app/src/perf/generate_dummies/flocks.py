@@ -13,7 +13,7 @@ class Dummy_Flocks:
         posteriori = []
         cursor = self.database.get_cursor()
         for _ in range(self.dum_count):
-            starting_count = random.randint(0, 10_000)
+            starting_count = random.randint(1, 10_000)
             starting_date = generate_unique_date(
                 self.used_dates, fake, "-720d", "today"
             )
