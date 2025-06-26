@@ -1,0 +1,10 @@
+[project]
+name = "DB-Poultry_performance_testing"
+version = "0.1.0"
+description = "Performance testing for DB Poultry Database application"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "black>=25.1.0",
+    "faker>=37.4.0",
+]
