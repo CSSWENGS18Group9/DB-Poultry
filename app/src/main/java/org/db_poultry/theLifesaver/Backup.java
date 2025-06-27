@@ -42,10 +42,9 @@ public class Backup {
     /**
      * Checks the date when we last backed up, and determines if we need to make a backup
      */
-    public static void TL_checkLastBackupDate() {
+    public static void TL_checkLastBackupDate(HashMap<String, String> config) {
         // read the config file for the last backupdate
         String lastBackUpDate;
-        HashMap<String, String> config = Config.TL_loadConfig();
         if (config != null) {
             lastBackUpDate = config.get("last_backup_date");
         } else {

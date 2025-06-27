@@ -38,3 +38,6 @@ app/.env
 
 # DB-Poultry
 *.🐔
+
+# Performance Testing
+posteriori.csv

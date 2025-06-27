@@ -63,6 +63,10 @@ dependencies {
     // JUnit
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
     testImplementation(kotlin("test"))
+
+    // Performance Testing
+    // REMOVE ME ONCE SHIPPING
+    implementation("net.datafaker:datafaker:2.0.2")
 }
 
 sourceSets {
