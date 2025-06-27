@@ -2,22 +2,18 @@ package org.db_poultry.perf;
 
 import net.datafaker.Faker;
 import org.db_poultry.db.flockDAO.*;
+import org.db_poultry.pojo.FlockPOJO.Flock;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class PerfFlock {
-    private final int samples;
-    private final Faker faker;
-    private final java.sql.Connection conn;
+public class PerfFlock extends Perf {
     private final List<java.sql.Date> dates;
 
     PerfFlock(int samples, Faker faker, java.sql.Connection conn) {
-        this.samples = samples;
-        this.faker = faker;
-        this.conn = conn;
+        super(samples, faker, conn);
         this.dates = generateDates();
     }
 
