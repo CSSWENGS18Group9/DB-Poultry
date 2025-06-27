@@ -1,3 +1,5 @@
+.\gradlew clean run
+
 $originalDir = Get-Location
 $viewerDir = ".\app\src\main\java\org\db_poultry\perf\viewer"
 $csvFileName = ".\app\posteriori.csv"
