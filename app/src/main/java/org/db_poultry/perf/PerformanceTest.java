@@ -30,12 +30,12 @@ public class PerformanceTest {
         int samples = 500;
 
         PerfFlock pf = new PerfFlock(samples, faker, app.getConnection());
-        makeCSV(pf.perfCreateFlock());
-//        makeCSV(pf.perfFlockFromADate());
-//        makeCSV(pf.perfFlocksFromDate());
+//      makeCSV(pf.perfCreateFlock());
+//      makeCSV(pf.perfFlockFromADate());
+//      makeCSV(pf.perfFlocksFromDate());
 
         PerfSupplyType pst = new PerfSupplyType(samples, faker, app.getConnection());
-//        makeCSV(pst.perfCreateSupply());
+        makeCSV(pst.perfCreateSupply());
 //        makeCSV(pst.perfReadSupplyTypeById());
         System.out.println("Read All Supply Types\t" + pst.perfReadAllSupplyTypes() + "ns");
         System.out.println("Read All Supply Types\t" + pst.perfReadSupplyTypeByName("Sample") + "ns");
