@@ -1,3 +1,7 @@
+.main-pane {
+    -fx-background-color: #fefae0;
+}
+
 .h1-bold {
     -fx-font-size: 4em;
     -fx-font-family: "HelveticaNowDisplay-Bold";
