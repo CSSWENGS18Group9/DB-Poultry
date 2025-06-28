@@ -108,7 +108,7 @@ fun main() {
 
     app.connect()
 
-    if (__CLIENT_MODE && !__DO_PERF) {
+    if (__CLIENT_MODE and !__DO_PERF) {
         // MAIN PROCESS OF THE APPLICATION
         // Open MainFrame (index GUI)
         app.openMainFrame()
@@ -121,7 +121,7 @@ fun main() {
     // ==================================================
     // Keep this here but remove before shipping or every release
     // ==================================================
-    if (!__CLIENT_MODE && __DO_WIPE) {
+    if (!__CLIENT_MODE and __DO_WIPE) {
         app.getConnection()?.close()
         wipe(app.databaseName)
     }
