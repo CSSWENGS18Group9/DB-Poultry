@@ -22,14 +22,14 @@ public class GetMortalityRate {
         }
 
         FlockDetails latestFlockDetail = ReadFlockDetails.getMostRecent(conn, flockDate); // latest Flock Detail
-        if (latestFlockDetail == null) {
-            generateErrorMessage("Error in `calculateMortalityRateForFlock()` in `GetMortalityRate`.", "No flock detail found for the specified date", "", null);
-            return null;
-        }
 
         int flockID = selectedFlock.getFlockId(); // gets ID of specified Flock
         int depleted = ReadFlockDetails.getCumulativeDepletedCount(conn, flockID); // gets cumulative depleted count from specified Flock
         int startingCount = selectedFlock.getStartingCount(); // gets starting count from specified Flock
+
+        if (latestFlockDetail == null) {
+            return new MortalityRate(0, flockID, flockDate, startingCount, startingCount);
+        }
 
         if (startingCount == 0) {
             generateErrorMessage("Error in `calculateMortalityRateForFlock()` in `GetMortalityRate`.", "Cannot divide by zero", "", null);
