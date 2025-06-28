@@ -124,7 +124,7 @@ public class ReadSupplyType {
             return null;
         } catch (SQLException e) {
             generateErrorMessage(
-                    "Error in `getSupplyType() in `ReadSupplyType`.",
+                    "Error in `getSupplyType()` in `ReadSupplyType`.",
                     "SQL Exception error occurred",
                     "",
                     e
