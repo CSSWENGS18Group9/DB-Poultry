@@ -13,6 +13,13 @@ import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 public class GetMortalityRate {
 
+    /**
+     * Gets the mortality rate for a specified flock
+     *
+     * @param conn          the Connection thing with SQL
+     * @param flockDate     the starting date of this flock
+     * @return a MortalityRate object
+     */
     public static MortalityRate calculateMortalityRateForFlock(Connection conn, Date flockDate) {
 
         Flock selectedFlock = ReadFlock.getFlockFromADate(conn, flockDate); // gets specified Flock POJO
@@ -44,6 +51,14 @@ public class GetMortalityRate {
 
     }
 
+    /**
+     * Gets the mortality rate for a day with the current count
+     *
+     * @param conn          the Connection thing with SQL
+     * @param flockDate     the starting date of this flock
+     * @param targetDate    the "end date" for calculating the mortality rate
+     * @return a MortalityRate object
+     */
     public static MortalityRate calculateMortalityRateForFlockDate(Connection conn, Date flockDate, Date targetDate) {
 
         Flock selectedFlock = ReadFlock.getFlockFromADate(conn, flockDate); // gets specified Flock POJO
@@ -77,7 +92,9 @@ public class GetMortalityRate {
 
         float mortalityRate = (float) depleted / curCountOnDay * 100; // mortality rate of specified Flock
 
-        return new MortalityRate(mortalityRate, flockID, flockDate, startingCount, curCountOnDay); // returns an instance of MortalityRate
+        FlockDetails latestFlockDetail = ReadFlockDetails.getMostRecent(conn, flockDate);
+
+        return new MortalityRate(mortalityRate, flockID, flockDate, latestFlockDetail.getFdDate(), startingCount, curCountOnDay); // returns an instance of MortalityRate
     }
 
 }
