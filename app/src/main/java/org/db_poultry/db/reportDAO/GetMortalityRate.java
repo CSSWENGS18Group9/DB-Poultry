@@ -65,8 +65,8 @@ public class GetMortalityRate {
         FlockDetails targetDetail = null;
         List<FlockDetails> targetDetailList = ReadFlockDetails.getFlockDetailsFromDate(conn, flockDate, targetDate, targetDate);
 
-        if (!targetDetailList.isEmpty()) {
-            targetDetail = targetDetailList.get(0);
+        if (targetDetailList != null && !targetDetailList.isEmpty()) {
+            targetDetail = targetDetailList.getFirst();
         }
         else {
             generateErrorMessage("Error in `calculateMortalityRateForFlockDate()` in `GetMortalityRate`.", "No flock details found for the specified date", "", null);
