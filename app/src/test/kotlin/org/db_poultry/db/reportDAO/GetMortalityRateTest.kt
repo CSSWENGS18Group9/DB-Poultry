@@ -104,7 +104,7 @@ class GetMortalityRateTest {
         val result = GetMortalityRate.calculateMortalityRateForFlock(conn, flockOneDate)
 
         assertEquals(flockOneDate, result.startDate)
-        assertEquals(flockOneDate, result.endDate)
+        assertNull(result.endDate)
         assertEquals(0.0f, result.mortalityRate)
         assertEquals(1000, result.startCount)
         assertEquals(1000, result.curCount)
@@ -112,7 +112,7 @@ class GetMortalityRateTest {
         val resultTwo = GetMortalityRate.calculateMortalityRateForFlock(conn, flockTwoDate)
 
         assertEquals(flockTwoDate, resultTwo.startDate)
-        assertEquals(flockTwoDate, resultTwo.endDate)
+        assertNull(resultTwo.endDate)
         assertEquals(0.0f, resultTwo.mortalityRate)
         assertEquals(1000, resultTwo.startCount)
         assertEquals(1000, resultTwo.curCount)
@@ -154,7 +154,7 @@ class GetMortalityRateTest {
 
         assertEquals(flockOneDate, result.startDate)
         assertEquals(fdDateTwo, result.endDate)
-        assertEquals(10.0f, result.mortalityRate)
+        assertEquals(5.263158f, result.mortalityRate)
         assertEquals(1000, result.startCount)
         assertEquals(900, result.curCount)
 
@@ -162,41 +162,33 @@ class GetMortalityRateTest {
 
         assertEquals(flockTwoDate, resultTwo.startDate)
         assertEquals(fdDateFour, resultTwo.endDate)
-        assertEquals(13.0f, resultTwo.mortalityRate)
+        assertEquals(6.4516125f, resultTwo.mortalityRate)
         assertEquals(1000, resultTwo.startCount)
         assertEquals(870, resultTwo.curCount)
 
         val resultThree = GetMortalityRate.calculateMortalityRateForFlockDate(conn, flockOneDate, fdDateOne)
 
         assertEquals(flockOneDate, resultThree.startDate)
-        assertEquals(fdDateOne, resultThree.endDate)
-        assertEquals(5.0f, resultThree.mortalityRate)
+        assertEquals(fdDateTwo, resultThree.endDate)
+        assertEquals(3.0612245f, resultThree.mortalityRate)
         assertEquals(1000, resultThree.startCount)
-        assertEquals(950, resultThree.curCount)
+        assertEquals(900, resultThree.curCount)
 
         val resultFour = GetMortalityRate.calculateMortalityRateForFlockDate(conn, flockTwoDate, fdDateThree)
 
         assertEquals(flockTwoDate, resultFour.startDate)
-        assertEquals(fdDateThree, resultFour.endDate)
-        assertEquals(7.0f, resultFour.mortalityRate)
+        assertEquals(fdDateFour, resultFour.endDate)
+        assertEquals(4.1237113f, resultFour.mortalityRate)
         assertEquals(1000, resultFour.startCount)
-        assertEquals(930, resultFour.curCount)
+        assertEquals(870, resultFour.curCount)
 
         val resultFive = GetMortalityRate.calculateMortalityRateForFlockDate(conn, fdDateOne, fdDateTwo)
 
-        assertEquals(fdDateOne, resultFive.startDate)
-        assertEquals(fdDateTwo, resultFive.endDate)
-        assertEquals(8.0f, resultFive.mortalityRate)
-        assertEquals(1000, resultFive.startCount)
-        assertEquals(920, resultFive.curCount)
+        assertNull(resultFive)
 
         val resultSix = GetMortalityRate.calculateMortalityRateForFlockDate(conn, fdDateThree, fdDateFour)
 
-        assertEquals(fdDateThree, resultSix.startDate)
-        assertEquals(fdDateFour, resultSix.endDate)
-        assertEquals(10.0f, resultSix.mortalityRate)
-        assertEquals(1000, resultSix.startCount)
-        assertEquals(900, resultSix.curCount)
+        assertNull(resultSix)
     }
 
     @Test
@@ -222,18 +214,18 @@ class GetMortalityRateTest {
         val result = GetMortalityRate.calculateMortalityRateForFlockDate(conn, flockOneDate, flockOneDate)
 
         assertEquals(flockOneDate, result.startDate)
-        assertEquals(flockOneDate, result.endDate)
-        assertEquals(0.0f, result.mortalityRate)
+        assertEquals(fdDateTwo, result.endDate)
+        assertEquals(2.0f, result.mortalityRate)
         assertEquals(1000, result.startCount)
-        assertEquals(1000, result.curCount)
+        assertEquals(900, result.curCount)
 
         val resultTwo = GetMortalityRate.calculateMortalityRateForFlockDate(conn, flockTwoDate, flockTwoDate)
 
         assertEquals(flockTwoDate, resultTwo.startDate)
-        assertEquals(flockTwoDate, resultTwo.endDate)
-        assertEquals(0.0f, resultTwo.mortalityRate)
+        assertEquals(fdDateFour, resultTwo.endDate)
+        assertEquals(3.0f, resultTwo.mortalityRate)
         assertEquals(1000, resultTwo.startCount)
-        assertEquals(1000, resultTwo.curCount)
+        assertEquals(870, resultTwo.curCount)
     }
 
     @Test
@@ -271,7 +263,7 @@ class GetMortalityRateTest {
         val result = GetMortalityRate.calculateMortalityRateForFlockDate(conn, flockOneDate, fdDateTwo)
 
         assertEquals(flockOneDate, result.startDate)
-        assertEquals(flockOneDate, result.endDate)
+        assertNull(result.endDate)
         assertEquals(0.0f, result.mortalityRate)
         assertEquals(1000, result.startCount)
         assertEquals(1000, result.curCount)
