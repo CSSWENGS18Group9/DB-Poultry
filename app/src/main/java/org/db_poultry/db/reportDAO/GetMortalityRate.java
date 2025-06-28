@@ -95,11 +95,15 @@ public class GetMortalityRate {
 
         int depleted = targetDetail.getDepletedCount();
 
+        int depletedOverall = ReadFlockDetails.getCumulativeDepletedCount(conn, flockID); // gets cumulative depleted count from specified Flock
+
+        int curCountEntireFlock = startingCount - depletedOverall;
+
         float mortalityRate = (float) depleted / curCountOnDay * 100; // mortality rate of specified Flock
 
         Date endDate = latestFlockDetail.getFdDate(); // gets Date of latest Flock Detail
 
-        return new MortalityRate(mortalityRate, flockID, flockDate, endDate, startingCount, curCountOnDay); // returns an instance of MortalityRate
+        return new MortalityRate(mortalityRate, flockID, flockDate, endDate, startingCount, curCountEntireFlock); // returns an instance of MortalityRate
     }
 
 }
