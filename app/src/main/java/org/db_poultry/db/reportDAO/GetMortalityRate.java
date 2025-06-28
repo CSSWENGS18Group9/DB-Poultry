@@ -92,9 +92,7 @@ public class GetMortalityRate {
 
         float mortalityRate = (float) depleted / curCountOnDay * 100; // mortality rate of specified Flock
 
-        FlockDetails latestFlockDetail = ReadFlockDetails.getMostRecent(conn, flockDate);
-
-        return new MortalityRate(mortalityRate, flockID, flockDate, latestFlockDetail.getFdDate(), startingCount, curCountOnDay); // returns an instance of MortalityRate
+        return new MortalityRate(mortalityRate, flockID, flockDate, startingCount, curCountOnDay); // returns an instance of MortalityRate
     }
 
 }
