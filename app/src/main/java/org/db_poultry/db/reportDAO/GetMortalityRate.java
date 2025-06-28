@@ -72,6 +72,11 @@ public class GetMortalityRate {
         int startingCount = selectedFlock.getStartingCount(); // gets starting count from specified Flock
         int curCountOnDay = startingCount - cumDepleted; // current count up until before the target Date
 
+        FlockDetails latestFlockDetail = ReadFlockDetails.getMostRecent(conn, flockDate); // latest Flock Detail
+        if (latestFlockDetail == null) {
+            return new MortalityRate(0, flockID, flockDate, startingCount, startingCount);
+        }
+
         if (curCountOnDay == 0) {
             generateErrorMessage("Error in `calculateMortalityRateForFlock()` in `GetMortalityRate`.", "Cannot divide by zero", "", null);
             return null;
@@ -92,7 +97,9 @@ public class GetMortalityRate {
 
         float mortalityRate = (float) depleted / curCountOnDay * 100; // mortality rate of specified Flock
 
-        return new MortalityRate(mortalityRate, flockID, flockDate, startingCount, curCountOnDay); // returns an instance of MortalityRate
+        Date endDate = latestFlockDetail.getFdDate(); // gets Date of latest Flock Detail
+
+        return new MortalityRate(mortalityRate, flockID, flockDate, endDate, startingCount, curCountOnDay); // returns an instance of MortalityRate
     }
 
 }
