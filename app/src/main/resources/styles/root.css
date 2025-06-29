@@ -1,5 +1,15 @@
+/* For all pages */
+
 .main-pane {
     -fx-background-color: #fefae0;
+}
+
+.confirm-button {
+    -fx-background-color: #A4AE81;
+    -fx-background-radius: 15;
+    -fx-text-fill: white;
+    -fx-font-family: "HelveticaNowDisplay-Regular";
+    -fx-font-size: 1.7em;
 }
 
 .h1-bold {

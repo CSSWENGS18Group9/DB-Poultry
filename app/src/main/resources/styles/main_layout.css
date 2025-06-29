@@ -1,6 +1,6 @@
 .sidebar {
     -fx-background-color: #F7ECB7;
-    border-right: ;
+    -fx-border-right: 1px solid #000000;
 }
 
 .h1_button {
@@ -14,7 +14,7 @@
 }
 
 .h1_button:hover {
-    -fx-background-color: #A4AE81;
+    -fx-background-color: #8f250c;
     -fx-text-fill: white;
     -fx-translate-y: -7;
 }

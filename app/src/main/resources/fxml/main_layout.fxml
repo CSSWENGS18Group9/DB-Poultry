@@ -28,7 +28,7 @@
          <children>
           <AnchorPane fx:id="sidebarAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="397.0" prefWidth="129.0" styleClass="sidebar">
                <children>
-                  <GridPane fx:id="sideBarGridPane" alignment="TOP_CENTER" prefHeight="397.3333333333333" prefWidth="146.0" vgap="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <GridPane fx:id="sideBarGridPane" alignment="TOP_CENTER" prefHeight="397.3333333333333" prefWidth="146.0" style="-fx-border-color: #D0D0D0; -fx-border-width: 0 2 0 0;" vgap="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
