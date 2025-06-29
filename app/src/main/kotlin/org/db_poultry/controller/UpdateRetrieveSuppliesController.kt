@@ -40,3 +40,7 @@ class UpdateRetrieveSuppliesController {
     private lateinit var shapeSelectSupply: Rectangle
 
 }
+
+    fun confirm() {
+
+    }
