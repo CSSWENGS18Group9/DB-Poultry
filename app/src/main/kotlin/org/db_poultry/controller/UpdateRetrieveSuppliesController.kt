@@ -82,6 +82,8 @@ class UpdateRetrieveSuppliesController: Initializable {
 
         RetrieveSupplyRecord.retrieveSupply(getConnection(), sqlDate, supplyTypeName)
 
+        println("Supply retrieved successfully: $supplyTypeName on $sqlDate") // DEBUGGING
+
     }
 
 }

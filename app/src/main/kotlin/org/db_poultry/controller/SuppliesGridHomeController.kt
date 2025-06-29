@@ -2,6 +2,7 @@ package org.db_poultry.controller
 
 import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
+import org.db_poultry.db.supplyRecordDAO.ReadSupplyRecord
 import org.db_poultry.pojo.SupplyPOJO.SupplyType
 import org.db_poultry.pojo.SupplyPOJO.SupplyComplete
 
@@ -15,6 +16,7 @@ import javafx.scene.layout.FlowPane
 import javafx.scene.layout.VBox
 import javafx.geometry.Insets
 import javafx.geometry.Pos
+import java.sql.Date
 
 import javafx.fxml.Initializable
 import java.net.URL
@@ -28,11 +30,9 @@ class SuppliesGridHomeController: Initializable {
     @FXML
     private lateinit var mainFlowPane: FlowPane
 
-    private val supplyTypeList = ReadSupplyType.getAllSupplyTypes(getConnection())
-
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        // loadSupplyGrid()
-        testAddVBoxes() // For testing purposes, remove in production
+         loadSupplyGrid()
+//        testAddVBoxes() // For testing purposes, remove in production
     }
 
     /**
@@ -106,6 +106,8 @@ class SuppliesGridHomeController: Initializable {
 
     private fun loadSupplyGrid() {
 
+        val supplyTypeList = ReadSupplyType.getAllSupplyTypes(getConnection())
+
         if (supplyTypeList != null && supplyTypeList.isNotEmpty()) {
             for (supplyType in supplyTypeList) {
                 val vbox = createSupplyVBox(supplyType)
@@ -155,7 +157,11 @@ class SuppliesGridHomeController: Initializable {
             styleClass.add("supply-label")
         }
 
-        val currentCount = getSupplyCount(supplyType.name)
+        val currentCount = ReadSupplyRecord.getCurrentCountForDate(
+            getConnection(),
+            supplyType.supplyTypeId,
+            Date(System.currentTimeMillis())
+        )
 
         
         val countLabel = Label("Current Count: $currentCount")
@@ -164,13 +170,6 @@ class SuppliesGridHomeController: Initializable {
         vbox.children.addAll(imageView, nameLabel, countLabel)
 
         return vbox
-    }
-
-    private fun getSupplyCount(supplyTypeName: String): Int {
-        // This method should return the current count of the supply type
-        // For now, returning a dummy value
-        // Replace this with actual logic to retrieve count from database
-        return 10 // Placeholder value
     }
 
 }
