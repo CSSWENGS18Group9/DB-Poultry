@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
-public class undoFlock {
+public class DeleteFlock {
 
     public static String undoCreateFlock(Connection connect) {
         try (PreparedStatement preppedStatement = connect.prepareStatement("DELETE FROM Flock ORDER BY flock_id DESC LIMIT 1")) {
