@@ -10,12 +10,11 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="main-pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.SuppliesGridHomeController">
    <children>
-      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="9.0" layoutY="5.0" prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="9.0" layoutY="5.0" prefHeight="720.0" prefWidth="1280.0" styleClass="main-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
-            <FlowPane fx:id="mainFlowPane" hgap="10.0" prefHeight="720.0" prefWidth="1280.0" styleClass="main-pane" vgap="10.0">
+            <FlowPane fx:id="mainFlowPane" alignment="TOP_CENTER" columnHalignment="CENTER" hgap="10.0" prefHeight="720.0" prefWidth="1280.0" styleClass="main-pane" vgap="10.0">
                <padding>
                   <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                </padding>
