@@ -1,3 +1,8 @@
+.sidebar {
+    -fx-background-color: #F7ECB7;
+    border-right: ;
+}
+
 .h1_button {
     -fx-font-family: "HelveticaNowDisplay-Bold";
     -fx-font-size: 3em;
