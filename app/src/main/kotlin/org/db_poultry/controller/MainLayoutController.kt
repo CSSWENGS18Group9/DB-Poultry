@@ -87,7 +87,8 @@ class MainLayoutController : Initializable {
     
     @FXML
     private fun navigateToSupplies() {
-        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_supplies.fxml")
+        // GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_supplies.fxml")
+        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_supplies_grid.fxml")
     }
     
     @FXML

@@ -30,7 +30,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button fx:id="homeFlockBtn1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToCreate" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" styleClass="h1" text="Create" textFill="#8f250c" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Button fx:id="homeFlockBtn1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToCreate" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" styleClass="h1-bold" text="Create" textFill="#8f250c" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="HelveticaNowDisplay-Bold" size="30.0" />
                </font>
@@ -45,7 +45,7 @@
                   <Insets bottom="10.0" />
                </padding>
             </Button>
-            <Button fx:id="homeFlockBtn3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToGenerate" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" styleClass="h1" text="Generate" textFill="#8f250c" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <Button fx:id="homeFlockBtn3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToGenerate" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" styleClass="h1-bold" text="Generate" textFill="#8f250c" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <font>
                   <Font name="HelveticaNowDisplay-Bold" size="30.0" />
                </font>
@@ -60,7 +60,7 @@
                   <Insets bottom="10.0" />
                </padding>
             </Button>
-            <Button fx:id="homeFlockBtn2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToView" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" styleClass="h1" text="View" textFill="#8f250c" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <Button fx:id="homeFlockBtn2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToView" prefHeight="90.0" prefWidth="260.0" style="-fx-background-radius: 15px; -fx-background-color: white;" styleClass="h1-bold" text="View" textFill="#8f250c" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <font>
                   <Font name="HelveticaNowDisplay-Bold" size="30.0" />
                </font>
@@ -90,7 +90,7 @@
                   <Insets left="30.0" />
                </GridPane.margin>
             </Button>
-            <Text mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h4" text="new flock, flock details" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Text mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="new flock, flock details" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="HelveticaNowDisplay-Light" size="12.0" />
                </font>
@@ -98,7 +98,7 @@
                   <Insets top="60.0" />
                </GridPane.margin>
             </Text>
-            <Text mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h4" text="reports" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <Text mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="reports" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <font>
                   <Font name="HelveticaNowDisplay-Light" size="12.0" />
                </font>
@@ -106,7 +106,7 @@
                   <Insets top="60.0" />
                </GridPane.margin>
             </Text>
-            <Text mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h4" text="flock records" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <Text mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="flock records" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <font>
                   <Font name="HelveticaNowDisplay-Light" size="12.0" />
                </font>
@@ -114,7 +114,7 @@
                   <Insets top="60.0" />
                </GridPane.margin>
             </Text>
-            <Label alignment="CENTER" contentDisplay="TOP" maxWidth="1.7976931348623157E308" styleClass="h1" text="Flock Management" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+            <Label alignment="CENTER" contentDisplay="TOP" maxWidth="1.7976931348623157E308" styleClass="h1-bold" text="Flock Management" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
    </children>

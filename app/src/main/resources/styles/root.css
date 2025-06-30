@@ -1,32 +1,91 @@
-.h1 {
+/* For all pages */
+
+.main-pane {
+    -fx-background-color: #fefae0;
+}
+
+.confirm-button {
+    -fx-background-color: #A4AE81;
+    -fx-background-radius: 15;
+    -fx-text-fill: white;
+    -fx-font-family: "HelveticaNowDisplay-Regular";
+    -fx-font-size: 1.7em;
+}
+
+.h1-bold {
+    -fx-font-size: 4em;
+    -fx-font-family: "HelveticaNowDisplay-Bold";
+}
+
+.h2-bold {
     -fx-font-size: 3em;
-    -fx-font-weight: bold;
+    -fx-font-family: "HelveticaNowDisplay-Bold";
+
 }
 
-.h2 {
+.h3-bold {
     -fx-font-size: 2em;
-    -fx-font-weight: bold;
+    -fx-font-family: "HelveticaNowDisplay-Bold";
 }
 
-.h3 {
+.h4-bold {
     -fx-font-size: 1.5em;
     -fx-font-family: "HelveticaNowDisplay-Bold";
 }
 
-.h4 {
+.h5-bold {
     -fx-font-size: 1.2em;
+    -fx-font-family: "HelveticaNowDisplay-Bold";
+}
+
+.h6-bold {
+    -fx-font-size: 0.8em;
+    -fx-font-family: "HelveticaNowDisplay-Bold";
+}
+
+.h1 {
+    -fx-font-size: 4em;
+    -fx-font-family: "HelveticaNowDisplay-Regular";
+}
+
+.h2 {
+    -fx-font-size: 3em;
+    -fx-font-family: "HelveticaNowDisplay-Regular";
+}
+
+.h3 {
+    -fx-font-size: 2em;
+    -fx-font-family: "HelveticaNowDisplay-Regular";
+}
+
+.h4 {
+    -fx-font-size: 1.5em;
+    -fx-font-family: "HelveticaNowDisplay-Regular";
 }
 
 .h5 {
-    -fx-font-size: 0.8em;
+    -fx-font-size: 1.2em;
+    -fx-font-family: "HelveticaNowDisplay-Regular";
 }
 
 .h6 {
-    -fx-font-size: 0.5em;
+    -fx-font-size: 0.8em;
+    -fx-font-family: "HelveticaNowDisplay-Regular";
 }
 
 .img-container {
     -fx-background-image: url("../img/main_bg.jpg");
     -fx-background-size: cover;
     -fx-background-position: center center;
+}
+
+.img-container-2 {
+    -fx-background-image: url("../img/main_bg_2.jpeg");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.inner-pane {
+    -fx-background-color: white;
+    -fx-background-radius: 35;
 }
