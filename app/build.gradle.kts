@@ -10,7 +10,6 @@ plugins {
     kotlin("jvm") version "2.1.21"
     java
     id("com.gradleup.shadow") version "8.3.6"
-
 }
 
 group = "org.db_poultry"
@@ -63,10 +62,6 @@ dependencies {
     // JUnit
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
     testImplementation(kotlin("test"))
-
-    // Performance Testing
-    // REMOVE ME ONCE SHIPPING
-    implementation("net.datafaker:datafaker:2.0.2")
 }
 
 sourceSets {

@@ -88,14 +88,11 @@ val __CLIENT_MODE: Boolean = false
 // Do clean database. Should always be FALSE!
 val __DO_WIPE: Boolean = false
 
-// Do performance testing. Should always be FALSE!
-val __DO_PERF: Boolean = true
-
 fun main() {
     val app = App()
     app.start()
 
-    if (__CLIENT_MODE and !__DO_PERF) {
+    if (__CLIENT_MODE) {
         // Check if this is the first open
         val config = TL_loadConfig()
         if (config == null){
@@ -108,14 +105,8 @@ fun main() {
 
     app.connect()
 
-    if (__CLIENT_MODE and !__DO_PERF) {
-        // MAIN PROCESS OF THE APPLICATION
-        // Open MainFrame (index GUI)
-        app.openMainFrame()
-    } else {
-        // PERFORMANCE TESTING PROCESS OF THE APPLICATION
-        PerformanceTest.runTest(app);
-    }
+    // Open MainFrame (index GUI)
+    app.openMainFrame()
 
 
     // ==================================================
