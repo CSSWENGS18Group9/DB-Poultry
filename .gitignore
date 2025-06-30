@@ -38,3 +38,7 @@ app/.env
 
 # DB-Poultry
 *.🐔
+
+# DB-Poultry backups
+dbp_backups/
+**/dbp_backups/**

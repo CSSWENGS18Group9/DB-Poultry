@@ -7,6 +7,7 @@ import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.theLifesaver.Backup.TL_checkLastBackupDate
+import org.db_poultry.theLifesaver.Backup.*
 import org.db_poultry.theLifesaver.TL.TL_firstOpen
 import org.db_poultry.theLifesaver.TL.wipe
 import java.sql.Connection
@@ -92,18 +93,24 @@ fun main() {
     val app = App()
     app.start()
 
-    if (__DIRECT_CLIENT_) {
-        TL_firstOpen(app)
-        TL_checkLastBackupDate()
-        __FIRST_LAUNCHED = true
-    }
+    // if (__DIRECT_CLIENT_) {
+    //     TL_firstOpen(app)
+    //     __FIRST_LAUNCHED = true
+    // }
 
     app.connect()
 
-    if (__FIRST_LAUNCHED) {
-        // if it is the first open, we will clean all tables
-        cleanTables(app.getConnection())
-    }
+    // if (__FIRST_LAUNCHED) {
+    //     // if it is the first open, we will clean all tables
+    //     cleanTables(app.getConnection())
+    // }
+
+    // FOR TESTING:
+    cleanTables(app.getConnection())
+    TL_restoreDatabase("June-30-2025", app.databaseName, app.databasePass)
+
+    TL_checkLastBackupDate(app.databaseName, app.databasePass)
+    TL_cleanupOldBackups();
 
     // Open MainFrame (index GUI)
     app.openMainFrame()
