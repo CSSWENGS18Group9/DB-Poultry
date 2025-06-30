@@ -20,6 +20,7 @@ import javafx.scene.control.DatePicker
 import java.sql.Date
 
 import javafx.fxml.Initializable
+import org.db_poultry.db.supplyRecordDAO.ReadSupplyRecord
 import java.net.URL
 import java.util.ResourceBundle 
 
@@ -71,18 +72,16 @@ class UpdateRetrieveSuppliesController: Initializable {
     @FXML
     fun confirm() {
         val supplyTypeName = supplyTypeComboBox.value
-        val date = datepickerDate.value
+        val date = ReadSupplyRecord.getMostRecentFromName(getConnection(), supplyTypeName).date
 
         if (supplyTypeName == null || supplyTypeName == "Select a Supply Type" || date == null) {
             println("Please select a supply type and date.")
             return
         }
 
-        val sqlDate = Date.valueOf(date)
+        RetrieveSupplyRecord.retrieveSupply(getConnection(), date, supplyTypeName)
 
-        RetrieveSupplyRecord.retrieveSupply(getConnection(), sqlDate, supplyTypeName)
-
-        println("Supply retrieved successfully: $supplyTypeName on $sqlDate") // DEBUGGING
+        println("Supply retrieved successfully: $supplyTypeName on $date") // DEBUGGING
 
     }
 
