@@ -78,3 +78,9 @@
     -fx-background-size: cover;
     -fx-background-position: center center;
 }
+
+.img-container-2 {
+    -fx-background-image: url("../img/main_bg_2.jpeg");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
