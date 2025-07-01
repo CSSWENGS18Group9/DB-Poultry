@@ -14,7 +14,7 @@ public class DeleteFlockDetail {
      * Deletes the specified Detail from a Flock (the latest one user made)
      *
      * @param conn          the Connection thing with SQL
-     * @param flockId       ID of the flock containing the detail
+     * @param flockID       ID of the flock containing the detail
      * @param detailDate    date of the Detail to delete
      * @return a String which is the query with filled-in values
      */
