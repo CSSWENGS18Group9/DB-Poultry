@@ -52,6 +52,7 @@ dependencies {
     }
 
     // JavaFX Icons (https://kordamp.org/ikonli/#_javafx)
+    implementation("org.kordamp.ikonli:ikonli-core:12.4.0")
     implementation("org.kordamp.ikonli:ikonli-javafx:12.4.0")
     implementation("org.kordamp.ikonli:ikonli-fontawesome6-pack:12.4.0")
 
