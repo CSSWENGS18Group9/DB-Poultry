@@ -4,13 +4,22 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Date;
+import org.db_poultry.util.flockDetailsSingleton;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 public class DeleteFlockDetail {
 
-    public static String undoCreateFlockDetail(Connection connect, int flockId, Date detailDate) {
-        try (PreparedStatement preppedStatement = connect.prepareStatement("DELETE FROM Flock_Details WHERE Flock_ID = ? AND FD_Date = ?")) {
+    /**
+     * Deletes the specified Detail from a Flock (the latest one user made)
+     *
+     * @param conn          the Connection thing with SQL
+     * @param flockId       ID of the flock containing the detail
+     * @param detailDate    date of the Detail to delete
+     * @return a String which is the query with filled-in values
+     */
+    public static String undoCreateFlockDetail(Connection conn, int flockId, Date detailDate) {
+        try (PreparedStatement preppedStatement = conn.prepareStatement("DELETE FROM Flock_Details WHERE Flock_ID = ? AND FD_Date = ?")) {
 
             preppedStatement.setInt(1, flockId);
             preppedStatement.setDate(2, detailDate);
@@ -29,4 +38,36 @@ public class DeleteFlockDetail {
         }
 
     }
+
+    /**
+     * Sets the Flock ID and the Detail date to store into the singleton (this will be set every time the user creates a detail,
+     * making the singleton attributes contain the latest ones the user made)
+     *
+     * @param flockId       ID of the flock containing the detail
+     * @param detailDate    date of the Detail to delete
+     * @return 1
+     */
+    public static int setFlockDetailsToDelete(int flockId, Date detailDate) {
+        flockDetailsSingleton.INSTANCE.setId(flockId);
+        flockDetailsSingleton.INSTANCE.setDate(detailDate);
+
+        return 1;
+    }
+
+    /**
+     * Gets the Flock ID and the Detail date from the singleton, then passes the values into undoCreateFlockDetail()
+     *
+     * @param conn          the Connection thing with SQL
+     * @return 1
+     */
+    public static int getFlockDetailsToDelete(Connection conn) {
+        int id = flockDetailsSingleton.INSTANCE.getId();
+        Date date = flockDetailsSingleton.INSTANCE.getDate();
+
+        undoCreateFlockDetail(conn, id, date);
+
+        return 1;
+    }
+
+
 }

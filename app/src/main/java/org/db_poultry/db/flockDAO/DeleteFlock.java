@@ -8,8 +8,14 @@ import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 public class DeleteFlock {
 
-    public static String undoCreateFlock(Connection connect) {
-        try (PreparedStatement preppedStatement = connect.prepareStatement("DELETE FROM Flock ORDER BY flock_id DESC LIMIT 1")) {
+    /**
+     * Deletes the latest record added in Flock
+     *
+     * @param conn       the Connection thing with SQL
+     * @return a String which is the query
+     */
+    public static String undoCreateFlock(Connection conn) {
+        try (PreparedStatement preppedStatement = conn.prepareStatement("DELETE FROM Flock ORDER BY flock_id DESC LIMIT 1")) {
 
             preppedStatement.executeUpdate();
 
