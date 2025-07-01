@@ -18,14 +18,14 @@ public class DeleteFlockDetail {
      * @param detailDate    date of the Detail to delete
      * @return a String which is the query with filled-in values
      */
-    public static String undoCreateFlockDetail(Connection conn, int flockId, Date detailDate) {
+    public static String undoCreateFlockDetail(Connection conn, int flockID, Date detailDate) {
         try (PreparedStatement preppedStatement = conn.prepareStatement("DELETE FROM Flock_Details WHERE Flock_ID = ? AND FD_Date = ?")) {
 
-            preppedStatement.setInt(1, flockId);
+            preppedStatement.setInt(1, flockID);
             preppedStatement.setDate(2, detailDate);
             preppedStatement.executeUpdate();
 
-            return String.format("DELETE FROM Flock_Details WHERE Flock_ID = %d AND FD_Date = %s", flockId, detailDate.toString());
+            return String.format("DELETE FROM Flock_Details WHERE Flock_ID = %d AND FD_Date = %s", flockID, detailDate.toString());
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `undoCreateFlockDetail()`.",
@@ -43,12 +43,12 @@ public class DeleteFlockDetail {
      * Sets the Flock ID and the Detail date to store into the singleton (this will be set every time the user creates a detail,
      * making the singleton attributes contain the latest ones the user made)
      *
-     * @param flockId       ID of the flock containing the detail
+     * @param flockID       ID of the flock containing the detail
      * @param detailDate    date of the Detail to delete
      * @return 1
      */
-    public static int setFlockDetailsToDelete(int flockId, Date detailDate) {
-        flockDetailsSingleton.INSTANCE.setId(flockId);
+    public static int setFlockDetailsToDelete(int flockID, Date detailDate) {
+        flockDetailsSingleton.INSTANCE.setId(flockID);
         flockDetailsSingleton.INSTANCE.setDate(detailDate);
 
         return 1;
@@ -61,10 +61,10 @@ public class DeleteFlockDetail {
      * @return 1
      */
     public static int getFlockDetailsToDelete(Connection conn) {
-        int id = flockDetailsSingleton.INSTANCE.getId();
-        Date date = flockDetailsSingleton.INSTANCE.getDate();
+        int flockID = flockDetailsSingleton.INSTANCE.getId();
+        Date detailDate = flockDetailsSingleton.INSTANCE.getDate();
 
-        undoCreateFlockDetail(conn, id, date);
+        undoCreateFlockDetail(conn, flockID, detailDate);
 
         return 1;
     }
