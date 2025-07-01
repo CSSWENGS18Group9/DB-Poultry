@@ -3,7 +3,7 @@ import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.shape.Rectangle
 
-class SuccessfulSupplyInputPopupController {
+class InvalidCreateFlockPopupController{
 
     @FXML
     private lateinit var closeBtn: Button
@@ -16,8 +16,5 @@ class SuccessfulSupplyInputPopupController {
 
     @FXML
     private lateinit var message2Lbl: Label
-
-    @FXML
-    private lateinit var undoBtn: Button
 
 }

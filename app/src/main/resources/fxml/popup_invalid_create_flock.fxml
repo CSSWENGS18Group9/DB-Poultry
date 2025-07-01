@@ -11,7 +11,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="283.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle fx:id="mainRectangle" arcHeight="5.0" arcWidth="5.0" fill="#8f250c" height="183.0" layoutX="-6.0" layoutY="-2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="291.0" />
-      <Label fx:id="message1Lbl" layoutX="45.0" layoutY="86.0" prefHeight="30.0" prefWidth="197.0" text="Error deleting supply." textFill="WHITE">
+      <Label fx:id="message1Lbl" layoutX="32.0" layoutY="86.0" prefHeight="30.0" prefWidth="225.0" text="Error creating new flock." textFill="WHITE">
          <font>
             <Font name="HelveticaNowDisplay-Bold" size="20.0" />
          </font>
