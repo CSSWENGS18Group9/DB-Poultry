@@ -113,6 +113,11 @@ class ViewSuppliesController: Initializable {
         }
         viewSuppliesTable.items = tableData
     }
+
+    @FXML
+    fun switchToViewSupplies(event: ActionEvent) {
+        GeneralUtil.loadContentView(viewSupplyAnchorPane, "/fxml/content_view_supplies.fxml")
+    }
         
     @FXML
     fun switchToViewSupplyHistory(event: ActionEvent) {
