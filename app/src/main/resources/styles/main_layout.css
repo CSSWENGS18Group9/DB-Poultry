@@ -14,5 +14,4 @@
 .h1_button:hover {
     -fx-background-color: #8f250c;
     -fx-text-fill: white;
-    -fx-translate-y: -7;
 }

@@ -89,3 +89,15 @@
     -fx-background-color: white;
     -fx-background-radius: 35;
 }
+
+.button {
+    -fx-font-family: "HelveticaNowDisplay-Bold";
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+}
+
+.button:hover {
+    -fx-background-color: #8f250c;
+    -fx-text-fill: #FEFAE0;
+}
+
