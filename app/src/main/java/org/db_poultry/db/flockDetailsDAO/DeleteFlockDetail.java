@@ -64,5 +64,4 @@ public class DeleteFlockDetail {
         return undoCreateFlockDetail(conn, flockID, detailDate);
     }
 
-
 }
