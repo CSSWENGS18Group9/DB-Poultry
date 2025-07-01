@@ -20,7 +20,7 @@ repositories {
 }
 
 // JavaFX
-val javafxVersion = "17.0.2"
+val javafxVersion = "23.0.1"
 val platform = when (System.getProperty("os.name").lowercase()) {
     "mac os x", "macos" -> "mac"
     "linux" -> "linux"
@@ -50,6 +50,10 @@ dependencies {
     javafxModules.forEach {
         implementation("org.openjfx:javafx-$it:$javafxVersion:$platform")
     }
+
+    // JavaFX Icons (https://kordamp.org/ikonli/#_javafx)
+    implementation("org.kordamp.ikonli:ikonli-javafx:12.4.0")
+    implementation("org.kordamp.ikonli:ikonli-fontawesome6-pack:12.4.0")
 
     // Dependencies for Database
     // PostgresSQL
