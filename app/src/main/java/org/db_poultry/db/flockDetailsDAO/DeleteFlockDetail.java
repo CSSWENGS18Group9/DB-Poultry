@@ -45,28 +45,23 @@ public class DeleteFlockDetail {
      *
      * @param flockID       ID of the flock containing the detail
      * @param detailDate    date of the Detail to delete
-     * @return 1
      */
-    public static int setFlockDetailsToDelete(int flockID, Date detailDate) {
+    public static void setFlockDetailsToDelete(int flockID, Date detailDate) {
         flockDetailsSingleton.INSTANCE.setId(flockID);
         flockDetailsSingleton.INSTANCE.setDate(detailDate);
-
-        return 1;
     }
 
     /**
      * Gets the Flock ID and the Detail date from the singleton, then passes the values into undoCreateFlockDetail()
      *
      * @param conn          the Connection thing with SQL
-     * @return 1
+     * @return a String which is the query with filled-in values
      */
-    public static int getFlockDetailsToDelete(Connection conn) {
+    public static String getFlockDetailsToDelete(Connection conn) {
         int flockID = flockDetailsSingleton.INSTANCE.getId();
         Date detailDate = flockDetailsSingleton.INSTANCE.getDate();
 
-        undoCreateFlockDetail(conn, flockID, detailDate);
-
-        return 1;
+        return undoCreateFlockDetail(conn, flockID, detailDate);
     }
 
 
