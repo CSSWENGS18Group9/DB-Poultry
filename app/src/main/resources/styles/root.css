@@ -10,7 +10,7 @@
 }
 
 .main-button:hover {
-    -fx-background-color: #8f250c;
+    -fx-background-color: #8F250C;
     -fx-text-fill: #FEFAE0;
 }
 
@@ -29,6 +29,12 @@
     -fx-text-fill: white;
     -fx-border-color: #A4AE81;
     -fx-border-width: 2;
+}
+
+.title {
+    -fx-font-size: 6em;
+    -fx-font-family: "HelveticaNowDisplay-Bold";
+    -fx-text-fill: #8F250C;
 }
 
 .h1-bold {
