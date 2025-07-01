@@ -2,3 +2,12 @@
     -fx-background-color: white;
     -fx-background-radius: 35;
 }
+
+.file-img {
+    -fx-background-image: url("../img/create-supplies/insert-image.png");
+    -fx-background-size: 135%;
+    -fx-background-position: center center;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+
+}

@@ -133,20 +133,21 @@ class SuppliesGridHomeController: Initializable {
             fitWidth = 200.0
             isPickOnBounds = true
             isPreserveRatio = true
-            
-            // Try to load specific image for supply type, fallback to default
-            try {
-                val imagePath = "/img/supply-img/${supplyType.name}.png"
-                val imageUrl = javaClass.getResource(imagePath)
-                if (imageUrl != null) {
-                    image = Image(imageUrl.toString())
-                } else {
-                    // Fallback to default image
-                    image = Image(javaClass.getResource("/img/supply-img/default.png")?.toString())
-                }
-            } catch (e: Exception) {
-                // Fallback to default image if any error
-                image = Image(javaClass.getResource("/img/supply-img/default.png")?.toString())
+
+            val supportedExtensions = listOf("jpg", "png", "jpeg", "gif", "bmp")
+            val basePath = "/img/supply-img/${supplyType.name}"
+            var imageUrl: URL? = null
+
+            for (ext in supportedExtensions) {
+                val path = "$basePath.$ext"
+                imageUrl = javaClass.getResource(path)
+                if (imageUrl != null) break
+            }
+
+            image = if (imageUrl != null) {
+                Image(imageUrl.toString())
+            } else {
+                Image(javaClass.getResource("/img/supply-img/default.png")?.toString())
             }
             
             VBox.setMargin(this, Insets(10.0, 0.0, 0.0, 0.0))
