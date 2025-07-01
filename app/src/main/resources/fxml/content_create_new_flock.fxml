@@ -17,36 +17,40 @@
          <children>
             <GridPane prefHeight="720.0" prefWidth="1280.0" styleClass="inner-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="11.11" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="11.11" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.5" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="11.11" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="11.11" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="11.11" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="11.11" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="11.11" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="11.11" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label styleClass="h1-bold" text="Create New Flock" textFill="#8f250c" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
-                  <Label styleClass="h2" text="Starting Date" textFill="#8f250c" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                     <padding>
-                        <Insets left="200.0" />
-                     </padding>
-                  </Label>
-                  <Label styleClass="h2" text="Current Count" textFill="#8f250c" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                     <padding>
-                        <Insets left="200.0" />
-                     </padding>
-                  </Label>
-                  <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#confirm" prefHeight="60.0" prefWidth="125.0" styleClass="confirm-button" text="Confirm" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                  <Label styleClass="h1-bold" text="Create New Flock" textFill="#8f250c" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Label styleClass="h2" text="Starting Date" textFill="#8f250c" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <Label styleClass="h2" text="Current Count" textFill="#8f250c" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                  <Button fx:id="btnConfirm" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#confirm" prefHeight="60.0" prefWidth="125.0" styleClass="confirm-button" text="Confirm" textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                      <font>
                         <Font name="HelveticaNowDisplay-Bold" size="13.0" />
                      </font>
-                  </Button>
-                  <DatePicker fx:id="createNewFlockDatePicker" prefHeight="30.0" prefWidth="344.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="createNewFlockTextField" prefHeight="30.0" prefWidth="228.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
-                        <Insets right="200.0" />
+                        <Insets bottom="20.0" top="20.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <DatePicker fx:id="createNewFlockDatePicker" prefHeight="30.0" prefWidth="344.0" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <TextField fx:id="createNewFlockTextField" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="30.0" prefWidth="228.0" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets />
                      </GridPane.margin>
                   </TextField>
                </children>
