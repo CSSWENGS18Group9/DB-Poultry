@@ -8,25 +8,25 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="312.0" prefWidth="288.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="283.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Rectangle fx:id="mainRectangle" arcHeight="5.0" arcWidth="5.0" fill="#8f250c" height="216.0" layoutX="-6.0" layoutY="-2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="294.0" />
-      <Label fx:id="message1Lbl" layoutX="47.0" layoutY="102.0" prefHeight="30.0" prefWidth="197.0" text="Error deleting supply." textFill="WHITE">
+      <Rectangle fx:id="mainRectangle" arcHeight="5.0" arcWidth="5.0" fill="#8f250c" height="183.0" layoutX="-6.0" layoutY="-2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="291.0" />
+      <Label fx:id="message1Lbl" layoutX="45.0" layoutY="86.0" prefHeight="30.0" prefWidth="197.0" text="Error deleting supply." textFill="WHITE">
          <font>
             <Font name="HelveticaNowDisplay-Bold" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="closeBtn" layoutX="120.0" layoutY="251.0" mnemonicParsing="false" style="-fx-background-color: #BC6C25;" text="Close" textFill="WHITE">
+      <Button fx:id="closeBtn" layoutX="95.0" layoutY="210.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="95.0" style="-fx-background-color: #606C38;" text="Close" textFill="WHITE">
          <font>
-            <Font name="HelveticaNowDisplay-Light" size="13.0" />
+            <Font name="HelveticaNowDisplay-Bold" size="13.0" />
          </font>
       </Button>
-      <Label fx:id="message2Lbl" layoutX="69.0" layoutY="126.0" text="Please try again." textFill="WHITE">
+      <Label fx:id="message2Lbl" layoutX="67.0" layoutY="110.0" text="Please try again." textFill="WHITE">
          <font>
             <Font name="HelveticaNowDisplay-Bold" size="20.0" />
          </font>
       </Label>
-      <ImageView fitHeight="46.0" fitWidth="72.0" layoutX="122.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="46.0" fitWidth="72.0" layoutX="120.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/x_icon.png" />
          </image>
