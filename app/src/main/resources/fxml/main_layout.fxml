@@ -2,33 +2,39 @@
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: FEFAE0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.MainLayoutController">
+<AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.MainLayoutController">
    <children>
       <GridPane fx:id="mainGridPane" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: FEFAE0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.33331298828125" minWidth="10.0" prefWidth="178.33331298828125" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.3333740234375" minWidth="10.0" prefWidth="159.66668701171875" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-          <AnchorPane fx:id="sidebarAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="397.0" prefWidth="129.0" styleClass="sidebar">
+          <AnchorPane fx:id="sidebarAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="397.0" prefWidth="129.0" styleClass="sidebar" GridPane.columnSpan="2">
                <children>
-                  <GridPane fx:id="sideBarGridPane" alignment="TOP_CENTER" prefHeight="397.3333333333333" prefWidth="146.0" style="-fx-border-color: #D0D0D0; -fx-border-width: 0 2 0 0;" vgap="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <GridPane fx:id="sideBarGridPane" alignment="TOP_CENTER" prefHeight="397.3333333333333" prefWidth="146.0" vgap="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -41,77 +47,20 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <ImageView fx:id="sideBarImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+                        <ImageView fx:id="sideBarImageView" fitHeight="200.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER">
                            <image>
                               <Image url="@../img/CSSWENG_DB%20Poultry%20Logo.png" />
                            </image>
                         </ImageView>
-                        <Button fx:id="sidebarHomeBtn" graphicTextGap="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#navigateToHome" prefHeight="41.0" prefWidth="145.0" styleClass="h1_button" text="Home" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="1">
-                           <effect>
-                              <DropShadow offsetY="1.5">
-                                 <color>
-                                    <Color opacity="0.4000000059604645" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                           <GridPane.margin>
-                              <Insets bottom="5.0" left="40.0" top="5.0" />
-                           </GridPane.margin>
-                           <graphic>
-                              <ImageView fx:id="homeImageView" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" styleClass="icon_button">
-                                 <image>
-                                    <Image url="@../img/icons/home.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <font>
-                              <Font name="HelveticaNowDisplay-Bold" size="18.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="sidebarSuppliesBtn" alignment="CENTER" graphicTextGap="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#navigateToSupplies" prefHeight="50.0" prefWidth="117.0" styleClass="h1_button" text="   Supplies" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="2">
-                           <effect>
-                              <DropShadow offsetY="1.5">
-                                 <color>
-                                    <Color opacity="0.4000000059604645" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                           <font>
-                              <Font name="HelveticaNowDisplay-Bold" size="18.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets bottom="5.0" left="40.0" top="5.0" />
-                           </GridPane.margin>
-                           <graphic>
-                              <ImageView fx:id="suppliesImageView" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" styleClass="supplies-icon">
-                                 <image>
-                                    <Image url="@../img/icons/pencil.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="sidebarFlockBtn" alignment="CENTER" graphicTextGap="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#navigateToFlock" prefHeight="55.0" prefWidth="218.0" styleClass="h1_button" text="Flock" GridPane.columnSpan="2" GridPane.rowIndex="3">
-                           <effect>
-                              <DropShadow offsetY="1.5">
-                                 <color>
-                                    <Color opacity="0.4000000059604645" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                           <font>
-                              <Font name="System Bold" size="50.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets bottom="5.0" left="40.0" top="5.0" />
-                           </GridPane.margin>
-                           <graphic>
-                              <ImageView fx:id="flockImageView" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" styleClass="icon_button">
-                                 <image>
-                                    <Image url="@../img/icons/egg.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
+                        <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToHome" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                           <children>
+                              <FontIcon fx:id="homeFontIcon" iconLiteral="fas-home" iconSize="50" textAlignment="CENTER" wrappingWidth="50.0" />
+                              <Label styleClass="h2-bold" text="Home" />
+                           </children>
+                           <padding>
+                              <Insets left="40.0" />
+                           </padding>
+                        </FlowPane>
                         <Label fx:id="sideBarDateLabel" graphicTextGap="15.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="35.0" style="-fx-background-color: white; -fx-background-radius: 10;" styleClass="h3" text="Label" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="4">
                            <font>
                               <Font name="HelveticaNowDisplay-Black" size="14.0" />
@@ -134,6 +83,27 @@
                               </ImageView>
                            </graphic>
                         </Label>
+                        <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToSupplies" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                           <children>
+                              <FontIcon fx:id="suppliesFontIcon" iconLiteral="fas-boxes" iconSize="50" textAlignment="CENTER" wrappingWidth="50.0" />
+                              <Label styleClass="h2-bold" text="Supplies" />
+                           </children>
+                           <padding>
+                              <Insets left="40.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </FlowPane>
+                        <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToFlock" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                           <children>
+                              <FontIcon fx:id="flockFontIcon" iconLiteral="fas-egg" iconSize="50" textAlignment="CENTER" wrappingWidth="50.0" />
+                              <Label styleClass="h2-bold" text="Flock" />
+                           </children>
+                           <padding>
+                              <Insets left="40.0" />
+                           </padding>
+                        </FlowPane>
                      </children>
                      <padding>
                         <Insets top="10.0" />
@@ -147,10 +117,11 @@
                   <Insets />
                </opaqueInsets>
             </AnchorPane>
-          <AnchorPane fx:id="contentAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="297.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
+          <AnchorPane fx:id="contentAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="297.0" styleClass="right-pane" GridPane.columnIndex="2" GridPane.columnSpan="6">
                <GridPane.margin>
                   <Insets />
-               </GridPane.margin></AnchorPane>
+               </GridPane.margin>
+            </AnchorPane>
          </children>
       </GridPane>
    </children>

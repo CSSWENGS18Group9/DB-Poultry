@@ -2,16 +2,25 @@
     -fx-background-color: #F7ECB7;
 }
 
-.h1_button {
+.right-pane {
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.75), 4.75, 0, 4, 0);
+}
+
+.sidebar-pane {
     -fx-font-family: "HelveticaNowDisplay-Bold";
-    -fx-font-size: 3em;
-    -fx-background-color: none;
-    -fx-background-insets: 0;
-    -fx-background-radius: 0;
     -fx-background-radius: 30 0 0 30;
 }
 
-.h1_button:hover {
+.sidebar-pane:hover {
     -fx-background-color: #8f250c;
-    -fx-text-fill: white;
+}
+
+.sidebar-pane:hover .label {
+     -fx-translate-x: 15;
+     -fx-text-fill: white;
+ }
+
+.sidebar-pane:hover FontIcon {
+    -fx-icon-color: white;
+    -fx-translate-x: 15;
 }
