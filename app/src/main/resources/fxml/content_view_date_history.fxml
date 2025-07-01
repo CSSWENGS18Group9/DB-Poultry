@@ -30,7 +30,7 @@
             <TableColumn fx:id="currAmountCol" prefWidth="193.0" text="Current Amount" />
          </columns>
       </TableView>
-      <Button fx:id="currHistoryBtn" layoutX="494.0" layoutY="606.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Current History" textFill="WHITE">
+      <Button fx:id="currHistoryBtn" layoutX="494.0" layoutY="606.0" mnemonicParsing="false" onAction="#switchToViewSupplies" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Current History" textFill="WHITE">
          <font>
             <Font name="HelveticaNowDisplay-Light" size="15.0" />
          </font>
