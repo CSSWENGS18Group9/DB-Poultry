@@ -93,24 +93,17 @@ fun main() {
     val app = App()
     app.start()
 
-    // if (__DIRECT_CLIENT_) {
-    //     TL_firstOpen(app)
-    //     __FIRST_LAUNCHED = true
-    // }
+    if (__DIRECT_CLIENT_) {
+        TL_firstOpen(app)
+        __FIRST_LAUNCHED = true
+    }
 
     app.connect()
 
-    // if (__FIRST_LAUNCHED) {
-    //     // if it is the first open, we will clean all tables
-    //     cleanTables(app.getConnection())
-    // }
-
-    // FOR TESTING:
-    cleanTables(app.getConnection())
-    TL_restoreDatabase("June-30-2025", app.databaseName, app.databasePass)
-
-    TL_checkLastBackupDate(app.databaseName, app.databasePass)
-    TL_cleanupOldBackups();
+    if (__FIRST_LAUNCHED) {
+        // if it is the first open, we will clean all tables
+        cleanTables(app.getConnection())
+    }
 
     // Open MainFrame (index GUI)
     app.openMainFrame()
