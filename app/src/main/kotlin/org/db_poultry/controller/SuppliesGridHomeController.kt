@@ -35,75 +35,6 @@ class SuppliesGridHomeController: Initializable {
 //        testAddVBoxes() // For testing purposes, remove in production
     }
 
-    /**
-     * Test function that brute-force adds sample VBoxes to test layout
-     */
-    private fun testAddVBoxes() {
-        val testSupplyNames = listOf(
-            "Corn", "Rice", "Wheat", "Soybean", "Vitamins", 
-            "Medicine", "Feed A", "Feed B", "Supplement", 
-            "Water Treatment", "Calcium", "Protein Mix"
-        )
-        
-        println("Adding ${testSupplyNames.size} test VBoxes...")
-        
-        for (i in testSupplyNames.indices) {
-            val testVBox = createTestVBox(testSupplyNames[i], i + 1)
-            mainFlowPane.children.add(testVBox)
-            println("Added test VBox: ${testSupplyNames[i]}")
-        }
-        
-        println("Total VBoxes in FlowPane: ${mainFlowPane.children.size}")
-    }
-
-    /**
-     * Creates a test VBox with sample data
-     */
-    private fun createTestVBox(supplyName: String, count: Int): VBox {
-        val vbox = VBox().apply {
-            alignment = Pos.CENTER
-            prefHeight = 200.0
-            prefWidth = 200.0
-            spacing = 10.0
-            styleClass.add("grid")
-        }
-
-        // Create test image (solid color rectangle as placeholder)
-        val imageView = ImageView().apply {
-            fitHeight = 150.0
-            fitWidth = 200.0
-            isPickOnBounds = true
-            isPreserveRatio = true
-            
-            try {
-                val imageUrl = javaClass.getResource("/img/supply-img/default.png")
-                if (imageUrl != null) {
-                    image = Image(imageUrl.toString())
-                } else {
-                    println("No default image found for: $supplyName")
-                }
-            } catch (e: Exception) {
-                println("Failed to load image for: $supplyName - ${e.message}")
-            }
-            
-            VBox.setMargin(this, Insets(10.0, 0.0, 0.0, 0.0))
-        }
-
-        // Create supply name label
-        val nameLabel = Label(supplyName).apply {
-            styleClass.add("supply-label")
-        }
-
-        // Create count label with test data
-        val countLabel = Label("Current Count: ${count * 25}").apply {
-        }
-
-        // Add all children to VBox
-        vbox.children.addAll(imageView, nameLabel, countLabel)
-
-        return vbox
-    }
-
     private fun loadSupplyGrid() {
 
         val supplyTypeList = ReadSupplyType.getAllSupplyTypes(getConnection())
@@ -145,7 +76,7 @@ class SuppliesGridHomeController: Initializable {
             }
 
             image = if (imageUrl != null) {
-                Image(imageUrl.toString())
+                Image(imageUrl.toString(), true)
             } else {
                 Image(javaClass.getResource("/img/supply-img/default.png")?.toString())
             }
@@ -166,6 +97,76 @@ class SuppliesGridHomeController: Initializable {
 
         
         val countLabel = Label("Current Count: $currentCount")
+
+        // Add all children to VBox
+        vbox.children.addAll(imageView, nameLabel, countLabel)
+
+        return vbox
+    }
+
+
+    /**
+     * Test function that brute-force adds sample VBoxes to test layout
+     */
+    private fun testAddVBoxes() {
+        val testSupplyNames = listOf(
+            "Corn", "Rice", "Wheat", "Soybean", "Vitamins",
+            "Medicine", "Feed A", "Feed B", "Supplement",
+            "Water Treatment", "Calcium", "Protein Mix"
+        )
+
+        println("Adding ${testSupplyNames.size} test VBoxes...")
+
+        for (i in testSupplyNames.indices) {
+            val testVBox = createTestVBox(testSupplyNames[i], i + 1)
+            mainFlowPane.children.add(testVBox)
+            println("Added test VBox: ${testSupplyNames[i]}")
+        }
+
+        println("Total VBoxes in FlowPane: ${mainFlowPane.children.size}")
+    }
+
+    /**
+     * Creates a test VBox with sample data
+     */
+    private fun createTestVBox(supplyName: String, count: Int): VBox {
+        val vbox = VBox().apply {
+            alignment = Pos.CENTER
+            prefHeight = 200.0
+            prefWidth = 200.0
+            spacing = 10.0
+            styleClass.add("grid")
+        }
+
+        // Create test image (solid color rectangle as placeholder)
+        val imageView = ImageView().apply {
+            fitHeight = 150.0
+            fitWidth = 200.0
+            isPickOnBounds = true
+            isPreserveRatio = true
+
+            try {
+                val imageUrl = javaClass.getResource("/img/supply-img/default.png")
+                if (imageUrl != null) {
+                    image = Image(imageUrl.toString())
+                } else {
+                    println("No default image found for: $supplyName")
+                }
+            } catch (e: Exception) {
+                println("Failed to load image for: $supplyName - ${e.message}")
+            }
+
+            VBox.setMargin(this, Insets(10.0, 0.0, 0.0, 0.0))
+        }
+
+        // Create supply name label
+        val nameLabel = Label(supplyName).apply {
+            styleClass.add("supply-label")
+        }
+
+        // Create count label with test data
+        val countLabel = Label("Current Count: ${count * 25}").apply {
+        }
 
         // Add all children to VBox
         vbox.children.addAll(imageView, nameLabel, countLabel)
