@@ -1,6 +1,10 @@
 package org.db_poultry.theLifesaver;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
@@ -66,6 +70,6 @@ public class Config {
             return null;
         }
 
-        return config;
+        return config.isEmpty() ? null : config;
     }
 }
