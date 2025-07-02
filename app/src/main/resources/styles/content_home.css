@@ -2,18 +2,16 @@
     -fx-font-size: 3em;
     -fx-font-family: "HelveticaNowDisplay-Bold";
     -fx-background-color: white;
-    -fx-text-fill: initial;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
     -fx-background-radius: 15;
 }
 
 .h1_button:hover {
-    -fx-background-color: #A4AE81;
-    -fx-text-fill: white;
-    -fx-translate-y: -7;
+    -fx-background-color: #8f250c;
+    -fx-text-fill: #FEFAE0;
 }
 
 .h1_button:hover .button-graphic {
-    -fx-text-fill: #ddff00;
+    -fx-text-fill: white;
 }

@@ -16,7 +16,7 @@ import javafx.scene.control.SplitPane
 import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.GridPane
 import javafx.scene.image.ImageView
-import javafx.scene.shape.SVGPath
+import org.kordamp.ikonli.javafx.FontIcon
 
 class MainLayoutController : Initializable {
 
@@ -54,26 +54,27 @@ class MainLayoutController : Initializable {
     private lateinit var sideBarDateLabel: Label
     
     @FXML
-    private lateinit var homeImageView: ImageView
+    private lateinit var homeFontIcon: FontIcon
 
     @FXML
-    private lateinit var suppliesImageView: ImageView
+    private lateinit var suppliesFontIcon: FontIcon
 
     @FXML
-    private lateinit var flockImageView: ImageView
+    private lateinit var flockFontIcon: FontIcon
 
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
         // Set today's date
         val today = LocalDate.now()
-        sideBarDateLabel.text = GeneralUtil.formatDatePretty(today)
-        // Removed hardcoded date; replaced with dynamic date formatting
+        // sideBarDateLabel.text = GeneralUtil.formatDatePretty(today)
+        sideBarDateLabel.text = "September 30, 2023" // For testing purposes, set a fixed date
 
         GeneralUtil.initializeFontSizeManager(mainAnchorPane)
 
         GeneralUtil.resizeImageViewToFit(mainAnchorPane, sideBarImageView)
-        GeneralUtil.resizeImageViewToFit(mainAnchorPane,  homeImageView, 0.05, 0.07)
-        GeneralUtil.resizeImageViewToFit(mainAnchorPane, suppliesImageView, 0.05, 0.07)
-        GeneralUtil.resizeImageViewToFit(mainAnchorPane, flockImageView, 0.05, 0.07)
+
+        GeneralUtil.initializeIconSizeManager(mainAnchorPane, homeFontIcon)
+        GeneralUtil.initializeIconSizeManager(mainAnchorPane, suppliesFontIcon)
+        GeneralUtil.initializeIconSizeManager(mainAnchorPane, flockFontIcon)
 
         GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home.fxml")
     }
@@ -87,7 +88,8 @@ class MainLayoutController : Initializable {
     
     @FXML
     private fun navigateToSupplies() {
-        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_supplies.fxml")
+        // GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_supplies.fxml")
+        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_supplies_grid.fxml")
     }
     
     @FXML

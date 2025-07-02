@@ -10,7 +10,6 @@ plugins {
     kotlin("jvm") version "2.1.21"
     java
     id("com.gradleup.shadow") version "8.3.6"
-
 }
 
 group = "org.db_poultry"
@@ -21,7 +20,7 @@ repositories {
 }
 
 // JavaFX
-val javafxVersion = "17.0.2"
+val javafxVersion = "23.0.1"
 val platform = when (System.getProperty("os.name").lowercase()) {
     "mac os x", "macos" -> "mac"
     "linux" -> "linux"
@@ -52,6 +51,11 @@ dependencies {
         implementation("org.openjfx:javafx-$it:$javafxVersion:$platform")
     }
 
+    // JavaFX Icons (https://kordamp.org/ikonli/#_javafx)
+    implementation("org.kordamp.ikonli:ikonli-core:12.4.0")
+    implementation("org.kordamp.ikonli:ikonli-javafx:12.4.0")
+    implementation("org.kordamp.ikonli:ikonli-fontawesome6-pack:12.4.0")
+
     // Dependencies for Database
     // PostgresSQL
     implementation("org.postgresql:postgresql:42.7.3")
@@ -63,10 +67,6 @@ dependencies {
     // JUnit
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
     testImplementation(kotlin("test"))
-
-    // Performance Testing
-    // REMOVE ME ONCE SHIPPING
-    implementation("net.datafaker:datafaker:2.0.2")
 }
 
 sourceSets {
