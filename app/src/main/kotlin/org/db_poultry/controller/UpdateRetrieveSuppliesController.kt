@@ -5,7 +5,7 @@ import org.db_poultry.util.GeneralUtil
 
 import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
-import org.db_poultry.db.supplyRecordDAO.RetrieveSupplyRecord
+import org.db_poultry.db.supplyRecordDAO.CreateSupplyRecord
 
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
@@ -83,7 +83,7 @@ class UpdateRetrieveSuppliesController: Initializable {
             return
         }
 
-        RetrieveSupplyRecord.retrieveSupply(getConnection(), date, supplyTypeName)
+//        CreateSupplyRecord.createSupplyRecord(getConnection(), , , , , )
 
         println("Supply retrieved successfully: $supplyTypeName on $date") // DEBUGGING
     }
