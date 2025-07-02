@@ -6,9 +6,11 @@ import javafx.scene.Parent
 import javafx.scene.Node
 import javafx.scene.layout.AnchorPane
 import javafx.scene.image.ImageView
+import org.kordamp.ikonli.javafx.FontIcon
 
 import javafx.beans.binding.Bindings
 import javafx.beans.property.SimpleDoubleProperty
+import javafx.scene.text.Text
 
 import java.time.format.DateTimeFormatter
 import java.time.LocalDate
@@ -76,6 +78,39 @@ class GeneralUtil {
                 if (scene != null) {
                     toResizeImage.fitWidthProperty().bind(scene.widthProperty().multiply(widthMultiplier))
                     toResizeImage.fitHeightProperty().bind(scene.heightProperty().multiply(heightMultiplier))
+                }
+            }
+        }
+
+//        @JvmStatic
+//        fun initializeIconSizeManager(mainPane: Node, fontIcon: FontIcon, baseIconSize: Double = 50.0) {
+//            mainPane.sceneProperty().addListener { _, oldScene, newScene ->
+//                if (oldScene == null && newScene != null) {
+//                    val iconSize = SimpleDoubleProperty(0.0)
+//                    iconSize.bind(
+//                        newScene.widthProperty().add(newScene.heightProperty())
+//                            .divide(1280.0 + 720.0)
+//                            .multiply(baseIconSize)
+//                    )
+//                    iconSize.addListener { _, _, newSize ->
+//                        fontIcon.style = "-fx-icon-size: ${newSize.toInt()}px;"
+//                    }
+//                }
+//            }
+//        }
+
+        @JvmStatic
+        fun initializeIconSizeManager(mainPane: Node, fontIcon: FontIcon, baseIconSize: Double = 50.0) {
+            mainPane.sceneProperty().addListener { _, oldScene, newScene ->
+                if (oldScene == null && newScene != null) {
+                    val iconSize = SimpleDoubleProperty(0.0)
+                    iconSize.bind(
+                        newScene.widthProperty().add(newScene.heightProperty())
+                            .divide(1280.0 + 720.0)
+                            .multiply(baseIconSize)
+                    )
+                    fontIcon.iconSizeProperty().bind(iconSize)
+                    fontIcon.wrappingWidthProperty().bind(iconSize)
                 }
             }
         }

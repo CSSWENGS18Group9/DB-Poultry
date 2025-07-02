@@ -9,6 +9,7 @@ import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.theLifesaver.Backup.TL_checkLastBackupDate
 import org.db_poultry.theLifesaver.Backup.*
 import org.db_poultry.theLifesaver.TL.TL_firstOpen
+import org.db_poultry.theLifesaver.Config.TL_loadConfig
 import org.db_poultry.theLifesaver.TL.wipe
 import java.sql.Connection
 
@@ -81,37 +82,37 @@ class App {
 
     fun getConnection(): Connection? = DBConnect.getConnection()
 }
+// checks if the developers are the ones running the code
+val __CLIENT_MODE: Boolean = false
 
-// checks if the developers are the ones running the code, if true then don't run TL
-// otherwise run TL (since the client is using it)
-// set this to true once we will shit it to the client
-val __DIRECT_CLIENT_: Boolean = true
-var __FIRST_LAUNCHED: Boolean = false
+// Do clean database. Should always be FALSE!
 val __DO_WIPE: Boolean = false
 
 fun main() {
     val app = App()
     app.start()
 
-    if (__DIRECT_CLIENT_) {
-        TL_firstOpen(app)
-        __FIRST_LAUNCHED = true
+  if (__CLIENT_MODE) {
+        // Check if this is the first open
+        val config = TL_loadConfig()
+        if (config == null){
+            TL_firstOpen(app)
+            cleanTables(app.getConnection())
+        } else {
+            TL_checkLastBackupDate(config)
+        }
     }
 
     app.connect()
 
-    if (__FIRST_LAUNCHED) {
-        // if it is the first open, we will clean all tables
-        cleanTables(app.getConnection())
-    }
-
     // Open MainFrame (index GUI)
     app.openMainFrame()
+
 
     // ==================================================
     // Keep this here but remove before shipping or every release
     // ==================================================
-    if (__DO_WIPE) {
+    if (!__CLIENT_MODE and __DO_WIPE) {
         app.getConnection()?.close()
         wipe(app.databaseName)
     }

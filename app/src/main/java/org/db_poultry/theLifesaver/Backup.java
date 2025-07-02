@@ -49,7 +49,6 @@ public class Backup {
     public static void TL_checkLastBackupDate(String databaseName, String databasePassword) {
         // read the config file for the last backupdate
         String lastBackUpDate;
-        HashMap<String, String> config = Config.TL_loadConfig();
         if (config != null) {
             lastBackUpDate = config.get("last_backup_date");
         } else {

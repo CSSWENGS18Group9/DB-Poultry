@@ -42,3 +42,6 @@ app/.env
 # DB-Poultry backups
 dbp_backups/
 **/dbp_backups/**
+
+# Supplies Images
+app/src/main/resources/img/supply-img/
