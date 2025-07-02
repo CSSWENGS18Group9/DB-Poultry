@@ -17,4 +17,7 @@ class SuccessfulSupplyDeletePopupController {
     @FXML
     private lateinit var message2Lbl: Label
 
+    @FXML
+    private lateinit var undoBtn: Button
+
 }

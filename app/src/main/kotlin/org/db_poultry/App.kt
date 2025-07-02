@@ -6,7 +6,6 @@ import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import org.db_poultry.errors.generateErrorMessage
-import org.db_poultry.perf.PerformanceTest
 import org.db_poultry.theLifesaver.Backup.TL_checkLastBackupDate
 import org.db_poultry.theLifesaver.TL.TL_firstOpen
 import org.db_poultry.theLifesaver.Config.TL_loadConfig

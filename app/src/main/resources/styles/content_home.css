@@ -10,7 +10,6 @@
 .h1_button:hover {
     -fx-background-color: #8f250c;
     -fx-text-fill: #FEFAE0;
-    -fx-translate-y: -7;
 }
 
 .h1_button:hover .button-graphic {

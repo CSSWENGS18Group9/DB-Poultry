@@ -2,75 +2,90 @@
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="main-pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.CreateSuppliesController">
+<AnchorPane fx:id="createSuppliesAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="main-pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.CreateSuppliesController">
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <GridPane prefHeight="720.0" prefWidth="1280.0" styleClass="inner-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0" />
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label styleClass="h1-bold" text="Create Supplies" textFill="#8f250c" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
-                  <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#confirm" prefHeight="59.0" prefWidth="124.0" styleClass="confirm-button" text="Confirm" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                     <font>
-                        <Font name="HelveticaNowDisplay-Regular" size="24.0" />
-                     </font>
-                  </Button>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" styleClass="h3-bold" text="Supply Name" textFill="#8f250c" />
-                        <TextField fx:id="createSuppliesTextField" prefHeight="30.0" prefWidth="228.0" />
-                     </children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="title" text="Create Supplies" textFill="#8f250c" GridPane.columnSpan="6" GridPane.halignment="CENTER" />
+                  <Pane fx:id="uploadImagePane" onMouseClicked="#uploadSupplyImage" prefHeight="200.0" prefWidth="200.0" styleClass="file-img" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
-                     <padding>
-                        <Insets right="60.0" />
-                     </padding>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Pane>
+                  <Button fx:id="btnConfirm" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirm" prefHeight="0.0" prefWidth="0.0" styleClass="confirm-button" text="Confirm" textFill="WHITE" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Regular" size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="20.0" top="20.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <VBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="1">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" styleClass="h3-bold" text="Supply Name" textFill="#8f250c" />
+                        <TextField fx:id="createSuppliesTextField" prefHeight="30.0" prefWidth="228.0" promptText="Enter supply name...">
+                           <VBox.margin>
+                              <Insets right="100.0" />
+                           </VBox.margin>
+                        </TextField>
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="70.0" />
+                     </GridPane.margin>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <VBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="2">
                      <children>
                         <Label styleClass="h3-bold" text="Unit of Measurement" textFill="#8f250c" />
-                        <TextField fx:id="createSuppliesTextFieldUnit" prefHeight="30.0" prefWidth="228.0" />
+                        <TextField fx:id="createSuppliesTextFieldUnit" prefHeight="30.0" prefWidth="228.0" promptText="Enter unit of measurement...">
+                           <VBox.margin>
+                              <Insets right="100.0" />
+                           </VBox.margin>
+                        </TextField>
                      </children>
-                     <padding>
-                        <Insets right="60.0" />
-                     </padding>
+                     <GridPane.margin>
+                        <Insets left="70.0" />
+                     </GridPane.margin>
                   </VBox>
-                  <ImageView fitHeight="340.0" fitWidth="357.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="3" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/create-supplies/insert-image.png" />
-                     </image>
-                  </ImageView>
                </children>
                <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
                </padding>
             </GridPane>
          </children>
          <padding>
-            <Insets bottom="65.0" left="65.0" right="65.0" top="65.0" />
+            <Insets bottom="65.0" left="120.0" right="120.0" top="65.0" />
          </padding>
       </AnchorPane>
    </children>

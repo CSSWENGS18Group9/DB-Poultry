@@ -4,12 +4,37 @@
     -fx-background-color: #fefae0;
 }
 
+.main-button {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+}
+
+.main-button:hover {
+    -fx-background-color: #8F250C;
+    -fx-text-fill: #FEFAE0;
+}
+
 .confirm-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #A4AE81;
+    -fx-border-width: 2;
+    -fx-text-fill: #A4AE81;
+}
+
+.confirm-button:hover {
     -fx-background-color: #A4AE81;
     -fx-background-radius: 15;
     -fx-text-fill: white;
-    -fx-font-family: "HelveticaNowDisplay-Regular";
-    -fx-font-size: 1.7em;
+    -fx-border-color: #A4AE81;
+    -fx-border-width: 2;
+}
+
+.title {
+    -fx-font-size: 6em;
+    -fx-font-family: "HelveticaNowDisplay-Bold";
+    -fx-text-fill: #8F250C;
 }
 
 .h1-bold {

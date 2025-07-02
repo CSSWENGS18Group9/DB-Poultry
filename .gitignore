@@ -41,3 +41,6 @@ app/.env
 
 # Performance Testing
 posteriori.csv
+
+# Supplies Images
+app/src/main/resources/img/supply-img/
