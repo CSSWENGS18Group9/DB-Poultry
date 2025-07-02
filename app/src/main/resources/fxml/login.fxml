@@ -25,7 +25,7 @@
          <children>
             <VBox alignment="CENTER" prefHeight="423.0" prefWidth="295.0" spacing="10.0" GridPane.columnIndex="1">
                <children>
-                  <Label fx:id="loginTitleLbl" alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="h1" text="Login-Loginan" />
+                  <Label fx:id="loginTitleLbl" alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="h1-bold" text="Login-Loginan" />
                   <TextField fx:id="usernameTextField" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" promptText="Enter username...">
                      <VBox.margin>
                         <Insets left="40.0" right="40.0" />

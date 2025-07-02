@@ -77,7 +77,6 @@ class UpdateAddDeleteSuppliesController: Initializable {
         supplyTypeComboBox.items.addAll(supplyTypeNames)
         supplyTypeComboBox.value = "Select a Supply Type"
 
-
     }
 
     @FXML
