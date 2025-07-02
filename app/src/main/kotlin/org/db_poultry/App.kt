@@ -99,7 +99,7 @@ fun main() {
             TL_firstOpen(app)
             cleanTables(app.getConnection())
         } else {
-            TL_checkLastBackupDate(config)
+            TL_checkLastBackupDate(config, app.databaseName, app.databasePass)
         }
     }
 
@@ -107,7 +107,6 @@ fun main() {
 
     // Open MainFrame (index GUI)
     app.openMainFrame()
-
 
     // ==================================================
     // Keep this here but remove before shipping or every release

@@ -71,6 +71,10 @@ class UpdateRetrieveSuppliesController: Initializable {
 
     @FXML
     fun confirm() {
+        // TODO: @Dattebayo2505
+        // Fix this, use CreateSupplyRecord with any value for added or depleted but SET Retrieved to TRUE.
+        // This handles all the columns for you already!
+        
         val supplyTypeName = supplyTypeComboBox.value
         val date = ReadSupplyRecord.getMostRecentFromName(getConnection(), supplyTypeName).date
 
@@ -82,7 +86,5 @@ class UpdateRetrieveSuppliesController: Initializable {
         RetrieveSupplyRecord.retrieveSupply(getConnection(), date, supplyTypeName)
 
         println("Supply retrieved successfully: $supplyTypeName on $date") // DEBUGGING
-
     }
-
 }

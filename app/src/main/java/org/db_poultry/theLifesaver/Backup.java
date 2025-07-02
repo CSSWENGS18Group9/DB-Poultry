@@ -46,7 +46,7 @@ public class Backup {
     /**
      * Checks the date when we last backed up, and determines if we need to make a backup
      */
-    public static void TL_checkLastBackupDate(String databaseName, String databasePassword) {
+    public static void TL_checkLastBackupDate(HashMap<String, String> config, String databaseName, String databasePassword) {
         // read the config file for the last backupdate
         String lastBackUpDate;
         if (config != null) {
