@@ -86,4 +86,3 @@ class UpdateRetrieveSuppliesController: Initializable {
     }
 
 }
-

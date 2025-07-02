@@ -7,6 +7,7 @@ import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.theLifesaver.Backup.TL_checkLastBackupDate
+import org.db_poultry.theLifesaver.Backup.*
 import org.db_poultry.theLifesaver.TL.TL_firstOpen
 import org.db_poultry.theLifesaver.Config.TL_loadConfig
 import org.db_poultry.theLifesaver.TL.wipe
@@ -91,7 +92,7 @@ fun main() {
     val app = App()
     app.start()
 
-    if (__CLIENT_MODE) {
+  if (__CLIENT_MODE) {
         // Check if this is the first open
         val config = TL_loadConfig()
         if (config == null){

@@ -65,8 +65,8 @@ class MainLayoutController : Initializable {
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
         // Set today's date
         val today = LocalDate.now()
-        sideBarDateLabel.text = GeneralUtil.formatDatePretty(today)
-        // Removed hardcoded date; replaced with dynamic date formatting
+        // sideBarDateLabel.text = GeneralUtil.formatDatePretty(today)
+        sideBarDateLabel.text = "September 30, 2023" // For testing purposes, set a fixed date
 
         GeneralUtil.initializeFontSizeManager(mainAnchorPane)
 
