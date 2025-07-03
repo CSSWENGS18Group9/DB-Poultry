@@ -9,7 +9,7 @@ import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 public class DeleteSupplyType {
 
     /**
-     * Deletes the latest record added in Flock
+     * Deletes the latest supply type added in Supply_Type
      *
      * @param conn       the Connection thing with SQL
      * @return a String which is the query

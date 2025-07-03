@@ -1,5 +1,8 @@
 package org.db_poultry.db.supplyTypeDAO;
 
+import org.db_poultry.util.undoSingleton;
+import org.db_poultry.util.undoTypes;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -51,6 +54,8 @@ public class CreateSupplyType {
             psmt.setString(1, validName);
             psmt.setString(2, validUnit);
             psmt.executeUpdate();
+
+            undoSingleton.INSTANCE.setUndoMode(undoTypes.doUndoSupplyType);
 
             return String.format("INSERT INTO supply_type (supply_name, unit) VALUES('%s', '%s')", validName,
                     validUnit);
