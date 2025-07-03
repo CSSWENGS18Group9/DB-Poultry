@@ -197,4 +197,28 @@ public class ReadFlockDetails {
         }
 
     }
+
+    public static int getCumulativeDepletedCountUpToDate(Connection connect, int flockID, Date targetDate) {
+        HashMap<Integer, FlockComplete> flocks = ReadFlock.allByID(connect);
+        FlockComplete flockChosen = flocks.get(flockID);
+        int flockStartingCount = flockChosen.getFlock().getStartingCount();
+
+        try (PreparedStatement preppedStatement = connect.prepareStatement("SELECT SUM(Depleted_Count) AS Total_Count_Depleted FROM Flock_Details WHERE Flock_ID = ? AND FD_Date < ?")) {
+            preppedStatement.setInt(1, flockID);
+            preppedStatement.setDate(2, targetDate);
+
+            int sum = 0; // Gets total depleted count
+            try (ResultSet result = preppedStatement.executeQuery()) {
+                while (result.next()) sum = result.getInt("Total_Count_Depleted");
+                if (flockStartingCount < sum) return -1;
+            }
+            return sum; // Returns the total depleted count
+
+        } catch (SQLException e) {
+            generateErrorMessage("Error in `cumulativeDepletedCount()`.", "SQLException occurred.", "", e);
+            return -1;
+        }
+
+    }
+
 }

@@ -13,26 +13,33 @@ import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 public class ReadMortalityRate {
 
+    /**
+     * Gets the mortality rate for a specified flock
+     *
+     * @param conn          the Connection thing with SQL
+     * @param flockDate     the starting date of this flock
+     * @return a MortalityRate object
+     */
     public static MortalityRate calculateMortalityRateForFlock(Connection conn, Date flockDate) {
 
         Flock selectedFlock = ReadFlock.getFlockFromADate(conn, flockDate); // gets specified Flock POJO
         if (selectedFlock == null) {
-            generateErrorMessage("Error in `calculateMortalityRateForFlock()` in `ReadMortalityRate`.", "No flock found for the specified date", "", null);
+            generateErrorMessage("Error in `calculateMortalityRateForFlock()` in `GetMortalityRate`.", "No flock found for the specified date", "", null);
             return null;
         }
 
         FlockDetails latestFlockDetail = ReadFlockDetails.getMostRecent(conn, flockDate); // latest Flock Detail
-        if (latestFlockDetail == null) {
-            generateErrorMessage("Error in `calculateMortalityRateForFlock()` in `ReadMortalityRate`.", "No flock detail found for the specified date", "", null);
-            return null;
-        }
 
         int flockID = selectedFlock.getFlockId(); // gets ID of specified Flock
         int depleted = ReadFlockDetails.getCumulativeDepletedCount(conn, flockID); // gets cumulative depleted count from specified Flock
         int startingCount = selectedFlock.getStartingCount(); // gets starting count from specified Flock
 
+        if (latestFlockDetail == null) {
+            return new MortalityRate(0, flockID, flockDate, startingCount, startingCount);
+        }
+
         if (startingCount == 0) {
-            generateErrorMessage("Error in `calculateMortalityRateForFlock()` in `ReadMortalityRate`.", "Cannot divide by zero", "", null);
+            generateErrorMessage("Error in `calculateMortalityRateForFlock()` in `GetMortalityRate`.", "Cannot divide by zero", "", null);
             return null;
         }
 
@@ -44,11 +51,19 @@ public class ReadMortalityRate {
 
     }
 
+    /**
+     * Gets the mortality rate for a day with the current count
+     *
+     * @param conn          the Connection thing with SQL
+     * @param flockDate     the starting date of this flock
+     * @param targetDate    the "end date" for calculating the mortality rate
+     * @return a MortalityRate object
+     */
     public static MortalityRate calculateMortalityRateForFlockDate(Connection conn, Date flockDate, Date targetDate) {
 
         Flock selectedFlock = ReadFlock.getFlockFromADate(conn, flockDate); // gets specified Flock POJO
         if (selectedFlock == null) {
-            generateErrorMessage("Error in `calculateMortalityRateForFlock()` in `ReadMortalityRate`.", "No flock found for the specified date", "", null);
+            generateErrorMessage("Error in `calculateMortalityRateForFlock()` in `GetMortalityRate`.", "No flock found for the specified date", "", null);
             return null;
         }
 
@@ -57,27 +72,38 @@ public class ReadMortalityRate {
         int startingCount = selectedFlock.getStartingCount(); // gets starting count from specified Flock
         int curCountOnDay = startingCount - cumDepleted; // current count up until before the target Date
 
+        FlockDetails latestFlockDetail = ReadFlockDetails.getMostRecent(conn, flockDate); // latest Flock Detail
+        if (latestFlockDetail == null) {
+            return new MortalityRate(0, flockID, flockDate, startingCount, startingCount);
+        }
+
         if (curCountOnDay == 0) {
-            generateErrorMessage("Error in `calculateMortalityRateForFlock()` in `ReadMortalityRate`.", "Cannot divide by zero", "", null);
+            generateErrorMessage("Error in `calculateMortalityRateForFlock()` in `GetMortalityRate`.", "Cannot divide by zero", "", null);
             return null;
         }
 
-        FlockDetails targetDetail = null;
+        FlockDetails targetDetail;
         List<FlockDetails> targetDetailList = ReadFlockDetails.getFlockDetailsFromDate(conn, flockDate, targetDate, targetDate);
 
-        if (!targetDetailList.isEmpty()) {
-            targetDetail = targetDetailList.get(0);
+        if (targetDetailList != null && !targetDetailList.isEmpty()) {
+            targetDetail = targetDetailList.getFirst();
         }
         else {
-            generateErrorMessage("Error in `calculateMortalityRateForFlockDate()` in `ReadMortalityRate`.", "No flock details found for the specified date", "", null);
+            generateErrorMessage("Error in `calculateMortalityRateForFlockDate()` in `GetMortalityRate`.", "No flock details found for the specified date", "", null);
             return null;
         }
 
         int depleted = targetDetail.getDepletedCount();
 
+        int depletedOverall = ReadFlockDetails.getCumulativeDepletedCount(conn, flockID); // gets cumulative depleted count from specified Flock
+
+        int curCountEntireFlock = startingCount - depletedOverall;
+
         float mortalityRate = (float) depleted / curCountOnDay * 100; // mortality rate of specified Flock
 
-        return new MortalityRate(mortalityRate, flockID, flockDate, startingCount, curCountOnDay); // returns an instance of MortalityRate
+        Date endDate = latestFlockDetail.getFdDate(); // gets Date of latest Flock Detail
+
+        return new MortalityRate(mortalityRate, flockID, flockDate, endDate, startingCount, curCountEntireFlock); // returns an instance of MortalityRate
     }
 
 }
