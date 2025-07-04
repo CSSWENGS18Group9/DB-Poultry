@@ -44,17 +44,6 @@ class HomeController: Initializable {
         // GeneralUtil.initializeFontSizeManager(homeAnchorPane)
     }
 
-    @FXML
-    fun switchToLogin(event: ActionEvent) {
-        println("Switching to login")
-        SceneSwitcher.switchTo(homeReturnLoginBtn, "/fxml/login.fxml")
-    }
-
-    @FXML
-    private fun navigateToHome() {
-        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home.fxml")
-    }
-
     @FXML 
     fun switchToFlock() {
         GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home_flock.fxml")

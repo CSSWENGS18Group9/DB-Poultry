@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
@@ -34,17 +35,18 @@
          <children>
           <AnchorPane fx:id="sidebarAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="397.0" prefWidth="129.0" styleClass="sidebar" GridPane.columnSpan="2">
                <children>
-                  <GridPane fx:id="sideBarGridPane" alignment="TOP_CENTER" prefHeight="397.3333333333333" prefWidth="146.0" vgap="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <GridPane fx:id="sideBarGridPane" alignment="TOP_CENTER" prefHeight="397.3333333333333" prefWidth="146.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
                         <ImageView fx:id="sideBarImageView" fitHeight="200.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER">
@@ -52,16 +54,38 @@
                               <Image url="@../img/CSSWENG_DB%20Poultry%20Logo.png" />
                            </image>
                         </ImageView>
-                        <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToHome" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
                            <children>
-                              <FontIcon fx:id="homeFontIcon" iconLiteral="fas-home" iconSize="50" textAlignment="CENTER" wrappingWidth="50.0" />
-                              <Label styleClass="h2-bold" text="Home" />
+                              <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToHome" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane">
+                                 <children>
+                                    <FontIcon fx:id="homeFontIcon" iconLiteral="fas-home" iconSize="50" textAlignment="CENTER" wrappingWidth="50.0" />
+                                    <Label styleClass="h2-bold" text="Home" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="40.0" />
+                                 </padding>
+                              </FlowPane>
+                              <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToSupplies" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane">
+                                 <children>
+                                    <FontIcon fx:id="suppliesFontIcon" iconLiteral="fas-boxes" iconSize="50" textAlignment="CENTER" wrappingWidth="50.0" />
+                                    <Label styleClass="h2-bold" text="Supplies" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="40.0" />
+                                 </padding>
+                              </FlowPane>
+                              <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToFlock" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane">
+                                 <children>
+                                    <FontIcon fx:id="flockFontIcon" iconLiteral="fas-egg" iconSize="50" textAlignment="CENTER" wrappingWidth="50.0" />
+                                    <Label styleClass="h2-bold" text="Flock" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="40.0" />
+                                 </padding>
+                              </FlowPane>
                            </children>
-                           <padding>
-                              <Insets left="40.0" />
-                           </padding>
-                        </FlowPane>
-                        <Label fx:id="sideBarDateLabel" graphicTextGap="15.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="35.0" style="-fx-background-color: white; -fx-background-radius: 10;" styleClass="h3" text="Label" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                        </VBox>
+                        <Label fx:id="sideBarDateLabel" graphicTextGap="15.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="35.0" style="-fx-background-color: white; -fx-background-radius: 10;" styleClass="h3" text="Label" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="5">
                            <font>
                               <Font name="HelveticaNowDisplay-Black" size="14.0" />
                            </font>
@@ -83,26 +107,17 @@
                               </ImageView>
                            </graphic>
                         </Label>
-                        <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToSupplies" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                        <FlowPane fx:id="logoutFlowPane" alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#switchToLogin" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane" GridPane.columnSpan="2" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
                            <children>
-                              <FontIcon fx:id="suppliesFontIcon" iconLiteral="fas-boxes" iconSize="50" textAlignment="CENTER" wrappingWidth="50.0" />
-                              <Label styleClass="h2-bold" text="Supplies" />
+                              <FontIcon fx:id="homeFontIcon1" iconLiteral="fas-sign-out-alt" iconSize="50" textAlignment="CENTER" wrappingWidth="50.0" />
+                              <Label styleClass="h2-bold" text="Logout" />
                            </children>
                            <padding>
                               <Insets left="40.0" />
                            </padding>
                            <GridPane.margin>
-                              <Insets />
+                              <Insets bottom="10.0" top="10.0" />
                            </GridPane.margin>
-                        </FlowPane>
-                        <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToFlock" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane" GridPane.columnSpan="2" GridPane.rowIndex="3">
-                           <children>
-                              <FontIcon fx:id="flockFontIcon" iconLiteral="fas-egg" iconSize="50" textAlignment="CENTER" wrappingWidth="50.0" />
-                              <Label styleClass="h2-bold" text="Flock" />
-                           </children>
-                           <padding>
-                              <Insets left="40.0" />
-                           </padding>
                         </FlowPane>
                      </children>
                      <padding>

@@ -39,7 +39,7 @@ class LoginController: Initializable {
     @FXML
     fun switchToHome(event: ActionEvent) {
         println("Switching to home view")
-        SceneSwitcher.switchTo(signInBtn, "/fxml/main_layout.fxml")
+        SceneSwitcher.switchTo("/fxml/main_layout.fxml")
     }
 
 }
