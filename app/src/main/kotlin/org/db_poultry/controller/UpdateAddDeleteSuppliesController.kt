@@ -3,113 +3,101 @@ package org.db_poultry.controller
 import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 import org.db_poultry.db.supplyRecordDAO.CreateSupplyRecord.createSupplyRecord
+import org.db_poultry.controller.backend.CurrentSupplyInUse
 
 import javafx.fxml.FXML
-import javafx.scene.control.Button
-import javafx.scene.control.ComboBox
 import javafx.scene.control.DatePicker
 import javafx.scene.control.Label
-import javafx.scene.control.RadioButton
 import javafx.scene.control.TextField
-import javafx.scene.control.ToggleGroup
-import javafx.scene.layout.AnchorPane
-import javafx.scene.shape.Rectangle
 
 import java.math.BigDecimal
 import java.sql.Date
 
 import javafx.fxml.Initializable
+import javafx.scene.image.Image
+import javafx.scene.image.ImageView
 import java.net.URL
 import java.util.ResourceBundle
 
 class UpdateAddDeleteSuppliesController: Initializable {
 
     @FXML
-    private lateinit var addRadioBtn: RadioButton
+    private lateinit var supplyNameLabel: Label
 
     @FXML
-    private lateinit var amountTxtField: TextField
-
-    @FXML
-    private lateinit var btnConfirm: Button
+    private lateinit var supplyTypeImageView: ImageView
 
     @FXML
     private lateinit var datepickerDate: DatePicker
 
     @FXML
-    private lateinit var deletedRadioBtn: RadioButton
+    private lateinit var addAmountSupplyTextField: TextField
 
     @FXML
-    private lateinit var headerText: Label
+    private lateinit var deductAmountSupplyTextField: TextField
 
-    @FXML
-    private lateinit var homeAnchorPane: AnchorPane
-
-    @FXML
-    private lateinit var labelSelectSupply: Label
-
-    @FXML
-    private lateinit var shapeBackground: Rectangle
-
-    @FXML
-    private lateinit var shapeSelectSupply: Rectangle
-
-    @FXML
-    private lateinit var supplyTypeComboBox: ComboBox<String>
-
-    @FXML
-    private lateinit var toggle: ToggleGroup
+    private var currentSupplyType: String? = null
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        val supplyTypesArrayList = ReadSupplyType.getAllSupplyTypes(getConnection())
 
-        val supplyTypeNames: List<String> = supplyTypesArrayList?.map { it.name } ?: emptyList()
-
-        supplyTypeComboBox.items.clear()
-        if (supplyTypeNames.isNotEmpty()) {
-            supplyTypeComboBox.items.addAll(supplyTypeNames)
-        } else {
-            println("No supply types available.")
-            supplyTypeComboBox.items.add("No Supply Types Available")
-        }
-
-        supplyTypeComboBox.items.clear()
-        supplyTypeComboBox.items.addAll(supplyTypeNames)
-        supplyTypeComboBox.value = "Select a Supply Type"
+        setSupplyName()
+        setSupplyImage()
 
     }
+
+    private fun setSupplyName() {
+
+        currentSupplyType = CurrentSupplyInUse.getCurrentSupply()
+        if (currentSupplyType != null) {
+
+            supplyNameLabel.text = capitalizeWords(currentSupplyType!!)
+        } else {
+            supplyNameLabel.text = "Backend Error - MUST FIX"
+        }
+    }
+
+    private fun setSupplyImage() {
+        val imageDir = CurrentSupplyInUse.getCurrentSupplyImageDir()
+        if (imageDir != null) {
+            var imagePath = javaClass.getResource(imageDir)?.toExternalForm()
+            if (imagePath != null) {
+                supplyTypeImageView.image = Image(imagePath, true)
+            }
+            else {
+                imagePath = javaClass.getResource("/img/supply-img/default.png")?.toExternalForm()
+                supplyTypeImageView.image = Image(imagePath, true)
+                println("Image not found at path: $imageDir")
+            }
+        } else {
+            println("Current supply image directory is null")
+        }
+    }
+
 
     @FXML
     fun confirm() {
-        val supplyType = supplyTypeComboBox.value
-        var amount_add = amountTxtField.text.toIntOrNull()
-        var amount_del = amount_add
+        val amountAdd: Double? = addAmountSupplyTextField.text.toDoubleOrNull()
+        val amount_del: Double? = deductAmountSupplyTextField.text.toDoubleOrNull()
         val date = datepickerDate.value
 
-        if (supplyType == null || amount_add == null || date == null) {
-            println("Please fill in all fields correctly.")
+        if ((amountAdd == null || amount_del == null) && date == null) {
+            println("Please fill in either the amount to add or delete and select a date.")
             return
         }
 
-        if (addRadioBtn.isSelected) {
-            amount_del = 0
-            println("Adding $amount_add of $supplyType on $date")
-        } else if (deletedRadioBtn.isSelected) {
-            amount_add = 0
-            println("Deleting $amount_del of $supplyType on $date")
-        } else {
-            println("Please select an action (Add/Delete).")
-        }
-
-        val supplyID = ReadSupplyType.getSupplyTypeByName(getConnection(), supplyType.toString())?.getSupplyTypeId() ?: return
+        val supplyID = ReadSupplyType.getSupplyTypeByName(getConnection(), currentSupplyType.toString())?.supplyTypeId ?: return
 
         val sqlDate = Date.valueOf(date)
-        val added = BigDecimal(amount_add)
-        val consumed = BigDecimal(amount_del)
+        val added = BigDecimal(amountAdd!!)
+        val consumed = BigDecimal(amount_del!!)
 
         createSupplyRecord(getConnection(), supplyID, sqlDate, added, consumed, false)
 
-
     }
+
+    private fun capitalizeWords(input: String): String =
+        input.split(" ").joinToString(" ") { word ->
+            word.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+        }
 
 }
