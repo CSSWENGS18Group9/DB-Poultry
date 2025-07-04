@@ -38,7 +38,7 @@ class SuppliesHomeController {
 
     @FXML
     fun switchToUpdate(event: ActionEvent) {
-        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_update_supplies.fxml")
+        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home_supplies_grid.fxml")
     }
 
     @FXML

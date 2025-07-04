@@ -8,7 +8,6 @@
 
 .sidebar-pane {
     -fx-font-family: "HelveticaNowDisplay-Bold";
-    -fx-background-radius: 30 0 0 30;
 }
 
 .sidebar-pane:hover {
