@@ -55,7 +55,7 @@
                   <VBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="1">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" styleClass="h3-bold" text="Supply Name" textFill="#8f250c" />
-                        <TextField fx:id="createSuppliesTextField" prefHeight="30.0" prefWidth="228.0" promptText="Enter supply name...">
+                        <TextField fx:id="createSuppliesTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="228.0" promptText="Enter supply name...">
                            <VBox.margin>
                               <Insets right="100.0" />
                            </VBox.margin>
@@ -68,7 +68,7 @@
                   <VBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="2">
                      <children>
                         <Label styleClass="h3-bold" text="Unit of Measurement" textFill="#8f250c" />
-                        <TextField fx:id="createSuppliesTextFieldUnit" prefHeight="30.0" prefWidth="228.0" promptText="Enter unit of measurement...">
+                        <TextField fx:id="createSuppliesTextFieldUnit" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="228.0" promptText="Enter unit of measurement...">
                            <VBox.margin>
                               <Insets right="100.0" />
                            </VBox.margin>
