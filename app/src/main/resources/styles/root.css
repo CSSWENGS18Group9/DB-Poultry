@@ -20,6 +20,10 @@
     -fx-text-fill: #FEFAE0;
 }
 
+.main-button:pressed {
+    -fx-background-color: #501609;
+}
+
 .confirm-button {
     -fx-background-color: transparent;
     -fx-background-radius: 15;
