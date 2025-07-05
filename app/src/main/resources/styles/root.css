@@ -112,32 +112,32 @@ HelveticaNowDisplay HairlineIta
 
 .h1 {
     -fx-font-size: 4em;
-    -fx-font-family: "HelveticaNowDisplay-Regular";
+    -fx-font-family: "HelveticaNowDisplay Regular";
 }
 
 .h2 {
     -fx-font-size: 3em;
-    -fx-font-family: "HelveticaNowDisplay-Regular";
+    -fx-font-family: "HelveticaNowDisplay Regular";
 }
 
 .h3 {
     -fx-font-size: 2em;
-    -fx-font-family: "HelveticaNowDisplay-Regular";
+    -fx-font-family: "HelveticaNowDisplay Regular";
 }
 
 .h4 {
     -fx-font-size: 1.5em;
-    -fx-font-family: "HelveticaNowDisplay-Regular";
+    -fx-font-family: "HelveticaNowDisplay Regular";
 }
 
 .h5 {
     -fx-font-size: 1.2em;
-    -fx-font-family: "HelveticaNowDisplay-Regular";
+    -fx-font-family: "HelveticaNowDisplay Regular";
 }
 
 .h6 {
     -fx-font-size: 0.8em;
-    -fx-font-family: "HelveticaNowDisplay-Regular";
+    -fx-font-family: "HelveticaNowDisplay Regular";
 }
 
 .img-container {
