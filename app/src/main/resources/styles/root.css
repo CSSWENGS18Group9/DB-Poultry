@@ -4,8 +4,14 @@
     -fx-background-color: #fefae0;
 }
 
+.inner-pane {
+    -fx-background-color: white;
+    -fx-background-radius: 35;
+}
+
 .main-button {
     -fx-background-color: white;
+    -fx-text-fill: #8F250C;
     -fx-background-radius: 20;
 }
 
@@ -29,6 +35,14 @@
     -fx-text-fill: white;
     -fx-border-color: #A4AE81;
     -fx-border-width: 2;
+}
+
+.back-icon {
+    -fx-icon-color: black;
+}
+
+.back-icon:hover {
+    -fx-icon-color: #8F250C;
 }
 
 /* Fonts for USE
@@ -132,9 +146,5 @@ HelveticaNowDisplay HairlineIta
     -fx-background-image: url("../img/main_bg_2.jpeg");
     -fx-background-size: cover;
     -fx-background-position: center center;
-}
-
-.inner-pane {
-    -fx-background-color: white;
-    -fx-background-radius: 35;
+    -fx-opacity: 0.5;
 }
