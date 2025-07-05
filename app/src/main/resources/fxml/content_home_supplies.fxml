@@ -35,7 +35,7 @@
             <RowConstraints />
          </rowConstraints>
          <children>
-            <FontIcon fx:id="homeFontIcon" iconLiteral="fas-arrow-circle-left" iconSize="50" onMouseClicked="#navigateToMenu" styleClass="back-icon" textAlignment="CENTER" wrappingWidth="50.0">
+            <FontIcon fx:id="homeFontIcon" iconLiteral="fas-arrow-circle-left" iconSize="50" onMouseClicked="#navigateToHome" styleClass="back-icon" textAlignment="CENTER" wrappingWidth="50.0">
                <GridPane.margin>
                   <Insets left="30.0" />
                </GridPane.margin></FontIcon>

@@ -11,7 +11,7 @@ class SuppliesHomeController {
     private lateinit var homeAnchorPane: AnchorPane
 
     @FXML
-    fun navigateToMenu() {
+    fun navigateToHome() {
         GeneralUtil.navigateToMainContent(homeAnchorPane, "/fxml/content_home.fxml")
     }
 

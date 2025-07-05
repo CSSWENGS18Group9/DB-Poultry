@@ -30,12 +30,12 @@
             <TableColumn fx:id="currAmountCol" prefWidth="193.0" text="Current Amount" />
          </columns>
       </TableView>
-      <Button fx:id="currentHistoryBtn" layoutX="494.0" layoutY="606.0" mnemonicParsing="false" onAction="#switchToViewSupplies" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Current History" textFill="WHITE">
+      <Button fx:id="currentHistoryBtn" layoutX="494.0" layoutY="606.0" mnemonicParsing="false" onAction="#navigateToViewSupplies" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Current History" textFill="WHITE">
          <font>
             <Font name="HelveticaNowDisplay-Light" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="dateHistoryBtn" layoutX="686.0" layoutY="606.0" mnemonicParsing="false" onAction="#switchToViewDateHistory" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Date History" textFill="WHITE">
+      <Button fx:id="dateHistoryBtn" layoutX="686.0" layoutY="606.0" mnemonicParsing="false" onAction="#navigateToViewDateHistory" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Date History" textFill="WHITE">
          <font>
             <Font name="HelveticaNowDisplay-Light" size="15.0" />
          </font>

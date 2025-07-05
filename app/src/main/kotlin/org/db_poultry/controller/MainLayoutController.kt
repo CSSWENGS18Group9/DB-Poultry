@@ -97,18 +97,18 @@ class MainLayoutController : Initializable {
     }
 
     @FXML
-    private fun navigateToHome() {
+    fun navigateToHome() {
         GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home.fxml")
     }
     
     @FXML
-    private fun navigateToSupplies() {
+    fun navigateToSupplies() {
         // GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_supplies.fxml")
         GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_supplies.fxml")
     }
     
     @FXML
-    private fun navigateToFlock() {
+    fun navigateToFlock() {
         GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_flock.fxml")
     }
 }

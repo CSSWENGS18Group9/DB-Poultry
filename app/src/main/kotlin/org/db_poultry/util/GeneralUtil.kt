@@ -10,13 +10,10 @@ import org.kordamp.ikonli.javafx.FontIcon
 
 import javafx.beans.binding.Bindings
 import javafx.beans.property.SimpleDoubleProperty
-import javafx.scene.text.Text
 
 import java.time.format.DateTimeFormatter
 import java.time.LocalDate
 import java.util.Locale
-import kotlin.collections.get
-import kotlin.text.get
 
 class GeneralUtil {
     companion object {
@@ -165,23 +162,6 @@ class GeneralUtil {
                 }
             }
         }
-
-//        @JvmStatic
-//        fun initializeIconSizeManager(mainPane: Node, fontIcon: FontIcon, baseIconSize: Double = 50.0) {
-//            mainPane.sceneProperty().addListener { _, oldScene, newScene ->
-//                if (oldScene == null && newScene != null) {
-//                    val iconSize = SimpleDoubleProperty(0.0)
-//                    iconSize.bind(
-//                        newScene.widthProperty().add(newScene.heightProperty())
-//                            .divide(1280.0 + 720.0)
-//                            .multiply(baseIconSize)
-//                    )
-//                    iconSize.addListener { _, _, newSize ->
-//                        fontIcon.style = "-fx-icon-size: ${newSize.toInt()}px;"
-//                    }
-//                }
-//            }
-//        }
 
         @JvmStatic
         fun initializeIconSizeManager(mainPane: Node, fontIcon: FontIcon, baseIconSize: Double = 50.0) {
