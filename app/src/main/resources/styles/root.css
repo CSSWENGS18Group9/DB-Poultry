@@ -28,15 +28,15 @@
     -fx-background-color: transparent;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
-    -fx-border-color: #A4AE81;
+    -fx-border-color: #388E3C;
     -fx-border-width: 2;
-    -fx-text-fill: #A4AE81;
+    -fx-text-fill: #388E3C;
 }
 
 .confirm-button:hover {
-    -fx-background-color: #A4AE81;
+    -fx-background-color: #388E3C;
     -fx-text-fill: white;
-    -fx-border-color: #A4AE81;
+    -fx-border-color: #388E3C;
 }
 
 .back-icon {

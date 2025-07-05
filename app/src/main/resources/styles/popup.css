@@ -1,0 +1,30 @@
+.green-box {
+    -fx-background-color: #283618;
+}
+
+.red-box {
+    -fx-background-color: #8F250C;
+}
+
+.icon {
+    -fx-icon-color: white;
+}
+
+.popup-text {
+    -fx-fill: white;
+}
+
+.undo-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #B54242;
+    -fx-border-width: 2;
+    -fx-text-fill: #B54242;
+}
+
+.undo-button:hover {
+    -fx-background-color: #B54242;
+    -fx-text-fill: white;
+    -fx-border-color: #B54242;
+}
