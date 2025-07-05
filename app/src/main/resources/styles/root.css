@@ -44,52 +44,52 @@ HelveticaNowDisplay Light
 HelveticaNowDisplay ExtLt
 HelveticaNowDisplay Hairline
 
-HelveticaNowDisplay-ExtBlkIta
-HelveticaNowDisplay-ExtBdIta
-HelveticaNowDisplay-BoldIta
-HelveticaNowDisplay-MedIta
-HelveticaNowDisplay-RegIta
-HelveticaNowDisplay-ThinIta
-HelveticaNowDisplay-LightIta
-HelveticaNowDisplay-HairlineIta
+HelveticaNowDisplay ExtBlkIta
+HelveticaNowDisplay ExtBdIta
+HelveticaNowDisplay BoldIta
+HelveticaNowDisplay MedIta
+HelveticaNowDisplay RegIta
+HelveticaNowDisplay ThinIta
+HelveticaNowDisplay LightIta
+HelveticaNowDisplay HairlineIta
 
 */
 
 .title {
     -fx-font-size: 6em;
-    -fx-font-family: "HelveticaNowDisplay-Bold";
+    -fx-font-family: "HelveticaNowDisplay Bold";
     -fx-text-fill: #8F250C;
 }
 
 .h1-bold {
     -fx-font-size: 4em;
-    -fx-font-family: "HelveticaNowDisplay-Bold";
+    -fx-font-family: "HelveticaNowDisplay Bold";
 }
 
 .h2-bold {
     -fx-font-size: 3em;
-    -fx-font-family: "HelveticaNowDisplay-Bold";
+    -fx-font-family: "HelveticaNowDisplay Bold";
 
 }
 
 .h3-bold {
     -fx-font-size: 2em;
-    -fx-font-family: "HelveticaNowDisplay-Bold";
+    -fx-font-family: "HelveticaNowDisplay Bold";
 }
 
 .h4-bold {
     -fx-font-size: 1.5em;
-    -fx-font-family: "HelveticaNowDisplay-Bold";
+    -fx-font-family: "HelveticaNowDisplay Bold";
 }
 
 .h5-bold {
     -fx-font-size: 1.2em;
-    -fx-font-family: "HelveticaNowDisplay-Bold";
+    -fx-font-family: "HelveticaNowDisplay Bold";
 }
 
 .h6-bold {
     -fx-font-size: 0.8em;
-    -fx-font-family: "HelveticaNowDisplay-Bold";
+    -fx-font-family: "HelveticaNowDisplay Bold";
 }
 
 .h1 {
