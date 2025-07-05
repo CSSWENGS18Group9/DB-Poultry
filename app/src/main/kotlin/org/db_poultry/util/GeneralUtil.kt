@@ -21,11 +21,49 @@ import kotlin.text.get
 class GeneralUtil {
     companion object {
 
+        // Mapping of FXML paths to sections
+        private val fxmlSectionMapping = mapOf(
+            "/fxml/main_layout.fxml" to "HOME",
+            "/fxml/content_home.fxml" to "HOME",
+            "/fxml/login.fxml" to "HOME",
+            "/fxml/content_create_flock_details.fxml" to "FLOCK",
+            "/fxml/content_create_flock.fxml" to "FLOCK",
+            "/fxml/content_create_new_flock.fxml" to "FLOCK",
+            "/fxml/content_create_supplies.fxml" to "SUPPLIES",
+            "/fxml/content_generate_report.fxml" to "FLOCK",
+            "/fxml/content_home_flock.fxml" to "FLOCK",
+            "/fxml/content_home_supplies_grid.fxml" to "SUPPLIES",
+            "/fxml/content_home_supplies.fxml" to "SUPPLIES",
+            "/fxml/content_update_supplies_add_delete.fxml" to "SUPPLIES",
+            "/fxml/content_update_supplies_retrieve.fxml" to "SUPPLIES",
+            "/fxml/content_view_date_history.fxml" to "SUPPLIES",
+            "/fxml/content_view_flock_details.fxml" to "FLOCK",
+            "/fxml/content_view_flock.fxml" to "FLOCK",
+            "/fxml/content_view_supplies.fxml" to "SUPPLIES",
+            "/fxml/content_view_supply_history.fxml" to "SUPPLIES",
+        )
+
+        private var currentSection: String? = null
+
+        private var sectionChangeCallback: ((String) -> Unit)? = null
+
+        @JvmStatic
+        fun registerSectionChangeCallback(callback: (String) -> Unit) {
+            sectionChangeCallback = callback
+        }
+
+        @JvmStatic
+        fun getCurrentSection(): String? = currentSection
 
 
         @JvmStatic
         fun loadContentView(contentAnchorPane: AnchorPane, fxmlPath: String) {
             try {
+
+                if (!fxmlSectionMapping.containsKey(fxmlPath)) { //DEBUGGING
+                    println("Warning: FXML $fxmlPath is not mapped to any section")
+                    return
+                }
 
                 if (contentAnchorPane.children.isNotEmpty()) {
                     val currentRoot = contentAnchorPane.children[0]
@@ -39,7 +77,6 @@ class GeneralUtil {
                 println("Loading content view: $fxmlPath")
 
                 val loader = FXMLLoader(GeneralUtil::class.java.getResource(fxmlPath))
-
                 loader.controllerFactory = ControllerManager.controllerFactory
                 val view = loader.load<Parent>()
 
@@ -57,7 +94,14 @@ class GeneralUtil {
                 AnchorPane.setRightAnchor(view, 0.0)
                 AnchorPane.setBottomAnchor(view, 0.0)
                 AnchorPane.setLeftAnchor(view, 0.0)
-                
+
+                val newSection = fxmlSectionMapping[fxmlPath]!!
+                if (currentSection != newSection) {
+                    currentSection = newSection
+                    sectionChangeCallback?.invoke(newSection)
+                    println("Section changed to: $newSection")
+                }
+
             } catch (e: Exception) {
                 println("Error loading content view: $fxmlPath")
                 e.printStackTrace()

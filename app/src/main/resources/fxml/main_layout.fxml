@@ -56,7 +56,7 @@
                         </ImageView>
                         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
                            <children>
-                              <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToHome" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane">
+                              <FlowPane fx:id="homeFlowPane" alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToHome" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane">
                                  <children>
                                     <FontIcon fx:id="homeFontIcon" iconLiteral="fas-home" iconSize="50" textAlignment="CENTER" wrappingWidth="50.0" />
                                     <Label styleClass="h2-bold" text="Home" />
@@ -65,7 +65,7 @@
                                     <Insets left="40.0" />
                                  </padding>
                               </FlowPane>
-                              <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToSupplies" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane">
+                              <FlowPane fx:id="suppliesFlowPane" alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToSupplies" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane">
                                  <children>
                                     <FontIcon fx:id="suppliesFontIcon" iconLiteral="fas-boxes" iconSize="50" textAlignment="CENTER" wrappingWidth="50.0" />
                                     <Label styleClass="h2-bold" text="Supplies" />
@@ -74,7 +74,7 @@
                                     <Insets left="40.0" />
                                  </padding>
                               </FlowPane>
-                              <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToFlock" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane">
+                              <FlowPane fx:id="flockFlowPane" alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToFlock" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane">
                                  <children>
                                     <FontIcon fx:id="flockFontIcon" iconLiteral="fas-egg" iconSize="50" textAlignment="CENTER" wrappingWidth="50.0" />
                                     <Label styleClass="h2-bold" text="Flock" />
@@ -97,7 +97,7 @@
                               <Insets bottom="10.0" top="10.0" />
                            </GridPane.margin>
                         </FlowPane>
-                        <Label fx:id="sideBarDateLabel" graphicTextGap="15.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="35.0" style="-fx-background-color: white; -fx-background-radius: 10;" styleClass="h3" text="Label" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="5">
+                        <Label fx:id="sideBarDateLabel" graphicTextGap="15.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="35.0" style="-fx-background-color: white; -fx-background-radius: 10;" styleClass="h4" text="Label" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="5">
                            <font>
                               <Font name="HelveticaNowDisplay-Black" size="14.0" />
                            </font>

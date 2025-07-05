@@ -11,7 +11,7 @@
 }
 
 .sidebar-pane:hover {
-    -fx-background-color: #8f250c;
+    -fx-background-color: rgba(143, 37, 12, 0.7);
 }
 
 .sidebar-pane:hover .label {
@@ -22,4 +22,16 @@
 .sidebar-pane:hover FontIcon {
     -fx-icon-color: white;
     -fx-translate-x: 15;
+}
+
+.sidebar-pane-active {
+    -fx-background-color: #8f250c;
+}
+
+.sidebar-pane-active .label {
+    -fx-text-fill: white;
+}
+
+.sidebar-pane-active FontIcon {
+    -fx-icon-color: white;
 }
