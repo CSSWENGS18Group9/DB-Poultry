@@ -15,27 +15,42 @@ import javafx.scene.text.Text
 import java.time.format.DateTimeFormatter
 import java.time.LocalDate
 import java.util.Locale
+import kotlin.collections.get
+import kotlin.text.get
 
 class GeneralUtil {
     companion object {
+
+
+
         @JvmStatic
         fun loadContentView(contentAnchorPane: AnchorPane, fxmlPath: String) {
             try {
+
+                if (contentAnchorPane.children.isNotEmpty()) {
+                    val currentRoot = contentAnchorPane.children[0]
+                    val currentFXML = currentRoot.properties["fxmlPath"]
+                    if (currentFXML == fxmlPath) {
+                        println("Already in $fxmlPath, not switching.")
+                        return
+                    }
+                }
+
                 println("Loading content view: $fxmlPath")
 
                 val loader = FXMLLoader(GeneralUtil::class.java.getResource(fxmlPath))
 
                 loader.controllerFactory = ControllerManager.controllerFactory
                 val view = loader.load<Parent>()
-                
+
+                view.properties["fxmlPath"] = fxmlPath
+
                 // DEBUGGING
                 val controller = loader.getController<Any>()
                 println("Controller for $fxmlPath: ${controller.javaClass.name} (${System.identityHashCode(controller)})")
 
                 contentAnchorPane.children.clear()
                 contentAnchorPane.children.add(view)
-                
-                
 
                 // Set AnchorPane constraints to fill the entire area
                 AnchorPane.setTopAnchor(view, 0.0)
