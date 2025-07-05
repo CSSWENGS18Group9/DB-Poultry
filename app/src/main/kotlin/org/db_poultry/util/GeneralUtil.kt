@@ -108,6 +108,31 @@ class GeneralUtil {
             }
         }
 
+        @JvmStatic
+        fun navigateToMainContent(currentPane: AnchorPane, fxmlPath: String) {
+            val mainContentPane = findMainContentPane(currentPane)
+            if (mainContentPane != null) {
+                loadContentView(mainContentPane, fxmlPath)
+            } else {
+                println("Warning: Could not find main content pane from current view")
+            }
+        }
+
+        @JvmStatic
+        private fun findMainContentPane(currentPane: AnchorPane): AnchorPane? {
+            // Traverse up the scene graph to find the main content pane
+            var parent = currentPane.parent
+            while (parent != null) {
+                if (parent is AnchorPane && parent.id == "contentAnchorPane") {
+                    return parent
+                }
+                parent = parent.parent
+            }
+            return null
+        }
+
+
+
         /**
          * Initializes the font size manager for the main pane.
          * This will adjust the font size based on the scene dimensions.

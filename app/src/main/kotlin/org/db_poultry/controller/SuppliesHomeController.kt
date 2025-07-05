@@ -12,22 +12,22 @@ class SuppliesHomeController {
 
     @FXML
     fun navigateToMenu() {
-        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home.fxml")
+        GeneralUtil.navigateToMainContent(homeAnchorPane, "/fxml/content_home.fxml")
     }
 
     @FXML
     fun navigateToCreate() {
-        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_create_supplies.fxml")
+        GeneralUtil.navigateToMainContent(homeAnchorPane, "/fxml/content_create_supplies.fxml")
     }
 
     @FXML
     fun navigateToUpdate() {
-        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home_supplies_grid.fxml")
+        GeneralUtil.navigateToMainContent(homeAnchorPane, "/fxml/content_home_supplies_grid.fxml")
     }
 
     @FXML
     fun navigateToView() {
-        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_view_supplies.fxml")
+        GeneralUtil.navigateToMainContent(homeAnchorPane, "/fxml/content_view_supplies.fxml")
     }
 
 }
