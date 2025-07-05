@@ -85,28 +85,6 @@
                               </FlowPane>
                            </children>
                         </VBox>
-                        <Label fx:id="sideBarDateLabel" graphicTextGap="15.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="35.0" style="-fx-background-color: white; -fx-background-radius: 10;" styleClass="h3" text="Label" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="5">
-                           <font>
-                              <Font name="HelveticaNowDisplay-Black" size="14.0" />
-                           </font>
-                           <effect>
-                              <DropShadow offsetY="1.5">
-                                 <color>
-                                    <Color opacity="0.4000000059604645" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                           <GridPane.margin>
-                              <Insets left="50.0" right="50.0" />
-                           </GridPane.margin>
-                           <graphic>
-                              <ImageView fitHeight="61.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" styleClass="icon_button">
-                                 <image>
-                                    <Image url="@../img/icons/calendar-date-range.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Label>
                         <FlowPane fx:id="logoutFlowPane" alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#switchToLogin" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane" GridPane.columnSpan="2" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
                            <children>
                               <FontIcon fx:id="homeFontIcon1" iconLiteral="fas-sign-out-alt" iconSize="50" textAlignment="CENTER" wrappingWidth="50.0" />
@@ -119,6 +97,28 @@
                               <Insets bottom="10.0" top="10.0" />
                            </GridPane.margin>
                         </FlowPane>
+                        <Label fx:id="sideBarDateLabel" graphicTextGap="15.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="35.0" style="-fx-background-color: white; -fx-background-radius: 10;" styleClass="h3" text="Label" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="HelveticaNowDisplay-Black" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="50.0" right="50.0" />
+                           </GridPane.margin>
+                           <graphic>
+                              <ImageView fitHeight="61.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" styleClass="icon_button">
+                                 <image>
+                                    <Image url="@../img/icons/calendar-date-range.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <effect>
+                              <DropShadow offsetY="1.5">
+                                 <color>
+                                    <Color opacity="0.4000000059604645" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </Label>
                      </children>
                      <padding>
                         <Insets top="10.0" />
