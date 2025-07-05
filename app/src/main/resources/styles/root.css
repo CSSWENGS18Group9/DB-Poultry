@@ -35,10 +35,8 @@
 
 .confirm-button:hover {
     -fx-background-color: #A4AE81;
-    -fx-background-radius: 15;
     -fx-text-fill: white;
     -fx-border-color: #A4AE81;
-    -fx-border-width: 2;
 }
 
 .back-icon {
