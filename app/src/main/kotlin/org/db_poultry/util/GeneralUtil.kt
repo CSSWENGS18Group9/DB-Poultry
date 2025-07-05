@@ -68,7 +68,7 @@ class GeneralUtil {
                 if (contentAnchorPane.children.isNotEmpty()) {
                     val currentRoot = contentAnchorPane.children[0]
                     val currentFXML = currentRoot.properties["fxmlPath"]
-                    if (currentFXML == fxmlPath) {
+                    if (currentFXML != null && currentFXML == fxmlPath) {
                         println("Already in $fxmlPath, not switching.")
                         return
                     }

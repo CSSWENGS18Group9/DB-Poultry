@@ -22,35 +22,38 @@ class HomeController: Initializable {
     @FXML
     private lateinit var homeAnchorPane: AnchorPane
 
-    @FXML
-    private lateinit var homeStackPane: StackPane
-
-    @FXML
-    private lateinit var bgImageAnchorPane: AnchorPane
-
-    @FXML
-    private lateinit var homeBackgroundImageView: ImageView
-
-    @FXML
-    private lateinit var homeFlockBtn1: Button
-
-    @FXML
-    private lateinit var homeReturnLoginBtn: Button
-
-    @FXML
-    private lateinit var homeSuppliesBtn1: Button
-
     override fun initialize(url: URL?, rb: ResourceBundle?) {
-        // GeneralUtil.initializeFontSizeManager(homeAnchorPane)
+
     }
 
-    @FXML 
+    private fun findMainContentPane(): AnchorPane? {
+        // Traverse up the scene graph to find the main content pane (avoid nested FXML structures)
+        var parent = homeAnchorPane.parent
+        while (parent != null) {
+            if (parent is AnchorPane && parent.id == "contentAnchorPane") {
+                return parent
+            }
+            parent = parent.parent
+        }
+        return null
+    }
+
+    @FXML
     fun switchToFlock() {
-        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home_flock.fxml")
+        // Find the main content area by traversing up the scene graph
+        val mainContentPane = findMainContentPane()
+        if (mainContentPane != null) {
+            GeneralUtil.loadContentView(mainContentPane, "/fxml/content_home_flock.fxml")
+        }
     }
 
-    @FXML 
+    @FXML
     fun switchToSupplies() {
-        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home_supplies.fxml")
+        // Find the main content area by traversing up the scene graph
+        val mainContentPane = findMainContentPane()
+        if (mainContentPane != null) {
+            GeneralUtil.loadContentView(mainContentPane, "/fxml/content_home_supplies.fxml")
+        }
     }
+
 }
