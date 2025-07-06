@@ -11,13 +11,16 @@ import org.kordamp.ikonli.javafx.FontIcon
 import javafx.beans.binding.Bindings
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.scene.Scene
+import javafx.scene.paint.Color
 import javafx.scene.text.Text
 import javafx.stage.Modality
 import javafx.stage.Stage
+import javafx.stage.StageStyle
 
 import java.time.format.DateTimeFormatter
 import java.time.LocalDate
 import java.util.Locale
+import kotlin.collections.fill
 import kotlin.div
 
 class GeneralUtil {
@@ -80,6 +83,7 @@ class GeneralUtil {
                 .firstOrNull { it.isFocused }
 
             val stage = Stage()
+            stage.initStyle(StageStyle.UNDECORATED)
 
             // Set the owner (this ensures the popup stays on top of the current window)
             if (ownerStage != null) {
@@ -87,7 +91,13 @@ class GeneralUtil {
             }
 
             stage.initModality(Modality.APPLICATION_MODAL)
-            stage.scene = Scene(root)
+
+            // Create scene with transparent background
+            stage.initStyle(StageStyle.TRANSPARENT)
+            val scene = Scene(root)
+            scene.fill = Color.TRANSPARENT
+            stage.scene = scene
+
             stage.isResizable = false
 
             // Position the popup when it's shown
@@ -107,6 +117,19 @@ class GeneralUtil {
                     // Fallback to center on owner window if contentPane not provided
                     stage.centerOnScreen()
                 }
+            }
+
+            var dragOffsetX = 0.0
+            var dragOffsetY = 0.0
+
+            root.setOnMousePressed { event ->
+                dragOffsetX = event.sceneX
+                dragOffsetY = event.sceneY
+            }
+
+            root.setOnMouseDragged { event ->
+                stage.x = event.screenX - dragOffsetX
+                stage.y = event.screenY - dragOffsetY
             }
 
             stage.showAndWait()

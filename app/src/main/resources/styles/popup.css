@@ -1,13 +1,41 @@
+.popup-container {
+    /* dropshadow(blurType, color, radius, spread, offsetX, offsetY)
+       blurType: gaussian
+       color: rgba(0,0,0,0.5)
+       radius: 10
+       spread: 0.5
+       offsetX: 0
+       offsetY: 5
+    */
+    -fx-effect: dropshadow(gaussian, black, 10, 0.6, 0, 0);
+}
+
+#popupErrorAnchorPane,
+#popupSuccessAnchorPane {
+    -fx-background-color: transparent;
+}
+
 .green-box {
     -fx-background-color: #283618;
+    -fx-background-radius: 20 20 0 0;
 }
 
 .red-box {
     -fx-background-color: #8F250C;
+    -fx-background-radius: 20 20 0 0;
+}
+
+.bottom-section {
+    -fx-background-color: #F5F5F5;
+    -fx-background-radius: 0 0 20 20;
 }
 
 .icon {
     -fx-icon-color: white;
+}
+
+.icon:hover {
+    -fx-icon-color: black;
 }
 
 .popup-text {
