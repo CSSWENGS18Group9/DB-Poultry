@@ -8,6 +8,7 @@ import javafx.geometry.Pos
 import javafx.scene.control.Button
 import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.FlowPane
+import org.db_poultry.controller.backend.CurrentFlockInUse
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.pojo.FlockPOJO.FlockComplete
@@ -53,8 +54,40 @@ class ViewController: Initializable {
             isMnemonicParsing = false
             prefWidth = 225.0
             styleClass.addAll("flock-button", "h4-bold")
+            setOnMouseClicked { navigateToFlockRelated() }
+            setOnMousePressed { event ->
+                CurrentFlockInUse.setCurrentFlockDate(flock.startingDate.toString())
+
+            }
 
         }
+    }
+
+    private fun navigateToFlockRelated() {
+        val fxmlInUse = GeneralUtil.getCurrentFXML()
+
+        when (fxmlInUse) {
+            "/fxml/content_view_flock_details.fxml" -> {
+                navigateToViewFlockDetails()
+            }
+            "/fxml/content_generate_report.fxml" -> {
+                navigateToViewFlockGenerateReport()
+            }
+            else -> {
+                println("Unknown FXML in use: $fxmlInUse")
+            }
+        }
+    }
+
+    @FXML
+    fun navigateToViewFlockDetails() {
+        GeneralUtil.navigateToMainContent(selectFlockAnchorPane, "/fxml/content_view_flock_details.fxml")
+    }
+
+    @FXML
+    fun navigateToViewFlockGenerateReport() {
+        GeneralUtil.navigateToMainContent(selectFlockAnchorPane, "/fxml/content_generate_report.fxml")
+
     }
 
 }

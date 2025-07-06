@@ -54,6 +54,8 @@ class GeneralUtil {
 
         private var inUseContentPane: AnchorPane? = null
 
+        private var currentFXML: String? = null
+
         @JvmStatic
         fun registerSectionChangeCallback(callback: (String) -> Unit) {
             sectionChangeCallback = callback
@@ -61,6 +63,9 @@ class GeneralUtil {
 
         @JvmStatic
         fun getCurrentSection(): String? = currentSection
+
+        @JvmStatic
+        fun getCurrentFXML(): String? = currentFXML
 
         @JvmStatic
         fun showPopup(status: String, text: String) {
@@ -148,7 +153,7 @@ class GeneralUtil {
 
                 if (contentAnchorPane.children.isNotEmpty()) {
                     val currentRoot = contentAnchorPane.children[0]
-                    val currentFXML = currentRoot.properties["fxmlPath"]
+                    currentFXML = currentRoot.properties["fxmlPath"] as String?
                     if (currentFXML != null && currentFXML == fxmlPath) {
                         println("Already in $fxmlPath, not switching.")
                         return
