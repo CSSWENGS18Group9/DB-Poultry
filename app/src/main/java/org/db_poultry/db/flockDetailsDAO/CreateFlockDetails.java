@@ -76,6 +76,8 @@ public class CreateFlockDetails {
             preppedStatement.setInt(3, depleted);
             preppedStatement.executeUpdate(); // Executes query
 
+            DeleteFlockDetail.setFlockDetailsToDelete(flockID, actualDetailDate);
+
             undoSingleton.INSTANCE.setUndoMode(undoTypes.doUndoFlockDetail);
 
             return String.format(
