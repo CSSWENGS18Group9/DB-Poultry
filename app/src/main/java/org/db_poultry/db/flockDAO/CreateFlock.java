@@ -1,5 +1,8 @@
 package org.db_poultry.db.flockDAO;
 
+import org.db_poultry.util.undoSingleton;
+import org.db_poultry.util.undoTypes;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -49,6 +52,8 @@ public class CreateFlock {
             preppedStatement.setInt(1, startCount);
             preppedStatement.setDate(2, actualDate);
             preppedStatement.executeUpdate(); // Executes query
+
+            undoSingleton.INSTANCE.setUndoMode(undoTypes.doUndoFlock);
 
             return String.format(
                     "INSERT INTO Flock (Starting_Count, Starting_Date) VALUES (%d, '%s')",

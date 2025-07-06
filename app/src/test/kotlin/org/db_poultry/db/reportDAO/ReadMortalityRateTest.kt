@@ -93,10 +93,6 @@ class ReadMortalityRateTest {
     fun testReadMortalityRateForFlockNoFlockDetails() {
         val flockOneDate = Date.valueOf("1000-01-01")
         val flockTwoDate = Date.valueOf("1000-06-01")
-        val fdDateOne = Date.valueOf("1000-02-01")
-        val fdDateTwo = Date.valueOf("1000-03-01")
-        val fdDateThree = Date.valueOf("1000-07-01")
-        val fdDateFour = Date.valueOf("1000-08-01")
 
         CreateFlock.createFlock(conn, 1000, flockOneDate)
         CreateFlock.createFlock(conn, 1000, flockTwoDate)
@@ -120,7 +116,6 @@ class ReadMortalityRateTest {
 
     @Test
     fun testReadMortalityRateForFlockNoData() {
-        val flockOneDate = Date.valueOf("1000-01-01")
         val flockTwoDate = Date.valueOf("1000-06-01")
 
         val result = ReadMortalityRate.calculateMortalityRateForFlock(conn, flockTwoDate)

@@ -2,6 +2,8 @@ package org.db_poultry.db.flockDetailsDAO;
 
 import org.db_poultry.pojo.FlockPOJO.Flock;
 import org.db_poultry.pojo.FlockPOJO.FlockDetails;
+import org.db_poultry.util.undoSingleton;
+import org.db_poultry.util.undoTypes;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -73,6 +75,10 @@ public class CreateFlockDetails {
             preppedStatement.setDate(2, actualDetailDate);
             preppedStatement.setInt(3, depleted);
             preppedStatement.executeUpdate(); // Executes query
+
+            DeleteFlockDetail.setFlockDetailsToDelete(flockID, actualDetailDate);
+
+            undoSingleton.INSTANCE.setUndoMode(undoTypes.doUndoFlockDetail);
 
             return String.format(
                     "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (%d, '%s', %d)",

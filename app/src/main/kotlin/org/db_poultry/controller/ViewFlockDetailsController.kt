@@ -52,11 +52,9 @@ class ViewFlockDetailsController : Initializable {
     @FXML
     lateinit var rectFlockDetails: Rectangle
 
-    val data = flockDateSingleton.instance
-
     override fun initialize(location: URL?, resources: ResourceBundle?) {
 
-        val date = data.getDate()
+        val date = flockDateSingleton.getDate()
         val latestDetail = ReadFlockDetails.getMostRecent(DBConnect.getConnection(), date)
 
         lblDateStartedValue.text = date.toString()
