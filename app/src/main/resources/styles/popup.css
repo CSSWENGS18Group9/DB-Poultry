@@ -16,7 +16,7 @@
 }
 
 .green-box {
-    -fx-background-color: #283618;
+    -fx-background-color: #606C38;
     -fx-background-radius: 20 20 0 0;
 }
 
@@ -36,6 +36,21 @@
 
 .popup-text {
     -fx-fill: white;
+}
+
+.close-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #BC6C25;
+    -fx-border-width: 2;
+    -fx-text-fill: #BC6C25;
+}
+
+.close-button:hover {
+    -fx-background-color: #BC6C25;
+    -fx-text-fill: white;
+    -fx-border-color: #BC6C25;
 }
 
 .undo-button {
