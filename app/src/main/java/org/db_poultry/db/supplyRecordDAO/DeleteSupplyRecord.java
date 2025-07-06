@@ -15,7 +15,7 @@ public class DeleteSupplyRecord {
      * @return a String which is the query
      */
     public static String undoCreateSupplyRecord(Connection conn) {
-        try (PreparedStatement preppedStatement = conn.prepareStatement("DELETE FROM Supply_Record ORDER BY Supply_ID DESC LIMIT 1")) {
+        try (PreparedStatement preppedStatement = conn.prepareStatement("DELETE FROM Supply_Record WHERE ctid IN (SELECT ctid FROM Supply_Record ORDER BY Supply_ID DESC LIMIT 1)")) {
 
             preppedStatement.executeUpdate();
 

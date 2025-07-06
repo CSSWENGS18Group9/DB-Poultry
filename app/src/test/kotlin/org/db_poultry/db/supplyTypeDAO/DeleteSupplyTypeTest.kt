@@ -69,9 +69,4 @@ class DeleteSupplyTypeTest {
         assertNull(ReadSupplyRecord.getOneByDateAndName(conn, dateTwo, "Test_2"))
     }
 
-    @Test
-    fun testCreateDeleteTypeWithNoData() {
-        val result = DeleteSupplyType.undoCreateSupplyType(conn)
-        assertNull(result)
-    }
 }

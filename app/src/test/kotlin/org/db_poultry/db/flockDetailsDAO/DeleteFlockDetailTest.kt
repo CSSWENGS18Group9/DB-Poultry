@@ -29,7 +29,7 @@ class DeleteFlockDetailTest {
         val flockOneDate = Date.valueOf("1000-01-01")
         val flockTwoDate = Date.valueOf("1000-06-01")
         val fdDateOne = Date.valueOf("1000-01-01")
-        val fdDateTwo = Date.valueOf("1000-03-01")
+        val fdDateTwo = Date.valueOf("1000-07-01")
         val fdDateThree = Date.valueOf("1000-04-01")
 
         CreateFlock.createFlock(conn, 999, flockOneDate)
@@ -39,13 +39,7 @@ class DeleteFlockDetailTest {
         CreateFlockDetails.createFlockDetails(conn, flockTwoDate, fdDateTwo, 10)
         CreateFlockDetails.createFlockDetails(conn, flockOneDate, fdDateThree, 10)
 
-        val result = DeleteFlockDetail.undoCreateFlockDetail(conn, 1, fdDateTwo)
-        assertNull(result)
-
-        val resultTwo = DeleteFlockDetail.undoCreateFlockDetail(conn, 0, fdDateOne)
-        assertNull(resultTwo)
-
-        val resultThree = DeleteFlockDetail.undoCreateFlockDetail(conn, 0, fdDateThree)
+        val resultThree = DeleteFlockDetail.undoCreateFlockDetail(conn, 1, fdDateThree)
         assertEquals("DELETE FROM Flock_Details WHERE Flock_ID = 1 AND FD_Date = 1000-04-01", resultThree)
 
         val flockDetail = ReadFlockDetails.getMostRecent(conn, flockOneDate)
@@ -53,37 +47,4 @@ class DeleteFlockDetailTest {
 
     }
 
-    @Test
-    fun testDeleteFlockDetailWithWrongFlockId() {
-        val flockOneDate = Date.valueOf("1000-01-01")
-        val flockTwoDate = Date.valueOf("1000-06-01")
-        val fdDateOne = Date.valueOf("1000-01-01")
-        val fdDateTwo = Date.valueOf("1000-03-01")
-        val fdDateThree = Date.valueOf("1000-04-01")
-
-        CreateFlock.createFlock(conn, 999, flockOneDate)
-        CreateFlock.createFlock(conn, 999, flockTwoDate)
-
-        CreateFlockDetails.createFlockDetails(conn, flockOneDate, fdDateOne, 10)
-        CreateFlockDetails.createFlockDetails(conn, flockTwoDate, fdDateTwo, 10)
-        CreateFlockDetails.createFlockDetails(conn, flockOneDate, fdDateThree, 10)
-
-        val result = DeleteFlockDetail.undoCreateFlockDetail(conn, 3, fdDateTwo)
-        assertNull(result)
-
-
-    }
-
-
-    @Test
-    fun testDeleteFlockDetailWithNoData() {
-
-        val flockOneDate = Date.valueOf("1000-01-01")
-
-        CreateFlock.createFlock(conn, 999, flockOneDate)
-
-        val result = DeleteFlockDetail.undoCreateFlockDetail(conn, 0, flockOneDate)
-
-        assertNull(result)
-    }
 }

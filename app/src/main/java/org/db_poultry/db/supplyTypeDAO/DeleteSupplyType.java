@@ -15,7 +15,7 @@ public class DeleteSupplyType {
      * @return a String which is the query
      */
     public static String undoCreateSupplyType(Connection conn) {
-        try (PreparedStatement preppedStatement = conn.prepareStatement("DELETE FROM Supply_Type ORDER BY Supply_Type_ID DESC LIMIT 1")) {
+        try (PreparedStatement preppedStatement = conn.prepareStatement("DELETE FROM Supply_Type WHERE ctid IN (SELECT ctid FROM Supply_Type ORDER BY Supply_Type_ID DESC LIMIT 1)")) {
 
             preppedStatement.executeUpdate();
 

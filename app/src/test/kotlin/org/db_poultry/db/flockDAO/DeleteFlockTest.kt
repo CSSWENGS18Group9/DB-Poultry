@@ -29,7 +29,7 @@ class DeleteFlockTest {
 
         CreateFlock.createFlock(conn, 100, date)
         val result = DeleteFlock.undoCreateFlock(conn)
-        assertEquals("DELETE FROM Flock ORDER BY flock_id DESC LIMIT 1", result)
+        assertEquals("DELETE FROM Flock WHERE ctid IN (SELECT ctid FROM Flock ORDER BY flock_id DESC LIMIT 1)", result)
         assertNull(ReadFlock.getFlockFromADate(conn, date))
     }
 
