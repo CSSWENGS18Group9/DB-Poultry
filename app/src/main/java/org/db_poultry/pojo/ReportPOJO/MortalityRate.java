@@ -23,7 +23,7 @@ public class MortalityRate {
         this(mortalityRate, flockId, startDate, null, startCount, curCount);
     }
 
-    public float ReadMortalityRate() {
+    public float getMortalityRate() {
         return mortalityRate;
     }
 
