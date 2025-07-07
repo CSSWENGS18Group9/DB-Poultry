@@ -44,6 +44,9 @@ class ViewFlockDetailsController : Initializable {
     @FXML
     lateinit var colDepletions: TableColumn<FlockDetails, Int>
 
+    @FXML
+    lateinit var colChickenCount: TableColumn<FlockDetails, Int>
+
 //    val data = flockDateSingleton.instance
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
@@ -58,8 +61,15 @@ class ViewFlockDetailsController : Initializable {
         dateStartedLabel.text = currentFlockDate.toString()
         quantityStartedLabel.text = currentFlockQuantity.toString()
 
+        // Get data from POJO
         colDate.cellValueFactory = PropertyValueFactory("fdDate")
         colDepletions.cellValueFactory = PropertyValueFactory("depletedCount")
+
+        colChickenCount.setCellValueFactory { cellData ->
+            val currentFlockQuantity = CurrentFlockInUse.getCurrentFlockComplete()?.flock?.startingCount ?: 0
+            val depletedCount = cellData.value.depletedCount
+            javafx.beans.property.SimpleIntegerProperty(currentFlockQuantity - depletedCount).asObject()
+        }
 
         if (latestDetail != null) {
             val flockDetailsList: List<FlockDetails> =
@@ -69,6 +79,7 @@ class ViewFlockDetailsController : Initializable {
             flockRecordsTableView.items = observableList
         }
 
+        // Clear blue highlight focus on first row
         flockRecordsTableView.getSelectionModel().clearSelection()
         flockRecordsTableView.getFocusModel().focus(-1)
     }

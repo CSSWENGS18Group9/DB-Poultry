@@ -113,7 +113,7 @@
     -fx-font-size: 1.4em;
     -fx-font-family: "HelveticaNowDisplay Medium";
     -fx-alignment: center;
-    -fx-padding: 5 10 10 10;
+    -fx-padding: 10 10 5 10;
 }
 
 /* Remove rightmost column cells' border */

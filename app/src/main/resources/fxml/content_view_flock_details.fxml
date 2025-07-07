@@ -65,8 +65,8 @@
                         <TableView fx:id="flockRecordsTableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.rowIndex="1">
                           <columns>
                             <TableColumn fx:id="colDate" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="240.0" text="Date" />
-                            <TableColumn fx:id="colDepletions" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="240.0" text="Depletions" />
-                              <TableColumn maxWidth="1.7976931348623157E308" prefWidth="240.0" text="Chicken Count" />
+                            <TableColumn fx:id="colDepletions" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="240.0" text="Depleted Chickens" />
+                              <TableColumn fx:id="colChickenCount" maxWidth="1.7976931348623157E308" prefWidth="240.0" text="Chicken Count" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
