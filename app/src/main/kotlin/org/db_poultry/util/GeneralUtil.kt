@@ -20,8 +20,6 @@ import javafx.stage.StageStyle
 import java.time.format.DateTimeFormatter
 import java.time.LocalDate
 import java.util.Locale
-import kotlin.collections.fill
-import kotlin.div
 
 class GeneralUtil {
     companion object {
@@ -265,9 +263,9 @@ class GeneralUtil {
         }
 
         @JvmStatic
-        fun formatDatePretty(date: LocalDate): String {
+        fun formatDatePretty(date: LocalDate?): String {
             val formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH)
-            return date.format(formatter)
+            return date?.format(formatter) ?: String.format("No date provided")
         } 
     }
 }
