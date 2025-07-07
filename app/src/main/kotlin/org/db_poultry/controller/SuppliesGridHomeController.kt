@@ -111,8 +111,9 @@ class SuppliesGridHomeController: Initializable {
         return vbox
     }
 
+    @FXML
     private fun navigateToUpdateSupplies() {
-        GeneralUtil.loadContentView(mainAnchorPane, "/fxml/content_update_supplies_add_delete.fxml")
+        GeneralUtil.navigateToMainContent(mainAnchorPane, "/fxml/content_update_supplies_add_delete.fxml")
     }
 
 }

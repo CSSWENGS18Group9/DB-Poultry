@@ -1,58 +1,91 @@
 package org.db_poultry.controller
 
+import org.db_poultry.util.GeneralUtil
+
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
+import javafx.geometry.Pos
 import javafx.scene.control.Button
-import javafx.scene.control.ChoiceBox
 import javafx.scene.layout.AnchorPane
-import javafx.scene.text.Text
-import org.db_poultry.util.flockDateSingleton
-import org.db_poultry.util.GeneralUtil
+import javafx.scene.layout.FlowPane
+import org.db_poultry.controller.backend.CurrentFlockInUse
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDAO.ReadFlock
+import org.db_poultry.pojo.FlockPOJO.FlockComplete
 import java.net.URL
-import java.sql.Date
 import java.util.ResourceBundle
-import kotlin.collections.isNotEmpty
 
-
+// TODO: Remove dropdown, replace with gridlike structure @Dattebayo2505
 class ViewController: Initializable {
 
     @FXML
     lateinit var selectFlockAnchorPane: AnchorPane
 
     @FXML
-    private lateinit var viewSelectFlockChoiceBox: ChoiceBox<Any>
-
-    @FXML
-    private lateinit var selectFlockLbl: Text
-
-    @FXML
-    private lateinit var viewConfirmBtn: Button
-
-    @FXML
-    fun switchToViewFlockDetails() {
-        flockDateSingleton.setDate(Date.valueOf(viewSelectFlockChoiceBox.value as String))
-        println("Switching to view flock details")
-        GeneralUtil.loadContentView(selectFlockAnchorPane, "/fxml/content_view_flock_details.fxml")
-    }
+    lateinit var mainFlowPane: FlowPane
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
+        loadFlockGrid()
+    }
 
+    private fun loadFlockGrid() {
         val flockMap = ReadFlock.allByID(DBConnect.getConnection())
 
-        val dateList = mutableListOf<String>()
-
         if (flockMap != null && flockMap.isNotEmpty()) {
-            val dates = flockMap.values.map { it.flock.startingDate.toString() }
-            dateList.addAll(dates)
-            println("Flock starting dates: $dates") // DEBUGGING
+            for ((flockId, flockComplete) in flockMap) {
+                val button = createFlockButton(flockComplete)
+                mainFlowPane.children.add(button)
+            }
         } else {
-            println("No data found.")
+            println("No flock records found")
         }
-
-        viewSelectFlockChoiceBox.items.clear()
-        viewSelectFlockChoiceBox.items.addAll(dateList)
-        viewSelectFlockChoiceBox.value = "Select a flock"
     }
+
+    private fun createFlockButton(flockComplete: FlockComplete): Button {
+        val flockComp = flockComplete
+        val formattedDate = GeneralUtil.formatDatePretty(flockComp.flock.startingDate.toLocalDate())
+
+        return Button(formattedDate).apply {
+            alignment = Pos.CENTER
+            maxHeight = -1.0
+            maxWidth = -1.0
+            isMnemonicParsing = false
+            prefWidth = 225.0
+            styleClass.addAll("flock-button", "h4-bold")
+            setOnMouseClicked { navigateToFlockRelated() }
+            setOnMousePressed { event ->
+                CurrentFlockInUse.setCurrentFlockComplete(flockComp)
+            }
+
+        }
+    }
+
+    private fun navigateToFlockRelated() {
+        val fxmlInUse = CurrentFlockInUse.getCurrentFlockFXML()
+
+        // Refer to FlockHomeController.kt for the FXML reference
+        when (fxmlInUse) {
+            "flock_details" -> {
+                navigateToViewFlockDetails()
+            }
+            "flock_generate_reports" -> {
+                navigateToViewFlockGenerateReport()
+            }
+            else -> {
+                println("Unknown FXML in use: $fxmlInUse")
+            }
+        }
+    }
+
+    @FXML
+    fun navigateToViewFlockDetails() {
+        GeneralUtil.navigateToMainContent(selectFlockAnchorPane, "/fxml/content_view_flock_details.fxml")
+    }
+
+    @FXML
+    fun navigateToViewFlockGenerateReport() {
+        GeneralUtil.navigateToMainContent(selectFlockAnchorPane, "/fxml/content_generate_report.fxml")
+
+    }
+
 }

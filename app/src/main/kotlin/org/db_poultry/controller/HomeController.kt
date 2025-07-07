@@ -22,46 +22,19 @@ class HomeController: Initializable {
     @FXML
     private lateinit var homeAnchorPane: AnchorPane
 
-    @FXML
-    private lateinit var homeStackPane: StackPane
-
-    @FXML
-    private lateinit var bgImageAnchorPane: AnchorPane
-
-    @FXML
-    private lateinit var homeBackgroundImageView: ImageView
-
-    @FXML
-    private lateinit var homeFlockBtn1: Button
-
-    @FXML
-    private lateinit var homeReturnLoginBtn: Button
-
-    @FXML
-    private lateinit var homeSuppliesBtn1: Button
-
     override fun initialize(url: URL?, rb: ResourceBundle?) {
-        // GeneralUtil.initializeFontSizeManager(homeAnchorPane)
+
     }
 
     @FXML
-    fun switchToLogin(event: ActionEvent) {
-        println("Switching to login")
-        SceneSwitcher.switchTo(homeReturnLoginBtn, "/fxml/login.fxml")
+    fun navigateToSupplies() {
+        GeneralUtil.navigateToMainContent(homeAnchorPane, "/fxml/content_home_supplies.fxml")
     }
 
     @FXML
-    private fun navigateToHome() {
-        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home.fxml")
+    fun navigateToFlock() {
+        GeneralUtil.navigateToMainContent(homeAnchorPane, "/fxml/content_home_flock.fxml")
     }
 
-    @FXML 
-    fun switchToFlock() {
-        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home_flock.fxml")
-    }
 
-    @FXML 
-    fun switchToSupplies() {
-        GeneralUtil.loadContentView(homeAnchorPane, "/fxml/content_home_supplies.fxml")
-    }
 }

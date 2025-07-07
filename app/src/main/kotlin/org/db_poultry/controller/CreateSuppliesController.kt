@@ -73,12 +73,26 @@ class CreateSuppliesController: Initializable {
             println("Image copied to: ${targetFile.absolutePath}")
         }
 
+        if (supplyName.isBlank() || supplyUnit.isBlank()) {
+            GeneralUtil.showPopup("error", "Supply name and unit cannot be empty.")
+            println("Supply name and unit cannot be empty.")
+            return
+        }
+
+
         if (createSupplyType(getConnection(), supplyName, supplyUnit) != null) {
             println("Successfully created Supply type.")
         } else {
+            GeneralUtil.showPopup("error", "Failed to create Supply type.")
             println("Failed to create Supply type.")
         }
 
+        GeneralUtil.showPopup("success", "Supply type created successfully.")
+
+        resetFields()
+    }
+
+    fun resetFields() {
         createSuppliesTextField.clear()
         createSuppliesTextFieldUnit.clear()
         uploadImagePane.style = "-fx-background-image: none;"

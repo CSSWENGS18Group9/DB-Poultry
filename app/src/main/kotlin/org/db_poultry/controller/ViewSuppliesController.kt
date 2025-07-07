@@ -32,15 +32,6 @@ class ViewSuppliesController: Initializable {
     private lateinit var currDateLbl: Label
 
     @FXML
-    private lateinit var dateHistoryBtn: Button
-
-    @FXML
-    private lateinit var supplyHistoryBtn: Button
-
-    @FXML
-    private lateinit var viewSuppliesLbl: Label
-
-    @FXML
     private lateinit var viewSupplyAnchorPane: AnchorPane
 
     @FXML
@@ -115,17 +106,17 @@ class ViewSuppliesController: Initializable {
     }
 
     @FXML
-    fun switchToViewSupplies(event: ActionEvent) {
-        GeneralUtil.loadContentView(viewSupplyAnchorPane, "/fxml/content_view_supplies.fxml")
+    fun navigateToViewSupplies(event: ActionEvent) {
+        GeneralUtil.navigateToMainContent(viewSupplyAnchorPane, "/fxml/content_view_supplies.fxml")
     }
         
     @FXML
-    fun switchToViewSupplyHistory(event: ActionEvent) {
-        GeneralUtil.loadContentView(viewSupplyAnchorPane, "/fxml/content_view_supply_history.fxml")
+    fun navigateToViewSupplyHistory(event: ActionEvent) {
+        GeneralUtil.navigateToMainContent(viewSupplyAnchorPane, "/fxml/content_view_supply_history.fxml")
     }
 
     @FXML
-    fun switchToViewDateHistory(event: ActionEvent) {
-        GeneralUtil.loadContentView(viewSupplyAnchorPane, "/fxml/content_view_date_history.fxml")
+    fun navigateToViewDateHistory(event: ActionEvent) {
+        GeneralUtil.navigateToMainContent(viewSupplyAnchorPane, "/fxml/content_view_date_history.fxml")
     }
 }
