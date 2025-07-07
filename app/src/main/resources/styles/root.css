@@ -1,7 +1,7 @@
 /* For all pages */
 
 .main-pane {
-    -fx-background-color: #fefae0;
+    -fx-background-color: #FEFAE0;
 }
 
 .inner-pane {
@@ -46,6 +46,88 @@
 .back-icon:hover {
     -fx-icon-color: #8F250C;
 }
+
+/* For all tables */
+.table-view {
+    -fx-background-radius: 20 20 0 0;
+    -fx-border-radius: 20 20 0 0;
+    -fx-border-width: 1;
+    -fx-background-insets: 0;
+    -fx-border-color: gray;
+}
+
+.table-view .column-header-background {
+  -fx-background-color: #F6F0CD;
+  -fx-background-radius: 20 20 0 0;
+  -fx-border-width: 1;
+  -fx-border-color: transparent transparent black transparent;
+  -fx-padding: 10 0 10 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .filler {
+  -fx-background-color: #F6F0CD; /* match column-header-background */
+}
+
+.table-view .column-header-background .label {
+    -fx-text-fill: #BC6C25;
+    -fx-font-size: 1.5em;
+    -fx-font-family: "HelveticaNowDisplay Bold";
+}
+
+.table-view > .virtual-flow > .corner {
+    -fx-background-color: #F6F0CD; /* match header background */
+}
+
+.table-view .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.table-view .scroll-bar .track {
+    -fx-background-color: Gainsboro;
+}
+
+.table-view .scroll-bar .thumb {
+    -fx-background-color: #BC6C25;
+    -fx-background-radius: 10;
+}
+
+.table-view .scroll-pane,
+.table-view .virtual-flow {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #F5F5DC; /* light beige for odd rows */
+}
+
+.table-view .table-row-cell:even {
+    -fx-background-color: white; /* white for even rows */
+}
+
+.table-view .cell {
+    -fx-background-color: transparent;
+    -fx-font-size: 1.4em;
+    -fx-font-family: "HelveticaNowDisplay Medium";
+    -fx-alignment: center;
+    -fx-padding: 5 10 10 10;
+}
+
+/* Remove rightmost column cells' border */
+.table-view .table-row-cell .cell:last-visible {
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Enable blue selection since bg of cell is transparent*/
+.table-view .table-row-cell:focused,
+.table-view .table-row-cell:selected {
+    -fx-background-color: -fx-selection-bar;
+}
+
+/* Table End */
 
 /* Fonts for USE
 

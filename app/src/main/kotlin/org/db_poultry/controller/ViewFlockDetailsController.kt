@@ -55,10 +55,8 @@ class ViewFlockDetailsController : Initializable {
 
         val latestDetail = ReadFlockDetails.getMostRecent(DBConnect.getConnection(), currentFlockDate)
 
-        dateStartedLabel.text = "Date Started: ${currentFlockDate.toString()}"
-        quantityStartedLabel.text = "Quantity Started: $currentFlockQuantity"
-
-        flockRecordsTableView.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN
+        dateStartedLabel.text = currentFlockDate.toString()
+        quantityStartedLabel.text = currentFlockQuantity.toString()
 
         colDate.cellValueFactory = PropertyValueFactory("fdDate")
         colDepletions.cellValueFactory = PropertyValueFactory("depletedCount")
@@ -70,6 +68,9 @@ class ViewFlockDetailsController : Initializable {
 
             flockRecordsTableView.items = observableList
         }
+
+        flockRecordsTableView.getSelectionModel().clearSelection()
+        flockRecordsTableView.getFocusModel().focus(-1)
     }
 
     @FXML
