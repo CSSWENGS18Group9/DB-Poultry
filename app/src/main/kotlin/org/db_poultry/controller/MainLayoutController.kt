@@ -1,6 +1,5 @@
 package org.db_poultry.controller
 
-import javafx.event.ActionEvent
 import org.db_poultry.util.GeneralUtil
 
 import javafx.fxml.FXML
@@ -11,11 +10,8 @@ import java.net.URL
 
 import java.time.LocalDate
 
-import javafx.scene.control.Button
 import javafx.scene.control.Label
-import javafx.scene.control.SplitPane
 import javafx.scene.layout.AnchorPane
-import javafx.scene.layout.GridPane
 import javafx.scene.image.ImageView
 import javafx.scene.layout.FlowPane
 import org.db_poultry.util.SceneSwitcher

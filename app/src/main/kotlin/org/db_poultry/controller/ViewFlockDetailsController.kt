@@ -1,5 +1,14 @@
 package org.db_poultry.controller
 
+import org.db_poultry.util.GeneralUtil
+import org.db_poultry.controller.backend.CurrentFlockInUse
+import org.db_poultry.util.flockDateSingleton
+import org.db_poultry.db.DBConnect
+import org.db_poultry.db.flockDAO.ReadFlock
+import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
+import org.db_poultry.pojo.FlockPOJO.Flock
+import org.db_poultry.pojo.FlockPOJO.FlockDetails
+
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
@@ -7,15 +16,7 @@ import javafx.scene.control.Label
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.cell.PropertyValueFactory
-import javafx.scene.layout.Pane
-import javafx.scene.shape.Rectangle
-import javafx.scene.text.Text
-import org.db_poultry.util.flockDateSingleton
-import org.db_poultry.db.DBConnect
-import org.db_poultry.db.flockDAO.ReadFlock
-import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
-import org.db_poultry.pojo.FlockPOJO.Flock
-import org.db_poultry.pojo.FlockPOJO.FlockDetails
+import javafx.scene.layout.AnchorPane
 import java.net.URL
 import java.sql.Date
 import java.util.*
@@ -23,22 +24,19 @@ import java.util.*
 class ViewFlockDetailsController : Initializable {
 
     @FXML
-    lateinit var viewFlockDetailsAnchorPane: Pane
+    lateinit var mainAnchorPane: AnchorPane
 
     @FXML
-    lateinit var lblQuantityStarted: Text
+    lateinit var flockNameLabel: Label
 
     @FXML
-    lateinit var lblQuantityStartedValue: Text
+    lateinit var dateStartedLabel: Label
 
     @FXML
-    lateinit var lblDateStarted: Text
+    lateinit var quantityStartedLabel: Label
 
     @FXML
-    lateinit var lblDateStartedValue: Text
-
-    @FXML
-    lateinit var tableView: TableView<FlockDetails>
+    lateinit var flockRecordsTableView: TableView<FlockDetails>
 
     @FXML
     lateinit var colDate: TableColumn<FlockDetails, Date>
@@ -46,33 +44,36 @@ class ViewFlockDetailsController : Initializable {
     @FXML
     lateinit var colDepletions: TableColumn<FlockDetails, Int>
 
-    @FXML
-    lateinit var lblFlockName: Label
-
-    @FXML
-    lateinit var rectFlockDetails: Rectangle
-
-    val data = flockDateSingleton.instance
+//    val data = flockDateSingleton.instance
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
+        val currentFlock = CurrentFlockInUse.getCurrentFlockComplete()?.flock?.flockId
+        val currentFlockDate = CurrentFlockInUse.getCurrentFlockComplete()?.flock?.startingDate
+        val currentFlockQuantity = CurrentFlockInUse.getCurrentFlockComplete()?.flock?.startingCount
 
-        val date = data.getDate()
-        val latestDetail = ReadFlockDetails.getMostRecent(DBConnect.getConnection(), date)
+        flockNameLabel.text = "Flock $currentFlock - ${GeneralUtil.formatDatePretty(currentFlockDate?.toLocalDate())}"
 
-        lblDateStartedValue.text = date.toString()
-        val flockList: Flock = ReadFlock.getFlockFromADate(DBConnect.getConnection(), date)
-        lblQuantityStartedValue.text = flockList.startingCount.toString()
+        val latestDetail = ReadFlockDetails.getMostRecent(DBConnect.getConnection(), currentFlockDate)
+
+        dateStartedLabel.text = "Date Started: ${currentFlockDate.toString()}"
+        quantityStartedLabel.text = "Quantity Started: $currentFlockQuantity"
+
+        flockRecordsTableView.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN
 
         colDate.cellValueFactory = PropertyValueFactory("fdDate")
         colDepletions.cellValueFactory = PropertyValueFactory("depletedCount")
 
         if (latestDetail != null) {
             val flockDetailsList: List<FlockDetails> =
-                ReadFlockDetails.getFlockDetailsFromDate(DBConnect.getConnection(), date, date, latestDetail.fdDate)
+                ReadFlockDetails.getFlockDetailsFromDate(DBConnect.getConnection(), currentFlockDate, currentFlockDate, latestDetail.fdDate)
             val observableList = FXCollections.observableArrayList(flockDetailsList)
 
-            tableView.items = observableList
+            flockRecordsTableView.items = observableList
         }
     }
 
+    @FXML
+    fun backToViewFlocks() {
+        GeneralUtil.navigateToMainContent(mainAnchorPane, "/fxml/content_view_flock.fxml")
+    }
 }

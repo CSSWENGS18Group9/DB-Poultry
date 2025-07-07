@@ -13,8 +13,6 @@ import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.pojo.FlockPOJO.FlockComplete
 import java.net.URL
-import java.sql.Date
-import java.time.LocalDate
 import java.util.ResourceBundle
 
 // TODO: Remove dropdown, replace with gridlike structure @Dattebayo2505
@@ -44,8 +42,8 @@ class ViewController: Initializable {
     }
 
     private fun createFlockButton(flockComplete: FlockComplete): Button {
-        val flock = flockComplete.flock
-        val formattedDate = GeneralUtil.formatDatePretty(flock.startingDate.toLocalDate())
+        val flockComp = flockComplete
+        val formattedDate = GeneralUtil.formatDatePretty(flockComp.flock.startingDate.toLocalDate())
 
         return Button(formattedDate).apply {
             alignment = Pos.CENTER
@@ -56,21 +54,21 @@ class ViewController: Initializable {
             styleClass.addAll("flock-button", "h4-bold")
             setOnMouseClicked { navigateToFlockRelated() }
             setOnMousePressed { event ->
-                CurrentFlockInUse.setCurrentFlockDate(flock.startingDate.toString())
-
+                CurrentFlockInUse.setCurrentFlockComplete(flockComp)
             }
 
         }
     }
 
     private fun navigateToFlockRelated() {
-        val fxmlInUse = GeneralUtil.getCurrentFXML()
+        val fxmlInUse = CurrentFlockInUse.getCurrentFlockFXML()
 
+        // Refer to FlockHomeController.kt for the FXML reference
         when (fxmlInUse) {
-            "/fxml/content_view_flock_details.fxml" -> {
+            "flock_details" -> {
                 navigateToViewFlockDetails()
             }
-            "/fxml/content_generate_report.fxml" -> {
+            "flock_generate_reports" -> {
                 navigateToViewFlockGenerateReport()
             }
             else -> {

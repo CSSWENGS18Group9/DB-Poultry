@@ -81,7 +81,7 @@
                         <Font name="HelveticaNowDisplay-Bold" size="13.0" />
                      </font>
                      <styleClass>
-                        <String fx:value="confirm-button" />
+                        <String fx:value="close-button" />
                         <String fx:value="h4-bold" />
                      </styleClass>
                      <GridPane.margin>

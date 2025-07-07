@@ -12,6 +12,7 @@ import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.layout.AnchorPane
 import javafx.scene.text.Text
+import org.db_poultry.controller.backend.CurrentFlockInUse
 
 class FlockHomeController: Initializable {
 
@@ -35,11 +36,13 @@ class FlockHomeController: Initializable {
     @FXML
     fun navigateToView() {
         GeneralUtil.navigateToMainContent(flockHomeAnchorPane, "/fxml/content_view_flock.fxml")
+        CurrentFlockInUse.setCurrentFlockFXML("flock_details")
     }
 
     @FXML 
     fun navigateToGenerate() {
-        GeneralUtil.navigateToMainContent(flockHomeAnchorPane, "/fxml/content_generate_report.fxml")
+        GeneralUtil.navigateToMainContent(flockHomeAnchorPane, "/fxml/content_view_flock.fxml")
+        CurrentFlockInUse.setCurrentFlockFXML("flock_generate_reports")
     }
 
 }
