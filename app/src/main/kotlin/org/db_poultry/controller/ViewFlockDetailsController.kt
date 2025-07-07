@@ -47,7 +47,9 @@ class ViewFlockDetailsController : Initializable {
     @FXML
     lateinit var colChickenCount: TableColumn<FlockDetails, Int>
 
-//    val data = flockDateSingleton.instance
+
+    val data = flockDateSingleton.instance
+
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         val currentFlock = CurrentFlockInUse.getCurrentFlockComplete()?.flock?.flockId
@@ -57,6 +59,7 @@ class ViewFlockDetailsController : Initializable {
         flockNameLabel.text = "Flock $currentFlock - ${GeneralUtil.formatDatePretty(currentFlockDate?.toLocalDate())}"
 
         val latestDetail = ReadFlockDetails.getMostRecent(DBConnect.getConnection(), currentFlockDate)
+
 
         dateStartedLabel.text = currentFlockDate.toString()
         quantityStartedLabel.text = currentFlockQuantity.toString()
