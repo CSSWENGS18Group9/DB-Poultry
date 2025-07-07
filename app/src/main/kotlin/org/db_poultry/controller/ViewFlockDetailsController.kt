@@ -48,7 +48,7 @@ class ViewFlockDetailsController : Initializable {
     lateinit var colChickenCount: TableColumn<FlockDetails, Int>
 
 
-    val data = flockDateSingleton.instance
+//    val data = flockDateSingleton.instance
 
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
