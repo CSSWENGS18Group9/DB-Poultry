@@ -16,6 +16,8 @@ import java.sql.Date
 import javafx.fxml.Initializable
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
+import org.db_poultry.util.GeneralUtil
+import org.db_poultry.util.undoSingleton
 import java.net.URL
 import java.util.ResourceBundle
 
@@ -91,8 +93,15 @@ class UpdateAddDeleteSuppliesController: Initializable {
         val added = BigDecimal(amountAdd!!)
         val consumed = BigDecimal(amount_del!!)
 
-        createSupplyRecord(getConnection(), supplyID, sqlDate, added, consumed, false)
-
+        val result = createSupplyRecord(getConnection(), supplyID, sqlDate, added, consumed, false)
+        if (result != null) {
+            undoSingleton.setUndoMode(3)
+            GeneralUtil.showPopup("success", "Supply record created successfully.")
+            println("Successfully created supply record.")
+        } else {
+            GeneralUtil.showPopup("error", "Failed to create supply record.")
+            println("DEBUG: createSupplyRecord returned null")
+        }
     }
 
     private fun capitalizeWords(input: String): String =

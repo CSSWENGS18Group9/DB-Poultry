@@ -16,6 +16,7 @@ import javafx.fxml.Initializable
 import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
 import org.db_poultry.util.GeneralUtil
+import org.db_poultry.util.undoSingleton
 import java.awt.image.BufferedImage
 import java.io.File
 import java.io.FileOutputStream
@@ -63,16 +64,6 @@ class CreateSuppliesController: Initializable {
         println("\nSupply Name: $supplyName")
         println("Supply Unit: $supplyUnit")
 
-        selectedImageFile?.let { file ->
-            val resourcesDir = File("src/main/resources/img/supply-img")
-            if (!resourcesDir.exists()) resourcesDir.mkdirs()
-            val targetFile = File(resourcesDir, "${supplyName.lowercase()}.jpg")
-
-            // Crop and compress all images to JPEG
-            cropCenterSquareAndCompress(file, targetFile)
-            println("Image copied to: ${targetFile.absolutePath}")
-        }
-
         if (supplyName.isBlank() || supplyUnit.isBlank()) {
             GeneralUtil.showPopup("error", "Supply name and unit cannot be empty.")
             println("Supply name and unit cannot be empty.")
@@ -81,13 +72,23 @@ class CreateSuppliesController: Initializable {
 
 
         if (createSupplyType(getConnection(), supplyName, supplyUnit) != null) {
+            undoSingleton.setUndoMode(4)
+            GeneralUtil.showPopup("success", "Supply type created successfully.")
             println("Successfully created Supply type.")
+
+            selectedImageFile?.let { file ->
+                val resourcesDir = File("src/main/resources/img/supply-img")
+                if (!resourcesDir.exists()) resourcesDir.mkdirs()
+                val targetFile = File(resourcesDir, "${supplyName.lowercase()}.jpg")
+
+                // Crop and compress all images to JPEG
+                cropCenterSquareAndCompress(file, targetFile)
+                println("Image copied to: ${targetFile.absolutePath}")
+            }
         } else {
             GeneralUtil.showPopup("error", "Failed to create Supply type.")
             println("Failed to create Supply type.")
         }
-
-        GeneralUtil.showPopup("success", "Supply type created successfully.")
 
         resetFields()
     }
