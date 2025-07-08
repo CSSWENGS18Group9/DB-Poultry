@@ -2,7 +2,6 @@
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -34,7 +33,6 @@
                   <Font name="HelveticaNowDisplay-Bold" size="12.0" />
                </font>
             </Label>
-            <ComboBox fx:id="flockStartDateComboBox" prefHeight="51.0" prefWidth="335.0" promptText="Choose a Flock" styleClass="h5-bold" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
             <AnchorPane fx:id="subGenerateReportAnchorPane" styleClass="subpane" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="4">
                <GridPane.margin>
                   <Insets bottom="20.0" left="60.0" right="60.0" />
