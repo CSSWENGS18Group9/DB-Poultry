@@ -36,7 +36,7 @@ class FlockHomeController: Initializable {
     @FXML
     fun navigateToView() {
         GeneralUtil.navigateToMainContent(flockHomeAnchorPane, "/fxml/content_view_flock.fxml")
-        CurrentFlockInUse.setCurrentFlockFXML("flock_details")
+        CurrentFlockInUse.setCurrentFlockFXML("view_flock_details")
     }
 
     @FXML 
