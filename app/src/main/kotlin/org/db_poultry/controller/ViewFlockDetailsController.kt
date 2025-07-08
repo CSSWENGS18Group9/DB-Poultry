@@ -47,9 +47,9 @@ class ViewFlockDetailsController : Initializable {
     @FXML
     lateinit var colChickenCount: TableColumn<FlockDetails, Int>
 
-
-    val data = flockDateSingleton.instance
-
+    // FIXME: @dattebayo @megandasal @keishoo4
+    // the line below causes an issue (unknown reference instance)
+    // val data = flockDateSingleton.instance
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         val currentFlock = CurrentFlockInUse.getCurrentFlockComplete()?.flock?.flockId
