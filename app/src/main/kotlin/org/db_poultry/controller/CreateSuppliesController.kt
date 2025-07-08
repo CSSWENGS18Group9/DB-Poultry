@@ -1,37 +1,27 @@
 package org.db_poultry.controller
 
-import javafx.event.ActionEvent
+import org.db_poultry.db.DBConnect.getConnection
+import org.db_poultry.db.supplyTypeDAO.CreateSupplyType.createSupplyType
+import org.db_poultry.util.GeneralUtil
+import org.db_poultry.util.undoSingleton
+import org.db_poultry.util.undoTypes
+
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
-import javafx.scene.shape.Rectangle
-import javafx.scene.text.Text
-import org.db_poultry.db.DBConnect.getConnection
-import org.db_poultry.db.supplyTypeDAO.CreateSupplyType.createSupplyType
-
 import javafx.stage.FileChooser
-
 import javafx.fxml.Initializable
-import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
-import org.db_poultry.util.GeneralUtil
-import org.db_poultry.util.undoSingleton
 import java.awt.image.BufferedImage
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
-import java.nio.file.Files
-import java.nio.file.StandardCopyOption
 import java.util.ResourceBundle
 import javax.imageio.IIOImage
 import javax.imageio.ImageIO
 import javax.imageio.ImageWriteParam
 import javax.imageio.ImageWriter
-import kotlin.collections.addAll
-import kotlin.compareTo
-import kotlin.div
-import kotlin.toString
 
 class CreateSuppliesController: Initializable {
 
@@ -72,7 +62,7 @@ class CreateSuppliesController: Initializable {
 
 
         if (createSupplyType(getConnection(), supplyName, supplyUnit) != null) {
-            undoSingleton.setUndoMode(4)
+            undoSingleton.setUndoMode(undoTypes.doUndoSupplyType)
             GeneralUtil.showPopup("success", "Supply type created successfully.")
             println("Successfully created Supply type.")
 

@@ -4,20 +4,19 @@ import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 import org.db_poultry.db.supplyRecordDAO.CreateSupplyRecord.createSupplyRecord
 import org.db_poultry.controller.backend.CurrentSupplyInUse
+import org.db_poultry.util.GeneralUtil
+import org.db_poultry.util.undoSingleton
+import org.db_poultry.util.undoTypes
 
 import javafx.fxml.FXML
 import javafx.scene.control.DatePicker
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
-
 import java.math.BigDecimal
 import java.sql.Date
-
 import javafx.fxml.Initializable
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
-import org.db_poultry.util.GeneralUtil
-import org.db_poultry.util.undoSingleton
 import java.net.URL
 import java.util.ResourceBundle
 
@@ -95,7 +94,7 @@ class UpdateAddDeleteSuppliesController: Initializable {
 
         val result = createSupplyRecord(getConnection(), supplyID, sqlDate, added, consumed, false)
         if (result != null) {
-            undoSingleton.setUndoMode(3)
+            undoSingleton.setUndoMode(undoTypes.doUndoSupplyRecord)
             GeneralUtil.showPopup("success", "Supply record created successfully.")
             println("Successfully created supply record.")
         } else {

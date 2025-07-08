@@ -1,5 +1,12 @@
 package org.db_poultry.controller
 
+import org.db_poultry.db.DBConnect.getConnection
+import org.db_poultry.db.flockDAO.ReadFlock
+import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails.createFlockDetails
+import org.db_poultry.util.GeneralUtil
+import org.db_poultry.util.undoSingleton
+import org.db_poultry.util.undoTypes
+
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.Button
@@ -9,11 +16,6 @@ import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
 import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
-import org.db_poultry.db.DBConnect.getConnection
-import org.db_poultry.db.flockDAO.ReadFlock
-import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails.createFlockDetails
-import org.db_poultry.util.GeneralUtil
-import org.db_poultry.util.undoSingleton
 import java.net.URL
 import java.sql.Date
 import java.util.*
@@ -96,7 +98,7 @@ class CreateFlockDetailsController : Initializable {
         println("Depleted Count: $depletedCount")
 
         if (createFlockDetails(getConnection(), flockDate, detailDate, depletedCount) != null) {
-            undoSingleton.setUndoMode(2)
+            undoSingleton.setUndoMode(undoTypes.doUndoFlockDetail)
             GeneralUtil.showPopup("success", "Flock details created successfully.")
             println("Successfully created Flock.")
         } else {
