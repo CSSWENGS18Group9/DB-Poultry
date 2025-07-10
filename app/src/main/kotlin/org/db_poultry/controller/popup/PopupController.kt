@@ -1,10 +1,14 @@
 package org.db_poultry.controller.popup
 
+import org.db_poultry.db.DBConnect
+import org.db_poultry.util.undoSingleton
+
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.layout.AnchorPane
 import javafx.scene.text.Text
 import javafx.stage.Stage
+import org.db_poultry.errors.generateErrorMessage
 
 class PopupController {
 
@@ -38,7 +42,19 @@ class PopupController {
 
     @FXML
     fun undoAction() {
-        // TODO: Implement undo action logic @Dattebayo2505
+        val connection = DBConnect.getConnection()
+
+        if (connection != null) {
+            undoSingleton.undo(connection)
+            closePopup()
+        } else {
+            generateErrorMessage(
+                "Database Connection Error",
+                "Failed to connect to the database. Please check your connection settings.",
+                "Check your database connection settings and try again."
+            )
+        }
+
         closePopup()
     }
 

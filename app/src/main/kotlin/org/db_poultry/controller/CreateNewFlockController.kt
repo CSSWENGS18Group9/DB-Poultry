@@ -1,5 +1,11 @@
 package org.db_poultry.controller
 
+import org.db_poultry.db.DBConnect.getConnection
+import org.db_poultry.db.flockDAO.CreateFlock.createFlock
+import org.db_poultry.util.GeneralUtil
+import org.db_poultry.util.undoSingleton
+import org.db_poultry.util.undoTypes
+
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.DatePicker
@@ -7,9 +13,6 @@ import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
 import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
-import org.db_poultry.db.DBConnect
-import org.db_poultry.db.DBConnect.getConnection
-import org.db_poultry.db.flockDAO.CreateFlock.createFlock
 import java.sql.Date
 
 class CreateNewFlockController {
@@ -50,10 +53,14 @@ class CreateNewFlockController {
         println("Date: $date")
 
         if (createFlock(getConnection(), startCount, date) != null) {
+            undoSingleton.setUndoMode(undoTypes.doUndoFlock)
+            GeneralUtil.showPopup("success", "Flock created successfully!")
             println("Successfully created Flock.")
         } else {
+            GeneralUtil.showPopup("error", "Flock creation error, retry again.")
             println("Failed to create Flock.")
         }
     }
+
 
 }
