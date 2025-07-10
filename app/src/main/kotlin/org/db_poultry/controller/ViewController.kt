@@ -15,7 +15,7 @@ import org.db_poultry.pojo.FlockPOJO.FlockComplete
 import java.net.URL
 import java.util.ResourceBundle
 
-// TODO: Remove dropdown, replace with gridlike structure @Dattebayo2505
+// TODO: Revise naming of this class to better reflect its purpose @Dattebayo2505
 class ViewController: Initializable {
 
     @FXML
@@ -65,7 +65,10 @@ class ViewController: Initializable {
 
         // Refer to FlockHomeController.kt for the FXML reference
         when (fxmlInUse) {
-            "flock_details" -> {
+            "create_flock_details" -> {
+                navigateToCreateFlockDetails()
+            }
+            "view_flock_details" -> {
                 navigateToViewFlockDetails()
             }
             "flock_generate_reports" -> {
@@ -75,6 +78,11 @@ class ViewController: Initializable {
                 println("Unknown FXML in use: $fxmlInUse")
             }
         }
+    }
+
+    @FXML
+    fun navigateToCreateFlockDetails() {
+        GeneralUtil.navigateToMainContent(selectFlockAnchorPane, "/fxml/content_create_flock_details.fxml")
     }
 
     @FXML

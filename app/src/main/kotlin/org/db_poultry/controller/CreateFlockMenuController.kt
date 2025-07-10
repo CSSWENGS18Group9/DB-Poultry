@@ -4,7 +4,9 @@ import org.db_poultry.util.GeneralUtil
 
 import javafx.fxml.FXML
 import javafx.scene.layout.AnchorPane
+import org.db_poultry.controller.backend.CurrentFlockInUse
 
+// TODO: Remove this class and merge with FlockHomeController @Dattebayo2505
 class CreateFlockMenuController {
 
     @FXML
@@ -12,7 +14,8 @@ class CreateFlockMenuController {
 
     @FXML
     private fun navigateToCreateFlockDetails() {
-        GeneralUtil.navigateToMainContent(anchorPaneCreate, "/fxml/content_create_flock_details.fxml")
+        GeneralUtil.navigateToMainContent(anchorPaneCreate, "/fxml/content_view_flock.fxml")
+        CurrentFlockInUse.setCurrentFlockFXML("create_flock_details")
     }
 
     @FXML
