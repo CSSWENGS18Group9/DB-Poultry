@@ -1,46 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FEFAE0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.CreateSuppliesController">
+<AnchorPane fx:id="createSuppliesAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="main-pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.CreateSuppliesController">
    <children>
-      <Rectangle fx:id="shapeBg" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="310.0" layoutX="35.0" layoutY="45.0" stroke="TRANSPARENT" strokeType="INSIDE" width="530.0">
-         <effect>
-            <DropShadow offsetY="1.5">
-               <color>
-                  <Color opacity="0.4000000059604645" />
-               </color>
-            </DropShadow>
-         </effect>
-      </Rectangle>
-      <Text fx:id="textHeader" fill="#8f250c" layoutX="136.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Supplies" textAlignment="CENTER" wrappingWidth="328.126953125">
-         <font>
-            <Font name="HelveticaNowDisplay-Bold" size="36.0" />
-         </font>
-      </Text>
-      <Text fx:id="textBody1" fill="#bc6d25" layoutX="48.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Supply Name" textAlignment="RIGHT" wrappingWidth="228.12698364257812">
-         <font>
-            <Font name="HelveticaNowDisplay-Bold" size="30.0" />
-         </font>
-      </Text>
-      <Text fx:id="textBody2" fill="#bc6d25" layoutX="56.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unit of measurement" textAlignment="RIGHT" wrappingWidth="228.12698364257812">
-         <font>
-            <Font name="HelveticaNowDisplay-Bold" size="23.0" />
-         </font>
-      </Text>
-      <TextField fx:id="createSuppliesTextFieldUnit" layoutX="300.0" layoutY="233.0" prefHeight="30.0" prefWidth="228.0" />
-      <TextField fx:id="createSuppliesTextField" layoutX="300.0" layoutY="177.0" prefHeight="30.0" prefWidth="228.0" />
-      <Button fx:id="btnConfirm" layoutX="259.0" layoutY="283.0" mnemonicParsing="false" onAction="#confirm" prefHeight="25.0" prefWidth="82.0" style="-fx-background-color: #283618;" text="Confirm" textFill="WHITE">
-         <font>
-            <Font name="HelveticaNowDisplay-Bold" size="13.0" />
-         </font>
-      </Button>
+      <AnchorPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <GridPane prefHeight="720.0" prefWidth="1280.0" styleClass="inner-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0" />
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" styleClass="title" text="Create Supplies" textFill="#8f250c" GridPane.columnSpan="6" GridPane.halignment="CENTER" />
+                  <Pane fx:id="uploadImagePane" onMouseClicked="#uploadSupplyImage" prefHeight="200.0" prefWidth="200.0" styleClass="file-img" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Pane>
+                  <Button fx:id="btnConfirm" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirm" prefHeight="0.0" prefWidth="0.0" styleClass="confirm-button" text="Confirm" textFill="WHITE" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Regular" size="24.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="20.0" top="20.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <VBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="1">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" styleClass="h3-bold" text="Supply Name" textFill="#8f250c" />
+                        <TextField fx:id="createSuppliesTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="228.0" promptText="Enter supply name...">
+                           <VBox.margin>
+                              <Insets right="100.0" />
+                           </VBox.margin>
+                        </TextField>
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="70.0" />
+                     </GridPane.margin>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="2">
+                     <children>
+                        <Label styleClass="h3-bold" text="Unit of Measurement" textFill="#8f250c" />
+                        <TextField fx:id="createSuppliesTextFieldUnit" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="228.0" promptText="Enter unit of measurement...">
+                           <VBox.margin>
+                              <Insets right="100.0" />
+                           </VBox.margin>
+                        </TextField>
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="70.0" />
+                     </GridPane.margin>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+               </padding>
+            </GridPane>
+         </children>
+         <padding>
+            <Insets bottom="65.0" left="120.0" right="120.0" top="65.0" />
+         </padding>
+      </AnchorPane>
    </children>
+   <stylesheets>
+      <URL value="@../styles/root.css" />
+      <URL value="@../styles/create_supplies.css" />
+   </stylesheets>
 </AnchorPane>

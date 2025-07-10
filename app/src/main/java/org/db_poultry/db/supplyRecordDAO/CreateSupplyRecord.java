@@ -2,6 +2,8 @@ package org.db_poultry.db.supplyRecordDAO;
 
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType;
 import org.db_poultry.pojo.SupplyPOJO.SupplyComplete;
+import org.db_poultry.util.undoSingleton;
+import org.db_poultry.util.undoTypes;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -120,6 +122,9 @@ public class CreateSupplyRecord {
             preparedStatement.setBoolean(5, retrieved);
 
             preparedStatement.executeUpdate();
+
+            undoSingleton.INSTANCE.setUndoMode(undoTypes.doUndoSupplyRecord);
+
             return String.format(
                             "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES " +
                             "(%d, '%s', %.4f, %.4f, %b)",

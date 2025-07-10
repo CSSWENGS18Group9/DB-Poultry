@@ -12,48 +12,37 @@ import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.layout.AnchorPane
 import javafx.scene.text.Text
+import org.db_poultry.controller.backend.CurrentFlockInUse
 
 class FlockHomeController: Initializable {
 
     @FXML
     private lateinit var flockHomeAnchorPane: AnchorPane
 
-    @FXML
-    private lateinit var homeFlockBtn1: Button
-
-    @FXML
-    private lateinit var homeFlockBtn2: Button
-
-    @FXML
-    private lateinit var homeFlockBtn3: Button
-
-    @FXML
-    private lateinit var txtHomeMenu1: Text
-
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
 
-        // GeneralUtil.initializeFontSizeManager(flockHomeAnchorPane)
-
     }
 
     @FXML
-    fun goToCreate(event: ActionEvent) {
-        GeneralUtil.loadContentView(flockHomeAnchorPane, "/fxml/content_create_flock.fxml")
+    fun navigateToHome() {
+        GeneralUtil.navigateToMainContent(flockHomeAnchorPane, "/fxml/content_home.fxml")
     }
 
     @FXML
-    fun goToView(event: ActionEvent) {
-        GeneralUtil.loadContentView(flockHomeAnchorPane, "/fxml/content_view_flock.fxml")
+    fun navigateToCreate() {
+        GeneralUtil.navigateToMainContent(flockHomeAnchorPane, "/fxml/content_create_flock.fxml")
     }
 
     @FXML
-    fun switchToMenu(event: ActionEvent) {
-        GeneralUtil.loadContentView(flockHomeAnchorPane, "/fxml/content_home.fxml")
+    fun navigateToView() {
+        GeneralUtil.navigateToMainContent(flockHomeAnchorPane, "/fxml/content_view_flock.fxml")
+        CurrentFlockInUse.setCurrentFlockFXML("view_flock_details")
     }
 
     @FXML 
-    fun switchToGenerate() {
-        GeneralUtil.loadContentView(flockHomeAnchorPane, "/fxml/content_generate_report.fxml")
+    fun navigateToGenerate() {
+        GeneralUtil.navigateToMainContent(flockHomeAnchorPane, "/fxml/content_view_flock.fxml")
+        CurrentFlockInUse.setCurrentFlockFXML("flock_generate_reports")
     }
 
 }

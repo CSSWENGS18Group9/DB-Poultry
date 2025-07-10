@@ -1,50 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.DropShadow?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: A4AE81;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.FlockHomeController">
+<AnchorPane fx:id="flockMortalityReportAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: A4AE81;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.FlockGenerateReportController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fefae0" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="600.0" />
-      <Text fill="#8f250c" layoutX="139.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Flock Mortality Report">
-         <font>
-            <Font name="HelveticaNowDisplay-Bold" size="32.0" />
-         </font>
-      </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="223.0" layoutX="45.0" layoutY="117.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="510.0">
-         <effect>
-            <DropShadow>
-               <color>
-                  <Color opacity="0.4000000059604645" />
-               </color>
-            </DropShadow>
-         </effect>
-      </Rectangle>
-      <Text layoutX="302.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Flock Start Date: -">
-         <font>
-            <Font name="HelveticaNowDisplay-Light" size="21.0" />
-         </font>
-      </Text>
-      <Text layoutX="300.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity Started: -">
-         <font>
-            <Font name="HelveticaNowDisplay-Light" size="21.0" />
-         </font>
-      </Text>
-      <Text layoutX="302.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mortality Rate: -">
-         <font>
-            <Font name="HelveticaNowDisplay-Light" size="21.0" />
-         </font>
-      </Text>
+      <GridPane prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="663.3333129882812" minWidth="10.0" prefWidth="642.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="638.0" minWidth="10.0" prefWidth="638.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label styleClass="h1-bold" text="Flock Mortality Report" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+               <font>
+                  <Font name="HelveticaNowDisplay-Bold" size="12.0" />
+               </font>
+            </Label>
+            <AnchorPane fx:id="subGenerateReportAnchorPane" styleClass="subpane" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="4">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="60.0" right="60.0" />
+               </GridPane.margin>
+               <children>
+                  <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <children>
+                        <VBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" GridPane.halignment="CENTER" GridPane.rowSpan="4">
+                           <children>
+                              <Label styleClass="h3-bold" text="Flock Start Date:">
+                                 <font>
+                                    <Font name="HelveticaNowDisplay-Black" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="10.0" styleClass="h3-bold" text="Quantity Started:">
+                                 <font>
+                                    <Font name="HelveticaNowDisplay-Black" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="47.0" styleClass="h3-bold" text="Mortality Rate:">
+                                 <font>
+                                    <Font name="HelveticaNowDisplay-Black" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="84.0" styleClass="h3-bold" text="Remaining Chicken Count:">
+                                 <font>
+                                    <Font name="HelveticaNowDisplay-Black" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets right="10.0" />
+                           </padding>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1" GridPane.rowSpan="4">
+                           <children>
+                              <Label fx:id="flockStartDateLbl" styleClass="h3">
+                                 <font>
+                                    <Font name="HelveticaNowDisplay-Black" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="quantityStartedLbl" styleClass="h3">
+                                 <font>
+                                    <Font name="HelveticaNowDisplay-Black" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="mortalityRateLbl" styleClass="h3">
+                                 <font>
+                                    <Font name="HelveticaNowDisplay-Black" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="remChickenCountLbl" styleClass="h3">
+                                 <font>
+                                    <Font name="HelveticaNowDisplay-Black" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </GridPane>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </AnchorPane>
+         </children>
+      </GridPane>
       <ImageView fitHeight="170.0" fitWidth="184.0" layoutX="96.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/chicken_sample.png" />
          </image>
       </ImageView>
    </children>
+   <stylesheets>
+      <URL value="@../styles/root.css" />
+      <URL value="@../styles/generate_reports.css" />
+   </stylesheets>
 </AnchorPane>

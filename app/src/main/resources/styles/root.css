@@ -1,32 +1,234 @@
-.h1 {
+/* For all pages */
+
+.main-pane {
+    -fx-background-color: #FEFAE0;
+}
+
+.inner-pane {
+    -fx-background-color: white;
+    -fx-background-radius: 35;
+}
+
+.main-button {
+    -fx-background-color: white;
+    -fx-text-fill: #8F250C;
+    -fx-background-radius: 20;
+}
+
+.main-button:hover {
+    -fx-background-color: #8F250C;
+    -fx-text-fill: #FEFAE0;
+}
+
+.main-button:pressed {
+    -fx-background-color: #501609;
+}
+
+.confirm-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #388E3C;
+    -fx-border-width: 2;
+    -fx-text-fill: #388E3C;
+}
+
+.confirm-button:hover {
+    -fx-background-color: #388E3C;
+    -fx-text-fill: white;
+    -fx-border-color: #388E3C;
+}
+
+.back-icon {
+    -fx-icon-color: black;
+}
+
+.back-icon:hover {
+    -fx-icon-color: #8F250C;
+}
+
+/* For all tables */
+.table-view {
+    -fx-background-radius: 20 20 0 0;
+    -fx-border-radius: 20 20 0 0;
+    -fx-border-width: 1;
+    -fx-background-insets: 0;
+    -fx-border-color: gray;
+}
+
+.table-view .column-header-background {
+  -fx-background-color: #F6F0CD;
+  -fx-background-radius: 20 20 0 0;
+  -fx-border-width: 1;
+  -fx-border-color: transparent transparent black transparent;
+  -fx-padding: 10 0 10 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .filler {
+  -fx-background-color: #F6F0CD; /* match column-header-background */
+}
+
+.table-view .column-header-background .label {
+    -fx-text-fill: #BC6C25;
+    -fx-font-size: 1.5em;
+    -fx-font-family: "HelveticaNowDisplay Bold";
+}
+
+.table-view > .virtual-flow > .corner {
+    -fx-background-color: #F6F0CD; /* match header background */
+}
+
+.table-view .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.table-view .scroll-bar .track {
+    -fx-background-color: Gainsboro;
+}
+
+.table-view .scroll-bar .thumb {
+    -fx-background-color: #BC6C25;
+    -fx-background-radius: 10;
+}
+
+.table-view .scroll-pane,
+.table-view .virtual-flow {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #F5F5DC; /* light beige for odd rows */
+}
+
+.table-view .table-row-cell:even {
+    -fx-background-color: white; /* white for even rows */
+}
+
+.table-view .cell {
+    -fx-background-color: transparent;
+    -fx-font-size: 1.4em;
+    -fx-font-family: "HelveticaNowDisplay Medium";
+    -fx-alignment: center;
+    -fx-padding: 10 10 5 10;
+}
+
+/* Remove rightmost column cells' border */
+.table-view .table-row-cell .cell:last-visible {
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Enable blue selection since bg of cell is transparent*/
+.table-view .table-row-cell:focused,
+.table-view .table-row-cell:selected {
+    -fx-background-color: -fx-selection-bar;
+}
+
+/* Table End */
+
+/* Fonts for USE
+
+HelveticaNowDisplay ExtBlk
+HelveticaNowDisplay Black
+HelveticaNowDisplay ExtraBold
+HelveticaNowDisplay Bold
+HelveticaNowDisplay Medium
+HelveticaNowDisplay Regular
+HelveticaNowDisplay Thin
+HelveticaNowDisplay Light
+HelveticaNowDisplay ExtLt
+HelveticaNowDisplay Hairline
+
+HelveticaNowDisplay ExtBlkIta
+HelveticaNowDisplay ExtBdIta
+HelveticaNowDisplay BoldIta
+HelveticaNowDisplay MedIta
+HelveticaNowDisplay RegIta
+HelveticaNowDisplay ThinIta
+HelveticaNowDisplay LightIta
+HelveticaNowDisplay HairlineIta
+
+*/
+
+.title {
+    -fx-font-size: 6em;
+    -fx-font-family: "HelveticaNowDisplay Bold";
+    -fx-text-fill: #8F250C;
+}
+
+.h1-bold {
+    -fx-font-size: 4em;
+    -fx-font-family: "HelveticaNowDisplay Bold";
+}
+
+.h2-bold {
     -fx-font-size: 3em;
-    -fx-font-weight: bold;
+    -fx-font-family: "HelveticaNowDisplay Bold";
+
+}
+
+.h3-bold {
+    -fx-font-size: 2em;
+    -fx-font-family: "HelveticaNowDisplay Bold";
+}
+
+.h4-bold {
+    -fx-font-size: 1.5em;
+    -fx-font-family: "HelveticaNowDisplay Bold";
+}
+
+.h5-bold {
+    -fx-font-size: 1.2em;
+    -fx-font-family: "HelveticaNowDisplay Bold";
+}
+
+.h6-bold {
+    -fx-font-size: 0.8em;
+    -fx-font-family: "HelveticaNowDisplay Bold";
+}
+
+.h1 {
+    -fx-font-size: 4em;
+    -fx-font-family: "HelveticaNowDisplay Regular";
 }
 
 .h2 {
-    -fx-font-size: 2em;
-    -fx-font-weight: bold;
+    -fx-font-size: 3em;
+    -fx-font-family: "HelveticaNowDisplay Regular";
 }
 
 .h3 {
-    -fx-font-size: 1.5em;
-    -fx-font-family: "HelveticaNowDisplay-Bold";
+    -fx-font-size: 2em;
+    -fx-font-family: "HelveticaNowDisplay Regular";
 }
 
 .h4 {
-    -fx-font-size: 1.2em;
+    -fx-font-size: 1.5em;
+    -fx-font-family: "HelveticaNowDisplay Regular";
 }
 
 .h5 {
-    -fx-font-size: 0.8em;
+    -fx-font-size: 1.2em;
+    -fx-font-family: "HelveticaNowDisplay Regular";
 }
 
 .h6 {
-    -fx-font-size: 0.5em;
+    -fx-font-size: 0.8em;
+    -fx-font-family: "HelveticaNowDisplay Regular";
 }
 
 .img-container {
     -fx-background-image: url("../img/main_bg.jpg");
     -fx-background-size: cover;
     -fx-background-position: center center;
+}
+
+.img-container-2 {
+    -fx-background-image: url("../img/main_bg_2.jpeg");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-opacity: 0.5;
 }

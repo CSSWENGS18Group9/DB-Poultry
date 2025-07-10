@@ -9,10 +9,13 @@ import javafx.scene.Parent
 import javafx.scene.Scene
 
 import javafx.scene.text.Font
+import org.db_poultry.util.SceneSwitcher
 
 class MainFrame : Application() {
     override fun start(primaryStage: Stage) {
         loadCustomFonts()
+
+        SceneSwitcher.setPrimaryStage(primaryStage)
 
         try {
             val loader = FXMLLoader(javaClass.getResource("/fxml/login.fxml"))
@@ -24,8 +27,8 @@ class MainFrame : Application() {
                 scene = mainScene
                 title = "DB Poultry"
 
-                setMinWidth(600.0)
-                setMinHeight(400.0)
+                minWidth = 600.0
+                minHeight = 400.0
 
                 // setMaxWidth(600.0)
                 // setMaxHeight(400.0)

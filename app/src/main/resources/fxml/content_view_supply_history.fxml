@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: FEFAE0; -fx-pref-height: 720; -fx-pref-width: 1280;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.ViewSupplyHistoryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: FEFAE0; -fx-pref-height: 720; -fx-pref-width: 1280;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.ViewSuppliesController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="618.0" layoutX="95.0" layoutY="51.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 15; -fx-arc-width: 15;" width="1091.0">
          <effect>
@@ -30,12 +30,12 @@
             <TableColumn fx:id="currAmountCol" prefWidth="193.0" text="Current Amount" />
          </columns>
       </TableView>
-      <Button fx:id="currentHistoryBtn" layoutX="494.0" layoutY="606.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Current History" textFill="WHITE">
+      <Button fx:id="currentHistoryBtn" layoutX="494.0" layoutY="606.0" mnemonicParsing="false" onAction="#navigateToViewSupplies" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Current History" textFill="WHITE">
          <font>
             <Font name="HelveticaNowDisplay-Light" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="dateHistoryBtn" layoutX="686.0" layoutY="606.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Date History" textFill="WHITE">
+      <Button fx:id="dateHistoryBtn" layoutX="686.0" layoutY="606.0" mnemonicParsing="false" onAction="#navigateToViewDateHistory" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Date History" textFill="WHITE">
          <font>
             <Font name="HelveticaNowDisplay-Light" size="15.0" />
          </font>

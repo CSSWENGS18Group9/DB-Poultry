@@ -18,20 +18,29 @@ import javafx.scene.Node
     *     SceneSwitcher.switchTo(button, "/home.fxml")
     */
 object SceneSwitcher {
+    private var primaryStage: Stage? = null
+
     /**
-     * Switches the entire scene (use only for login/logout screens).
+     * Sets the primary stage reference (call this from your main application class)
+     */
+    fun setPrimaryStage(stage: Stage) {
+        primaryStage = stage
+    }
+
+    /**
+     * Switches the entire scene using the primary stage reference.
      * WARNING: This will remove the sidebar.
      */
-    fun switchTo(node: Node, fxml: String) {
+    fun switchTo(fxml: String) {
         try {
-            val stage = node.scene.window as Stage
+            val stage = primaryStage ?: throw IllegalStateException("Primary stage not set")
             val loader = FXMLLoader(javaClass.getResource(fxml))
             loader.controllerFactory = ControllerManager.controllerFactory
             val root: Parent = loader.load()
-            
+
             val controller = loader.getController<Any>()
             println("Controller for $fxml: ${controller.javaClass.name} (${System.identityHashCode(controller)})")
-            
+
             stage.scene = Scene(root)
         } catch (e: Exception) {
             println("Error switching scene: ${e.message}")
