@@ -7,7 +7,6 @@ import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.theLifesaver.Backup.TL_checkLastBackupDate
-import org.db_poultry.theLifesaver.Backup.*
 import org.db_poultry.theLifesaver.TL.TL_firstOpen
 import org.db_poultry.theLifesaver.Config.TL_loadConfig
 import org.db_poultry.theLifesaver.TL.wipe
@@ -17,6 +16,8 @@ class App {
     lateinit var databaseName: String
     lateinit var databasePass: String
     lateinit var databasePort: String
+
+    lateinit var UIDefaultImagePath: String // FIXME @dattebayo add the default image path here
 
     fun getDotEnv(): Boolean {
         try {
