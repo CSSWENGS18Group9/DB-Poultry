@@ -148,7 +148,9 @@ public class CreateFlockDetails {
         // [i_Flock.startingDate, j_Flock.startingDate] where i < j (i comes before j)
         Date nextStartDate = null;
         try (PreparedStatement drStmt = conn.prepareStatement("""
-                    SELECT MIN(Starting_Date) AS nextStartDate FROM Flock WHERE Starting_Date > ?
+                    SELECT MIN(Starting_Date) AS nextStartDate 
+                    FROM Flock 
+                    WHERE Starting_Date > ?
                 """)) {
             drStmt.setDate(1, flock.getStartingDate());
             try (ResultSet rs = drStmt.executeQuery()) {
