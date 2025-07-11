@@ -1,3 +1,9 @@
+package org.db_poultry.db
+
+import org.db_poultry.errors.generateErrorMessage
+import java.sql.Connection
+import java.sql.SQLException
+
 fun cleanTables(conn: Connection?) {
     if (conn == null) {
         generateErrorMessage(
