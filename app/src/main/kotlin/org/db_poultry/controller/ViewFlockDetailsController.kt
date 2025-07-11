@@ -56,7 +56,6 @@ class ViewFlockDetailsController : Initializable {
 
         val latestDetail = ReadFlockDetails.getMostRecent(DBConnect.getConnection(), currentFlockDate)
 
-
         dateStartedLabel.text = currentFlockDate.toString()
         quantityStartedLabel.text = currentFlockQuantity.toString()
 
@@ -64,21 +63,30 @@ class ViewFlockDetailsController : Initializable {
         colDate.cellValueFactory = PropertyValueFactory("fdDate")
         colDepletions.cellValueFactory = PropertyValueFactory("depletedCount")
 
-        colChickenCount.setCellValueFactory { cellData ->
-            val currentFlockQuantity = CurrentFlockInUse.getCurrentFlockComplete()?.flock?.startingCount ?: 0
-            val currentRowIndex = flockRecordsTableView.items.indexOf(cellData.value)
-
-            val cumulativeDepletions = flockRecordsTableView.items
-                .take(currentRowIndex + 1)
-                .sumOf { it.depletedCount }
-
-            javafx.beans.property.SimpleIntegerProperty(currentFlockQuantity - cumulativeDepletions).asObject()
-        }
         if (latestDetail != null) {
             val flockDetailsList: List<FlockDetails> =
                 ReadFlockDetails.getFlockDetailsFromDate(DBConnect.getConnection(), currentFlockDate, currentFlockDate, latestDetail.fdDate)
-            val observableList = FXCollections.observableArrayList(flockDetailsList)
 
+            // INSERT THE NEW CODE HERE - Precompute cumulative depletions
+            val cumulativeDepletions = flockDetailsList.runningFold(0) { acc, detail ->
+                acc + detail.depletedCount
+            }.drop(1)
+
+            // UPDATE THE CELL FACTORY HERE
+            colChickenCount.setCellValueFactory { cellData ->
+                val currentFlockQuantity = CurrentFlockInUse.getCurrentFlockComplete()?.flock?.startingCount ?: 0
+                val rowIndex = flockRecordsTableView.items.indexOf(cellData.value)
+
+                val remainingChickens = if (rowIndex >= 0 && rowIndex < cumulativeDepletions.size) {
+                    currentFlockQuantity - cumulativeDepletions[rowIndex]
+                } else {
+                    currentFlockQuantity
+                }
+
+                javafx.beans.property.SimpleIntegerProperty(remainingChickens).asObject()
+            }
+
+            val observableList = FXCollections.observableArrayList(flockDetailsList)
             flockRecordsTableView.items = observableList
         }
 
