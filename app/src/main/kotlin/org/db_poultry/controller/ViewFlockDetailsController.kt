@@ -66,10 +66,14 @@ class ViewFlockDetailsController : Initializable {
 
         colChickenCount.setCellValueFactory { cellData ->
             val currentFlockQuantity = CurrentFlockInUse.getCurrentFlockComplete()?.flock?.startingCount ?: 0
-            val depletedCount = cellData.value.depletedCount
-            javafx.beans.property.SimpleIntegerProperty(currentFlockQuantity - depletedCount).asObject()
-        }
+            val currentRowIndex = flockRecordsTableView.items.indexOf(cellData.value)
 
+            val cumulativeDepletions = flockRecordsTableView.items
+                .take(currentRowIndex + 1)
+                .sumOf { it.depletedCount }
+
+            javafx.beans.property.SimpleIntegerProperty(currentFlockQuantity - cumulativeDepletions).asObject()
+        }
         if (latestDetail != null) {
             val flockDetailsList: List<FlockDetails> =
                 ReadFlockDetails.getFlockDetailsFromDate(DBConnect.getConnection(), currentFlockDate, currentFlockDate, latestDetail.fdDate)
