@@ -178,7 +178,8 @@ public class CreateFlockDetails {
                     GROUP BY Flock_ID
                 ) Details ON Flock.Flock_ID = Details.Flock_ID
                 WHERE Flock.Flock_ID != ?
-                  AND ? BETWEEN Flock.Starting_Date AND COALESCE(Details.endDate, Flock.Starting_Date)
+                  AND ? BETWEEN Flock.Starting_Date 
+                  AND COALESCE(Details.endDate, Flock.Starting_Date)
                 """;
 
         int overlaps = 0;
