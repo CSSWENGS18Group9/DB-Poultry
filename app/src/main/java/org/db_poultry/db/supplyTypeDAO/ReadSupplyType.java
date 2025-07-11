@@ -111,7 +111,7 @@ public class ReadSupplyType {
                     FROM Supply_Type st
                     JOIN Supply_Record sr ON st.supply_type_id = sr.supply_type_id
                     GROUP BY st.supply_type_id, st.supply_name, st.unit, st.image_file_path
-                    ORDER BY MAX(sr.sr_date)
+                    ORDER BY MAX(sr.sr_date) DESC 
                 """)) {
             return getSupplyTypeList(pstmt);
         } catch (SQLException e) {
