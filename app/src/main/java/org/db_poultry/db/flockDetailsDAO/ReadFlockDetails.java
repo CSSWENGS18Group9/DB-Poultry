@@ -35,8 +35,12 @@ public class ReadFlockDetails {
         }
 
         try (PreparedStatement preppedStatement = conn.prepareStatement("""
-                SELECT * FROM Flock_Details LEFT JOIN Flock ON Flock.Flock_ID = Flock_Details.Flock_ID 
-                WHERE (Flock.Starting_Date = ?) AND (Flock_Details.FD_Date BETWEEN ? AND ?) ORDER BY Flock_Details.FD_Date
+                SELECT fd.Flock_Details_ID, fd.Flock_ID, fd.FD_Date, fd.Depleted_Count
+                FROM Flock_Details 
+                LEFT JOIN Flock ON Flock.Flock_ID = Flock_Details.Flock_ID 
+                WHERE (Flock.Starting_Date = ?) 
+                AND (Flock_Details.FD_Date BETWEEN ? AND ?) 
+                ORDER BY Flock_Details.FD_Date
                 """)) {
 
             preppedStatement.setDate(1, flockDate);
@@ -47,13 +51,10 @@ public class ReadFlockDetails {
                 List<FlockDetails> flockDetails = new ArrayList<>();
                 while (result.next()) {
                     // Gets results per row from the SQL output
-                    int flockDetailsID = result.getInt("Flock_Details_ID"); // Gets the output from the column named
-                    // Flock_Details_ID
-                    int flockID = result.getInt("Flock_ID"); // Gets the output from the column named Flock_ID
-                    Date flockDetailsDate = result.getDate("FD_Date"); // Gets the output from the column named FD_Date
-                    int depletedCount = result.getInt("Depleted_Count"); // Gets the output from the column named
-                    // Depleted_Count
-
+                    int flockDetailsID = result.getInt("Flock_Details_ID"); 
+                    int flockID = result.getInt("Flock_ID");
+                    Date flockDetailsDate = result.getDate("FD_Date"); 
+                    int depletedCount = result.getInt("Depleted_Count"); 
 
                     FlockDetails returnedFlockDetails = new FlockDetails(flockDetailsID, flockID, flockDetailsDate,
                             depletedCount); // Creates a flock object to be returned
@@ -203,7 +204,10 @@ public class ReadFlockDetails {
         FlockComplete flockChosen = flocks.get(flockID);
         int flockStartingCount = flockChosen.getFlock().getStartingCount();
 
-        try (PreparedStatement preppedStatement = connect.prepareStatement("SELECT SUM(Depleted_Count) AS Total_Count_Depleted FROM Flock_Details WHERE Flock_ID = ? AND FD_Date < ?")) {
+        try (PreparedStatement preppedStatement = connect.prepareStatement("""
+            SELECT SUM(Depleted_Count) AS Total_Count_Depleted FROM Flock_Details 
+            WHERE Flock_ID = ? AND FD_Date < ?
+            """)) {
             preppedStatement.setInt(1, flockID);
             preppedStatement.setDate(2, targetDate);
 
@@ -215,7 +219,8 @@ public class ReadFlockDetails {
             return sum; // Returns the total depleted count
 
         } catch (SQLException e) {
-            generateErrorMessage("Error in `cumulativeDepletedCount()`.", "SQLException occurred.", "", e);
+            generateErrorMessage("Error in `cumulativeDepletedCount()`.", 
+            "SQLException occurred.", "", e);
             return -1;
         }
 

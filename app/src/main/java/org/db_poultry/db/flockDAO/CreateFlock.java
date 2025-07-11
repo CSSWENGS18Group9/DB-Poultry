@@ -95,9 +95,15 @@ public class CreateFlock {
         // check if the inserted date is not overlapping with another flock range
         // we defn a flock range as the date range from [Flock.startDate, Flock.(last)Flock Detail.detail_date]
         try (PreparedStatement pstmt = conn.prepareStatement("""
-                SELECT COUNT(*) AS overlaps FROM Flock LEFT JOIN (SELECT Flock_ID, MAX(FD_Date) as endDate
-                FROM Flock_Details GROUP BY Flock_ID) Details ON Flock.Flock_ID = Details.Flock_ID WHERE ?
-                BETWEEN Flock.Starting_Date AND COALESCE(Details.endDate, Flock.Starting_Date)
+            SELECT COUNT(*) AS overlaps
+                FROM Flock
+                LEFT JOIN (
+                    SELECT Flock_ID, MAX(FD_Date) AS endDate
+                    FROM Flock_Details
+                    GROUP BY Flock_ID
+                ) Details ON Flock.Flock_ID = Details.Flock_ID
+                WHERE ? BETWEEN Flock.Starting_Date 
+                AND COALESCE(Details.endDate, Flock.Starting_Date)
                 """.stripIndent())) {
             pstmt.setDate(1, actualDate);
 
