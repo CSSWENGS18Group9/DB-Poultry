@@ -19,25 +19,15 @@ public class ReadSupplyType {
      * @param conn the JDBC connection
      * @return an arraylist containing all the supply types
      * <p>
-     * To be used by the QA team for their user views. Not to be used outside of this. This is a costly function!
+     * To be used by the UI team for their user views. Not to be used outside of this. This is a costly function!
+     * </p>
      */
     public static ArrayList<SupplyType> getAllSupplyTypes(Connection conn) {
         try (PreparedStatement pstmt = conn.prepareStatement("""
-                SELECT supply_type_id, supply_name, unit FROM Supply_Type
+                SELECT supply_type_id, supply_name, unit, image_file_path FROM Supply_Type
                 """)) {
 
-            try (ResultSet rs = pstmt.executeQuery()) {
-                ArrayList<SupplyType> supplyTypes = new ArrayList<>();
-
-                while (rs.next()) {
-                    int id = rs.getInt("supply_type_id");
-                    String name = rs.getString("supply_name");
-                    String unit = rs.getString("unit");
-                    supplyTypes.add(new SupplyType(id, name, unit));
-                }
-
-                return supplyTypes;
-            }
+            return getSupplyTypeList(pstmt);
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `getAllSupplyTypes()` in `ReadSupplyType`.",
@@ -51,6 +41,92 @@ public class ReadSupplyType {
     }
 
     /**
+     * Gets all supply types in database, sorted by alphabetical order
+     *
+     * @param conn the JDBC connection
+     * @return a SORTED array list of all the supply types in alpha order
+     * <p>
+     * To be used by the UI team for their user views. Not to be used outside of this. This is a costly function!
+     * </p>
+     */
+    public static ArrayList<SupplyType> getSupplyTypeAscending(Connection conn) {
+        try (PreparedStatement pstmt = conn.prepareStatement("""
+                    SELECT st.supply_type_id, st.supply_name, st.unit, st.image_file_path
+                    FROM Supply_Type st
+                    ORDER BY st.supply_name ASC
+                """)) {
+            return getSupplyTypeList(pstmt);
+        } catch (SQLException e) {
+            generateErrorMessage(
+                    "Error in `getSupplyTypeAscending()` in `ReadSupplyType`.",
+                    "SQL Exception error occurred",
+                    "",
+                    e
+            );
+        }
+        return null;
+    }
+
+
+    /**
+     * Gets all supply types in database, sorted by reverse alphabetical order
+     *
+     * @param conn the JDBC connection
+     * @return a SORTED array list of all the supply types in alpha order
+     * <p>
+     * To be used by the UI team for their user views. Not to be used outside of this. This is a costly function!
+     * </p>
+     */
+    public static ArrayList<SupplyType> getSupplyTypeDescending(Connection conn) {
+        try (PreparedStatement pstmt = conn.prepareStatement("""
+                    SELECT st.supply_type_id, st.supply_name, st.unit, st.image_file_path
+                    FROM Supply_Type st
+                    ORDER BY st.supply_name DESC
+                """)) {
+            return getSupplyTypeList(pstmt);
+        } catch (SQLException e) {
+            generateErrorMessage(
+                    "Error in `getSupplyTypeDescending()` in `ReadSupplyType`.",
+                    "SQL Exception error occurred",
+                    "",
+                    e
+            );
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets all supply types in database, sorted by when they are last updated/used
+     *
+     * @param conn the JDBC connection
+     * @return a SORTED array list of all the supply types in alpha order
+     * <p>
+     * To be used by the UI team for their user views. Not to be used outside of this. This is a costly function!
+     * </p>
+     */
+    public static ArrayList<SupplyType> getSupplyTypeByLastUpdate(Connection conn) {
+        try (PreparedStatement pstmt = conn.prepareStatement("""
+                    SELECT st.supply_type_id, st.supply_name, st.unit, st.image_file_path
+                    FROM Supply_Type st
+                    JOIN Supply_Record sr ON st.supply_type_id = sr.supply_type_id
+                    GROUP BY st.supply_type_id, st.supply_name, st.unit, st.image_file_path
+                    ORDER BY MAX(sr.sr_date)
+                """)) {
+            return getSupplyTypeList(pstmt);
+        } catch (SQLException e) {
+            generateErrorMessage(
+                    "Error in `getSupplyTypeByLastUpdate()` in `ReadSupplyType`.",
+                    "SQL Exception error occurred",
+                    "",
+                    e
+            );
+        }
+
+        return null;
+    }
+
+    /**
      * Gets a supply type by the name, used for uniqueness validation
      *
      * @param conn the JDBC connection
@@ -59,7 +135,7 @@ public class ReadSupplyType {
      */
     public static SupplyType getSupplyTypeByName(Connection conn, String name) {
         try (PreparedStatement pstmt = conn.prepareStatement("""
-                SELECT supply_type_id, supply_name, unit FROM Supply_Type WHERE supply_name = ?"""
+                SELECT supply_type_id, supply_name, unit, image_file_path FROM Supply_Type WHERE supply_name = ?"""
         )) {
 
             pstmt.setString(1, name);
@@ -86,7 +162,7 @@ public class ReadSupplyType {
      */
     public static SupplyType getSupplyTypeById(Connection conn, int id) {
         try (PreparedStatement pstmt = conn.prepareStatement("""
-                SELECT supply_type_id, supply_name, unit FROM Supply_Type 
+                SELECT supply_type_id, supply_name, unit, image_file_path FROM Supply_Type 
                 WHERE supply_type_id = ?"""
         )) {
 
@@ -118,10 +194,42 @@ public class ReadSupplyType {
                 int supplyTypeId = rs.getInt("supply_type_id");
                 String supplyTypeName = rs.getString("supply_name");
                 String unit = rs.getString("unit");
-                return new SupplyType(supplyTypeId, supplyTypeName, unit);
+                String imageFilePath = rs.getString("image_file_path");
+                return new SupplyType(supplyTypeId, supplyTypeName, unit, imageFilePath);
             }
 
             return null;
+        } catch (SQLException e) {
+            generateErrorMessage(
+                    "Error in `getSupplyType() in `ReadSupplyType`.",
+                    "SQL Exception error occurred",
+                    "",
+                    e
+            );
+
+            return null;
+        }
+    }
+
+    /**
+     * Gets LIST of supply type object given some prepared statement. Not to be used outside of scope.
+     *
+     * @param pstmt the prepared statement
+     * @return the supply type object, {null} if it does not exist
+     */
+    private static ArrayList<SupplyType> getSupplyTypeList(PreparedStatement pstmt) {
+        try (ResultSet rs = pstmt.executeQuery()) {
+            ArrayList<SupplyType> supplyTypes = new ArrayList<>();
+
+            while (rs.next()) {
+                int id = rs.getInt("supply_type_id");
+                String name = rs.getString("supply_name");
+                String unit = rs.getString("unit");
+                String imageFilePath = rs.getString("image_file_path");
+                supplyTypes.add(new SupplyType(id, name, unit, imageFilePath));
+            }
+
+            return supplyTypes;
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `getSupplyType() in `ReadSupplyType`.",
