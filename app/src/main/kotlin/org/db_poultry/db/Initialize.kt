@@ -1,3 +1,10 @@
+package org.db_poultry.db
+
+import java.sql.Connection
+import java.sql.SQLException
+import org.db_poultry.errors.generateErrorMessage
+import kotlin.collections.iterator
+
 fun cleanTables(conn: Connection?) {
     if (conn == null) {
         generateErrorMessage(
