@@ -1,16 +1,19 @@
 package org.db_poultry.db.flockDetailsDAO;
 
-import org.db_poultry.db.flockDAO.ReadFlock;
-import org.db_poultry.pojo.FlockPOJO.FlockComplete;
-import org.db_poultry.pojo.FlockPOJO.FlockDetails;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.db_poultry.db.flockDAO.ReadFlock;
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
+import org.db_poultry.pojo.FlockPOJO.FlockComplete;
+import org.db_poultry.pojo.FlockPOJO.FlockDetails;
 
 public class ReadFlockDetails {
     /**
@@ -185,16 +188,18 @@ public class ReadFlockDetails {
 
         String query = searchQuery.trim().toUpperCase();
 
+        // Year only (e.g., "2025")
         if (query.matches("\\d{4}")) {
             return fetchByYear(conn, Integer.parseInt(query));
         }
 
+        // Full date (e.g., "10-01-2004", "October 1, 2004", "Oct 1, 2004")
         if (query.matches("([A-Z]+|\\d{2})( )*(-)?( )*\\d{1,2}( )*(-|,)?( )*\\d{4}")) {
             return fetchByFullDate(conn, query);
         }
 
         // Month + Year (e.g., "JUNE 2025", "6 2025")
-        if (query.matches("([A-Z]+|\\d{1,2})\\s+\\d{4}")) {
+        if (query.matches("([A-Z]+|\\d{1,2})*-?\\s+\\d{4}")) {
             String[] parts = query.split("\\s+");
             int month = monthToInt(parts[0]);
             int year = Integer.parseInt(parts[1]);
