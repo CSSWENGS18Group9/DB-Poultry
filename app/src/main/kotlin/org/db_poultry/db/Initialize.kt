@@ -34,7 +34,7 @@ fun cleanTables(conn: Connection?) {
             Supply_Type_ID SERIAL PRIMARY KEY,
             Supply_Name VARCHAR(36) UNIQUE NOT NULL CHECK (Supply_Name <> ''),
             Unit VARCHAR(12) NOT NULL CHECK (Unit <> ''),
-            Image_File_Path VARCHAR(255),
+            Image_File_Path VARCHAR(255)
         """.trimIndent(),
 
         "Supply_Record" to """            

@@ -17,8 +17,6 @@ class App {
     lateinit var databasePass: String
     lateinit var databasePort: String
 
-    lateinit var UIDefaultImagePath: String // FIXME @dattebayo add the default image path here
-
     fun getDotEnv(): Boolean {
         try {
             val dotenv = Dotenv.configure()
