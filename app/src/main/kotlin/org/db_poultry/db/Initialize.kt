@@ -1,8 +1,9 @@
 package org.db_poultry.db
 
-import org.db_poultry.errors.generateErrorMessage
 import java.sql.Connection
 import java.sql.SQLException
+import org.db_poultry.errors.generateErrorMessage
+import kotlin.collections.iterator
 
 fun cleanTables(conn: Connection?) {
     if (conn == null) {
@@ -33,7 +34,7 @@ fun cleanTables(conn: Connection?) {
             Supply_Type_ID SERIAL PRIMARY KEY,
             Supply_Name VARCHAR(36) UNIQUE NOT NULL CHECK (Supply_Name <> ''),
             Unit VARCHAR(12) NOT NULL CHECK (Unit <> ''),
-            Image_File_Path VARCHAR(255),
+            Image_File_Path VARCHAR(255)
         """.trimIndent(),
 
         "Supply_Record" to """            
