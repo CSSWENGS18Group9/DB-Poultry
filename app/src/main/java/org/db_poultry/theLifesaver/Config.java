@@ -62,7 +62,7 @@ public class Config {
         } catch (IOException e) {
             generateErrorMessage(
                     "Error at `TL_loadConfig` in `TL`.",
-                    "FATAL. Cannot load file, due to IOException.",
+                    "FATAL. Cannot load file, due to IOException. IF this is the first start, disregard!",
                     "",
                     e
             );
