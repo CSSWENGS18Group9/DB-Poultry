@@ -94,4 +94,52 @@ class ReadSupplyTypeTest {
         val result = ReadSupplyType.getSupplyTypeById(conn, 1)
         assertNull(result)
     }
+
+    @Test
+    fun testGetSupplyTypeAscendingWithData() {
+        CreateSupplyType.createSupplyType(conn, "feed", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
+        CreateSupplyType.createSupplyType(conn, "water", "liter", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
+        val result = ReadSupplyType.getSupplyTypeAscending(conn)
+        assertEquals("feed", result[0].name)
+        assertEquals("water", result[1].name)
+    }
+
+    @Test
+    fun testGetSupplyTypeAscendingWithNoData() {
+        val result = ReadSupplyType.getSupplyTypeAscending(conn)
+        assertNull(result)
+        //assertEquals(emptyList<String>(), result)
+    }
+
+    @Test
+    fun testGetSupplyTypeDescendingWithData() {
+        CreateSupplyType.createSupplyType(conn, "feed", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
+        CreateSupplyType.createSupplyType(conn, "water", "liter", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
+        val result = ReadSupplyType.getSupplyTypeDescending(conn)
+        assertEquals("water", result[0].name)
+        assertEquals("feed", result[1].name)
+    }
+
+    @Test
+    fun testGetSupplyTypeDescendingWithNoData(){
+        val result = ReadSupplyType.getSupplyTypeDescending(conn)
+        assertNull(result)
+        //assertEquals(emptyList<String>(), result)
+    }
+
+    @Test
+    fun testGetSupplyTypeByLastUpdateWithData() {
+        CreateSupplyType.createSupplyType(conn, "feed", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
+        CreateSupplyType.createSupplyType(conn, "water", "liter", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
+        val result = ReadSupplyType.getSupplyTypeByLastUpdate(conn)
+        assertEquals("feed", result[0].name)
+        assertEquals("water", result[1].name)
+    }
+
+    @Test
+    fun testGetSupplyTypeByLastUpdateWithNoData() {
+        val result = ReadSupplyType.getSupplyTypeByLastUpdate(conn)
+        assertNull(result)
+        //assertEquals(emptyList<String>(), result)
+    }
 }
