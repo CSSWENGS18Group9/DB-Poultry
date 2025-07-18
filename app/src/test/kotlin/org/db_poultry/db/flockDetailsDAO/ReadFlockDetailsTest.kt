@@ -547,7 +547,7 @@ class ReadFlockDetailsTest {
     }
 
     @Test
-    fun testSearchFlockDetailsWithInvalidInputForMonthNumeric() {
+    fun testSearchFlockDetailsWithValidInputForMonthNumericBuffer() {
         val dateFlock = Date.valueOf("1000-01-01")
         val dateOne = Date.valueOf("1000-02-01")
         val dateTwo = Date.valueOf("1000-03-01")
@@ -561,7 +561,9 @@ class ReadFlockDetailsTest {
 
         val result = ReadFlockDetails.searchFlockDetails(conn, "5")
 
-        assertNull(result)
+        assertEquals(1, result.size)
+        assertEquals(dateThree, result[0].fdDate)
+        assertEquals(15, result[0].depletedCount)
     }
 
     @Test
