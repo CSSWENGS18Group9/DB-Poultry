@@ -87,7 +87,7 @@ class App {
 val __CLIENT_MODE: Boolean = true
 
 // Do clean database. Should always be FALSE!
-val __DO_WIPE: Boolean = false
+val __DO_WIPE: Boolean = true
 
 fun main() {
     val app = App()
