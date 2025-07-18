@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import java.sql.Connection
 import java.sql.Date
+import kotlin.test.assertNotNull
 
 class ReadFlockDetailsTest {
     private var jdbcURL: String
@@ -348,4 +349,311 @@ class ReadFlockDetailsTest {
         assertNull(flockDetailsList)
     }
 
+    // SEARCH TESTING TIME WOOHOO!
+    @Test
+    fun testSearchFlockDetailsWithValidInputForFetchByYear() {
+        val dateFlock = Date.valueOf("1000-01-01")
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlock)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateThree, 15)
+
+        val result = ReadFlockDetails.searchFlockDetails(conn, "1000")
+
+        assertEquals(3, result.size)
+        assertEquals(dateOne, result[0].fdDate)
+        assertEquals(5, result[0].depletedCount)
+    }
+
+    @Test
+    fun testSearchFlockDetailsWithValidInputForFetchByFullDateFirstVariation() {
+        val dateFlock = Date.valueOf("1000-01-01")
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlock)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateThree, 15)
+
+        val result = ReadFlockDetails.searchFlockDetails(conn, "February 1, 1000")
+        assertEquals(1, result.size)
+        assertEquals(dateOne, result[0].fdDate)
+        assertEquals(5, result[0].depletedCount)
+    }
+
+    @Test
+    fun testSearchFlockDetailsWithValidInputForFetchByFullDateSecondVariation() {
+        val dateFlock = Date.valueOf("1000-01-01")
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlock)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateThree, 15)
+
+        val result = ReadFlockDetails.searchFlockDetails(conn, "Feb 1, 1000")
+        assertEquals(1, result.size)
+        assertEquals(dateOne, result[0].fdDate)
+        assertEquals(5, result[0].depletedCount)
+    }
+
+    @Test
+    fun testSearchFlockDetailsWithValidInputForFetchByFullDateThirdVariation() {
+        val dateFlock = Date.valueOf("1000-01-01")
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlock)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateThree, 15)
+
+        val result = ReadFlockDetails.searchFlockDetails(conn, "02-01-1000")
+        assertEquals(1, result.size)
+        assertEquals(dateOne, result[0].fdDate)
+        assertEquals(5, result[0].depletedCount)
+    }
+
+    @Test
+    fun testSearchFlockDetailsWithValidInputForMonthOnly() {
+        val dateFlock = Date.valueOf("1000-01-01")
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+        val dateFour = Date.valueOf("1000-02-02")
+        val dateFive = Date.valueOf("1000-02-03")
+
+        CreateFlock.createFlock(conn, 100, dateFlock)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateThree, 15)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateFour, 20)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateFive, 25)
+
+        val result = ReadFlockDetails.searchFlockDetails(conn, "February")
+        assertEquals(3, result.size)
+        assertEquals(dateOne, result[0].fdDate)
+        assertEquals(5, result[0].depletedCount)
+        assertEquals(dateFour, result[1].fdDate)
+        assertEquals(20, result[1].depletedCount)
+        assertEquals(dateFive, result[2].fdDate)
+        assertEquals(25, result[2].depletedCount)
+    }
+
+    @Test
+    fun testSearchFlockDetailsWithValidInputForMonthAndYearText() {
+        val dateFlock = Date.valueOf("1000-01-01")
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlock)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateThree, 15)
+
+        val result = ReadFlockDetails.searchFlockDetails(conn, "February 1000")
+        assertEquals(1, result.size)
+        assertEquals(dateOne, result[0].fdDate)
+        assertEquals(5, result[0].depletedCount)
+    }
+
+    @Test
+    fun testSearchFlockDetailsWithValidInputForMonthAndYearNumeric() {
+        val dateFlock = Date.valueOf("1000-01-01")
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlock)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateThree, 15)
+
+        val result = ReadFlockDetails.searchFlockDetails(conn, "2 1000")
+        assertEquals(1, result.size)
+        assertEquals(dateOne, result[0].fdDate)
+        assertEquals(5, result[0].depletedCount)
+    }
+
+    @Test
+    fun testSearchFlockDetailsWithValidInputForMonthAndYearDash() {
+        val dateFlock = Date.valueOf("1000-01-01")
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlock)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateThree, 15)
+
+        val result = ReadFlockDetails.searchFlockDetails(conn, "02-1000")
+        assertEquals(1, result.size)
+        assertEquals(dateOne, result[0].fdDate)
+        assertEquals(5, result[0].depletedCount)
+    }
+
+    @Test
+    fun testSearchFlockDetailsWithInvalidInputForYear() {
+        val dateFlock = Date.valueOf("1000-01-01")
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlock)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateThree, 15)
+
+        val result = ReadFlockDetails.searchFlockDetails(conn, "1001")
+
+        assertNull(result)
+    }
+
+    @Test
+    fun testSearchFlockDetailsWithInvalidInputForMonth() {
+        val dateFlock = Date.valueOf("1000-01-01")
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlock)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateThree, 15)
+
+        val result = ReadFlockDetails.searchFlockDetails(conn, "December")
+
+        assertNull(result)
+    }
+
+    @Test
+    fun testSearchFlockDetailsWithValidInputForMonthNumericBuffer() {
+        val dateFlock = Date.valueOf("1000-01-01")
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlock)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateThree, 15)
+
+        val result = ReadFlockDetails.searchFlockDetails(conn, "5")
+
+        assertEquals(1, result.size)
+        assertEquals(dateThree, result[0].fdDate)
+        assertEquals(15, result[0].depletedCount)
+    }
+
+    @Test
+    fun testSearchFlockDetailsWithInvalidInputForMonthAndYearText() {
+        val dateFlock = Date.valueOf("1000-01-01")
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlock)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateThree, 15)
+
+        val result = ReadFlockDetails.searchFlockDetails(conn, "March 2000")
+
+        assertNull(result)
+    }
+
+    @Test
+    fun testSearchFlockDetailsInputForMonthAndYearNumericDNE() {
+        val dateFlock = Date.valueOf("1000-01-01")
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlock)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateThree, 15)
+
+        val result = ReadFlockDetails.searchFlockDetails(conn, "3 2000")
+
+        assertNull(result)
+    }
+
+    @Test
+    fun testSearchFlockDetailsWithInvalidInputForFullDateFirstVariation() {
+        val dateFlock = Date.valueOf("1000-01-01")
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlock)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateThree, 15)
+
+        val result = ReadFlockDetails.searchFlockDetails(conn, "December 1, 1000")
+
+        assertNull(result)
+    }
+
+    @Test
+    fun testSearchFlockDetailsWithInvalidInputForFullDateSecondVariation() {
+        val dateFlock = Date.valueOf("1000-01-01")
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlock)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateThree, 15)
+
+        val result = ReadFlockDetails.searchFlockDetails(conn, "Dec 1, 1000")
+
+        assertNull(result)
+    }
+
+    @Test
+    fun testSearchFlockDetailsWithInvalidInputForFullDateThirdVariation() {
+        val dateFlock = Date.valueOf("1000-01-01")
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateFlock)
+
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateOne, 5)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateTwo, 10)
+        CreateFlockDetails.createFlockDetails(conn, dateFlock, dateThree, 15)
+
+        val result = ReadFlockDetails.searchFlockDetails(conn, "12-01-1000")
+
+        assertNull(result)
+    }
 }
