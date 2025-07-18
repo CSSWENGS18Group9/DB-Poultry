@@ -1,18 +1,13 @@
-package org.db_poultry.db.supplyTypeDAO;
+package org.db_poultry.db.supplyTypeDAO
 
 import org.db_poultry.App
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import java.sql.Connection
-import java.sql.Date
-import java.sql.SQLException
 
-import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
-import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 
 // Test class for ReadSupplyType
 // This class tests the functionality of reading supply types from the database.
@@ -65,25 +60,29 @@ class ReadSupplyTypeTest {
     // - Reading a supply type with an existing ID should return the correct supply type.
     @Test
     fun testGetSupplyTypeByIdExisting() {
-        CreateSupplyType.createSupplyType(conn, "feed", "kg")
+        CreateSupplyType.createSupplyType(conn, "feed", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
+
         val result = ReadSupplyType.getSupplyTypeById(conn, 1)
         assertEquals("feed", result?.name)
         assertEquals("kg", result?.unit)
+        assertEquals("src/main/resources/img/supply-img/Apog.png", result?.imagePath)
     }
 
     // - getSupplyTypeByName should return the correct supply type if the name exists.
     @Test
     fun testGetSupplyTypeByNameExisting() {
-        CreateSupplyType.createSupplyType(conn, "water", "liters")
+        CreateSupplyType.createSupplyType(conn, "water", "liter", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
         val result = ReadSupplyType.getSupplyTypeByName(conn, "water")
         assertEquals("water", result?.name)
-        assertEquals("liters", result?.unit)
+        assertEquals("liter", result?.unit)
+        assertEquals("src/main/resources/img/supply-img/Apog.png", result?.imagePath)
+
     }
 
     // - getSupplyTypeById should return null if the Name is empty
     @Test
     fun testGetSupplyTypeByIdEmptyName() {
-        CreateSupplyType.createSupplyType(conn, "", "kg")
+        CreateSupplyType.createSupplyType(conn, "", "liter", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
         val result = ReadSupplyType.getSupplyTypeById(conn, 1)
         assertNull(result)
     }
@@ -91,8 +90,56 @@ class ReadSupplyTypeTest {
     // - getSupplyTypeById should return null if the ID is empty
     @Test
     fun testGetSupplyTypeByIdEmptyUnit() {
-        CreateSupplyType.createSupplyType(conn, "Feed", "")
+        CreateSupplyType.createSupplyType(conn, "water", "", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
         val result = ReadSupplyType.getSupplyTypeById(conn, 1)
         assertNull(result)
+    }
+
+    @Test
+    fun testGetSupplyTypeAscendingWithData() {
+        CreateSupplyType.createSupplyType(conn, "feed", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
+        CreateSupplyType.createSupplyType(conn, "water", "liter", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
+        val result = ReadSupplyType.getSupplyTypeAscending(conn)
+        assertEquals("feed", result[0].name)
+        assertEquals("water", result[1].name)
+    }
+
+    @Test
+    fun testGetSupplyTypeAscendingWithNoData() {
+        val result = ReadSupplyType.getSupplyTypeAscending(conn)
+        assertNull(result)
+        //assertEquals(emptyList<String>(), result)
+    }
+
+    @Test
+    fun testGetSupplyTypeDescendingWithData() {
+        CreateSupplyType.createSupplyType(conn, "feed", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
+        CreateSupplyType.createSupplyType(conn, "water", "liter", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
+        val result = ReadSupplyType.getSupplyTypeDescending(conn)
+        assertEquals("water", result[0].name)
+        assertEquals("feed", result[1].name)
+    }
+
+    @Test
+    fun testGetSupplyTypeDescendingWithNoData(){
+        val result = ReadSupplyType.getSupplyTypeDescending(conn)
+        assertNull(result)
+        //assertEquals(emptyList<String>(), result)
+    }
+
+    @Test
+    fun testGetSupplyTypeByLastUpdateWithData() {
+        CreateSupplyType.createSupplyType(conn, "feed", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
+        CreateSupplyType.createSupplyType(conn, "water", "liter", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
+        val result = ReadSupplyType.getSupplyTypeByLastUpdate(conn)
+        assertEquals("feed", result[0].name)
+        assertEquals("water", result[1].name)
+    }
+
+    @Test
+    fun testGetSupplyTypeByLastUpdateWithNoData() {
+        val result = ReadSupplyType.getSupplyTypeByLastUpdate(conn)
+        assertNull(result)
+        //assertEquals(emptyList<String>(), result)
     }
 }
