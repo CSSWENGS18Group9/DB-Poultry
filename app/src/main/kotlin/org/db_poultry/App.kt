@@ -5,10 +5,11 @@ import javafx.application.Application
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
+import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.theLifesaver.Backup.TL_checkLastBackupDate
-import org.db_poultry.theLifesaver.TL.TL_firstOpen
 import org.db_poultry.theLifesaver.Config.TL_loadConfig
+import org.db_poultry.theLifesaver.TL.TL_firstOpen
 import org.db_poultry.theLifesaver.TL.wipe
 import java.sql.Connection
 
@@ -81,8 +82,9 @@ class App {
 
     fun getConnection(): Connection? = DBConnect.getConnection()
 }
+
 // checks if the developers are the ones running the code
-val __CLIENT_MODE: Boolean = false
+val __CLIENT_MODE: Boolean = true
 
 // Do clean database. Should always be FALSE!
 val __DO_WIPE: Boolean = false
@@ -91,18 +93,21 @@ fun main() {
     val app = App()
     app.start()
 
-  if (__CLIENT_MODE) {
+    var config: HashMap<String, String>? = null
+    if (__CLIENT_MODE) {
         // Check if this is the first open
-        val config = TL_loadConfig()
-        if (config == null){
+        config = TL_loadConfig()
+        if (config == null)
             TL_firstOpen(app)
-            cleanTables(app.getConnection())
-        } else {
+        else
             TL_checkLastBackupDate(config, app.databaseName, app.databasePass)
-        }
     }
 
     app.connect()
+
+    if (config == null) {
+        cleanTables(app.getConnection());
+    }
 
     // Open MainFrame (index GUI)
     app.openMainFrame()
@@ -110,7 +115,7 @@ fun main() {
     // ==================================================
     // Keep this here but remove before shipping or every release
     // ==================================================
-    if (!__CLIENT_MODE and __DO_WIPE) {
+    if (__DO_WIPE) {
         app.getConnection()?.close()
         wipe(app.databaseName)
     }
