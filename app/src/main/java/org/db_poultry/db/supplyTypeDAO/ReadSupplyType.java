@@ -55,7 +55,12 @@ public class ReadSupplyType {
                     FROM Supply_Type st
                     ORDER BY st.supply_name ASC
                 """)) {
-            return getSupplyTypeList(pstmt);
+            ArrayList<SupplyType> supplyTypes = getSupplyTypeList(pstmt);
+            if (supplyTypes == null) {
+                return null;
+            }
+
+            return supplyTypes.isEmpty() ? null : supplyTypes;
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `getSupplyTypeAscending()` in `ReadSupplyType`.",
@@ -83,7 +88,13 @@ public class ReadSupplyType {
                     FROM Supply_Type st
                     ORDER BY st.supply_name DESC
                 """)) {
-            return getSupplyTypeList(pstmt);
+            ArrayList<SupplyType> supplyTypes = getSupplyTypeList(pstmt);
+            if (supplyTypes == null) {
+                return null;
+            }
+
+            return supplyTypes.isEmpty() ? null : supplyTypes;
+
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `getSupplyTypeDescending()` in `ReadSupplyType`.",
@@ -113,7 +124,13 @@ public class ReadSupplyType {
                     GROUP BY st.supply_type_id, st.supply_name, st.unit, st.image_file_path
                     ORDER BY MAX(sr.sr_date) DESC 
                 """)) {
-            return getSupplyTypeList(pstmt);
+            ArrayList<SupplyType> supplyTypes = getSupplyTypeList(pstmt);
+            if (supplyTypes == null) {
+                return null;
+            }
+
+            return supplyTypes.isEmpty() ? null : supplyTypes;
+
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `getSupplyTypeByLastUpdate()` in `ReadSupplyType`.",
@@ -139,6 +156,7 @@ public class ReadSupplyType {
         )) {
 
             pstmt.setString(1, name);
+
             return getSupplyType(pstmt);
         } catch (SQLException e) {
             generateErrorMessage(
