@@ -68,10 +68,10 @@ fun cleanTables(conn: Connection?) {
         "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Larvicide', 'ml', 'src/main/resources/img/supply-img/Larvicide.png')",
         "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Fly Glue', 'ml', 'src/main/resources/img/supply-img/Fly_Glue.png')",
         "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Disinfectant', 'ml', 'src/main/resources/img/supply-img/Disinfectant.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Starter Feed', 'ml', 'src/main/resources/img/supply-img/Starter_Feed.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Grower Feed', 'ml', 'src/main/resources/img/supply-img/Grower_Feed.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Booster Feed', 'ml', 'src/main/resources/img/supply-img/Booster_Feed.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Finisher Feed', 'ml', 'src/main/resources/img/supply-img/Finisher_Feed.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Starter Feed', 'kg', 'src/main/resources/img/supply-img/Starter_Feed.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Grower Feed', 'kg', 'src/main/resources/img/supply-img/Grower_Feed.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Booster Feed', 'kg', 'src/main/resources/img/supply-img/Booster_Feed.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Finisher Feed', 'kg', 'src/main/resources/img/supply-img/Finisher_Feed.png')",
     )
 
     try {
