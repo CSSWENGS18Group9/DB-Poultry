@@ -248,8 +248,6 @@ public class ReadFlockDetails {
             int day = Integer.parseInt(parts[1]);
             int year = Integer.parseInt(parts[2]);
 
-            System.out.println("SOUT << monthStr: " + monthStr + ", day: " + day + ", year: " + year);
-
             if (day <= 0 || day > 31) return null;
 
             int month = monthToInt(monthStr);
