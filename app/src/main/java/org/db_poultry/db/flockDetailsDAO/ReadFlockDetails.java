@@ -36,11 +36,11 @@ public class ReadFlockDetails {
 
         try (PreparedStatement preppedStatement = conn.prepareStatement("""
                 SELECT fd.Flock_Details_ID, fd.Flock_ID, fd.FD_Date, fd.Depleted_Count
-                FROM Flock_Details 
-                LEFT JOIN Flock ON Flock.Flock_ID = Flock_Details.Flock_ID 
-                WHERE (Flock.Starting_Date = ?) 
-                AND (Flock_Details.FD_Date BETWEEN ? AND ?) 
-                ORDER BY Flock_Details.FD_Date
+                FROM Flock_Details AS fd
+                LEFT JOIN Flock ON Flock.Flock_ID = fd.Flock_ID
+                WHERE (Flock.Starting_Date = ?)
+                AND (fd.FD_Date BETWEEN ? AND ?)
+                ORDER BY fd.FD_Date
                 """)) {
 
             preppedStatement.setDate(1, flockDate);
