@@ -31,38 +31,38 @@ class CreateSupplyTypeTest {
 
     @Test
     fun testCreateSupplyTypeValidInputs() {
-        val result = CreateSupplyType.createSupplyType(conn, "feed", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
+        val result = CreateSupplyType.createSupplyType(conn, "feed", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
         assertEquals("INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES('feed', 'kg', 'src/main/resources/img/supply-img/Apog.png')", result)
     }
 
     @Test
     fun testCreateSupplyTypeDNEImage() {
-        val result = CreateSupplyType.createSupplyType(conn, "feed", "kg", "src/main/resources/img/supply-img/Apog.jng", "src/main/resources/img/supply-img/default.png\n")
+        val result = CreateSupplyType.createSupplyType(conn, "feed", "kg", "src/main/resources/img/supply-img/Apog.jng", "src/main/resources/img/supply-img/default.png")
         assertEquals("INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES('feed', 'kg', 'src/main/resources/img/supply-img/default.png')", result)
     }
 
     @Test
     fun testCreateSupplyTypeEmptyPath() {
-        val result = CreateSupplyType.createSupplyType(conn, "feed", "kg", "", "src/main/resources/img/supply-img/default.png\n")
+        val result = CreateSupplyType.createSupplyType(conn, "feed", "kg", "", "src/main/resources/img/supply-img/default.png")
         assertEquals("INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES('feed', 'kg', 'src/main/resources/img/supply-img/default.png')", result)
     }
 
     @Test
     fun testCreateSupplyTypeWithSameName() {
-        CreateSupplyType.createSupplyType(conn, "Water", "liter", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
-        val result = CreateSupplyType.createSupplyType(conn, "Water", "liter", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
+        CreateSupplyType.createSupplyType(conn, "Water", "liter", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        val result = CreateSupplyType.createSupplyType(conn, "Water", "liter", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
         assertNull(result)
     }
 
     @Test
     fun testCreateSupplyTypeWithEmptyName() {
-        val result = CreateSupplyType.createSupplyType(conn, "", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
+        val result = CreateSupplyType.createSupplyType(conn, "", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
         assertNull(result)
     }
 
     @Test
     fun testCreateSupplyTypeWithEmptyUnit() {
-        val result = CreateSupplyType.createSupplyType(conn, "Water", "", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png\n")
+        val result = CreateSupplyType.createSupplyType(conn, "Water", "", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
         assertNull(result)
     }
 }
