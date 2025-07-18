@@ -5,6 +5,7 @@ import org.db_poultry.db.supplyTypeDAO.CreateSupplyType.createSupplyType
 import org.db_poultry.util.GeneralUtil
 import org.db_poultry.util.undoSingleton
 import org.db_poultry.util.undoTypes
+import org.db_poultry.util.SupplyTypeSingleton
 
 import javafx.fxml.FXML
 import javafx.scene.control.Button
@@ -22,6 +23,8 @@ import javax.imageio.IIOImage
 import javax.imageio.ImageIO
 import javax.imageio.ImageWriteParam
 import javax.imageio.ImageWriter
+import kotlin.compareTo
+import kotlin.div
 
 class CreateSuppliesController: Initializable {
 
@@ -60,21 +63,33 @@ class CreateSuppliesController: Initializable {
             return
         }
 
+        // Prepare path and cropped image, but don't save
+        var imagePath: String? = null
+        var croppedImage: BufferedImage? = null
+        val resourcesDir = File("src/main/resources/img/supply-img")
 
-        if (createSupplyType(getConnection(), supplyName, supplyUnit) != null) {
+        selectedImageFile?.let { file ->
+            if (!resourcesDir.exists()) resourcesDir.mkdirs()
+            val targetFile = File(resourcesDir, "${supplyName.lowercase()}.jpg")
+            imagePath = targetFile.absolutePath
+
+            // Prepare the image but don't write it yet
+            croppedImage = prepareImage(file)
+        }
+
+        if (createSupplyType(getConnection(), supplyName, supplyUnit,
+                imagePath, SupplyTypeSingleton.getUIDefaultImagePath()) != null) {
+
             undoSingleton.setUndoMode(undoTypes.doUndoSupplyType)
             GeneralUtil.showPopup("success", "Supply type created successfully.")
-            println("Successfully created Supply type.")
 
-            selectedImageFile?.let { file ->
-                val resourcesDir = File("src/main/resources/img/supply-img")
-                if (!resourcesDir.exists()) resourcesDir.mkdirs()
-                val targetFile = File(resourcesDir, "${supplyName.lowercase()}.jpg")
-
-                // Crop and compress all images to JPEG
-                cropCenterSquareAndCompress(file, targetFile)
-                println("Image copied to: ${targetFile.absolutePath}")
+            // Supply type created successfully, save the image
+            if (croppedImage != null && imagePath != null) {
+                saveProcessedImage(croppedImage, File(imagePath))
+                println("Image saved to: $imagePath")
             }
+
+            println("Successfully created Supply type.")
         } else {
             GeneralUtil.showPopup("error", "Failed to create Supply type.")
             println("Failed to create Supply type.")
@@ -110,32 +125,52 @@ class CreateSuppliesController: Initializable {
         }
     }
 
-    fun cropCenterSquareAndCompress(inputFile: File, outputFile: File, maxSizeBytes: Long = 2 * 1024 * 1024) {
+    private fun prepareImage(inputFile: File): BufferedImage {
         val original: BufferedImage = ImageIO.read(inputFile)
         val size = minOf(original.width, original.height)
         val x = (original.width - size) / 2
         val y = (original.height - size) / 2
-        val cropped = original.getSubimage(x, y, size, size)
+        return original.getSubimage(x, y, size, size)
+    }
 
-        val writers = ImageIO.getImageWritersByFormatName("jpg")
-        val writer: ImageWriter = writers.next()
+    private fun saveProcessedImage(image: BufferedImage, outputFile: File, maxSizeBytes: Long = 2 * 1024 * 1024) {
+        // Convert to a color model compatible with JPEG
+        val rgbImage = BufferedImage(image.width, image.height, BufferedImage.TYPE_INT_RGB)
+        rgbImage.createGraphics().apply {
+            drawImage(image, 0, 0, null)
+            dispose()
+        }
+
         var quality = 1.0f
 
-        do {
-            val param = writer.defaultWriteParam
-            param.compressionMode = ImageWriteParam.MODE_EXPLICIT
-            param.compressionQuality = quality
+        try {
+            do {
+                // Create new writer for each attempt
+                val writer = ImageIO.getImageWritersByFormatName("jpg").next()
+                val param = writer.defaultWriteParam
+                param.compressionMode = ImageWriteParam.MODE_EXPLICIT
+                param.compressionQuality = quality
 
-            FileOutputStream(outputFile).use { fos ->
-                writer.output = ImageIO.createImageOutputStream(fos)
-                writer.write(null, IIOImage(cropped, null, null), param)
-            }
+                outputFile.outputStream().use { fos ->
+                    ImageIO.createImageOutputStream(fos).use { ios ->
+                        writer.output = ios
+                        writer.write(null, IIOImage(rgbImage, null, null), param)
+                        ios.flush()
+                    }
+                }
 
-            if (outputFile.length() <= maxSizeBytes || quality < 0.1f) break
-            quality -= 0.1f
-        } while (true)
+                writer.dispose()
 
-        writer.dispose()
+                if (outputFile.length() <= maxSizeBytes || quality < 0.1f) break
+                quality -= 0.1f
+                println("Reducing quality to: $quality")
+            } while (true)
+
+            println("Final image size: ${outputFile.length()} bytes")
+        } catch (e: Exception) {
+            println("Error saving image: ${e.message}")
+            e.printStackTrace()
+        }
     }
 
 }

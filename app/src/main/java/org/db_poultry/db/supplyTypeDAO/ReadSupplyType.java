@@ -55,7 +55,12 @@ public class ReadSupplyType {
                     FROM Supply_Type st
                     ORDER BY st.supply_name ASC
                 """)) {
-            return getSupplyTypeList(pstmt);
+            ArrayList<SupplyType> supplyTypes = getSupplyTypeList(pstmt);
+            if (supplyTypes == null) {
+                return null;
+            }
+
+            return supplyTypes.isEmpty() ? null : supplyTypes;
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `getSupplyTypeAscending()` in `ReadSupplyType`.",
@@ -83,7 +88,13 @@ public class ReadSupplyType {
                     FROM Supply_Type st
                     ORDER BY st.supply_name DESC
                 """)) {
-            return getSupplyTypeList(pstmt);
+            ArrayList<SupplyType> supplyTypes = getSupplyTypeList(pstmt);
+            if (supplyTypes == null) {
+                return null;
+            }
+
+            return supplyTypes.isEmpty() ? null : supplyTypes;
+
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `getSupplyTypeDescending()` in `ReadSupplyType`.",
@@ -107,13 +118,22 @@ public class ReadSupplyType {
      */
     public static ArrayList<SupplyType> getSupplyTypeByLastUpdate(Connection conn) {
         try (PreparedStatement pstmt = conn.prepareStatement("""
-                    SELECT st.supply_type_id, st.supply_name, st.unit, st.image_file_path
+                    SELECT st.supply_type_id, st.supply_name, st.unit, st.image_file_path, MAX(sr.sr_date) AS latest_date
                     FROM Supply_Type st
-                    JOIN Supply_Record sr ON st.supply_type_id = sr.supply_type_id
+                    LEFT JOIN Supply_Record sr ON st.supply_type_id = sr.supply_type_id
                     GROUP BY st.supply_type_id, st.supply_name, st.unit, st.image_file_path
-                    ORDER BY MAX(sr.sr_date) DESC 
+                    ORDER BY
+                        CASE WHEN MAX(sr.sr_date) IS NULL THEN 1 ELSE 0 END, 
+                        MAX(sr.sr_date) DESC
                 """)) {
-            return getSupplyTypeList(pstmt);
+            ArrayList<SupplyType> supplyTypes = getSupplyTypeList(pstmt);
+
+            if (supplyTypes == null) {
+                return null;
+            }
+
+            return supplyTypes.isEmpty() ? null : supplyTypes;
+
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `getSupplyTypeByLastUpdate()` in `ReadSupplyType`.",
@@ -139,6 +159,7 @@ public class ReadSupplyType {
         )) {
 
             pstmt.setString(1, name);
+
             return getSupplyType(pstmt);
         } catch (SQLException e) {
             generateErrorMessage(
