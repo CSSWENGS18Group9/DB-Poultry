@@ -1,9 +1,8 @@
 package org.db_poultry.db
 
-import org.db_poultry.errors.generateErrorMessage
 import java.sql.Connection
 import java.sql.SQLException
-
+import org.db_poultry.errors.generateErrorMessage
 fun cleanTables(conn: Connection?) {
     if (conn == null) {
         generateErrorMessage(
@@ -15,11 +14,6 @@ fun cleanTables(conn: Connection?) {
     }
 
     val databaseTables = linkedMapOf(
-        // FOR ONES WITH FOREIGN KEYS: Order matters here
-        // Key: table name, Value: table schema (columns)
-        // format:
-        // "table name" to "columns, no need for parenthesis"
-
         "Flock" to """
             Flock_ID SERIAL PRIMARY KEY,
             Starting_Count INTEGER CHECK (Starting_Count > 0) NOT NULL,
@@ -36,23 +30,33 @@ fun cleanTables(conn: Connection?) {
 
         "Supply_Type" to """
             Supply_Type_ID SERIAL PRIMARY KEY,
-            Supply_Name TEXT UNIQUE NOT NULL CHECK (Supply_Name <> ''),
-            Unit VARCHAR(12) NOT NULL CHECK (Unit <> '')
+            Supply_Name VARCHAR(36) UNIQUE NOT NULL CHECK (Supply_Name <> ''),
+            Unit VARCHAR(12) NOT NULL CHECK (Unit <> ''),
+            Image_File_Path VARCHAR(255)
         """.trimIndent(),
 
         "Supply_Record" to """            
-                Supply_ID SERIAL PRIMARY KEY,
-                Supply_Type_ID INT  NOT NULL,
-                SR_Date DATE NOT NULL,
-                Added NUMERIC(12, 4),
-                Consumed NUMERIC(12, 4),
-                Retrieved BOOLEAN,
-                FOREIGN KEY (Supply_Type_ID) REFERENCES Supply_Type (Supply_Type_ID) ON DELETE CASCADE,
-                UNIQUE (Supply_Type_ID, SR_Date)
-        """.trimIndent()
+            Supply_ID SERIAL PRIMARY KEY,
+            Supply_Type_ID INT  NOT NULL,
+            SR_Date DATE NOT NULL,
+            Added NUMERIC(12, 4),
+            Consumed NUMERIC(12, 4),
+            Retrieved BOOLEAN,
+            FOREIGN KEY (Supply_Type_ID) REFERENCES Supply_Type (Supply_Type_ID) ON DELETE CASCADE,
+            UNIQUE (Supply_Type_ID, SR_Date)
+        """.trimIndent(),
     )
+
+    val indexQueries = listOf(
+        "CREATE INDEX idx_flock_R_starting_date ON Flock (Starting_Date);",
+
+        "CREATE INDEX idx_flock_details_R_flockid_fddate ON Flock_Details (Flock_ID, FD_Date DESC);",
+
+        "CREATE INDEX idx_flock_R_details_flockid ON Flock_Details (Flock_ID);"
+    )
+
     try {
-        // drop tables in reverse order (dependents first)
+        // Drop tables in reverse order
         for (table in databaseTables.keys.reversed()) {
             val dropQuery = "DROP TABLE IF EXISTS $table CASCADE"
             conn.createStatement().use { stmt ->
@@ -60,13 +64,21 @@ fun cleanTables(conn: Connection?) {
             }
         }
 
-        // create tables in normal order (dependencies first)
+        // Create tables in original order
         for ((table, columns) in databaseTables) {
             val createQuery = "CREATE TABLE $table ($columns)"
             conn.createStatement().use { stmt ->
                 stmt.execute(createQuery)
             }
         }
+
+        // Create indices after tables are created
+        for (query in indexQueries) {
+            conn.createStatement().use { stmt ->
+                stmt.execute(query)
+            }
+        }
+
     } catch (e: SQLException) {
         generateErrorMessage(
             "Error at `cleanTables()` in `Initialize.kt`",

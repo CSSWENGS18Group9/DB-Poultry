@@ -148,7 +148,9 @@ public class CreateFlockDetails {
         // [i_Flock.startingDate, j_Flock.startingDate] where i < j (i comes before j)
         Date nextStartDate = null;
         try (PreparedStatement drStmt = conn.prepareStatement("""
-                    SELECT MIN(Starting_Date) AS nextStartDate FROM Flock WHERE Starting_Date > ?
+                    SELECT MIN(Starting_Date) AS nextStartDate 
+                    FROM Flock 
+                    WHERE Starting_Date > ?
                 """)) {
             drStmt.setDate(1, flock.getStartingDate());
             try (ResultSet rs = drStmt.executeQuery()) {
@@ -176,7 +178,8 @@ public class CreateFlockDetails {
                     GROUP BY Flock_ID
                 ) Details ON Flock.Flock_ID = Details.Flock_ID
                 WHERE Flock.Flock_ID != ?
-                  AND ? BETWEEN Flock.Starting_Date AND COALESCE(Details.endDate, Flock.Starting_Date)
+                  AND ? BETWEEN Flock.Starting_Date 
+                  AND COALESCE(Details.endDate, Flock.Starting_Date)
                 """;
 
         int overlaps = 0;

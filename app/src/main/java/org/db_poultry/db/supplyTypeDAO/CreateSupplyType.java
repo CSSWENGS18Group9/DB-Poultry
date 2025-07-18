@@ -3,6 +3,7 @@ package org.db_poultry.db.supplyTypeDAO;
 import org.db_poultry.util.undoSingleton;
 import org.db_poultry.util.undoTypes;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -10,16 +11,17 @@ import java.sql.SQLException;
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 public class CreateSupplyType {
-
     /**
      * Creates a supply type and does the validation before insertion
      *
      * @param conn       the JDBC connection
      * @param supplyName the name of the supply
      * @param unit       the unit of the supply
+     * @param imagePath  the file path of the supply type image (for the UI)
      * @return the SQL query as a string if it worked, null otherwise
      */
-    public static String createSupplyType(Connection conn, String supplyName, String unit) {
+    public static String createSupplyType(Connection conn, String supplyName, String unit, String imagePath,
+                                          String defaultImagePath) {
         // transform the unit to a valid unit (no whitespace and stuff). If its null, then the unit is invalid
         String validUnit = validation_unitIsValid(unit);
         if (validUnit == null) {
@@ -44,21 +46,24 @@ public class CreateSupplyType {
             );
 
             return null;
-
         }
 
+        // check the image path
+        imagePath = validation_imagePath(imagePath, defaultImagePath);
+
         try (PreparedStatement psmt = conn.prepareStatement("""
-                INSERT INTO supply_type (supply_name, unit) VALUES (?, ?)
+                INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES (?, ?, ?)
                 """)) {
 
             psmt.setString(1, validName);
             psmt.setString(2, validUnit);
+            psmt.setString(3, imagePath);
             psmt.executeUpdate();
 
             undoSingleton.INSTANCE.setUndoMode(undoTypes.doUndoSupplyType);
 
-            return String.format("INSERT INTO supply_type (supply_name, unit) VALUES('%s', '%s')", validName,
-                    validUnit);
+            return String.format("INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES('%s', '%s', '%s')", validName,
+                    validUnit, imagePath);
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `createSupplyType()` in `CreateSupplyType`.",
@@ -88,7 +93,7 @@ public class CreateSupplyType {
      * @param unit the unit
      * @return returns {null} if its invalid/unfixable, {String} the same/fixed unit string
      */
-    public static String validation_unitIsValid(String unit) {
+    private static String validation_unitIsValid(String unit) {
         // (1) remove spaces in between, if a space or a list of spaces does exist replace it with a single space
         //  hello###world (denote # as " ") ===> hello#world
         // (2) remove preceding and trailing spaces
@@ -96,5 +101,29 @@ public class CreateSupplyType {
         unit = unit.replaceAll("\\s+", " ").strip().toLowerCase();
 
         return unit.isEmpty() || unit.length() > 12 ? null : unit;
+    }
+
+    /**
+     * Checks if the image path is invalid, if it is replace it with the default image path.
+     *
+     * @param imagePath the file path of the supply type's icon (UI)
+     * @return imagePath if it is valid, the default image path otherwise
+     */
+    private static String validation_imagePath(String imagePath, String defaultImagePath) {
+        // Check if the path is not null, not empty, and the file exists
+        if (imagePath != null && !imagePath.isEmpty() && new File(imagePath).exists()) {
+            // Get the file extension
+            String ext = imagePath.substring(imagePath.lastIndexOf(".") + 1).toLowerCase();
+
+            // Validate
+            String[] validExtensions = {"png", "jpg", "jpeg"};
+            for (String extension : validExtensions) {
+                if (ext.equals(extension)) {
+                    return imagePath;
+                }
+            }
+        }
+
+        return defaultImagePath;
     }
 }

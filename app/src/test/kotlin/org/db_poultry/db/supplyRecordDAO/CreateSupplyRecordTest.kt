@@ -28,7 +28,7 @@ class CreateSupplyRecordTest {
     fun testCreateSupplyRecordValidInputs() {
         val date = Date.valueOf("2025-01-01")
 
-        CreateSupplyType.createSupplyType(conn, "Test", "kg")
+        CreateSupplyType.createSupplyType(conn, "Test", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
 
         val result = CreateSupplyRecord.createSupplyRecord(
             conn,
@@ -65,7 +65,7 @@ class CreateSupplyRecordTest {
     fun testCreateSupplyRecordWithSameDateAndSameSupplyID() {
         val date = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test", "kg")
+        CreateSupplyType.createSupplyType(conn, "Test", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
 
         CreateSupplyRecord.createSupplyRecord(
             conn,
@@ -93,8 +93,8 @@ class CreateSupplyRecordTest {
     fun testCreateSupplyRecordWithSameDateAndDiffSupplyID() {
         val date = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg")
+        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -127,8 +127,8 @@ class CreateSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg")
+        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -158,8 +158,8 @@ class CreateSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg")
+        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -192,7 +192,7 @@ class CreateSupplyRecordTest {
         val dateOne = Date.valueOf("2025-02-02")
         val dateTwo = Date.valueOf("2025-02-03")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg")
+        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
 
         val resultOne = CreateSupplyRecord.createSupplyRecord(
             conn,
@@ -228,8 +228,7 @@ class CreateSupplyRecordTest {
     fun testCreateSupplyRecordWithOnlyConsume() {
         val date = Date.valueOf("2025-02-03")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg")
-
+        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
 
         val result = CreateSupplyRecord.createSupplyRecord(
             conn,
@@ -248,7 +247,7 @@ class CreateSupplyRecordTest {
     fun testCreateSupplyRecordWithZeroConsumedAndZeroAdded() {
         val date = Date.valueOf("2025-01-01")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg")
+        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
 
         val result = CreateSupplyRecord.createSupplyRecord(
             conn,
@@ -269,7 +268,7 @@ class CreateSupplyRecordTest {
     fun testCreateSupplyRecordWithNegativeInputs() {
         val date = Date.valueOf("2025-02-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg")
+        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
 
         val resultOne = CreateSupplyRecord.createSupplyRecord(
             conn,
@@ -310,7 +309,7 @@ class CreateSupplyRecordTest {
     fun testCreateSupplyRecordWithFiveDecimals() {
         val date = Date.valueOf("2025-02-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg")
+        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
 
         val resultOne = CreateSupplyRecord.createSupplyRecord(
             conn,
@@ -328,7 +327,7 @@ class CreateSupplyRecordTest {
     fun testCreateSupplyRecordWithZeroDecimalPlace() {
         val date = Date.valueOf("2025-01-01")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg")
+        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
 
         val resultOne = CreateSupplyRecord.createSupplyRecord(
             conn,

@@ -20,6 +20,7 @@ import javafx.scene.layout.AnchorPane
 import java.net.URL
 import java.sql.Date
 import java.util.*
+import kotlin.compareTo
 
 class ViewFlockDetailsController : Initializable {
 
@@ -47,40 +48,89 @@ class ViewFlockDetailsController : Initializable {
     @FXML
     lateinit var colChickenCount: TableColumn<FlockDetails, Int>
 
+    private var currentFlockData: Triple<Int?, Date?, Int?>? = null
+    private var cumulativeDepletions: List<Int> = emptyList()
+
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        val currentFlock = CurrentFlockInUse.getCurrentFlockComplete()?.flock?.flockId
-        val currentFlockDate = CurrentFlockInUse.getCurrentFlockComplete()?.flock?.startingDate
-        val currentFlockQuantity = CurrentFlockInUse.getCurrentFlockComplete()?.flock?.startingCount
+        initializeFlockData()
+        setupLabels()
+        setupTableColumns()
+        loadFlockDetails()
+        clearTableSelection()
+    }
 
-        flockNameLabel.text = "Flock $currentFlock - ${GeneralUtil.formatDatePretty(currentFlockDate?.toLocalDate())}"
+    private fun initializeFlockData() {
+        val currentFlockComplete = CurrentFlockInUse.getCurrentFlockComplete()
+        currentFlockData = Triple(
+            currentFlockComplete?.flock?.flockId,
+            currentFlockComplete?.flock?.startingDate,
+            currentFlockComplete?.flock?.startingCount
+        )
+    }
 
-        val latestDetail = ReadFlockDetails.getMostRecent(DBConnect.getConnection(), currentFlockDate)
+    private fun setupLabels() {
+        val (flockId, startingDate, startingCount) = currentFlockData ?: return
 
+        flockNameLabel.text = "Flock $flockId - ${GeneralUtil.formatDatePretty(startingDate?.toLocalDate())}"
+        dateStartedLabel.text = startingDate.toString()
+        quantityStartedLabel.text = startingCount.toString()
+    }
 
-        dateStartedLabel.text = currentFlockDate.toString()
-        quantityStartedLabel.text = currentFlockQuantity.toString()
-
-        // Get data from POJO
+    private fun setupTableColumns() {
         colDate.cellValueFactory = PropertyValueFactory("fdDate")
         colDepletions.cellValueFactory = PropertyValueFactory("depletedCount")
+    }
 
-        colChickenCount.setCellValueFactory { cellData ->
-            val currentFlockQuantity = CurrentFlockInUse.getCurrentFlockComplete()?.flock?.startingCount ?: 0
-            val depletedCount = cellData.value.depletedCount
-            javafx.beans.property.SimpleIntegerProperty(currentFlockQuantity - depletedCount).asObject()
-        }
+    private fun loadFlockDetails() {
+        val (_, startingDate, _) = currentFlockData ?: return
+        val latestDetail = ReadFlockDetails.getMostRecent(DBConnect.getConnection(), startingDate)
 
         if (latestDetail != null) {
-            val flockDetailsList: List<FlockDetails> =
-                ReadFlockDetails.getFlockDetailsFromDate(DBConnect.getConnection(), currentFlockDate, currentFlockDate, latestDetail.fdDate)
-            val observableList = FXCollections.observableArrayList(flockDetailsList)
-
-            flockRecordsTableView.items = observableList
+            val flockDetailsList = getFlockDetailsList(startingDate, latestDetail)
+            computeCumulativeDepletions(flockDetailsList)
+            setupChickenCountColumn()
+            populateTable(flockDetailsList)
         }
+    }
 
-        // Clear blue highlight focus on first row
-        flockRecordsTableView.getSelectionModel().clearSelection()
-        flockRecordsTableView.getFocusModel().focus(-1)
+    private fun getFlockDetailsList(startingDate: Date?, latestDetail: FlockDetails): List<FlockDetails> {
+        return ReadFlockDetails.getFlockDetailsFromDate(
+            DBConnect.getConnection(),
+            startingDate,
+            startingDate,
+            latestDetail.fdDate
+        )
+    }
+
+    private fun computeCumulativeDepletions(flockDetailsList: List<FlockDetails>) {
+        cumulativeDepletions = flockDetailsList.runningFold(0) { acc, detail ->
+            acc + detail.depletedCount
+        }.drop(1)
+    }
+
+    private fun setupChickenCountColumn() {
+        colChickenCount.setCellValueFactory { cellData ->
+            val startingCount = currentFlockData?.third ?: 0
+            val rowIndex = flockRecordsTableView.items.indexOf(cellData.value)
+
+            val remainingChickens = if (rowIndex >= 0 && rowIndex < cumulativeDepletions.size) {
+                startingCount - cumulativeDepletions[rowIndex]
+            } else {
+                startingCount
+            }
+
+            javafx.beans.property.SimpleIntegerProperty(remainingChickens).asObject()
+        }
+    }
+
+    private fun populateTable(flockDetailsList: List<FlockDetails>) {
+        val observableList = FXCollections.observableArrayList(flockDetailsList)
+        flockRecordsTableView.items = observableList
+    }
+
+    private fun clearTableSelection() {
+        flockRecordsTableView.selectionModel.clearSelection()
+        flockRecordsTableView.focusModel.focus(-1)
     }
 
     @FXML
