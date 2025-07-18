@@ -194,13 +194,13 @@ public class ReadFlockDetails {
         }
 
         // Full date (e.g., "10-01-2004", "October 1, 2004", "Oct 1, 2004")
-        if (query.matches("([A-Z]+|\\d{2})( )*(-)?( )*\\d{1,2}( )*(-|,)?( )*\\d{4}")) {
+        if (query.matches("(?i)^(\\d{1,2}[-\\s]\\d{1,2}[-\\s]\\d{4}|[A-Z]{3,9}[-\\s]\\d{1,2}[-,\\s]?\\s*\\d{4}|\\d{1,2}\\s\\d{1,2},\\s*\\d{4})$")) {
             return fetchByFullDate(conn, query);
         }
 
         // Month + Year (e.g., "JUNE 2025", "6 2025")
-        if (query.matches("([A-Z]+|\\d{1,2})*-?\\s+\\d{4}")) {
-            String[] parts = query.split("\\s+");
+        String[] parts = query.split("[-\\s]+");
+        if (query.matches("(?i)^([A-Z]{3,9}|\\d{1,2})(-)?\\s*\\d{4}$")) {
             int month = monthToInt(parts[0]);
             int year = Integer.parseInt(parts[1]);
             return fetchByMonthYearWithFallback(conn, month, year);
@@ -210,7 +210,6 @@ public class ReadFlockDetails {
         if (query.matches("^[A-Z]{3,9}$|^\\d{1,2}$")) {
             return fetchByMonthWithFallback(conn, query);
         }
-
         return null;
     }
 
@@ -226,7 +225,6 @@ public class ReadFlockDetails {
             try (ResultSet rs = pstmt.executeQuery()) {
                 return extractSearchResults(rs);
             }
-
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `fetchByYear()` in `ReadFlockDetails.java`",
@@ -250,7 +248,9 @@ public class ReadFlockDetails {
             int day = Integer.parseInt(parts[1]);
             int year = Integer.parseInt(parts[2]);
 
-            if (day <= 0 || day > 31 || year < 2000) return null;
+            System.out.println("SOUT << monthStr: " + monthStr + ", day: " + day + ", year: " + year);
+
+            if (day <= 0 || day > 31) return null;
 
             int month = monthToInt(monthStr);
             if (month == -1) return null;
@@ -287,15 +287,15 @@ public class ReadFlockDetails {
     // Helper to convert month string to int
     private static int monthToInt(String monthStr) {
         return switch (monthStr) {
-            case "JANUARY", "JAN", "1" -> 1;
-            case "FEBRUARY", "FEB", "2" -> 2;
-            case "MARCH", "MAR", "3" -> 3;
-            case "APRIL", "APR", "4" -> 4;
-            case "MAY", "5" -> 5;
-            case "JUNE", "JUN", "6" -> 6;
-            case "JULY", "JUL", "7" -> 7;
-            case "AUGUST", "AUG", "8" -> 8;
-            case "SEPTEMBER", "SEP", "9" -> 9;
+            case "JANUARY", "JAN", "1", "01" -> 1;
+            case "FEBRUARY", "FEB", "2", "02" -> 2;
+            case "MARCH", "MAR", "3", "03" -> 3;
+            case "APRIL", "APR", "4", "04" -> 4;
+            case "MAY", "5", "05" -> 5;
+            case "JUNE", "JUN", "6", "06" -> 6;
+            case "JULY", "JUL", "7", "07" -> 7;
+            case "AUGUST", "AUG", "8", "08" -> 8;
+            case "SEPTEMBER", "SEP", "9", "09" -> 9;
             case "OCTOBER", "OCT", "10" -> 10;
             case "NOVEMBER", "NOV", "11" -> 11;
             case "DECEMBER", "DEC", "12" -> 12;
@@ -346,7 +346,7 @@ public class ReadFlockDetails {
     }
 
     private static List<FlockDetails> fetchByMonthYearWithFallback(Connection conn, int month, int year) {
-        if (month <= 0 || month > 12 || year < 2000) return null;
+        if (month <= 0 || month > 122000) return null;
 
         List<FlockDetails> results = fetchByMonthYear(conn, month, year);
         if (results != null) return results;
@@ -372,6 +372,7 @@ public class ReadFlockDetails {
 
             pstmt.setInt(1, month);
             pstmt.setInt(2, year);
+
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 return extractSearchResults(rs);

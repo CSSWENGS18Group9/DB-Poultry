@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import java.sql.Connection
 import java.sql.Date
+import kotlin.test.assertNotNull
 
 class ReadFlockDetailsTest {
     private var jdbcURL: String
@@ -585,7 +586,7 @@ class ReadFlockDetailsTest {
     }
 
     @Test
-    fun testSearchFlockDetailsWithInvalidInputForMonthAndYearNumeric() {
+    fun testSearchFlockDetailsInputForMonthAndYearNumericDNE() {
         val dateFlock = Date.valueOf("1000-01-01")
         val dateOne = Date.valueOf("1000-02-01")
         val dateTwo = Date.valueOf("1000-03-01")
