@@ -37,14 +37,14 @@ class CreateSupplyTypeTest {
 
     @Test
     fun testCreateSupplyTypeDNEImage() {
-        val result = CreateSupplyType.createSupplyType(conn, "feed", "kg", "src/main/resources/img/supply-img/Apog.jng", "src/main/resources/img/supply-img/default.png")
-        assertEquals("INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES('feed', 'kg', 'src/main/resources/img/supply-img/default.png')", result)
+        val result = CreateSupplyType.createSupplyType(conn, "feedtwo", "kg", "src/main/resources/img/supply-img/Apog.jng", "src/main/resources/img/supply-img/default.png")
+        assertEquals("INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES('feedtwo', 'kg', 'src/main/resources/img/supply-img/default.png')", result)
     }
 
     @Test
     fun testCreateSupplyTypeEmptyPath() {
-        val result = CreateSupplyType.createSupplyType(conn, "feed", "kg", "", "src/main/resources/img/supply-img/default.png")
-        assertEquals("INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES('feed', 'kg', 'src/main/resources/img/supply-img/default.png')", result)
+        val result = CreateSupplyType.createSupplyType(conn, "feedthree", "kg", "", "src/main/resources/img/supply-img/default.png")
+        assertEquals("INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES('feedthree', 'kg', 'src/main/resources/img/supply-img/default.png')", result)
     }
 
     @Test
