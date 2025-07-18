@@ -346,7 +346,7 @@ public class ReadFlockDetails {
     }
 
     private static List<FlockDetails> fetchByMonthYearWithFallback(Connection conn, int month, int year) {
-        if (month <= 0 || month > 122000) return null;
+        if (month <= 0 || month > 12) return null;
 
         List<FlockDetails> results = fetchByMonthYear(conn, month, year);
         if (results != null) return results;
