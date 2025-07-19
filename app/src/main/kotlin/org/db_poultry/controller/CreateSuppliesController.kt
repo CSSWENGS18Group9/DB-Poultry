@@ -17,6 +17,7 @@ import javafx.fxml.Initializable
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.Pane
 import javafx.scene.text.Text
+import org.db_poultry.util.PopupUtil
 import java.awt.image.BufferedImage
 import java.io.File
 import java.io.FileOutputStream
@@ -70,7 +71,7 @@ class CreateSuppliesController: Initializable {
         println("Supply Unit: $supplyUnit")
 
         if (supplyName.isBlank() || supplyUnit.isBlank()) {
-            GeneralUtil.showPopup("error", "Supply name and unit cannot be empty.")
+            PopupUtil.showPopup("error", "Supply name and unit cannot be empty.")
             println("Supply name and unit cannot be empty.")
             return
         }
@@ -94,7 +95,7 @@ class CreateSuppliesController: Initializable {
                 imagePath, SupplyTypeSingleton.getUIDefaultImagePath()) != null) {
 
             undoSingleton.setUndoMode(undoTypes.doUndoSupplyType)
-            GeneralUtil.showPopup("success", "Supply type created successfully.")
+            PopupUtil.showPopup("success", "Supply type created successfully.")
 
             // Delete temp image
             imagePath?.let { path ->
@@ -115,7 +116,7 @@ class CreateSuppliesController: Initializable {
                 println("Cleaned up image file due to failed supply type creation")
             }
 
-            GeneralUtil.showPopup("error", "Failed to create Supply type.")
+            PopupUtil.showPopup("error", "Failed to create Supply type.")
             println("Failed to create Supply type.")
         }
 

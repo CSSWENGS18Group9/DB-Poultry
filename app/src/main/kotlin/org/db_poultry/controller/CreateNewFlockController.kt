@@ -13,6 +13,7 @@ import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
 import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
+import org.db_poultry.util.PopupUtil
 import java.sql.Date
 
 class CreateNewFlockController {
@@ -54,10 +55,10 @@ class CreateNewFlockController {
 
         if (createFlock(getConnection(), startCount, date) != null) {
             undoSingleton.setUndoMode(undoTypes.doUndoFlock)
-            GeneralUtil.showPopup("success", "Flock created successfully!")
+            PopupUtil.showPopup("success", "Flock created successfully!")
             println("Successfully created Flock.")
         } else {
-            GeneralUtil.showPopup("error", "Flock creation error, retry again.")
+            PopupUtil.showPopup("error", "Flock creation error, retry again.")
             println("Failed to create Flock.")
         }
     }
