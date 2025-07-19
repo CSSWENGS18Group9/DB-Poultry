@@ -70,8 +70,6 @@ class CreateSuppliesController: Initializable {
 
         selectedImageFile?.let { file ->
             if (!resourcesDir.exists()) resourcesDir.mkdirs()
-            val targetFile = File(resourcesDir, "${supplyName.lowercase()}.jpg")
-            imagePath = targetFile.absolutePath
             // Prepare the image but don't write it yet
             croppedImage = prepareImage(file)
         }
