@@ -110,25 +110,42 @@ public class CreateSupplyRecord {
             return null;
         }
 
+        SupplyComplete latestRecord = ReadSupplyRecord.getLatest(connect, supplyTypeID);
+
+        BigDecimal currentCount;
+
+        if (latestRecord != null) {
+            currentCount = latestRecord.getCurrent().add(added).subtract(consumed);
+        }
+        else {
+            currentCount = added.subtract(consumed);
+        }
+
+        if (currentCount.compareTo(BigDecimal.ZERO) < 0) {
+            currentCount = BigDecimal.ZERO.setScale(4, RoundingMode.DOWN);
+        }
+
+
         // if all tests pass then run the query
         try (PreparedStatement preparedStatement = connect.prepareStatement("""
-                INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (?, ?, ?, ?, ?)
+                INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (?, ?, ?, ?, ?, ?)
                 """)) {
 
             preparedStatement.setInt(1, supplyTypeID);
             preparedStatement.setDate(2, srDate);
             preparedStatement.setBigDecimal(3, added);
             preparedStatement.setBigDecimal(4, consumed);
-            preparedStatement.setBoolean(5, retrieved);
+            preparedStatement.setBigDecimal(5, currentCount);
+            preparedStatement.setBoolean(6, retrieved);
 
             preparedStatement.executeUpdate();
 
             undoSingleton.INSTANCE.setUndoMode(undoTypes.doUndoSupplyRecord);
 
             return String.format(
-                            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES " +
-                            "(%d, '%s', %.4f, %.4f, %b)",
-                    supplyTypeID, srDate, added, consumed, retrieved);
+                            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES " +
+                            "(%d, '%s', %.4f, %.4f, %.4f, %b)",
+                    supplyTypeID, srDate, added, consumed, currentCount, retrieved);
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `createSupplyRecord()` in `createSupplyRecord.",

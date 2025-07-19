@@ -12,9 +12,10 @@ public class SupplyComplete {
     final String unit;
     final BigDecimal added;
     final BigDecimal consumed;
+    final BigDecimal current;
     final boolean retrieved;
 
-    public SupplyComplete(int supply_id, int supply_type_id, Date date, String supply_name, String unit, BigDecimal added, BigDecimal consumed, boolean retrieved) {
+    public SupplyComplete(int supply_id, int supply_type_id, Date date, String supply_name, String unit, BigDecimal added, BigDecimal consumed, BigDecimal current, boolean retrieved) {
         this.supply_id = supply_id;
         this.supply_type_id = supply_type_id;
         this.date = date;
@@ -22,6 +23,7 @@ public class SupplyComplete {
         this.unit = unit;
         this.added = (added == null) ? null : added.setScale(4, RoundingMode.DOWN);
         this.consumed = (consumed == null) ? null : consumed.setScale(4, RoundingMode.DOWN);
+        this.current = (current == null) ? null : current.setScale(4, RoundingMode.DOWN);
         this.retrieved = retrieved;
     }
 
@@ -52,6 +54,8 @@ public class SupplyComplete {
     public BigDecimal getConsumed() {
         return consumed;
     }
+
+    public BigDecimal getCurrent() {return current;}
 
     public boolean isRetrieved() {
         return retrieved;
