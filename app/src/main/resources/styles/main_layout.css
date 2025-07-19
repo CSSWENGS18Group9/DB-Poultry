@@ -3,6 +3,11 @@
     -fx-background-color: #F7ECB7;
 }
 
+.navbar-pane:hover .label {
+    -fx-border-color: transparent transparent #BC6C25 transparent;
+    -fx-border-width: 0 0 5 0;
+}
+
 .underline-label {
     -fx-border-color: transparent transparent #8f250c transparent;
     -fx-border-width: 0 0 5 0;
