@@ -49,6 +49,15 @@ class MainLayoutController : Initializable {
     @FXML
     private lateinit var flockFlowPane: FlowPane
 
+    // NEWGEN
+    @FXML
+    private lateinit var suppliesLabel: Label
+
+    @FXML
+    private lateinit var flockLabel: Label
+
+
+
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
 
         val today = LocalDate.now()
@@ -74,9 +83,17 @@ class MainLayoutController : Initializable {
 
         // Add highlight to current section
         when (section) {
-            "HOME" -> homeFlowPane.styleClass.add("sidebar-pane-active")
-            "SUPPLIES" -> suppliesFlowPane.styleClass.add("sidebar-pane-active")
-            "FLOCK" -> flockFlowPane.styleClass.add("sidebar-pane-active")
+            "HOME" -> {
+                homeFlowPane.styleClass.add("sidebar-pane-active")
+            }
+            "SUPPLIES" -> {
+                suppliesFlowPane.styleClass.add("sidebar-pane-active")
+                suppliesLabel.styleClass.add("underline-label")
+            }
+            "FLOCK" -> {
+                flockFlowPane.styleClass.add("sidebar-pane-active")
+                flockLabel.styleClass.add("underline-label")
+            }
         }
     }
 
@@ -84,6 +101,9 @@ class MainLayoutController : Initializable {
         homeFlowPane.styleClass.remove("sidebar-pane-active")
         suppliesFlowPane.styleClass.remove("sidebar-pane-active")
         flockFlowPane.styleClass.remove("sidebar-pane-active")
+
+        suppliesLabel.styleClass.remove("underline-label")
+        flockLabel.styleClass.remove("underline-label")
     }
 
     @FXML
@@ -99,7 +119,6 @@ class MainLayoutController : Initializable {
     
     @FXML
     fun navigateToSupplies() {
-        // GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_supplies.fxml")
         GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_supplies.fxml")
     }
     

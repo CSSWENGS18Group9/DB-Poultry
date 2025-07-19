@@ -3,7 +3,7 @@
     -fx-background-color: #F7ECB7;
 }
 
-.underline-feature {
+.underline-label {
     -fx-border-color: transparent transparent #8f250c transparent;
     -fx-border-width: 0 0 5 0;
 }
@@ -21,7 +21,7 @@
 }
 
 .sidebar-pane:hover .label {
-     -fx-translate-x: 15;
+     -fx-translate-x: -15;
      -fx-text-fill: white;
  }
 
