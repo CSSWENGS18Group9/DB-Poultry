@@ -24,19 +24,35 @@
     -fx-background-color: #501609;
 }
 
-.confirm-button {
-    -fx-background-color: transparent;
+.sub-button {
+    -fx-background-color: #BC6C25;
+    -fx-text-fill: white;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
-    -fx-border-color: #388E3C;
+}
+
+.sub-button:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: #FEFAE0;
+    -fx-border-color: #BC6C25;
     -fx-border-width: 2;
-    -fx-text-fill: #388E3C;
+    -fx-text-fill: #BC6C25;
+}
+
+
+.confirm-button {
+    -fx-background-color: #8F250C;
+    -fx-text-fill: white;
+    -fx-border-color: #8F250C;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
 }
 
 .confirm-button:hover {
-    -fx-background-color: #388E3C;
-    -fx-text-fill: white;
-    -fx-border-color: #388E3C;
+    -fx-background-color: transparent;
+    -fx-border-color: #8F250C;
+    -fx-border-width: 2;
+    -fx-text-fill: #8F250C;
 }
 
 .back-icon {
