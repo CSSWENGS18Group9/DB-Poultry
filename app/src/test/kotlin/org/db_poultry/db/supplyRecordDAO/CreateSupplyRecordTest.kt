@@ -39,7 +39,7 @@ class CreateSupplyRecordTest {
             false
         )
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (1, '2025-01-01', 100.0000, 50.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-01-01', 100.0000, 50.0000, 50.0000, false)",
             result
         )
     }
@@ -50,7 +50,7 @@ class CreateSupplyRecordTest {
 
         val result = CreateSupplyRecord.createSupplyRecord(
             conn,
-            1,
+            13,
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
@@ -117,7 +117,7 @@ class CreateSupplyRecordTest {
 
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (2, '2025-01-02', 100.0000, 50.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (2, '2025-01-02', 100.0000, 50.0000, 50.0000, false)",
             result
         )
     }
@@ -182,8 +182,8 @@ class CreateSupplyRecordTest {
 
 
         assertEquals(
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (2, '2025-01-02', 100.0000, 50.0000, 50.0000, false)",
             result,
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (2, '2025-01-02', 100.0000, 50.0000, false)"
         )
     }
 
@@ -204,7 +204,7 @@ class CreateSupplyRecordTest {
         )
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (1, '2025-02-02', 50.0000, 0.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-02-02', 50.0000, 0.0000, 50.0000, false)",
             resultOne
         )
 
@@ -219,7 +219,7 @@ class CreateSupplyRecordTest {
 
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (1, '2025-02-03', 0.0000, 50.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-02-03', 0.0000, 50.0000, 0.0000, false)",
             resultTwo
         )
     }
@@ -260,7 +260,7 @@ class CreateSupplyRecordTest {
 
         assertEquals(
             result,
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (1, '2025-01-01', 0.0000, 0.0000, false)"
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-01-01', 0.0000, 0.0000, 0.0000, false)"
         )
     }
 
@@ -339,7 +339,7 @@ class CreateSupplyRecordTest {
         )
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (1, '2025-01-01', 100.0000, 50.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-01-01', 100.0000, 50.0000, 50.0000, false)",
             resultOne
         )
     }
