@@ -3,7 +3,6 @@ package org.db_poultry.controller
 import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 import org.db_poultry.db.supplyRecordDAO.CreateSupplyRecord.createSupplyRecord
-import org.db_poultry.controller.backend.CurrentSupplyInUse
 import org.db_poultry.util.GeneralUtil
 import org.db_poultry.util.undoSingleton
 import org.db_poultry.util.undoTypes
@@ -17,8 +16,11 @@ import java.sql.Date
 import javafx.fxml.Initializable
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
+import org.db_poultry.util.SupplyTypeSingleton
+import java.io.File
 import java.net.URL
 import java.util.ResourceBundle
+import kotlin.toString
 
 class UpdateAddDeleteSuppliesController: Initializable {
 
@@ -48,7 +50,7 @@ class UpdateAddDeleteSuppliesController: Initializable {
 
     private fun setSupplyName() {
 
-        currentSupplyType = CurrentSupplyInUse.getCurrentSupply()
+        currentSupplyType = SupplyTypeSingleton.getCurrentSupply()
         if (currentSupplyType != null) {
 
             supplyNameLabel.text = capitalizeWords(currentSupplyType!!)
@@ -58,19 +60,22 @@ class UpdateAddDeleteSuppliesController: Initializable {
     }
 
     private fun setSupplyImage() {
-        val imageDir = CurrentSupplyInUse.getCurrentSupplyImageDir()
-        if (imageDir != null) {
-            var imagePath = javaClass.getResource(imageDir)?.toExternalForm()
-            if (imagePath != null) {
-                supplyTypeImageView.image = Image(imagePath, true)
-            }
-            else {
-                imagePath = javaClass.getResource("/img/supply-img/default.png")?.toExternalForm()
-                supplyTypeImageView.image = Image(imagePath, true)
-                println("Image not found at path: $imageDir")
-            }
+        val supplyName = SupplyTypeSingleton.getCurrentSupply()
+        val imageDir = SupplyTypeSingleton.getCurrentSupplyImageDir()
+        val isDefaultSupplyType = supplyName != null && SupplyTypeSingleton.isDefaultSupplyType(supplyName)
+
+        val imageUrl: URL? = if (isDefaultSupplyType) {
+            val imageFileName = imageDir?.substringAfterLast('/')
+            val resourcePath = "/img/supply-img/$imageFileName"
+            javaClass.getResource(resourcePath)
         } else {
-            println("Current supply image directory is null")
+            if (imageDir != null) File(imageDir).toURI().toURL() else null
+        }
+
+        supplyTypeImageView.image = if (imageUrl != null) {
+            Image(imageUrl.toString(), true)
+        } else {
+            Image(javaClass.getResource("/img/supply-img/default.png")?.toString(), true)
         }
     }
 

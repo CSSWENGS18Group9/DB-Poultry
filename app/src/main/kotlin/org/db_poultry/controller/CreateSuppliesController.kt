@@ -1,5 +1,6 @@
 package org.db_poultry.controller
 
+import javafx.beans.property.SimpleObjectProperty
 import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.CreateSupplyType.createSupplyType
 import org.db_poultry.util.GeneralUtil
@@ -13,7 +14,9 @@ import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
 import javafx.stage.FileChooser
 import javafx.fxml.Initializable
+import javafx.scene.layout.GridPane
 import javafx.scene.layout.Pane
+import javafx.scene.text.Text
 import java.awt.image.BufferedImage
 import java.io.File
 import java.io.FileOutputStream
@@ -32,7 +35,7 @@ class CreateSuppliesController: Initializable {
     private lateinit var createSuppliesAnchorPane: AnchorPane
 
     @FXML
-    private lateinit var btnConfirm: Button
+    private lateinit var confirmButton: Button
 
     @FXML
     private lateinit var createSuppliesTextField: TextField
@@ -41,18 +44,27 @@ class CreateSuppliesController: Initializable {
     private lateinit var createSuppliesTextFieldUnit: TextField
 
     @FXML
-    private lateinit var uploadImagePane: Pane
+    private lateinit var uploadImageGridPane: GridPane
+
+    @FXML
+    private lateinit var addSupplyImageText: Text
+
+    @FXML
+    private lateinit var resetImageButton: Button
 
     private var selectedImageFile: File? = null
+    private val selectedImageFileProperty = SimpleObjectProperty<File?>(null)
+
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-//        GeneralUtil.resizeImageViewToFit(createSuppliesAnchorPane, uploadFileImageView)
+        initializeResetButton()
+        initializeConfirmButton()
     }
 
     @FXML
     fun confirm() {
-        val supplyName = createSuppliesTextField.text
-        val supplyUnit = createSuppliesTextFieldUnit.text
+        val supplyName = createSuppliesTextField.text.trim()
+        val supplyUnit = createSuppliesTextFieldUnit.text.trim()
 
         println("\nSupply Name: $supplyName")
         println("Supply Unit: $supplyUnit")
@@ -70,12 +82,13 @@ class CreateSuppliesController: Initializable {
 
         selectedImageFile?.let { file ->
             if (!resourcesDir.exists()) resourcesDir.mkdirs()
-            val targetFile = File(resourcesDir, "${supplyName.lowercase()}.jpg")
-            imagePath = targetFile.absolutePath
-
             // Prepare the image but don't write it yet
             croppedImage = prepareImage(file)
         }
+
+        val tempFile = File(resourcesDir, "${supplyName.lowercase()}.jpg")
+        if (!tempFile.exists()) tempFile.createNewFile()
+        imagePath = tempFile.absolutePath
 
         if (createSupplyType(getConnection(), supplyName, supplyUnit,
                 imagePath, SupplyTypeSingleton.getUIDefaultImagePath()) != null) {
@@ -83,7 +96,13 @@ class CreateSuppliesController: Initializable {
             undoSingleton.setUndoMode(undoTypes.doUndoSupplyType)
             GeneralUtil.showPopup("success", "Supply type created successfully.")
 
-            // Supply type created successfully, save the image
+            // Delete temp image
+            imagePath?.let { path ->
+                File(path).delete()
+                println("Cleaned up temp image file")
+            }
+
+            // Save real file
             if (croppedImage != null && imagePath != null) {
                 saveProcessedImage(croppedImage, File(imagePath))
                 println("Image saved to: $imagePath")
@@ -91,6 +110,11 @@ class CreateSuppliesController: Initializable {
 
             println("Successfully created Supply type.")
         } else {
+            imagePath?.let { path ->
+                File(path).delete()
+                println("Cleaned up image file due to failed supply type creation")
+            }
+
             GeneralUtil.showPopup("error", "Failed to create Supply type.")
             println("Failed to create Supply type.")
         }
@@ -98,10 +122,37 @@ class CreateSuppliesController: Initializable {
         resetFields()
     }
 
+    private fun initializeConfirmButton() {
+        val updateConfirmButtonState = {
+            val supplyNameEmpty = createSuppliesTextField.text.trim().isEmpty()
+            val supplyUnitEmpty = createSuppliesTextFieldUnit.text.trim().isEmpty()
+            confirmButton.isDisable = supplyNameEmpty || supplyUnitEmpty
+        }
+
+        // Add listeners to both text fields
+        createSuppliesTextField.textProperty().addListener { _, _, _ ->
+            updateConfirmButtonState()
+        }
+        createSuppliesTextFieldUnit.textProperty().addListener { _, _, _ ->
+            updateConfirmButtonState()
+        }
+
+        // Set initial state
+        updateConfirmButtonState()
+    }
+
+    private fun initializeResetButton() {
+        // Listener to enable/disable button
+        selectedImageFileProperty.addListener { _, _, newValue ->
+            resetImageButton.isDisable = newValue == null
+        }
+        resetImageButton.isDisable = true
+    }
+
     fun resetFields() {
         createSuppliesTextField.clear()
         createSuppliesTextFieldUnit.clear()
-        uploadImagePane.style = "-fx-background-image: none;"
+        uploadImageGridPane.style = "-fx-background-image: none;"
     }
 
     @FXML
@@ -111,11 +162,12 @@ class CreateSuppliesController: Initializable {
         fileChooser.extensionFilters.addAll(
             FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp")
         )
-        val file = fileChooser.showOpenDialog(uploadImagePane.scene.window)
+        val file = fileChooser.showOpenDialog(uploadImageGridPane.scene.window)
         if (file != null) {
             selectedImageFile = file
+            selectedImageFileProperty.set(file)
             val imageUrl = file.toURI().toString()
-            uploadImagePane.style = """
+            uploadImageGridPane.style = """
             -fx-background-image: url("$imageUrl");
             -fx-background-size: 117%;
             -fx-background-position: center center;
@@ -123,6 +175,22 @@ class CreateSuppliesController: Initializable {
             -fx-border-width: 2;
         """.trimIndent()
         }
+
+        addSupplyImageText.text = ""
+    }
+
+    @FXML
+    fun resetImageFile() {
+        uploadImageGridPane.style = """
+            -fx-background-image: none;
+            -fx-border-color: black;
+            -fx-border-width: 2;
+        """.trimIndent()
+
+
+        selectedImageFile = null
+        addSupplyImageText.text = "Add Supply Image"
+        selectedImageFileProperty.set(null)
     }
 
     private fun prepareImage(inputFile: File): BufferedImage {

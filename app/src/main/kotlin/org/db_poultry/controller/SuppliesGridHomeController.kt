@@ -4,7 +4,6 @@ import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 import org.db_poultry.db.supplyRecordDAO.ReadSupplyRecord
 import org.db_poultry.pojo.SupplyPOJO.SupplyType
-import org.db_poultry.controller.backend.CurrentSupplyInUse
 
 import javafx.fxml.FXML
 import javafx.scene.control.Label
@@ -19,6 +18,8 @@ import java.sql.Date
 
 import javafx.fxml.Initializable
 import org.db_poultry.util.GeneralUtil
+import org.db_poultry.util.SupplyTypeSingleton
+import java.io.File
 import java.net.URL
 import java.util.ResourceBundle
 
@@ -32,8 +33,6 @@ class SuppliesGridHomeController: Initializable {
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         loadSupplyGrid()
-//        testAddVBoxes() // For testing purposes, remove in production
-
     }
 
     private fun loadSupplyGrid() {
@@ -60,8 +59,8 @@ class SuppliesGridHomeController: Initializable {
             styleClass.add("grid")
             setOnMouseClicked { navigateToUpdateSupplies() }
             setOnMousePressed { event ->
-                CurrentSupplyInUse.setCurrentSupply(supplyType.name)
-                CurrentSupplyInUse.setCurrentSupplyImageDir("/img/supply-img/${supplyType.name}.jpg")
+                SupplyTypeSingleton.setCurrentSupply(supplyType.name)
+                SupplyTypeSingleton.setCurrentSupplyImageDir(supplyType.imagePath)
             }
 
         }
@@ -73,13 +72,15 @@ class SuppliesGridHomeController: Initializable {
             isPreserveRatio = true
 
             val supportedExtensions = listOf("jpg", "png", "jpeg", "gif", "bmp")
-            val basePath = "/img/supply-img/${supplyType.name}"
+            val imageFileName = supplyType.imagePath.substringAfterLast('/')
+            val resourcePath = "/img/supply-img/$imageFileName"
             var imageUrl: URL? = null
+            val isDefaultSupplyType = SupplyTypeSingleton.isDefaultSupplyType(supplyType.name)
 
-            for (ext in supportedExtensions) {
-                val path = "$basePath.$ext"
-                imageUrl = javaClass.getResource(path)
-                if (imageUrl != null) break
+            imageUrl = if (isDefaultSupplyType) {
+                javaClass.getResource(resourcePath)
+            } else {
+                File(supplyType.imagePath).toURI().toURL()
             }
 
             image = if (imageUrl != null) {
