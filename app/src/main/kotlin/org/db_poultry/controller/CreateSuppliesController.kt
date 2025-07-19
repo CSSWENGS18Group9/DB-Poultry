@@ -51,8 +51,8 @@ class CreateSuppliesController: Initializable {
 
     @FXML
     fun confirm() {
-        val supplyName = createSuppliesTextField.text
-        val supplyUnit = createSuppliesTextFieldUnit.text
+        val supplyName = createSuppliesTextField.text.trim()
+        val supplyUnit = createSuppliesTextFieldUnit.text.trim()
 
         println("\nSupply Name: $supplyName")
         println("Supply Unit: $supplyUnit")
@@ -72,10 +72,13 @@ class CreateSuppliesController: Initializable {
             if (!resourcesDir.exists()) resourcesDir.mkdirs()
             val targetFile = File(resourcesDir, "${supplyName.lowercase()}.jpg")
             imagePath = targetFile.absolutePath
-
             // Prepare the image but don't write it yet
             croppedImage = prepareImage(file)
         }
+
+        val tempFile = File(resourcesDir, "${supplyName.lowercase()}.jpg")
+        if (!tempFile.exists()) tempFile.createNewFile()
+        imagePath = tempFile.absolutePath
 
         if (createSupplyType(getConnection(), supplyName, supplyUnit,
                 imagePath, SupplyTypeSingleton.getUIDefaultImagePath()) != null) {
@@ -83,7 +86,13 @@ class CreateSuppliesController: Initializable {
             undoSingleton.setUndoMode(undoTypes.doUndoSupplyType)
             GeneralUtil.showPopup("success", "Supply type created successfully.")
 
-            // Supply type created successfully, save the image
+            // Delete temp image
+            imagePath?.let { path ->
+                File(path).delete()
+                println("Cleaned up temp image file")
+            }
+
+            // Save real file
             if (croppedImage != null && imagePath != null) {
                 saveProcessedImage(croppedImage, File(imagePath))
                 println("Image saved to: $imagePath")
@@ -91,6 +100,11 @@ class CreateSuppliesController: Initializable {
 
             println("Successfully created Supply type.")
         } else {
+            imagePath?.let { path ->
+                File(path).delete()
+                println("Cleaned up image file due to failed supply type creation")
+            }
+
             GeneralUtil.showPopup("error", "Failed to create Supply type.")
             println("Failed to create Supply type.")
         }

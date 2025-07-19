@@ -61,7 +61,7 @@ class SuppliesGridHomeController: Initializable {
             setOnMouseClicked { navigateToUpdateSupplies() }
             setOnMousePressed { event ->
                 CurrentSupplyInUse.setCurrentSupply(supplyType.name)
-                CurrentSupplyInUse.setCurrentSupplyImageDir("/img/supply-img/${supplyType.name}.jpg")
+                CurrentSupplyInUse.setCurrentSupplyImageDir(supplyType.imagePath)
             }
 
         }
@@ -73,7 +73,7 @@ class SuppliesGridHomeController: Initializable {
             isPreserveRatio = true
 
             val supportedExtensions = listOf("jpg", "png", "jpeg", "gif", "bmp")
-            val basePath = "/img/supply-img/${supplyType.name}"
+            val basePath = supplyType.imagePath
             var imageUrl: URL? = null
 
             for (ext in supportedExtensions) {
