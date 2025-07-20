@@ -106,14 +106,5 @@ class SuppliesViewController: Initializable {
     fun navigateToViewSupplies(event: ActionEvent) {
         GeneralUtil.navigateToMainContent(viewSupplyAnchorPane, "/fxml/content_view_supplies.fxml")
     }
-        
-    @FXML
-    fun navigateToViewSupplyHistory(event: ActionEvent) {
-        GeneralUtil.navigateToMainContent(viewSupplyAnchorPane, "/fxml/content_view_supply_history.fxml")
-    }
 
-    @FXML
-    fun navigateToViewDateHistory(event: ActionEvent) {
-        GeneralUtil.navigateToMainContent(viewSupplyAnchorPane, "/fxml/content_view_date_history.fxml")
-    }
 }
