@@ -36,9 +36,11 @@ public class ReadSupplyRecord {
             consumed = consumed.setScale(4, RoundingMode.DOWN);
         }
 
+        BigDecimal current = rs.getBigDecimal("Current_Count");
+
         boolean retrieved = rs.getBoolean("Retrieved");
 
-        return new SupplyComplete(supply_id, supply_type_id, srDate, supply_name, unit, added, consumed, retrieved);
+        return new SupplyComplete(supply_id, supply_type_id, srDate, supply_name, unit, added, consumed, current, retrieved);
     }
 
 
@@ -79,7 +81,7 @@ public class ReadSupplyRecord {
     public static ArrayList<SupplyComplete> getFromDate(Connection conn, Date date) {
         try (PreparedStatement pstmt = conn.prepareStatement("""
                 SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, st.Supply_Name, st.Unit, sr.Added, 
-                sr.Consumed, sr.Retrieved FROM Supply_Record sr JOIN Supply_Type st 
+                sr.Consumed, sr.Current_Count, sr.Retrieved FROM Supply_Record sr JOIN Supply_Type st 
                 ON sr.Supply_Type_ID = st.Supply_Type_ID WHERE sr.SR_Date = ?
                 """)) {
 
@@ -116,6 +118,7 @@ public class ReadSupplyRecord {
                         st.Unit,
                         sr.Added,
                         sr.Consumed,
+                        sr.Current_Count,
                         sr.Retrieved
                     FROM Supply_Record sr
                     JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID
@@ -140,6 +143,64 @@ public class ReadSupplyRecord {
     }
 
     /**
+     * Returns an array list of supply objects from the latest
+     *
+     * @param conn       the JDBC connection
+     * @param supply_type_id_query the supply name
+     * @return ArrayList of supply objects, {null} when something is caught
+     */
+    public static SupplyComplete getLatest(Connection conn, int supply_type_id_query) {
+        try (PreparedStatement pstmt = conn.prepareStatement("""
+                    SELECT
+                        sr.Supply_ID,
+                        sr.Supply_Type_ID,
+                        sr.SR_Date,
+                        st.Supply_Name,
+                        st.Unit,
+                        sr.Added,
+                        sr.Consumed,
+                        sr.Current_Count,
+                        sr.Retrieved
+                    FROM Supply_Record sr
+                    JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID
+                    WHERE st.Supply_Type_ID = ?
+                    ORDER BY sr.SR_Date DESC
+                    LIMIT 1;
+                """)) {
+
+            pstmt.setInt(1, supply_type_id_query);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {  // Move cursor to first row if present
+                    int supply_id = rs.getInt("supply_id");
+                    int supply_type_id = rs.getInt("supply_type_id");
+                    Date sr_date = rs.getDate("sr_date");
+                    String supply_name = rs.getString("supply_name");
+                    String unit = rs.getString("unit");
+                    BigDecimal added = rs.getBigDecimal("added");
+                    BigDecimal consumed = rs.getBigDecimal("consumed");
+                    BigDecimal current_count = rs.getBigDecimal("current_count");
+                    boolean retrieved = rs.getBoolean("retrieved");
+
+                    return new SupplyComplete(supply_id, supply_type_id, sr_date, supply_name, unit, added, consumed, current_count, retrieved);
+                }
+
+                return null; // No matching record found
+            }
+
+        } catch (SQLException e) {
+            generateErrorMessage(
+                    "Error in `getLatest()` in `ReadSupplyRecord`.",
+                    "SQL Exception error occurred",
+                    "",
+                    e
+            );
+
+            return null;
+        }
+    }
+
+    /**
      * Gets a single supply complete object (if it exists) given some date and supply name
      *
      * @param conn       the JDBC connection
@@ -151,7 +212,7 @@ public class ReadSupplyRecord {
         try (PreparedStatement pstmt =
                      conn.prepareStatement("""
                              SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, 
-                                    st.Supply_Name, st.Unit, sr.Added, sr.Consumed, sr.Retrieved 
+                                    st.Supply_Name, st.Unit, sr.Added, sr.Consumed, sr.Current_Count, sr.Retrieved 
                              FROM Supply_Record sr JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID 
                              WHERE st.Supply_Name = ? AND sr.SR_Date = ?
                              """)) {
@@ -194,6 +255,7 @@ public class ReadSupplyRecord {
                         st.Unit,
                         sr.Added,
                         sr.Consumed,
+                        sr.Current_Count,
                         sr.Retrieved
                     FROM Supply_Record sr
                     JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID
@@ -240,6 +302,7 @@ public class ReadSupplyRecord {
                         st.Unit,
                         sr.Added,
                         sr.Consumed,
+                        sr.Current_Count,
                         sr.Retrieved
                     FROM Supply_Record sr
                     JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID
@@ -291,46 +354,17 @@ public class ReadSupplyRecord {
         }
 
         try (PreparedStatement pstmt = conn.prepareStatement("""
-                WITH last_retrieved AS (
-                    SELECT MAX(SR_Date) AS last_retrieved_date
-                    FROM Supply_Record
-                    WHERE Supply_Type_ID = ?
-                      AND Retrieved = TRUE
-                      AND SR_Date <= ?
-                ),
-                start_date AS (
-                    SELECT CASE
-                        WHEN (SELECT last_retrieved_date FROM last_retrieved) IS NOT NULL THEN
-                            (SELECT MIN(SR_Date)
-                             FROM Supply_Record
-                             WHERE Supply_Type_ID = ?
-                               AND SR_Date > (SELECT last_retrieved_date FROM last_retrieved))
-                        ELSE
-                            (SELECT MIN(SR_Date)
-                             FROM Supply_Record
-                             WHERE Supply_Type_ID = ?)
-                    END AS first_after_retrieved
-                ),
-                range_records AS (
-                    SELECT *
-                    FROM Supply_Record
-                    WHERE Supply_Type_ID = ?
-                      AND SR_Date BETWEEN (SELECT first_after_retrieved FROM start_date) AND ?
-                )
-                SELECT COALESCE(SUM(Added) - SUM(Consumed), 0) AS currentCount
-                FROM range_records
+                SELECT Current_Count
+                FROM Supply_Record
+                WHERE Supply_Type_ID = ? AND SR_Date = ?
                 """)) {
 
             pstmt.setInt(1, supplyTypeID);
             pstmt.setDate(2, currentDate);
-            pstmt.setInt(3, supplyTypeID);
-            pstmt.setInt(4, supplyTypeID);
-            pstmt.setInt(5, supplyTypeID);
-            pstmt.setDate(6, currentDate);
 
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                return rs.getBigDecimal("currentCount").setScale(4, RoundingMode.DOWN);
+                return rs.getBigDecimal("Current_Count").setScale(4, RoundingMode.DOWN);
             }
 
             return null;

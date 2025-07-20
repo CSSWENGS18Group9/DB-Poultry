@@ -42,6 +42,23 @@ public class CreateSupplyRecord {
     public static String createSupplyRecord(Connection connect, int supplyTypeID, Date srDate, BigDecimal added,
                                             BigDecimal consumed, boolean retrieved) {
 
+        SupplyComplete latestRecord = ReadSupplyRecord.getLatest(connect, supplyTypeID);
+
+        BigDecimal currentCount;
+
+        if (latestRecord != null) {
+            currentCount = latestRecord.getCurrent().add(added).subtract(consumed);
+        }
+        else {
+            currentCount = added.subtract(consumed);
+        }
+
+        if (retrieved) {
+            currentCount = BigDecimal.valueOf(0);
+        }
+
+        boolean verifier = verify_numericValues(added, consumed, currentCount);
+
         // verify the supplyType exists
         if (verify_supplyTypeID(connect, supplyTypeID)) {
             generateErrorMessage(
@@ -71,19 +88,9 @@ public class CreateSupplyRecord {
         // and set the consumed to tbe the total of the added for this range - total of the consumed for this range
         if (retrieved) {
             added = BigDecimal.ZERO.setScale(4, RoundingMode.DOWN);
-            consumed = ReadSupplyRecord.getCurrentCountForDate(connect, supplyTypeID, srDate);
+            consumed = currentCount;
 
-            if (consumed == null) {
-                generateErrorMessage(
-                        "Error at `createSupplyRecord()` in `CreateSupplyRecord`.",
-                        "The consumed value became `null` after calling `getCurrentCountForDate()`.",
-                        "Check the logic of `getCurrentCountForDate()`.",
-                        null
-                );
-
-                return null;
-            }
-        } else if (verify_numericValues(added, consumed, supplyTypeID, srDate, connect)) {
+        } else if (verifier) {
             // if retrieved is false and the numeric values are INVALID
 
             generateErrorMessage(
@@ -112,23 +119,24 @@ public class CreateSupplyRecord {
 
         // if all tests pass then run the query
         try (PreparedStatement preparedStatement = connect.prepareStatement("""
-                INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES (?, ?, ?, ?, ?)
+                INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (?, ?, ?, ?, ?, ?)
                 """)) {
 
             preparedStatement.setInt(1, supplyTypeID);
             preparedStatement.setDate(2, srDate);
             preparedStatement.setBigDecimal(3, added);
             preparedStatement.setBigDecimal(4, consumed);
-            preparedStatement.setBoolean(5, retrieved);
+            preparedStatement.setBigDecimal(5, currentCount);
+            preparedStatement.setBoolean(6, retrieved);
 
             preparedStatement.executeUpdate();
 
             undoSingleton.INSTANCE.setUndoMode(undoTypes.doUndoSupplyRecord);
 
             return String.format(
-                            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Retrieved) VALUES " +
-                            "(%d, '%s', %.4f, %.4f, %b)",
-                    supplyTypeID, srDate, added, consumed, retrieved);
+                            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES " +
+                            "(%d, '%s', %.4f, %.4f, %.4f, %b)",
+                    supplyTypeID, srDate, added, consumed, currentCount, retrieved);
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `createSupplyRecord()` in `createSupplyRecord.",
@@ -190,22 +198,16 @@ public class CreateSupplyRecord {
      *
      * @param added        the number of added supplies
      * @param consumed     the number of consumed supplied
-     * @param supplyTypeID the supply id of the sr
-     * @param srDate       the date of the sr
-     * @param connection   the JDBC connection
      * @return {true} if the values are invalid, {false} otherwise
      */
-    private static boolean verify_numericValues(BigDecimal added, BigDecimal consumed, int supplyTypeID, Date srDate,
-                                                Connection connection) {
+    private static boolean verify_numericValues(BigDecimal added, BigDecimal consumed, BigDecimal current) {
         // check for negative
         if (added.compareTo(BigDecimal.ZERO) < 0 || consumed.compareTo(BigDecimal.ZERO) < 0) {
             return true;
         }
 
-        BigDecimal currentCount = ReadSupplyRecord.getCurrentCountForDate(connection, supplyTypeID, srDate);
-
         // Check if consuming more than what's currently available
-        return added.add(currentCount).subtract(consumed).compareTo(BigDecimal.ZERO) < 0;
+        return current.compareTo(BigDecimal.ZERO) < 0;
     }
 
 }
