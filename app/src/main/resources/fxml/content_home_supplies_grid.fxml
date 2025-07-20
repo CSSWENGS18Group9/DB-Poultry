@@ -52,7 +52,7 @@
                               </ImageView>
                               <Label fx:id="nameLabel" styleClass="supply-label" text="Apog" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2" />
                               <Label fx:id="countLabel" alignment="CENTER" layoutX="215.0" layoutY="35.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h5" text="Current Quantity: XXXX" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="View History" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navigateToViewSupplies" text="View History" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                  <styleClass>
                                     <String fx:value="main-button-reversed" />
                                     <String fx:value="h6-bold" />

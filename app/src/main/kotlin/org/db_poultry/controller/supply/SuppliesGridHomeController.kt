@@ -34,9 +34,6 @@ class SuppliesGridHomeController: Initializable {
     private lateinit var mainAnchorPane: AnchorPane
 
     @FXML
-    private lateinit var mainFlowPane: FlowPane
-
-    @FXML
     private lateinit var mainTilePane: TilePane
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
@@ -146,6 +143,11 @@ class SuppliesGridHomeController: Initializable {
             maxHeight = Double.MAX_VALUE
             maxWidth = Double.MAX_VALUE
             styleClass.addAll("main-button-reversed", "h6-bold")
+            setOnAction { navigateToViewSupplies() }
+            setOnMousePressed { event ->
+                SupplyTypeSingleton.setCurrentSupply(supplyType.name)
+                SupplyTypeSingleton.setCurrentSupplyImageDir(supplyType.imagePath)
+            }
         }
         GridPane.setHalignment(viewHistoryButton, HPos.CENTER)
         GridPane.setMargin(viewHistoryButton, Insets(10.0, 10.0, 10.0, 10.0))
@@ -173,4 +175,8 @@ class SuppliesGridHomeController: Initializable {
         GeneralUtil.navigateToMainContent(mainAnchorPane, "/fxml/content_update_supplies_add_delete.fxml")
     }
 
+    @FXML
+    private fun navigateToViewSupplies() {
+        GeneralUtil.navigateToMainContent(mainAnchorPane, "/fxml/content_view_supplies.fxml")
+    }
 }
