@@ -18,3 +18,7 @@
     -fx-background-radius: 20;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.50), 10, 0.6, 0, 0);
 }
+
+.grid-add-supply:hover {
+    -fx-background-color: #c4bd9f;
+}

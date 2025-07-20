@@ -13,8 +13,11 @@ import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
 import javafx.stage.FileChooser
 import javafx.fxml.Initializable
+import javafx.scene.control.Label
+import javafx.scene.layout.FlowPane
 import javafx.scene.layout.GridPane
 import javafx.scene.text.Text
+import javafx.stage.Stage
 import org.db_poultry.util.PopupUtil
 import java.awt.image.BufferedImage
 import java.io.File
@@ -39,13 +42,16 @@ class SuppliesCreateController: Initializable {
     private lateinit var createSuppliesTextFieldUnit: TextField
 
     @FXML
-    private lateinit var uploadImageGridPane: GridPane
+    private lateinit var uploadImageFlowPane: FlowPane
 
     @FXML
-    private lateinit var addSupplyImageText: Text
+    private lateinit var addSupplyImageLabel: Label
 
     @FXML
     private lateinit var resetImageButton: Button
+
+    @FXML
+    private lateinit var createSupplyLabel: Label
 
     private var selectedImageFile: File? = null
     private val selectedImageFileProperty = SimpleObjectProperty<File?>(null)
@@ -147,7 +153,7 @@ class SuppliesCreateController: Initializable {
     fun resetFields() {
         createSuppliesTextField.clear()
         createSuppliesTextFieldUnit.clear()
-        uploadImageGridPane.style = "-fx-background-image: none;"
+        uploadImageFlowPane.style = "-fx-background-image: none;"
     }
 
     @FXML
@@ -157,12 +163,12 @@ class SuppliesCreateController: Initializable {
         fileChooser.extensionFilters.addAll(
             FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp")
         )
-        val file = fileChooser.showOpenDialog(uploadImageGridPane.scene.window)
+        val file = fileChooser.showOpenDialog(uploadImageFlowPane.scene.window)
         if (file != null) {
             selectedImageFile = file
             selectedImageFileProperty.set(file)
             val imageUrl = file.toURI().toString()
-            uploadImageGridPane.style = """
+            uploadImageFlowPane.style = """
             -fx-background-image: url("$imageUrl");
             -fx-background-size: 117%;
             -fx-background-position: center center;
@@ -171,12 +177,12 @@ class SuppliesCreateController: Initializable {
         """.trimIndent()
         }
 
-        addSupplyImageText.text = ""
+        addSupplyImageLabel.text = ""
     }
 
     @FXML
     fun resetImageFile() {
-        uploadImageGridPane.style = """
+        uploadImageFlowPane.style = """
             -fx-background-image: none;
             -fx-border-color: black;
             -fx-border-width: 2;
@@ -184,7 +190,7 @@ class SuppliesCreateController: Initializable {
 
 
         selectedImageFile = null
-        addSupplyImageText.text = "Add Supply Image"
+        addSupplyImageLabel.text = "Add Supply Image"
         selectedImageFileProperty.set(null)
     }
 
@@ -234,6 +240,12 @@ class SuppliesCreateController: Initializable {
             println("Error saving image: ${e.message}")
             e.printStackTrace()
         }
+    }
+
+    @FXML
+    fun closePopup() {
+        val stage = createSupplyLabel.scene.window as Stage
+        stage.close()
     }
 
 }

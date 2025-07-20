@@ -24,6 +24,7 @@ import javafx.geometry.HPos
 import javafx.geometry.VPos
 import javafx.fxml.Initializable
 import javafx.scene.layout.TilePane
+import org.db_poultry.util.PopupUtil
 import java.io.File
 import java.net.URL
 import java.util.ResourceBundle
@@ -171,8 +172,14 @@ class SuppliesGridHomeController: Initializable {
     }
 
     @FXML
+    private fun navigateToCreateSupplies() {
+        PopupUtil.showContentPopup("/fxml/content_create_supplies.fxml")
+    }
+
+    @FXML
     private fun navigateToUpdateSupplies() {
-        GeneralUtil.navigateToMainContent(mainAnchorPane, "/fxml/content_update_supplies_add_delete.fxml")
+//        GeneralUtil.navigateToMainContent(mainAnchorPane, "/fxml/content_update_supplies_add_delete.fxml")
+        PopupUtil.showContentPopup("/fxml/content_update_supplies_add_delete.fxml")
     }
 
     @FXML
