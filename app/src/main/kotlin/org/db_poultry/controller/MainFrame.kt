@@ -27,8 +27,9 @@ class MainFrame : Application() {
                 scene = mainScene
                 title = "DB Poultry"
 
-                minWidth = 600.0
-                minHeight = 400.0
+
+                minWidth = 853.33 // actual 1.5x
+                minHeight = 480.00 // actual 1.5x
 
                 // setMaxWidth(600.0)
                 // setMaxHeight(400.0)

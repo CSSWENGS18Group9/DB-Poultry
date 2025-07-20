@@ -8,7 +8,13 @@
 }
 
 .supply-label {
-    -fx-font-size: 1.2em;
+    -fx-font-size: 1.5em;
     -fx-font-family: "HelveticaNowDisplay-Bold";
     -fx-text-fill: #8F250C;
+}
+
+.grid-supply {
+    -fx-background-color: #FEF5D0;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.50), 10, 0.6, 0, 0);
 }
