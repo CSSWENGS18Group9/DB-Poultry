@@ -355,42 +355,13 @@ public class ReadSupplyRecord {
         }
 
         try (PreparedStatement pstmt = conn.prepareStatement("""
-                WITH last_retrieved AS (
-                    SELECT MAX(SR_Date) AS last_retrieved_date
-                    FROM Supply_Record
-                    WHERE Supply_Type_ID = ?
-                      AND Retrieved = TRUE
-                      AND SR_Date <= ?
-                ),
-                start_date AS (
-                    SELECT CASE
-                        WHEN (SELECT last_retrieved_date FROM last_retrieved) IS NOT NULL THEN
-                            (SELECT MIN(SR_Date)
-                             FROM Supply_Record
-                             WHERE Supply_Type_ID = ?
-                               AND SR_Date > (SELECT last_retrieved_date FROM last_retrieved))
-                        ELSE
-                            (SELECT MIN(SR_Date)
-                             FROM Supply_Record
-                             WHERE Supply_Type_ID = ?)
-                    END AS first_after_retrieved
-                ),
-                range_records AS (
-                    SELECT *
-                    FROM Supply_Record
-                    WHERE Supply_Type_ID = ?
-                      AND SR_Date BETWEEN (SELECT first_after_retrieved FROM start_date) AND ?
-                )
-                SELECT COALESCE(SUM(Added) - SUM(Consumed), 0) AS currentCount
-                FROM range_records
+                SELECT Current_Count
+                FROM Supply_Record
+                WHERE supplyTypeID = ? AND currentDate = ?
                 """)) {
 
             pstmt.setInt(1, supplyTypeID);
             pstmt.setDate(2, currentDate);
-            pstmt.setInt(3, supplyTypeID);
-            pstmt.setInt(4, supplyTypeID);
-            pstmt.setInt(5, supplyTypeID);
-            pstmt.setDate(6, currentDate);
 
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
