@@ -202,9 +202,6 @@ public class CreateSupplyRecord {
      *
      * @param added        the number of added supplies
      * @param consumed     the number of consumed supplied
-     * @param supplyTypeID the supply id of the sr
-     * @param srDate       the date of the sr
-     * @param connection   the JDBC connection
      * @return {true} if the values are invalid, {false} otherwise
      */
     private static boolean verify_numericValues(BigDecimal added, BigDecimal consumed, BigDecimal current) {
