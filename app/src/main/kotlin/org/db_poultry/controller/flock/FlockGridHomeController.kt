@@ -14,7 +14,7 @@ import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.pojo.FlockPOJO.FlockComplete
 import java.net.URL
 import java.util.ResourceBundle
-import kotlin.collections.iterator
+// Line removed as it is unnecessary
 
 // TODO: Revise naming of this class to better reflect its purpose @Dattebayo2505
 class FlockGridHomeController: Initializable {
