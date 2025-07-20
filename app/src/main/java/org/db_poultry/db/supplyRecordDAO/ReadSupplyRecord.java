@@ -357,7 +357,7 @@ public class ReadSupplyRecord {
         try (PreparedStatement pstmt = conn.prepareStatement("""
                 SELECT Current_Count
                 FROM Supply_Record
-                WHERE supplyTypeID = ? AND currentDate = ?
+                WHERE Supply_Type_ID = ? AND SR_Date = ?
                 """)) {
 
             pstmt.setInt(1, supplyTypeID);

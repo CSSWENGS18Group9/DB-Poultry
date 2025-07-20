@@ -117,6 +117,9 @@ public class CreateSupplyRecord {
         if (latestRecord != null) {
             currentCount = latestRecord.getCurrent().add(added).subtract(consumed);
         }
+        else if (retrieved) {
+            currentCount = BigDecimal.valueOf(0);
+        }
         else {
             currentCount = added.subtract(consumed);
         }
