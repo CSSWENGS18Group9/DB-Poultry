@@ -1,7 +1,6 @@
 package org.db_poultry.db.supplyRecordDAO;
 
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType;
-import org.db_poultry.pojo.FlockPOJO.FlockDetails;
 import org.db_poultry.pojo.SupplyPOJO.SupplyComplete;
 
 import java.math.BigDecimal;
