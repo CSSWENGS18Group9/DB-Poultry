@@ -365,7 +365,7 @@ public class ReadSupplyRecord {
 
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                return rs.getBigDecimal("currentCount").setScale(4, RoundingMode.DOWN);
+                return rs.getBigDecimal("Current_Count").setScale(4, RoundingMode.DOWN);
             }
 
             return null;
