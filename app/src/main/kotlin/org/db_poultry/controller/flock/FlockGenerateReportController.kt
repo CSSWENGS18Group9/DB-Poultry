@@ -1,4 +1,4 @@
-package org.db_poultry.controller
+package org.db_poultry.controller.flock
 
 import javafx.fxml.FXML
 import javafx.fxml.Initializable

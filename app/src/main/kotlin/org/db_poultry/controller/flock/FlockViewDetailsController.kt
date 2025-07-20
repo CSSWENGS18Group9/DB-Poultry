@@ -1,12 +1,10 @@
-package org.db_poultry.controller
+package org.db_poultry.controller.flock
 
+import javafx.beans.property.SimpleIntegerProperty
 import org.db_poultry.util.GeneralUtil
 import org.db_poultry.controller.backend.CurrentFlockInUse
-import org.db_poultry.util.flockDateSingleton
 import org.db_poultry.db.DBConnect
-import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
-import org.db_poultry.pojo.FlockPOJO.Flock
 import org.db_poultry.pojo.FlockPOJO.FlockDetails
 
 import javafx.collections.FXCollections
@@ -20,9 +18,8 @@ import javafx.scene.layout.AnchorPane
 import java.net.URL
 import java.sql.Date
 import java.util.*
-import kotlin.compareTo
 
-class ViewFlockDetailsController : Initializable {
+class FlockViewDetailsController : Initializable {
 
     @FXML
     lateinit var mainAnchorPane: AnchorPane
@@ -119,7 +116,7 @@ class ViewFlockDetailsController : Initializable {
                 startingCount
             }
 
-            javafx.beans.property.SimpleIntegerProperty(remainingChickens).asObject()
+            SimpleIntegerProperty(remainingChickens).asObject()
         }
     }
 

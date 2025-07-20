@@ -1,23 +1,22 @@
-package org.db_poultry.controller
-
-import org.db_poultry.controller.backend.CurrentFlockInUse
-import org.db_poultry.db.DBConnect.getConnection
-import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails.createFlockDetails
-import org.db_poultry.util.GeneralUtil
-import org.db_poultry.util.undoSingleton
-import org.db_poultry.util.undoTypes
+package org.db_poultry.controller.flock.popup
 
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.DatePicker
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
+import org.db_poultry.controller.backend.CurrentFlockInUse
+import org.db_poultry.db.DBConnect
+import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
+import org.db_poultry.util.GeneralUtil
 import org.db_poultry.util.PopupUtil
+import org.db_poultry.util.undoSingleton
+import org.db_poultry.util.undoTypes
 import java.net.URL
 import java.sql.Date
-import java.util.*
+import java.util.ResourceBundle
 
-class CreateFlockDetailsController : Initializable {
+class FlockCreateDetailsController : Initializable {
 
     @FXML
     private lateinit var flockNameLabel: Label
@@ -57,7 +56,7 @@ class CreateFlockDetailsController : Initializable {
         println("Detail Date: $detailDate")
         println("Depleted Count: $depletedCount")
 
-        if (createFlockDetails(getConnection(), flockDate, detailDate, depletedCount) != null) {
+        if (CreateFlockDetails.createFlockDetails(DBConnect.getConnection(), flockDate, detailDate, depletedCount) != null) {
             undoSingleton.setUndoMode(undoTypes.doUndoFlockDetail)
             PopupUtil.showPopup("success", "Flock details created successfully.")
             println("Successfully created Flock.")

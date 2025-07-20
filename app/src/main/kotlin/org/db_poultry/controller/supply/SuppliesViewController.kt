@@ -1,4 +1,4 @@
-package org.db_poultry.controller
+package org.db_poultry.controller.supply
 
 import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
@@ -10,15 +10,12 @@ import org.db_poultry.util.GeneralUtil
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
-import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
-import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.layout.AnchorPane
 import java.math.BigDecimal
 import java.net.URL
-import java.sql.Date
 import java.time.LocalDate
 import java.util.*
 import javafx.event.ActionEvent
@@ -26,7 +23,7 @@ import javafx.event.ActionEvent
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 
-class ViewSuppliesController: Initializable {
+class SuppliesViewController: Initializable {
 
     @FXML
     private lateinit var currDateLbl: Label

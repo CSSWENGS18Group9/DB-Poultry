@@ -1,10 +1,11 @@
-package org.db_poultry.controller
+package org.db_poultry.controller.supply
 
 import org.db_poultry.util.GeneralUtil
 
 import javafx.fxml.FXML
 import javafx.scene.layout.AnchorPane
 
+// TODO: Deprecate soon, use SuppliesGridHomeController as main supply page @Dattebayo25
 class SuppliesHomeController {
 
     @FXML
