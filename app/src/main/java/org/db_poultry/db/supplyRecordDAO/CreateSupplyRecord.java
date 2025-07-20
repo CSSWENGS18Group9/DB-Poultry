@@ -42,6 +42,27 @@ public class CreateSupplyRecord {
     public static String createSupplyRecord(Connection connect, int supplyTypeID, Date srDate, BigDecimal added,
                                             BigDecimal consumed, boolean retrieved) {
 
+        SupplyComplete latestRecord = ReadSupplyRecord.getLatest(connect, supplyTypeID);
+
+        BigDecimal currentCount;
+
+        if (latestRecord != null) {
+            currentCount = latestRecord.getCurrent().add(added).subtract(consumed);
+        }
+        else {
+            currentCount = added.subtract(consumed);
+        }
+
+        if (retrieved) {
+            currentCount = BigDecimal.valueOf(0);
+        }
+
+        if (currentCount.compareTo(BigDecimal.ZERO) < 0) {
+            currentCount = BigDecimal.ZERO.setScale(4, RoundingMode.DOWN);
+        }
+
+        boolean verifier = verify_numericValues(added, consumed, currentCount);
+
         // verify the supplyType exists
         if (verify_supplyTypeID(connect, supplyTypeID)) {
             generateErrorMessage(
@@ -71,19 +92,9 @@ public class CreateSupplyRecord {
         // and set the consumed to tbe the total of the added for this range - total of the consumed for this range
         if (retrieved) {
             added = BigDecimal.ZERO.setScale(4, RoundingMode.DOWN);
-            consumed = ReadSupplyRecord.getCurrentCountForDate(connect, supplyTypeID, srDate);
+            consumed = currentCount;
 
-            if (consumed == null) {
-                generateErrorMessage(
-                        "Error at `createSupplyRecord()` in `CreateSupplyRecord`.",
-                        "The consumed value became `null` after calling `getCurrentCountForDate()`.",
-                        "Check the logic of `getCurrentCountForDate()`.",
-                        null
-                );
-
-                return null;
-            }
-        } else if (verify_numericValues(added, consumed, supplyTypeID, srDate, connect)) {
+        } else if (verifier) {
             // if retrieved is false and the numeric values are INVALID
 
             generateErrorMessage(
@@ -109,25 +120,6 @@ public class CreateSupplyRecord {
 
             return null;
         }
-
-        SupplyComplete latestRecord = ReadSupplyRecord.getLatest(connect, supplyTypeID);
-
-        BigDecimal currentCount;
-
-        if (latestRecord != null) {
-            currentCount = latestRecord.getCurrent().add(added).subtract(consumed);
-        }
-        else if (retrieved) {
-            currentCount = BigDecimal.valueOf(0);
-        }
-        else {
-            currentCount = added.subtract(consumed);
-        }
-
-        if (currentCount.compareTo(BigDecimal.ZERO) < 0) {
-            currentCount = BigDecimal.ZERO.setScale(4, RoundingMode.DOWN);
-        }
-
 
         // if all tests pass then run the query
         try (PreparedStatement preparedStatement = connect.prepareStatement("""
@@ -215,17 +207,14 @@ public class CreateSupplyRecord {
      * @param connection   the JDBC connection
      * @return {true} if the values are invalid, {false} otherwise
      */
-    private static boolean verify_numericValues(BigDecimal added, BigDecimal consumed, int supplyTypeID, Date srDate,
-                                                Connection connection) {
+    private static boolean verify_numericValues(BigDecimal added, BigDecimal consumed, BigDecimal current) {
         // check for negative
         if (added.compareTo(BigDecimal.ZERO) < 0 || consumed.compareTo(BigDecimal.ZERO) < 0) {
             return true;
         }
 
-        BigDecimal currentCount = ReadSupplyRecord.getCurrentCountForDate(connection, supplyTypeID, srDate);
-
         // Check if consuming more than what's currently available
-        return added.add(currentCount).subtract(consumed).compareTo(BigDecimal.ZERO) < 0;
+        return added.add(current).subtract(consumed).compareTo(BigDecimal.ZERO) < 0;
     }
 
 }
