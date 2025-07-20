@@ -36,7 +36,7 @@ class FlockCreateDetailsController : Initializable {
     private fun setFlock() {
         val currentFlock = CurrentFlockInUse.Companion.getCurrentFlockComplete()
         flockDate = currentFlock?.flock?.startingDate
-        val dateToDisplay = GeneralUtil.Companion.formatDatePretty(flockDate?.toLocalDate())
+        val dateToDisplay = GeneralUtil.formatDatePretty(flockDate?.toLocalDate())
         flockNameLabel.text  = "Current Flock Start Date: $dateToDisplay"
     }
 
