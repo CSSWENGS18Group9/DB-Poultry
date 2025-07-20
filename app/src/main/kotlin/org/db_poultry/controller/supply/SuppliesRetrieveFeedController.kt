@@ -1,30 +1,22 @@
-package org.db_poultry.controller
-
-import org.db_poultry.util.SceneSwitcher
-import org.db_poultry.util.GeneralUtil
+package org.db_poultry.controller.supply
 
 import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
-import org.db_poultry.db.supplyRecordDAO.CreateSupplyRecord
 
-import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.layout.AnchorPane
-import javafx.scene.text.Text
 import javafx.scene.control.ComboBox
 import javafx.scene.control.Label
 import javafx.scene.shape.Rectangle
 import javafx.scene.control.DatePicker
-
-import java.sql.Date
 
 import javafx.fxml.Initializable
 import org.db_poultry.db.supplyRecordDAO.ReadSupplyRecord
 import java.net.URL
 import java.util.ResourceBundle 
 
-class UpdateRetrieveSuppliesController: Initializable {
+class SuppliesRetrieveFeedController: Initializable {
 
     @FXML
     private lateinit var btnConfirm: Button

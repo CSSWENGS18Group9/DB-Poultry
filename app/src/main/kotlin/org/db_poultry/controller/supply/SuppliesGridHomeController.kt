@@ -1,4 +1,4 @@
-package org.db_poultry.controller
+package org.db_poultry.controller.supply
 
 import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType

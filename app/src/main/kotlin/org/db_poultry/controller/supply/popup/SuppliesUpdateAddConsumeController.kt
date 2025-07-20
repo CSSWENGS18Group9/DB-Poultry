@@ -1,9 +1,8 @@
-package org.db_poultry.controller
+package org.db_poultry.controller.supply.popup
 
 import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 import org.db_poultry.db.supplyRecordDAO.CreateSupplyRecord.createSupplyRecord
-import org.db_poultry.util.GeneralUtil
 import org.db_poultry.util.undoSingleton
 import org.db_poultry.util.undoTypes
 
@@ -23,7 +22,7 @@ import java.net.URL
 import java.util.ResourceBundle
 import kotlin.toString
 
-class UpdateAddDeleteSuppliesController: Initializable {
+class SuppliesUpdateAddConsumeController: Initializable {
 
     @FXML
     private lateinit var supplyNameLabel: Label

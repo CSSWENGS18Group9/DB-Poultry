@@ -1,9 +1,8 @@
-package org.db_poultry.controller
+package org.db_poultry.controller.supply.popup
 
 import javafx.beans.property.SimpleObjectProperty
 import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.CreateSupplyType.createSupplyType
-import org.db_poultry.util.GeneralUtil
 import org.db_poultry.util.undoSingleton
 import org.db_poultry.util.undoTypes
 import org.db_poultry.util.SupplyTypeSingleton
@@ -15,22 +14,17 @@ import javafx.scene.layout.AnchorPane
 import javafx.stage.FileChooser
 import javafx.fxml.Initializable
 import javafx.scene.layout.GridPane
-import javafx.scene.layout.Pane
 import javafx.scene.text.Text
 import org.db_poultry.util.PopupUtil
 import java.awt.image.BufferedImage
 import java.io.File
-import java.io.FileOutputStream
 import java.net.URL
 import java.util.ResourceBundle
 import javax.imageio.IIOImage
 import javax.imageio.ImageIO
 import javax.imageio.ImageWriteParam
-import javax.imageio.ImageWriter
-import kotlin.compareTo
-import kotlin.div
 
-class CreateSuppliesController: Initializable {
+class SuppliesCreateController: Initializable {
 
     @FXML
     private lateinit var createSuppliesAnchorPane: AnchorPane

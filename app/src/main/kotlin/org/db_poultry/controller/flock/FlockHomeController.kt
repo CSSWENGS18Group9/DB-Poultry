@@ -1,19 +1,16 @@
-package org.db_poultry.controller
+package org.db_poultry.controller.flock
 
-import org.db_poultry.util.SceneSwitcher
 import org.db_poultry.util.GeneralUtil
 
 import javafx.fxml.Initializable
 import java.util.ResourceBundle
 import java.net.URL
 
-import javafx.event.ActionEvent
 import javafx.fxml.FXML
-import javafx.scene.control.Button
 import javafx.scene.layout.AnchorPane
-import javafx.scene.text.Text
 import org.db_poultry.controller.backend.CurrentFlockInUse
 
+// TODO: Remove this and transfer to FlockGridHomeController @Dattebayo2505
 class FlockHomeController: Initializable {
 
     @FXML
