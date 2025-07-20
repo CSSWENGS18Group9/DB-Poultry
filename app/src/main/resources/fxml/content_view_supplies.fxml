@@ -1,56 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane fx:id="viewSupplyAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: FEFAE0; -fx-pref-height: 720; -fx-pref-width: 1280;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.supply.SuppliesViewController">
+<AnchorPane fx:id="viewSupplyAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: FEFAE0; -fx-pref-height: 720; -fx-pref-width: 1280;" stylesheets="@../styles/root.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.supply.SuppliesViewController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="618.0" layoutX="95.0" layoutY="51.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 15; -fx-arc-width: 15;" width="1091.0">
-         <effect>
-            <DropShadow>
-               <color>
-                  <Color opacity="0.4000000059604645" />
-               </color>
-            </DropShadow>
-         </effect>
-      </Rectangle>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fefae0" height="399.0" layoutX="204.0" layoutY="181.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" style="-fx-arc-height: 15; -fx-arc-width: 15;" width="874.0" />
-      <TableView fx:id="viewSuppliesTable" layoutX="271.0" layoutY="213.0" prefHeight="337.0" prefWidth="708.0">
-        <columns>
-          <TableColumn fx:id="supplyTypeCol" prefWidth="176.0" text="Supply Type" />
-          <TableColumn fx:id="qtyAddedCol" prefWidth="173.33331298828125" text="Quantity Added" />
-            <TableColumn fx:id="qtyDepletedCol" prefWidth="163.66668701171875" text="Quantity Depleted" />
-            <TableColumn fx:id="currAmountCol" prefWidth="194.0" text="Current Amount" />
-        </columns>
-      </TableView>
-      <Button fx:id="dateHistoryBtn" layoutX="494.0" layoutY="606.0" mnemonicParsing="false" onAction="#navigateToViewDateHistory" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Date History" textFill="WHITE">
-         <font>
-            <Font name="HelveticaNowDisplay-Light" size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="supplyHistoryBtn" layoutX="686.0" layoutY="606.0" mnemonicParsing="false" onAction="#navigateToViewSupplyHistory" prefHeight="29.0" prefWidth="121.0" style="-fx-background-color: #A4AE81;" text="Supply History" textFill="WHITE">
-         <font>
-            <Font name="HelveticaNowDisplay-Light" size="15.0" />
-         </font>
-      </Button>
-      <Label fx:id="viewSuppliesLbl" layoutX="538.0" layoutY="83.0" text="View Supplies" textFill="#8f250c">
-         <font>
-            <Font name="HelveticaNowDisplay-Bold" size="32.0" />
-         </font>
-      </Label>
-      <Label fx:id="currDateLbl" layoutX="585.0" layoutY="132.0" text="DATE TODAY" textFill="#bc6c25">
-         <font>
-            <Font name="HelveticaNowDisplay-Light" size="18.0" />
-         </font>
-      </Label>
-      <FlowPane prefHeight="200.0" prefWidth="200.0" />
+      <GridPane prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="33.33" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="33.33" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <FontIcon iconLiteral="fas-arrow-circle-left" iconSize="40" onMouseClicked="#backToSuppliesGridHome" styleClass="back-icon" wrappingWidth="40.0">
+               <GridPane.margin>
+                  <Insets left="60.0" />
+               </GridPane.margin>
+            </FontIcon>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+               <children>
+                  <ImageView fx:id="supplyImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/supply-img/Apog.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="suppliesLabel" text="&lt;Placeholder&gt;" textFill="#8f250c">
+                     <font>
+                        <Font name="HelveticaNowDisplay-Bold" size="32.0" />
+                     </font>
+                  </Label>
+               </children>
+               <GridPane.margin>
+                  <Insets top="20.0" />
+               </GridPane.margin>
+            </HBox>
+            <TableView fx:id="supplyViewTable" prefHeight="337.0" prefWidth="708.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
+              <columns>
+                <TableColumn fx:id="dateCol" prefWidth="176.0" text="Date" />
+                <TableColumn fx:id="qtyAddedCol" editable="false" prefWidth="173.33331298828125" text="Quantity Added" />
+                  <TableColumn fx:id="qtyConsumedCol" editable="false" prefWidth="163.66668701171875" text="Quantity Consumed" />
+                  <TableColumn fx:id="currQtyCol" editable="false" prefWidth="194.0" text="Current Quantity" />
+              </columns>
+               <GridPane.margin>
+                  <Insets bottom="60.0" left="60.0" right="60.0" top="60.0" />
+               </GridPane.margin>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>
