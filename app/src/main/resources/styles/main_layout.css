@@ -1,9 +1,30 @@
-.sidebar {
+.sidebar,
+.navbar {
     -fx-background-color: #F7ECB7;
 }
 
+.navbar-pane:hover .label {
+    -fx-border-color: transparent transparent #BC6C25 transparent;
+    -fx-border-width: 0 0 5 0;
+}
+
+.underline-label {
+    -fx-border-color: transparent transparent #8f250c transparent;
+    -fx-border-width: 0 0 5 0;
+}
+
 .right-pane {
-    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.75), 4.75, 0, 4, 0);
+    /*
+        -fx-effect: innershadow(
+            gaussian,                // Type of blur algorithm (gaussian blur)
+            rgba(0,0,0,0.75),        // Shadow color (black, 75% opacity)
+            4.75,                    // Radius (blur amount)
+            0,                       // Choke (0 = soft edge, higher = harder edge)
+            4,                       // Offset-X (horizontal shadow offset)
+            0                       // Offset-Y (vertical shadow offset, negative = shadow at top)
+        );
+    */
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.75), 4.75, 0, 4, 4);
 }
 
 .sidebar-pane {
@@ -15,7 +36,7 @@
 }
 
 .sidebar-pane:hover .label {
-     -fx-translate-x: 15;
+     -fx-translate-x: -15;
      -fx-text-fill: white;
  }
 

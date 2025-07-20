@@ -1,4 +1,4 @@
-package org.db_poultry.controller.popup
+package org.db_poultry.controller.general_popup
 
 import org.db_poultry.db.DBConnect
 import org.db_poultry.util.undoSingleton

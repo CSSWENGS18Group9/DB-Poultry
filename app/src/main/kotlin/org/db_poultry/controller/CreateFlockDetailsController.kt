@@ -12,6 +12,7 @@ import javafx.fxml.Initializable
 import javafx.scene.control.DatePicker
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
+import org.db_poultry.util.PopupUtil
 import java.net.URL
 import java.sql.Date
 import java.util.*
@@ -58,10 +59,10 @@ class CreateFlockDetailsController : Initializable {
 
         if (createFlockDetails(getConnection(), flockDate, detailDate, depletedCount) != null) {
             undoSingleton.setUndoMode(undoTypes.doUndoFlockDetail)
-            GeneralUtil.showPopup("success", "Flock details created successfully.")
+            PopupUtil.showPopup("success", "Flock details created successfully.")
             println("Successfully created Flock.")
         } else {
-            GeneralUtil.showPopup("error", "Failed to create flock details.")
+            PopupUtil.showPopup("error", "Failed to create flock details.")
             println("Failed to create Flock.")
         }
     }

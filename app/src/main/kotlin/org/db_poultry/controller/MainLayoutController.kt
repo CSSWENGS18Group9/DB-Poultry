@@ -14,8 +14,11 @@ import javafx.scene.control.Label
 import javafx.scene.layout.AnchorPane
 import javafx.scene.image.ImageView
 import javafx.scene.layout.FlowPane
+import javafx.scene.layout.GridPane
+import javafx.scene.layout.StackPane
 import org.db_poultry.util.SceneSwitcher
 import org.kordamp.ikonli.javafx.FontIcon
+import kotlin.collections.remove
 
 class MainLayoutController : Initializable {
 
@@ -49,6 +52,42 @@ class MainLayoutController : Initializable {
     @FXML
     private lateinit var flockFlowPane: FlowPane
 
+    // NEWGEN
+
+    @FXML
+    private lateinit var mainStackPane: StackPane
+
+    @FXML
+    private lateinit var suppliesNavFlowPane: FlowPane
+
+    @FXML
+    private lateinit var flockNavFlowPane: FlowPane
+
+    @FXML
+    private lateinit var suppliesLabel: Label
+
+    @FXML
+    private lateinit var flockLabel: Label
+
+    @FXML
+    private lateinit var supplyGridPane: GridPane
+
+    @FXML
+    private lateinit var flockGridPane: GridPane
+
+    @FXML
+    private lateinit var updateSuppliesFlowPane: FlowPane
+
+    @FXML
+    private lateinit var retrieveChickenFeedPane: FlowPane
+
+    @FXML
+    private lateinit var flockSelectionFlowPane: FlowPane
+
+    @FXML
+    private lateinit var flockGenerateReportFlowPane: FlowPane
+
+
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
 
         val today = LocalDate.now()
@@ -57,9 +96,8 @@ class MainLayoutController : Initializable {
 
         GeneralUtil.initializeFontSizeManager(mainAnchorPane)
         GeneralUtil.resizeImageViewToFit(mainAnchorPane, sideBarImageView)
-        GeneralUtil.initializeIconSizeManager(mainAnchorPane, homeFontIcon)
-        GeneralUtil.initializeIconSizeManager(mainAnchorPane, suppliesFontIcon)
-        GeneralUtil.initializeIconSizeManager(mainAnchorPane, flockFontIcon)
+        GeneralUtil.initializeIconSizeManager(mainAnchorPane, suppliesFontIcon, 30.0)
+        GeneralUtil.initializeIconSizeManager(mainAnchorPane, flockFontIcon, 30.0)
 
         GeneralUtil.registerSectionChangeCallback { section ->
             updateSidebarHighlight(section)
@@ -69,21 +107,58 @@ class MainLayoutController : Initializable {
     }
 
     private fun updateSidebarHighlight(section: String) {
-        // Remove highlight from all panes
         clearAllHighlights()
 
-        // Add highlight to current section
+        // Handle navbar highlighting (main sections only)
+        val mainSection = when (section) {
+            "SUPPLIES", "SUPPLIES_UPDATE", "SUPPLIES_RETRIEVE" -> "SUPPLIES"
+            "FLOCK", "FLOCK_SELECT", "FLOCK_GENERATE_REPORT" -> "FLOCK"
+            else -> section
+        }
+
+        // Update navbar
+        when (mainSection) {
+            "SUPPLIES" -> {
+                suppliesLabel.styleClass.add("underline-label")
+                supplyGridPane.isVisible = true
+                flockGridPane.isVisible = false
+                supplyGridPane.isDisable = false
+                flockGridPane.isDisable = true
+            }
+            "FLOCK" -> {
+                flockLabel.styleClass.add("underline-label")
+                supplyGridPane.isVisible = false
+                flockGridPane.isVisible = true
+                flockGridPane.isDisable = false
+                supplyGridPane.isDisable = true
+            }
+            else -> {
+                // Hide both if not in SUPPLIES or FLOCK section
+                supplyGridPane.isVisible = false
+                flockGridPane.isVisible = false
+                supplyGridPane.isDisable = true
+                flockGridPane.isDisable = true
+            }
+        }
+
+        // Update sidebar based on specific subsection
         when (section) {
-            "HOME" -> homeFlowPane.styleClass.add("sidebar-pane-active")
-            "SUPPLIES" -> suppliesFlowPane.styleClass.add("sidebar-pane-active")
-            "FLOCK" -> flockFlowPane.styleClass.add("sidebar-pane-active")
+            "SUPPLIES_UPDATE" -> updateSuppliesFlowPane.styleClass.add("sidebar-pane-active")
+            "SUPPLIES_RETRIEVE" -> retrieveChickenFeedPane.styleClass.add("sidebar-pane-active")
+            "FLOCK_SELECT" -> flockSelectionFlowPane.styleClass.add("sidebar-pane-active")
+            "FLOCK_GENERATE_REPORT" -> flockGenerateReportFlowPane.styleClass.add("sidebar-pane-active")
         }
     }
 
     private fun clearAllHighlights() {
-        homeFlowPane.styleClass.remove("sidebar-pane-active")
-        suppliesFlowPane.styleClass.remove("sidebar-pane-active")
-        flockFlowPane.styleClass.remove("sidebar-pane-active")
+        suppliesLabel.styleClass.remove("underline-label")
+        flockLabel.styleClass.remove("underline-label")
+
+        // Clear sidebar highlights
+        updateSuppliesFlowPane.styleClass.remove("sidebar-pane-active")
+        retrieveChickenFeedPane.styleClass.remove("sidebar-pane-active")
+        flockSelectionFlowPane.styleClass.remove("sidebar-pane-active")
+        flockGenerateReportFlowPane.styleClass.remove("sidebar-pane-active")
     }
 
     @FXML
@@ -96,15 +171,29 @@ class MainLayoutController : Initializable {
     fun navigateToHome() {
         GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home.fxml")
     }
-    
+
     @FXML
-    fun navigateToSupplies() {
-        // GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_supplies.fxml")
+    fun navigateToSupplies() { // TODO: Change soon after other fixes @Dattbayo25
         GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_supplies.fxml")
     }
-    
+
     @FXML
-    fun navigateToFlock() {
+    fun navigateToUpdateSupplies() {
+        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_supplies_grid.fxml")
+    }
+
+    @FXML
+    fun navigateToRetrieveChickenFeed() {
+        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_update_supplies_retrieve.fxml")
+    }
+
+    @FXML
+    fun navigateToFlockSelection() {
         GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_flock.fxml")
+    }
+
+    @FXML
+    fun navigateToFlockGenerateReport() {
+        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_generate_report.fxml")
     }
 }
