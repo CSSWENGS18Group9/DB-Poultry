@@ -18,7 +18,6 @@ import javafx.scene.layout.GridPane
 import javafx.scene.layout.StackPane
 import org.db_poultry.util.SceneSwitcher
 import org.kordamp.ikonli.javafx.FontIcon
-import java.util.concurrent.Flow
 import kotlin.collections.remove
 
 class MainLayoutController : Initializable {
