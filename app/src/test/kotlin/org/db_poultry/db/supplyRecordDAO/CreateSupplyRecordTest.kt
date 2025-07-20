@@ -232,7 +232,7 @@ class CreateSupplyRecordTest {
 
         val result = CreateSupplyRecord.createSupplyRecord(
             conn,
-            1,
+            13,
             date,
             BigDecimal("0.00"),
             BigDecimal("50.00"),

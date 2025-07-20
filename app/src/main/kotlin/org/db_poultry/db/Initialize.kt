@@ -61,18 +61,18 @@ fun cleanTables(conn: Connection?) {
     // SPECIFIC FOR @megandasal
     // Feel free to adjust the unit measurements for each default supply
     val defaultSupplyTypes = listOf(
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Apog', 'ml', 'src/main/resources/img/supply-img/Apog.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Adulticide', 'ml', 'src/main/resources/img/supply-img/Adulticide.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('String', 'cm', 'src/main/resources/img/supply-img/String.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Fuel', 'l', 'src/main/resources/img/supply-img/Fuel.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Chicken Medicine', 'bottles', 'src/main/resources/img/supply-img/Chicken_Medicine.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Larvicide', 'ml', 'src/main/resources/img/supply-img/Larvicide.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Fly Glue', 'ml', 'src/main/resources/img/supply-img/Fly_Glue.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Disinfectant', 'ml', 'src/main/resources/img/supply-img/Disinfectant.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Starter Feed', 'kg', 'src/main/resources/img/supply-img/Starter_Feed.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Grower Feed', 'kg', 'src/main/resources/img/supply-img/Grower_Feed.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Booster Feed', 'kg', 'src/main/resources/img/supply-img/Booster_Feed.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('Finisher Feed', 'kg', 'src/main/resources/img/supply-img/Finisher_Feed.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('apog', 'ml', 'src/main/resources/img/supply-img/Apog.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('adulticide', 'ml', 'src/main/resources/img/supply-img/Adulticide.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('string', 'cm', 'src/main/resources/img/supply-img/String.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('fuel', 'l', 'src/main/resources/img/supply-img/Fuel.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('chicken Medicine', 'bottles', 'src/main/resources/img/supply-img/Chicken_Medicine.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('larvicide', 'ml', 'src/main/resources/img/supply-img/Larvicide.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('fly glue', 'ml', 'src/main/resources/img/supply-img/Fly_Glue.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('disinfectant', 'ml', 'src/main/resources/img/supply-img/Disinfectant.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('starter feed', 'kg', 'src/main/resources/img/supply-img/Starter_Feed.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('grower feed', 'kg', 'src/main/resources/img/supply-img/Grower_Feed.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('booster feed', 'kg', 'src/main/resources/img/supply-img/Booster_Feed.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('finisher feed', 'kg', 'src/main/resources/img/supply-img/Finisher_Feed.png')",
     )
 
     try {

@@ -57,10 +57,6 @@ public class CreateSupplyRecord {
             currentCount = BigDecimal.valueOf(0);
         }
 
-        if (currentCount.compareTo(BigDecimal.ZERO) < 0) {
-            currentCount = BigDecimal.ZERO.setScale(4, RoundingMode.DOWN);
-        }
-
         boolean verifier = verify_numericValues(added, consumed, currentCount);
 
         // verify the supplyType exists
@@ -211,7 +207,7 @@ public class CreateSupplyRecord {
         }
 
         // Check if consuming more than what's currently available
-        return added.add(current).subtract(consumed).compareTo(BigDecimal.ZERO) < 0;
+        return current.compareTo(BigDecimal.ZERO) < 0;
     }
 
 }
