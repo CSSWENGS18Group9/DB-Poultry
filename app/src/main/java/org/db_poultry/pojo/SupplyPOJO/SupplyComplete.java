@@ -55,7 +55,7 @@ public class SupplyComplete {
         return consumed;
     }
 
-    public BigDecimal getCurrent() {return current;}
+    public BigDecimal getCurrent() { return current; }
 
     public boolean isRetrieved() {
         return retrieved;
