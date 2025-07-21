@@ -26,6 +26,7 @@ import javafx.fxml.Initializable
 import javafx.scene.layout.TilePane
 import org.db_poultry.util.PopupUtil
 import java.io.File
+import java.math.BigDecimal
 import java.net.URL
 import java.util.ResourceBundle
 
@@ -37,6 +38,9 @@ class SuppliesGridHomeController: Initializable {
     @FXML
     private lateinit var mainTilePane: TilePane
 
+    @FXML
+    private lateinit var currentAmountLabel: Label
+    
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         loadSupplyGrid()
     }
@@ -125,19 +129,16 @@ class SuppliesGridHomeController: Initializable {
         gridPane.add(nameLabel, 1, 1)
 
         // Create count label
-        val currentCount = ReadSupplyRecord.getCurrentCountForDate(
-            getConnection(),
-            supplyType.supplyTypeId,
-            Date(System.currentTimeMillis())
-        )
-        val formattedCount = currentCount.stripTrailingZeros().toPlainString()
+        SupplyTypeSingleton.setCurrentSupply(supplyType.name)
+        val currentCount = SupplyTypeSingleton.getCurrentAmount()
+        val formattedCount = currentCount?.stripTrailingZeros()?.toPlainString()
 
         val unit = if (supplyType.unit.isNotEmpty()) " (${supplyType.unit})" else ""
-        val countLabel = Label("Current Quantity: $formattedCount $unit").apply {
+        currentAmountLabel = Label("Current Quantity: $formattedCount $unit").apply {
             styleClass.add("h5")
         }
-        GridPane.setHalignment(countLabel, HPos.CENTER)
-        gridPane.add(countLabel, 1, 3)
+        GridPane.setHalignment(currentAmountLabel, HPos.CENTER)
+        gridPane.add(currentAmountLabel, 1, 3)
 
         // Create buttons
         val viewHistoryButton = Button("View History").apply {
@@ -162,6 +163,7 @@ class SuppliesGridHomeController: Initializable {
             setOnMousePressed { event ->
                 SupplyTypeSingleton.setCurrentSupply(supplyType.name)
                 SupplyTypeSingleton.setCurrentSupplyImageDir(supplyType.imagePath)
+                SupplyTypeSingleton.getCurrentAmount()
             }
         }
         GridPane.setHalignment(updateCountButton, HPos.CENTER)
@@ -178,7 +180,6 @@ class SuppliesGridHomeController: Initializable {
 
     @FXML
     private fun navigateToUpdateSupplies() {
-//        GeneralUtil.navigateToMainContent(mainAnchorPane, "/fxml/content_update_supplies_add_delete.fxml")
         PopupUtil.showContentPopup("/fxml/content_update_supplies_add_delete.fxml")
     }
 

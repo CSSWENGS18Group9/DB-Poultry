@@ -1,5 +1,13 @@
 package org.db_poultry.util
 
+import org.db_poultry.db.supplyRecordDAO.ReadSupplyRecord
+import org.db_poultry.db.DBConnect.getConnection
+import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
+
+import java.math.BigDecimal
+import java.sql.Date
+import java.time.LocalDate
+
 object SupplyTypeSingleton {
 
     private var UIDefaultImagePath: String = "src/main/resources/img/supply-img/default.png"
@@ -7,6 +15,9 @@ object SupplyTypeSingleton {
     // This class can be used to manage the current supply in use, mainly for supply grid
     private var currentSupply: String? = null
     private var currentSupplyImageDir: String? = null
+    private var currentSupplyID: Int = -1
+    private var currentAmount: BigDecimal = BigDecimal.ZERO
+
 
     fun setCurrentSupply(supply: String) {
         currentSupply = supply
@@ -25,6 +36,15 @@ object SupplyTypeSingleton {
         return currentSupplyImageDir
     }
 
+    fun getCurrentAmount(): BigDecimal? {
+        currentSupplyID = ReadSupplyType.getSupplyTypeByName(getConnection(),currentSupply).supplyTypeId
+
+        return ReadSupplyRecord.getCurrentCountForDate(
+            getConnection(),
+            currentSupplyID,
+            Date.valueOf(LocalDate.now())
+            )
+    }
 
     private val defaultSupplyNames = setOf(
         "Apog",
