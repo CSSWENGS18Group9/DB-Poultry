@@ -82,7 +82,7 @@
                               <Insets top="40.0" />
                            </GridPane.margin>
                         </ImageView>
-                        <FlowPane fx:id="suppliesNavFlowPane" alignment="CENTER" hgap="10.0" onMouseClicked="#navigateToSupplies" prefHeight="200.0" prefWidth="200.0" styleClass="navbar-pane" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                        <FlowPane fx:id="suppliesNavFlowPane" alignment="CENTER" hgap="10.0" onMouseClicked="#navigateToUpdateSupplies" prefHeight="200.0" prefWidth="200.0" styleClass="navbar-pane" GridPane.columnIndex="3" GridPane.rowIndex="1">
                            <children>
                               <FontIcon fx:id="suppliesFontIcon" iconLiteral="fas-boxes" iconSize="30" textAlignment="CENTER" wrappingWidth="30.0" />
                               <Label fx:id="suppliesLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h3-bold" text="Supplies">

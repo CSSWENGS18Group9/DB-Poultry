@@ -27,11 +27,6 @@ class HomeController: Initializable {
     }
 
     @FXML
-    fun navigateToSupplies() {
-        GeneralUtil.navigateToMainContent(homeAnchorPane, "/fxml/content_home_supplies.fxml")
-    }
-
-    @FXML
     fun navigateToFlock() {
         GeneralUtil.navigateToMainContent(homeAnchorPane, "/fxml/content_home_flock.fxml")
     }
