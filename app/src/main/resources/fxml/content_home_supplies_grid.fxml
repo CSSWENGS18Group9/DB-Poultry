@@ -113,11 +113,6 @@
                   <ComboBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Sort By: Alphabetical" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                </children>
             </GridPane>
-            <FontIcon fx:id="homeFontIcon" iconLiteral="fas-arrow-circle-left" iconSize="50" styleClass="back-icon" textAlignment="CENTER" wrappingWidth="50.0">
-               <GridPane.margin>
-                  <Insets left="30.0" />
-               </GridPane.margin>
-            </FontIcon>
          </children>
          <padding>
             <Insets left="10.0" right="10.0" />
