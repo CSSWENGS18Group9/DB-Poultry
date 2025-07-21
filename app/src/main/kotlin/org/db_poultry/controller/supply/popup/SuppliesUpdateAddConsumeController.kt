@@ -22,6 +22,7 @@ import org.db_poultry.util.SupplyTypeSingleton
 import java.io.File
 import java.net.URL
 import java.util.ResourceBundle
+import kotlin.toString
 
 
 class SuppliesUpdateAddConsumeController: Initializable {
@@ -53,12 +54,14 @@ class SuppliesUpdateAddConsumeController: Initializable {
     @FXML
     private lateinit var deductAmountSupplyTextField: TextField
 
+    @FXML
+    private lateinit var confirmButton: Button
+
     private var currentSupplyType: String? = null
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         setSupplyName()
         setAmounts()
-        setDateListener()
     }
 
     private fun setSupplyName() {
@@ -75,17 +78,44 @@ class SuppliesUpdateAddConsumeController: Initializable {
     private fun setAmounts() {
         currentAmountLabel.text = SupplyTypeSingleton.getCurrentAmount()?.toString() ?: "0.00"
         updatedCurrentAmountLabel.text = currentAmountLabel.text
+        updatedCurrentAmountLabel.style = "-fx-text-fill: black;"
+        confirmButton.isDisable = true
 
-        val listener = { _: javafx.beans.Observable ->
+        val updateButtonAndLabel = {
             val currentAmount = SupplyTypeSingleton.getCurrentAmount() ?: BigDecimal.ZERO
-            val addAmount = addAmountSupplyTextField.text.toBigDecimalOrNull() ?: BigDecimal.ZERO
-            val deductAmount = deductAmountSupplyTextField.text.toBigDecimalOrNull() ?: BigDecimal.ZERO
+            val addText = addAmountSupplyTextField.text
+            val deductText = deductAmountSupplyTextField.text
+            val addAmount = addText.toBigDecimalOrNull() ?: BigDecimal.ZERO
+            val deductAmount = deductText.toBigDecimalOrNull() ?: BigDecimal.ZERO
             val updatedAmount = currentAmount + addAmount - deductAmount
             updatedCurrentAmountLabel.text = updatedAmount.toPlainString()
+
+            val isAmountEntered = addAmountSupplyTextField.text.isNotBlank() || deductAmountSupplyTextField.text.isNotBlank()
+            val isDateSet = dateDatePicker.value != null
+            confirmButton.isDisable = !(isAmountEntered && isDateSet)
+
+            // Disable setTodayButton if date picker already has today's date
+            val today = java.time.LocalDate.now()
+            setTodayButton.isDisable = dateDatePicker.value == today
+
+            updatedCurrentAmountLabel.style = when {
+                !isAmountEntered -> "-fx-text-fill: black;"
+                updatedAmount > currentAmount -> "-fx-text-fill: #606C38;"
+                else -> "-fx-text-fill: #8F250C;"
+            }
         }
 
-        addAmountSupplyTextField.textProperty().addListener(listener)
-        deductAmountSupplyTextField.textProperty().addListener(listener)
+        addAmountSupplyTextField.textProperty().addListener { _ -> updateButtonAndLabel() }
+        deductAmountSupplyTextField.textProperty().addListener { _ -> updateButtonAndLabel() }
+        dateDatePicker.valueProperty().addListener { _, _, newValue ->
+            if (newValue != null) {
+                dateTodayLabel.text = GeneralUtil.formatDatePretty(newValue)
+            } else {
+                dateTodayLabel.text = ""
+            }
+            updateButtonAndLabel()
+        }
+        updateButtonAndLabel()
     }
 
     @FXML
@@ -120,16 +150,6 @@ class SuppliesUpdateAddConsumeController: Initializable {
         input.split(" ").joinToString(" ") { word ->
             word.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
         }
-
-    private fun setDateListener() {
-        dateDatePicker.valueProperty().addListener { _, _, newValue ->
-            if (newValue != null) {
-                dateTodayLabel.text = GeneralUtil.formatDatePretty(newValue)
-            } else {
-                dateTodayLabel.text = ""
-            }
-        }
-    }
 
     @FXML
     fun setDateToToday() {
