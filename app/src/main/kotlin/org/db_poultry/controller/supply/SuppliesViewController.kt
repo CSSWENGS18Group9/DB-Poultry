@@ -21,99 +21,83 @@ import java.util.*
 import javafx.event.ActionEvent
 
 import javafx.beans.property.SimpleObjectProperty
-import javafx.beans.property.SimpleStringProperty
+import javafx.scene.control.cell.PropertyValueFactory
+import javafx.scene.image.ImageView
+import org.db_poultry.util.SupplyTypeSingleton
+import java.io.File
 
 class SuppliesViewController: Initializable {
-
-    @FXML
-    private lateinit var currDateLbl: Label
 
     @FXML
     private lateinit var viewSupplyAnchorPane: AnchorPane
 
     @FXML
-    private lateinit var viewSuppliesTable: TableView<SupplyWithCurrentAmount>
+    private lateinit var supplyImageView: ImageView
 
     @FXML
-    private lateinit var supplyTypeCol: TableColumn<SupplyWithCurrentAmount, String>
+    private lateinit var suppliesLabel: Label
 
     @FXML
-    private lateinit var qtyAddedCol: TableColumn<SupplyWithCurrentAmount, BigDecimal>
+    private lateinit var supplyViewTable: TableView<SupplyComplete>
 
     @FXML
-    private lateinit var qtyDepletedCol: TableColumn<SupplyWithCurrentAmount, BigDecimal>
+    private lateinit var dateCol: TableColumn<SupplyComplete, Date>
 
     @FXML
-    private lateinit var currAmountCol: TableColumn<SupplyWithCurrentAmount, BigDecimal>
+    private lateinit var currQtyCol: TableColumn<SupplyComplete, BigDecimal>
 
-    data class SupplyWithCurrentAmount(
-        val supply: SupplyComplete,
-        val currentAmount: BigDecimal
-    )
+    @FXML
+    private lateinit var qtyAddedCol: TableColumn<SupplyComplete, BigDecimal>
+
+    @FXML
+    private lateinit var qtyConsumedCol: TableColumn<SupplyComplete, BigDecimal>
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        // Set up table columns
-        supplyTypeCol.setCellValueFactory { cellData ->
-            SimpleStringProperty(cellData.value.supply.supply_name)
-        }
-        qtyAddedCol.setCellValueFactory { cellData ->
-            SimpleObjectProperty(cellData.value.supply.added)
-        }
-        qtyDepletedCol.setCellValueFactory { cellData ->
-            SimpleObjectProperty(cellData.value.supply.consumed)
-        }
-        currAmountCol.setCellValueFactory { cellData ->
-            SimpleObjectProperty(cellData.value.currentAmount)
-        }
-
-        // Set current date in label
-        val today = LocalDate.now()
-        currDateLbl.text = "Current Date: $today"
-        
-        // Fetch and display supply data
+        setSupply()
+        setupTableColumns()
         loadSupplyData()
+
+    }
+
+    private fun setSupply() {
+        suppliesLabel.text = SupplyTypeSingleton.getCurrentSupply()
+        val supplyImage = SupplyTypeSingleton.getCurrentSupplyImageDir() ?: SupplyTypeSingleton.getUIDefaultImagePath()
+        supplyImageView = ImageView(File(supplyImage).toURI().toString())
+    }
+
+    private fun setupTableColumns() {
+        dateCol.cellValueFactory = PropertyValueFactory("date")
+        qtyAddedCol.cellValueFactory = PropertyValueFactory("added")
+        qtyConsumedCol.cellValueFactory = PropertyValueFactory("consumed")
+        currQtyCol.setCellValueFactory { cellData: TableColumn.CellDataFeatures<SupplyComplete, BigDecimal> ->
+            val currentQty = ReadSupplyRecord.getCurrentCountForDate(
+                getConnection(),
+                cellData.value.supply_type_id,
+                cellData.value.date
+            )
+            SimpleObjectProperty(currentQty)
+        }
     }
 
     private fun loadSupplyData() {
-        val supplyTypes = ReadSupplyType.getAllSupplyTypes(getConnection()) ?: return
-        val tableData = FXCollections.observableArrayList<SupplyWithCurrentAmount>()
-
-        for (supplyType in supplyTypes) {
-            val records = ReadSupplyRecord.getFromName(getConnection(), supplyType.name)
-            if (records != null) {
-                // Sort records by date
-                val sortedRecords = records.sortedBy { it.date }
-                var runningTotal = BigDecimal.ZERO
-
-                for (record in sortedRecords) {
-                    val added = record.added ?: BigDecimal.ZERO
-                    val consumed = record.consumed ?: BigDecimal.ZERO
-
-                    runningTotal = if (record.isRetrieved) {
-                        added - consumed
-                    } else {
-                        runningTotal + added - consumed
-                    }
-
-                    tableData.add(SupplyWithCurrentAmount(record, runningTotal.setScale(4)))
-                }
+        val currentSupplyName = SupplyTypeSingleton.getCurrentSupply()
+        if (currentSupplyName != null) {
+            val supplyList = ReadSupplyRecord.getFromName(getConnection(), currentSupplyName)
+            if (supplyList != null) {
+                val observableList = FXCollections.observableArrayList(supplyList)
+                supplyViewTable.items = observableList
             }
         }
-        viewSuppliesTable.items = tableData
     }
 
     @FXML
-    fun navigateToViewSupplies(event: ActionEvent) {
+    fun navigateToViewSupplies() {
         GeneralUtil.navigateToMainContent(viewSupplyAnchorPane, "/fxml/content_view_supplies.fxml")
     }
-        
-    @FXML
-    fun navigateToViewSupplyHistory(event: ActionEvent) {
-        GeneralUtil.navigateToMainContent(viewSupplyAnchorPane, "/fxml/content_view_supply_history.fxml")
-    }
 
     @FXML
-    fun navigateToViewDateHistory(event: ActionEvent) {
-        GeneralUtil.navigateToMainContent(viewSupplyAnchorPane, "/fxml/content_view_date_history.fxml")
+    fun backToSuppliesGridHome() {
+        GeneralUtil.navigateToMainContent(viewSupplyAnchorPane, "/fxml/content_home_supplies_grid.fxml")
     }
+
 }

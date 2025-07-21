@@ -11,6 +11,8 @@ import javafx.scene.Scene
 import javafx.scene.text.Font
 import org.db_poultry.util.SceneSwitcher
 
+// TODO: Fix pane switching (eg. login>update supplies > login)
+//  unnecessarily adjusting popup page screen position @Dattebayo25
 class MainFrame : Application() {
     override fun start(primaryStage: Stage) {
         loadCustomFonts()
@@ -27,8 +29,9 @@ class MainFrame : Application() {
                 scene = mainScene
                 title = "DB Poultry"
 
-                minWidth = 600.0
-                minHeight = 400.0
+
+                minWidth = 853.33 // actual 1.5x
+                minHeight = 480.00 // actual 1.5x
 
                 // setMaxWidth(600.0)
                 // setMaxHeight(400.0)

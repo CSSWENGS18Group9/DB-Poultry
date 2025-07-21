@@ -1,101 +1,145 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane fx:id="homeAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="main-pane" stylesheets="@../styles/root.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.supply.popup.SuppliesUpdateAddConsumeController">
+<AnchorPane fx:id="updateSuppliesAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="480.0" stylesheets="@../styles/root.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.supply.popup.SuppliesUpdateAddConsumeController">
    <children>
-      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="720.0" prefWidth="1280.0" styleClass="inner-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane alignment="TOP_CENTER" layoutX="100.0" layoutY="80.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="620.0" prefWidth="1180.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" percentHeight="15.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="0.67" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
-            <GridPane alignment="TOP_CENTER" layoutX="64.0" layoutY="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="620.0" prefWidth="1180.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" percentHeight="16.67" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" percentHeight="16.67" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" percentHeight="16.67" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" percentHeight="16.67" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" percentHeight="16.67" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" percentHeight="16.67" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
+            <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h2-bold" text="Update Supply" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" />
+            <FontIcon fx:id="homeFontIcon" iconLiteral="fas-times-circle" iconSize="30" onMouseClicked="#closePopup" styleClass="back-icon" text="" textAlignment="CENTER" wrappingWidth="30.0" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets right="20.0" top="20.0" />
+               </GridPane.margin>
+            </FontIcon>
+            <GridPane GridPane.columnSpan="3" GridPane.rowIndex="1">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
-                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h1-bold" text="Update Supplies" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" />
-                  <Label fx:id="supplyNameLabel" alignment="CENTER" layoutX="210.0" layoutY="61.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="&lt;Supply Name&gt;" textFill="#8f250c" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="HelveticaNowDisplay-Bold" size="64.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="supplyTypeImageView" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets bottom="40.0" />
-                     </GridPane.margin>
-                     <image>
-                        <Image url="@../img/supply-img/default.png" />
-                     </image></ImageView>
-                  <DatePicker fx:id="datepickerDate" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="570.0" style="-fx-border-color: #606c38; -fx-border-width: 2;" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets bottom="10.0" right="100.0" top="10.0" />
-                     </GridPane.margin></DatePicker>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="3" GridPane.rowSpan="2">
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1">
                      <children>
-                        <Label styleClass="h3-bold" text="Add Amount" />
-                        <TextField fx:id="addAmountSupplyTextField" promptText="Enter amount to add..." text="0">
-                           <VBox.margin>
-                              <Insets right="100.0" />
-                           </VBox.margin></TextField>
-                        <Label styleClass="h3-bold" text="Deduct Amount" />
-                        <TextField fx:id="deductAmountSupplyTextField" promptText="Enter amount to deduct..." text="0">
-                           <VBox.margin>
-                              <Insets right="100.0" />
-                           </VBox.margin>
-                        </TextField>
+                        <Label fx:id="supplyNameLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h3-bold" text="&lt;Supply Name&gt;" textFill="#8f250c">
+                           <font>
+                              <Font name="HelveticaNowDisplay-Bold" size="64.0" />
+                           </font>
+                        </Label>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <FontIcon fx:id="homeFontIcon1" iconLiteral="fas-arrow-right" iconSize="30" onMouseClicked="#closePopup" styleClass="back-icon" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                              <Label fx:id="currentAmountLabel" styleClass="h4-bold" text="XXXX" GridPane.halignment="RIGHT" />
+                              <Label fx:id="updatedCurrentAmountLabel" styleClass="h4-bold" text="XXXX" GridPane.columnIndex="2" GridPane.halignment="LEFT" />
+                           </children>
+                        </GridPane>
                      </children>
                   </VBox>
-                  <Button fx:id="btnConfirm" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#confirm" prefHeight="69.0" prefWidth="330.0" styleClass="confirm-button" text="Confirm" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" percentHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <DatePicker fx:id="dateDatePicker" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                        <Button fx:id="setTodayButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#setDateToToday" text="Set Today" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                           <styleClass>
+                              <String fx:value="sub-button" />
+                              <String fx:value="h5-bold" />
+                           </styleClass>
+                           <GridPane.margin>
+                              <Insets left="15.0" right="15.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Label fx:id="dateTodayLabel" styleClass="h4-bold" text="Month Day, Year" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                     </children>
                      <GridPane.margin>
-                        <Insets bottom="50.0" left="100.0" right="100.0" />
+                        <Insets top="10.0" />
                      </GridPane.margin>
-                     <effect>
-                        <DropShadow offsetY="2.0">
-                           <color>
-                              <Color opacity="0.30000001192092896" />
-                           </color>
-                        </DropShadow>
-                     </effect>
-                     <font>
-                        <Font name="HelveticaNowDisplay-Bold" size="24.0" />
-                     </font>
+                  </GridPane>
+                  <GridPane hgap="40.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <TextField fx:id="addAmountSupplyTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                           <GridPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="deductAmountSupplyTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Label styleClass="h4-bold" text="Added" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label layoutX="10.0" layoutY="76.0" styleClass="h4-bold" text="Consumed" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                     </children>
+                     <GridPane.margin>
+                        <Insets bottom="15.0" />
+                     </GridPane.margin>
+                  </GridPane>
+                  <Button fx:id="confirmButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Confirm" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                     <styleClass>
+                        <String fx:value="h3-bold" />
+                        <String fx:value="confirm-button" />
+                     </styleClass>
                   </Button>
                </children>
             </GridPane>
          </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <padding>
-            <Insets bottom="50.0" left="50.0" right="50.0" top="30.0" />
-         </padding>
-      </AnchorPane>
+         <styleClass>
+            <String fx:value="main-pane" />
+            <String fx:value="popup-pane" />
+         </styleClass>
+      </GridPane>
    </children>
    <padding>
-      <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
 </AnchorPane>

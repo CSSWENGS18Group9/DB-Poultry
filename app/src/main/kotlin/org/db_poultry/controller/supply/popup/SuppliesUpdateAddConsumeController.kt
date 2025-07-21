@@ -13,8 +13,10 @@ import javafx.scene.control.TextField
 import java.math.BigDecimal
 import java.sql.Date
 import javafx.fxml.Initializable
-import javafx.scene.image.Image
-import javafx.scene.image.ImageView
+import javafx.scene.control.Button
+import javafx.scene.layout.AnchorPane
+import javafx.stage.Stage
+import org.db_poultry.util.GeneralUtil
 import org.db_poultry.util.PopupUtil
 import org.db_poultry.util.SupplyTypeSingleton
 import java.io.File
@@ -22,16 +24,29 @@ import java.net.URL
 import java.util.ResourceBundle
 import kotlin.toString
 
+
 class SuppliesUpdateAddConsumeController: Initializable {
+
+    @FXML
+    private lateinit var updateSuppliesAnchorPane: AnchorPane
 
     @FXML
     private lateinit var supplyNameLabel: Label
 
     @FXML
-    private lateinit var supplyTypeImageView: ImageView
+    private lateinit var currentAmountLabel: Label
 
     @FXML
-    private lateinit var datepickerDate: DatePicker
+    private lateinit var updatedCurrentAmountLabel: Label
+
+    @FXML
+    private lateinit var setTodayButton: Button
+    
+    @FXML
+    private lateinit var dateDatePicker: DatePicker
+
+    @FXML
+    private lateinit var dateTodayLabel: Label
 
     @FXML
     private lateinit var addAmountSupplyTextField: TextField
@@ -39,13 +54,14 @@ class SuppliesUpdateAddConsumeController: Initializable {
     @FXML
     private lateinit var deductAmountSupplyTextField: TextField
 
+    @FXML
+    private lateinit var confirmButton: Button
+
     private var currentSupplyType: String? = null
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-
         setSupplyName()
-        setSupplyImage()
-
+        setAmounts()
     }
 
     private fun setSupplyName() {
@@ -59,34 +75,56 @@ class SuppliesUpdateAddConsumeController: Initializable {
         }
     }
 
-    private fun setSupplyImage() {
-        val supplyName = SupplyTypeSingleton.getCurrentSupply()
-        val imageDir = SupplyTypeSingleton.getCurrentSupplyImageDir()
-        val isDefaultSupplyType = supplyName != null && SupplyTypeSingleton.isDefaultSupplyType(supplyName)
+    private fun setAmounts() {
+        currentAmountLabel.text = SupplyTypeSingleton.getCurrentAmount()?.toString() ?: "0.00"
+        updatedCurrentAmountLabel.text = currentAmountLabel.text
+        updatedCurrentAmountLabel.style = "-fx-text-fill: black;"
+        confirmButton.isDisable = true
 
-        val imageUrl: URL? = if (isDefaultSupplyType) {
-            val imageFileName = imageDir?.substringAfterLast('/')
-            val resourcePath = "/img/supply-img/$imageFileName"
-            javaClass.getResource(resourcePath)
-        } else {
-            if (imageDir != null) File(imageDir).toURI().toURL() else null
+        val updateButtonAndLabel = {
+            val currentAmount = SupplyTypeSingleton.getCurrentAmount() ?: BigDecimal.ZERO
+            val addText = addAmountSupplyTextField.text
+            val deductText = deductAmountSupplyTextField.text
+            val addAmount = addText.toBigDecimalOrNull() ?: BigDecimal.ZERO
+            val deductAmount = deductText.toBigDecimalOrNull() ?: BigDecimal.ZERO
+            val updatedAmount = currentAmount + addAmount - deductAmount
+            updatedCurrentAmountLabel.text = updatedAmount.toPlainString()
+
+            val isAmountEntered = addAmountSupplyTextField.text.isNotBlank() || deductAmountSupplyTextField.text.isNotBlank()
+            val isDateSet = dateDatePicker.value != null
+            confirmButton.isDisable = !(isAmountEntered && isDateSet)
+
+            // Disable setTodayButton if date picker already has today's date
+            val today = java.time.LocalDate.now()
+            setTodayButton.isDisable = dateDatePicker.value == today
+
+            updatedCurrentAmountLabel.style = when {
+                !isAmountEntered -> "-fx-text-fill: black;"
+                updatedAmount > currentAmount -> "-fx-text-fill: #606C38;"
+                else -> "-fx-text-fill: #8F250C;"
+            }
         }
 
-        supplyTypeImageView.image = if (imageUrl != null) {
-            Image(imageUrl.toString(), true)
-        } else {
-            Image(javaClass.getResource("/img/supply-img/default.png")?.toString(), true)
+        addAmountSupplyTextField.textProperty().addListener { _ -> updateButtonAndLabel() }
+        deductAmountSupplyTextField.textProperty().addListener { _ -> updateButtonAndLabel() }
+        dateDatePicker.valueProperty().addListener { _, _, newValue ->
+            if (newValue != null) {
+                dateTodayLabel.text = GeneralUtil.formatDatePretty(newValue)
+            } else {
+                dateTodayLabel.text = ""
+            }
+            updateButtonAndLabel()
         }
+        updateButtonAndLabel()
     }
-
 
     @FXML
     fun confirm() {
         val amountAdd: Double? = addAmountSupplyTextField.text.toDoubleOrNull()
-        val amount_del: Double? = deductAmountSupplyTextField.text.toDoubleOrNull()
-        val date = datepickerDate.value
+        val amountDel: Double? = deductAmountSupplyTextField.text.toDoubleOrNull()
+        val date = dateDatePicker.value
 
-        if ((amountAdd == null || amount_del == null) && date == null) {
+        if ((amountAdd == null || amountDel == null) && date == null) {
             println("Please fill in either the amount to add or delete and select a date.")
             return
         }
@@ -95,7 +133,7 @@ class SuppliesUpdateAddConsumeController: Initializable {
 
         val sqlDate = Date.valueOf(date)
         val added = BigDecimal(amountAdd!!)
-        val consumed = BigDecimal(amount_del!!)
+        val consumed = BigDecimal(amountDel!!)
 
         val result = createSupplyRecord(getConnection(), supplyID, sqlDate, added, consumed, false)
         if (result != null) {
@@ -113,4 +151,16 @@ class SuppliesUpdateAddConsumeController: Initializable {
             word.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
         }
 
+    @FXML
+    fun setDateToToday() {
+        val today = java.time.LocalDate.now()
+        dateDatePicker.value = today
+        dateTodayLabel.text = GeneralUtil.formatDatePretty(today)
+    }
+
+    @FXML
+    fun closePopup() {
+        val stage = supplyNameLabel.scene.window as Stage
+        stage.close()
+    }
 }

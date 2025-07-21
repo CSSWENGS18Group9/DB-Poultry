@@ -24,7 +24,7 @@
             0                       // Offset-Y (vertical shadow offset, negative = shadow at top)
         );
     */
-    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.75), 4.75, 0, 4, 4);
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.50), 4.75, 0, 4, 4);
 }
 
 .sidebar-pane {
