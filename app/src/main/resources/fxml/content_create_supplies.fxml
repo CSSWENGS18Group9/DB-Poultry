@@ -116,9 +116,9 @@
                   <Insets left="20.0" right="20.0" />
                </GridPane.margin>
             </GridPane>
-            <FontIcon fx:id="homeFontIcon" iconLiteral="fas-times-circle" iconSize="30" onMouseClicked="#closePopup" styleClass="back-icon" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+            <FontIcon fx:id="homeFontIcon" iconLiteral="fas-times-circle" iconSize="30" onMouseClicked="#closePopup" styleClass="back-icon" text="" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                <GridPane.margin>
-                  <Insets right="30.0" />
+                  <Insets right="20.0" />
                </GridPane.margin></FontIcon>
          </children>
          <styleClass>
