@@ -4,79 +4,75 @@ import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 
 import javafx.fxml.FXML
-import javafx.scene.control.Button
-import javafx.scene.layout.AnchorPane
-import javafx.scene.control.ComboBox
 import javafx.scene.control.Label
-import javafx.scene.shape.Rectangle
-import javafx.scene.control.DatePicker
 
 import javafx.fxml.Initializable
+import javafx.scene.control.Button
+import org.db_poultry.db.supplyRecordDAO.CreateSupplyRecord
 import org.db_poultry.db.supplyRecordDAO.ReadSupplyRecord
+import java.math.BigDecimal
 import java.net.URL
-import java.util.ResourceBundle 
+import java.time.LocalDate
+import java.sql.Date
+import java.util.ResourceBundle
+import kotlin.text.compareTo
 
 class SuppliesRetrieveFeedController: Initializable {
 
     @FXML
-    private lateinit var btnConfirm: Button
+    private lateinit var currCountBoosterLabel: Label
 
     @FXML
-    private lateinit var supplyTypeComboBox: ComboBox<String>
+    private lateinit var currCountStarterLabel: Label
 
     @FXML
-    private lateinit var datepickerDate: DatePicker
+    private lateinit var currCountGrowerLabel: Label
 
     @FXML
-    private lateinit var headerText: Label
+    private lateinit var currCountFinisherLabel: Label
 
     @FXML
-    private lateinit var homeAnchorPane: AnchorPane
+    private lateinit var confirmButton: Button
 
-    @FXML
-    private lateinit var labelSelectSupply: Label
-
-    @FXML
-    private lateinit var shapeBackground: Rectangle
-
-    @FXML
-    private lateinit var shapeSelectSupply: Rectangle
+    private val sqlDate: Date = Date.valueOf(LocalDate.now())
+    private val feedArrayList: List<String> = listOf("Booster Feed", "Starter Feed", "Grower Feed", "Finisher Feed")
+    private lateinit var feedSupplyTypeIDList: MutableList<Int>
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        val supplyTypesArrayList = ReadSupplyType.getAllSupplyTypes(getConnection())
+        feedSupplyTypeIDList = mutableListOf()
+        setFeedCounts()
 
-        val supplyTypeNames: List<String> = supplyTypesArrayList?.map { it.name } ?: emptyList()
 
-        supplyTypeComboBox.items.clear()
-        if (supplyTypeNames.isNotEmpty()) {
-            supplyTypeComboBox.items.addAll(supplyTypeNames)
-        } else {
-            println("No supply types available.")
-            supplyTypeComboBox.items.add("No Supply Types Available")
+    }
+
+    private fun setFeedCounts() {
+        val feedCountMap = HashMap<String, BigDecimal>()
+
+        for (feed in feedArrayList) {
+            val supplyTypeID = ReadSupplyType.getSupplyTypeByName(getConnection(), feed).supplyTypeId
+            feedSupplyTypeIDList.add(supplyTypeID)
+            val count = ReadSupplyRecord.getCurrentCountForDate(getConnection(), supplyTypeID, sqlDate)
+            feedCountMap[feed] = count
         }
 
-        supplyTypeComboBox.items.clear()
-        supplyTypeComboBox.items.addAll(supplyTypeNames)
-        supplyTypeComboBox.value = "Select a Supply Type"
+        currCountBoosterLabel.text = "Current Count: ${feedCountMap["Booster Feed"] ?: "ERROR"}"
+        currCountStarterLabel.text = "Current Count: ${feedCountMap["Starter Feed"] ?: "ERROR"}"
+        currCountGrowerLabel.text = "Current Count: ${feedCountMap["Grower Feed"] ?: "ERROR"}"
+        currCountFinisherLabel.text = "Current Count: ${feedCountMap["Finisher Feed"] ?: "ERROR"}"
 
-    }   
+        // Disalble confirm button if all counts are zero
+        val allCountsZero = feedCountMap.values.all { it.compareTo(BigDecimal.ZERO) == 0 }
+        confirmButton.isDisable = allCountsZero
+
+    }
 
     @FXML
     fun confirm() {
-        // TODO: @Dattebayo2505
-        // Fix this, use CreateSupplyRecord with any value for added or depleted but SET Retrieved to TRUE.
-        // This handles all the columns for you already!
-        
-        val supplyTypeName = supplyTypeComboBox.value
-        val date = ReadSupplyRecord.getMostRecentFromName(getConnection(), supplyTypeName).date
-
-        if (supplyTypeName == null || supplyTypeName == "Select a Supply Type" || date == null) {
-            println("Please select a supply type and date.")
-            return
+        for (supplyTypeID in feedSupplyTypeIDList) {
+            CreateSupplyRecord.createSupplyRecord(getConnection(), supplyTypeID,
+                sqlDate, BigDecimal.ZERO, BigDecimal.ZERO, true)
         }
 
-//        CreateSupplyRecord.createSupplyRecord(getConnection(), , , , , )
-
-        println("Supply retrieved successfully: $supplyTypeName on $date") // DEBUGGING
+        setFeedCounts()
     }
 }
