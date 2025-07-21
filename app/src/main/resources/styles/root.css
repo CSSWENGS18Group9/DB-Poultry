@@ -9,6 +9,16 @@
     -fx-background-radius: 35;
 }
 
+.popup-pane {
+    -fx-effect: dropshadow(gaussian, black, 10, 0.6, 0, 0);
+    -fx-background-radius: 20;
+}
+
+/* Popup (Topmost)AnchorPanes */
+#createSuppliesAnchorPane {
+    -fx-background-color: transparent;
+}
+
 .main-button {
     -fx-background-color: white;
     -fx-text-fill: #8F250C;

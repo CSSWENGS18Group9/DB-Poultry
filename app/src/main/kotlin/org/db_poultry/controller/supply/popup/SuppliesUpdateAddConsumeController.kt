@@ -15,6 +15,7 @@ import java.sql.Date
 import javafx.fxml.Initializable
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
+import javafx.stage.Stage
 import org.db_poultry.util.PopupUtil
 import org.db_poultry.util.SupplyTypeSingleton
 import java.io.File
@@ -113,4 +114,9 @@ class SuppliesUpdateAddConsumeController: Initializable {
             word.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
         }
 
+    @FXML
+    fun closePopup() {
+        val stage = supplyNameLabel.scene.window as Stage
+        stage.close()
+    }
 }
