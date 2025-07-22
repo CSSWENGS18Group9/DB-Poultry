@@ -35,7 +35,7 @@ class SuppliesRetrieveFeedController: Initializable {
     private lateinit var confirmButton: Button
 
     private val sqlDate: Date = Date.valueOf(LocalDate.now())
-    private val feedArrayList: List<String> = listOf("Booster Feed", "Starter Feed", "Grower Feed", "Finisher Feed")
+    private val feedArrayList: List<String> = listOf("booster feed", "starter feed", "grower feed", "finisher feed")
     private lateinit var feedSupplyTypeIDList: MutableList<Int>
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
@@ -51,14 +51,14 @@ class SuppliesRetrieveFeedController: Initializable {
         for (feed in feedArrayList) {
             val supplyTypeID = ReadSupplyType.getSupplyTypeByName(getConnection(), feed).supplyTypeId
             feedSupplyTypeIDList.add(supplyTypeID)
-            val count = ReadSupplyRecord.getCurrentCountForDate(getConnection(), supplyTypeID, sqlDate)
+            val count = ReadSupplyRecord.getMostRecentFromID(getConnection(), supplyTypeID)?.current ?: BigDecimal.ZERO
             feedCountMap[feed] = count
         }
 
-        currCountBoosterLabel.text = "Current Count: ${feedCountMap["Booster Feed"] ?: "ERROR"}"
-        currCountStarterLabel.text = "Current Count: ${feedCountMap["Starter Feed"] ?: "ERROR"}"
-        currCountGrowerLabel.text = "Current Count: ${feedCountMap["Grower Feed"] ?: "ERROR"}"
-        currCountFinisherLabel.text = "Current Count: ${feedCountMap["Finisher Feed"] ?: "ERROR"}"
+        currCountBoosterLabel.text = "Current Count: ${feedCountMap["booster feed"] ?: "ERROR"}"
+        currCountStarterLabel.text = "Current Count: ${feedCountMap["starter feed"] ?: "ERROR"}"
+        currCountGrowerLabel.text = "Current Count: ${feedCountMap["grower feed"] ?: "ERROR"}"
+        currCountFinisherLabel.text = "Current Count: ${feedCountMap["finisher feed"] ?: "ERROR"}"
 
         // Disalble confirm button if all counts are zero
         val allCountsZero = feedCountMap.values.all { it.compareTo(BigDecimal.ZERO) == 0 }
