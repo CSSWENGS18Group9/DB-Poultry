@@ -25,6 +25,7 @@ import org.db_poultry.util.PopupUtil
 import java.io.File
 import java.net.URL
 import java.util.ResourceBundle
+import kotlin.text.compareTo
 
 class SuppliesGridHomeController: Initializable {
 
@@ -42,10 +43,27 @@ class SuppliesGridHomeController: Initializable {
     }
 
     private fun loadSupplyGrid() {
-        val supplyTypeList = ReadSupplyType.getSupplyTypeByLastUpdate(getConnection())
+        val supplyTypeList = ReadSupplyType.getSupplyTypeAscending(getConnection())
 
+        // Refer to Initialize.kt for the feed type naming
         if (supplyTypeList != null && supplyTypeList.isNotEmpty()) {
-            for (supplyType in supplyTypeList) {
+            val feedTypes = listOf("starter feed", "grower feed", "booster feed", "finisher feed")
+
+            val sortedList = supplyTypeList.sortedWith { supply1, supply2 ->
+                val feedIndex1 = feedTypes.indexOf(supply1.name.lowercase())
+                val feedIndex2 = feedTypes.indexOf(supply2.name.lowercase())
+                val isFeed1 = feedIndex1 != -1
+                val isFeed2 = feedIndex2 != -1
+
+                when {
+                    isFeed1 && isFeed2 -> feedIndex1.compareTo(feedIndex2)  // Order by feed sequence
+                    isFeed1 && !isFeed2 -> -1  // Feed types come first
+                    !isFeed1 && isFeed2 -> 1   // Non-feed types come after
+                    else -> supply1.name.compareTo(supply2.name)  // Alphabetical within groups
+                }
+            }
+
+            for (supplyType in sortedList) {
                 val gridPane = createSupplyGridPane(supplyType)
                 mainTilePane.children.add(gridPane)
             }

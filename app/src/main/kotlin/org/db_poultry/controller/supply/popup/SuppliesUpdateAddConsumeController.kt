@@ -56,22 +56,13 @@ class SuppliesUpdateAddConsumeController: Initializable {
     @FXML
     private lateinit var confirmButton: Button
 
-    private var currentSupplyType: String? = null
-
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         setSupplyName()
         setAmounts()
     }
 
     private fun setSupplyName() {
-
-        currentSupplyType = SupplySingleton.getCurrentSupplyName()
-        if (currentSupplyType != null) {
-
-            supplyNameLabel.text = capitalizeWords(currentSupplyType!!)
-        } else {
-            supplyNameLabel.text = "Backend Error - MUST FIX"
-        }
+        supplyNameLabel.text = SupplySingleton.getCurrentSupplyName()
     }
 
     private fun setAmounts() {
@@ -128,7 +119,7 @@ class SuppliesUpdateAddConsumeController: Initializable {
             return
         }
 
-        val supplyID = ReadSupplyType.getSupplyTypeByName(getConnection(), currentSupplyType.toString())?.supplyTypeId ?: return
+        val supplyID = SupplySingleton.getCurrentSupplyID()
 
         val sqlDate = Date.valueOf(date)
         val added = BigDecimal(amountAdd)
@@ -146,11 +137,6 @@ class SuppliesUpdateAddConsumeController: Initializable {
 
         updatePaneState()
     }
-
-    private fun capitalizeWords(input: String): String =
-        input.split(" ").joinToString(" ") { word ->
-            word.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
-        }
 
     private fun updatePaneState() {
         currentAmountLabel.text = SupplySingleton.getCurrentAmount().toString()

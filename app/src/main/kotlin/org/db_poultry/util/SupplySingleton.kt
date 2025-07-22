@@ -27,8 +27,12 @@ object SupplySingleton {
         }
     }
 
-    fun getCurrentSupplyName(): String? {
-        return currentSupplyComplete?.supply_name
+    fun getCurrentSupplyID(): Int {
+        return currentSupplyID
+    }
+
+    fun getCurrentSupplyName(): String {
+        return capitalizeWords(currentSupplyComplete?.supply_name)
     }
 
     fun getCurrentSupplyImageDir(): String? {
@@ -74,4 +78,9 @@ object SupplySingleton {
         "Larvicide", "Fly Glue", "Disinfectant", "Starter Feed",
         "Grower Feed", "Booster Feed", "Finisher Feed"
     )
+
+    private fun capitalizeWords(input: String?): String =
+        input?.split(" ")?.joinToString(" ") { word ->
+            word.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+        } ?: "BACKEND ERROR: MUST FIX"
 }
