@@ -18,8 +18,7 @@ import javafx.scene.layout.AnchorPane
 import javafx.stage.Stage
 import org.db_poultry.util.GeneralUtil
 import org.db_poultry.util.PopupUtil
-import org.db_poultry.util.SupplyTypeSingleton
-import java.io.File
+import org.db_poultry.util.SupplySingleton
 import java.net.URL
 import java.util.ResourceBundle
 import kotlin.toString
@@ -66,7 +65,7 @@ class SuppliesUpdateAddConsumeController: Initializable {
 
     private fun setSupplyName() {
 
-        currentSupplyType = SupplyTypeSingleton.getCurrentSupply()
+        currentSupplyType = SupplySingleton.getCurrentSupplyName()
         if (currentSupplyType != null) {
 
             supplyNameLabel.text = capitalizeWords(currentSupplyType!!)
@@ -76,13 +75,13 @@ class SuppliesUpdateAddConsumeController: Initializable {
     }
 
     private fun setAmounts() {
-        currentAmountLabel.text = SupplyTypeSingleton.getCurrentAmount().toString()
+        currentAmountLabel.text = SupplySingleton.getCurrentAmount().toString()
         updatedCurrentAmountLabel.text = currentAmountLabel.text
         updatedCurrentAmountLabel.style = "-fx-text-fill: black;"
         confirmButton.isDisable = true
 
         val updateButtonAndLabel = {
-            val currentAmount = SupplyTypeSingleton.getCurrentAmount()
+            val currentAmount = SupplySingleton.getCurrentAmount()
             val addText = addAmountSupplyTextField.text
             val deductText = deductAmountSupplyTextField.text
             val addAmount = addText.toBigDecimalOrNull() ?: BigDecimal.ZERO
@@ -154,7 +153,7 @@ class SuppliesUpdateAddConsumeController: Initializable {
         }
 
     private fun updatePaneState() {
-        currentAmountLabel.text = SupplyTypeSingleton.getCurrentAmount().toString()
+        currentAmountLabel.text = SupplySingleton.getCurrentAmount().toString()
         addAmountSupplyTextField.clear()
         deductAmountSupplyTextField.clear()
         dateDatePicker.value = null

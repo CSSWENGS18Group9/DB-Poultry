@@ -1,7 +1,6 @@
 package org.db_poultry.controller.supply
 
 import org.db_poultry.db.DBConnect.getConnection
-import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 import org.db_poultry.db.supplyRecordDAO.ReadSupplyRecord
 import org.db_poultry.pojo.SupplyPOJO.SupplyComplete
 
@@ -16,14 +15,12 @@ import javafx.scene.control.TableView
 import javafx.scene.layout.AnchorPane
 import java.math.BigDecimal
 import java.net.URL
-import java.time.LocalDate
 import java.util.*
-import javafx.event.ActionEvent
 
 import javafx.beans.property.SimpleObjectProperty
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.image.ImageView
-import org.db_poultry.util.SupplyTypeSingleton
+import org.db_poultry.util.SupplySingleton
 import java.io.File
 
 class SuppliesViewController: Initializable {
@@ -60,8 +57,8 @@ class SuppliesViewController: Initializable {
     }
 
     private fun setSupply() {
-        suppliesLabel.text = SupplyTypeSingleton.getCurrentSupply()
-        val supplyImage = SupplyTypeSingleton.getCurrentSupplyImageDir() ?: SupplyTypeSingleton.getUIDefaultImagePath()
+        suppliesLabel.text = SupplySingleton.getCurrentSupplyName()
+        val supplyImage = SupplySingleton.getCurrentSupplyImageDir() ?: SupplySingleton.getUIDefaultImagePath()
         supplyImageView = ImageView(File(supplyImage).toURI().toString())
     }
 
@@ -80,7 +77,7 @@ class SuppliesViewController: Initializable {
     }
 
     private fun loadSupplyData() {
-        val currentSupplyName = SupplyTypeSingleton.getCurrentSupply()
+        val currentSupplyName = SupplySingleton.getCurrentSupplyName()
         if (currentSupplyName != null) {
             val supplyList = ReadSupplyRecord.getFromName(getConnection(), currentSupplyName)
             if (supplyList != null) {

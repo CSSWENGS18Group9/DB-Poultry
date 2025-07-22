@@ -4,7 +4,7 @@ import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 import org.db_poultry.pojo.SupplyPOJO.SupplyType
 import org.db_poultry.util.GeneralUtil
-import org.db_poultry.util.SupplyTypeSingleton
+import org.db_poultry.util.SupplySingleton
 
 import javafx.fxml.FXML
 import javafx.scene.control.Label
@@ -42,7 +42,7 @@ class SuppliesGridHomeController: Initializable {
     }
 
     private fun loadSupplyGrid() {
-        val supplyTypeList = ReadSupplyType.getAllSupplyTypes(getConnection())
+        val supplyTypeList = ReadSupplyType.getSupplyTypeByLastUpdate(getConnection())
 
         if (supplyTypeList != null && supplyTypeList.isNotEmpty()) {
             for (supplyType in supplyTypeList) {
@@ -97,7 +97,7 @@ class SuppliesGridHomeController: Initializable {
 
             val imageFileName = supplyType.imagePath.substringAfterLast('/')
             val resourcePath = "/img/supply-img/$imageFileName"
-            val isDefaultSupplyType = SupplyTypeSingleton.isDefaultSupplyType(supplyType.name)
+            val isDefaultSupplyType = SupplySingleton.isDefaultSupplyType(supplyType.name)
 
             val imageUrl = if (isDefaultSupplyType) {
                 javaClass.getResource(resourcePath)
@@ -125,8 +125,8 @@ class SuppliesGridHomeController: Initializable {
         gridPane.add(nameLabel, 1, 1)
 
         // Create count label
-        SupplyTypeSingleton.setCurrentSupply(supplyType.name)
-        val currentCount = SupplyTypeSingleton.getCurrentAmount()
+        SupplySingleton.setCurrentSupply(supplyType.name)
+        val currentCount = SupplySingleton.getCurrentAmount()
         val formattedCount = currentCount.stripTrailingZeros().toPlainString()
 
         val unit = if (supplyType.unit.isNotEmpty()) " (${supplyType.unit})" else ""
@@ -143,8 +143,7 @@ class SuppliesGridHomeController: Initializable {
             styleClass.addAll("main-button-reversed", "h6-bold")
             setOnAction { navigateToViewSupplies() }
             setOnMousePressed { event ->
-                SupplyTypeSingleton.setCurrentSupply(supplyType.name)
-                SupplyTypeSingleton.setCurrentSupplyImageDir(supplyType.imagePath)
+                SupplySingleton.setCurrentSupply(supplyType.name)
             }
         }
         GridPane.setHalignment(viewHistoryButton, HPos.CENTER)
@@ -157,9 +156,7 @@ class SuppliesGridHomeController: Initializable {
             styleClass.addAll("main-button-reversed", "h6-bold")
             setOnAction { navigateToUpdateSupplies() }
             setOnMousePressed { event ->
-                SupplyTypeSingleton.setCurrentSupply(supplyType.name)
-                SupplyTypeSingleton.setCurrentSupplyImageDir(supplyType.imagePath)
-                SupplyTypeSingleton.getCurrentAmount()
+                SupplySingleton.setCurrentSupply(supplyType.name)
             }
         }
         GridPane.setHalignment(updateCountButton, HPos.CENTER)
