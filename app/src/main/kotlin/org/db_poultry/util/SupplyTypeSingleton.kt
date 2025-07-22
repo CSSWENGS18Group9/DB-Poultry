@@ -5,8 +5,6 @@ import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 
 import java.math.BigDecimal
-import java.sql.Date
-import java.time.LocalDate
 
 object SupplyTypeSingleton {
 
@@ -36,14 +34,11 @@ object SupplyTypeSingleton {
         return currentSupplyImageDir
     }
 
-    fun getCurrentAmount(): BigDecimal? {
-        currentSupplyID = ReadSupplyType.getSupplyTypeByName(getConnection(),currentSupply).supplyTypeId
+    fun getCurrentAmount(): BigDecimal {
+        currentSupplyID = ReadSupplyType.getSupplyTypeByName(getConnection(), currentSupply).supplyTypeId
 
-        return ReadSupplyRecord.getCurrentCountForDate(
-            getConnection(),
-            currentSupplyID,
-            Date.valueOf(LocalDate.now())
-            )
+        val supplyComplete = ReadSupplyRecord.getLatest(getConnection(), currentSupplyID)
+        return supplyComplete?.current ?: BigDecimal.ZERO
     }
 
     private val defaultSupplyNames = setOf(

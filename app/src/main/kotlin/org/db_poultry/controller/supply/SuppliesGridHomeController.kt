@@ -127,7 +127,7 @@ class SuppliesGridHomeController: Initializable {
         // Create count label
         SupplyTypeSingleton.setCurrentSupply(supplyType.name)
         val currentCount = SupplyTypeSingleton.getCurrentAmount()
-        val formattedCount = currentCount?.stripTrailingZeros()?.toPlainString()
+        val formattedCount = currentCount.stripTrailingZeros().toPlainString()
 
         val unit = if (supplyType.unit.isNotEmpty()) " (${supplyType.unit})" else ""
         currentAmountLabel = Label("Current Quantity: $formattedCount $unit").apply {

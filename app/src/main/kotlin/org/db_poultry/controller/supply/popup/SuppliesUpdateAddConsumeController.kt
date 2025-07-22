@@ -76,13 +76,13 @@ class SuppliesUpdateAddConsumeController: Initializable {
     }
 
     private fun setAmounts() {
-        currentAmountLabel.text = SupplyTypeSingleton.getCurrentAmount()?.toString() ?: "0.00"
+        currentAmountLabel.text = SupplyTypeSingleton.getCurrentAmount().toString()
         updatedCurrentAmountLabel.text = currentAmountLabel.text
         updatedCurrentAmountLabel.style = "-fx-text-fill: black;"
         confirmButton.isDisable = true
 
         val updateButtonAndLabel = {
-            val currentAmount = SupplyTypeSingleton.getCurrentAmount() ?: BigDecimal.ZERO
+            val currentAmount = SupplyTypeSingleton.getCurrentAmount()
             val addText = addAmountSupplyTextField.text
             val deductText = deductAmountSupplyTextField.text
             val addAmount = addText.toBigDecimalOrNull() ?: BigDecimal.ZERO
@@ -120,20 +120,20 @@ class SuppliesUpdateAddConsumeController: Initializable {
 
     @FXML
     fun confirm() {
-        val amountAdd: Double? = addAmountSupplyTextField.text.toDoubleOrNull()
-        val amountDel: Double? = deductAmountSupplyTextField.text.toDoubleOrNull()
+        val amountAdd = addAmountSupplyTextField.text.toDoubleOrNull() ?: 0.0
+        val amountDel = deductAmountSupplyTextField.text.toDoubleOrNull() ?: 0.0
         val date = dateDatePicker.value
 
-        if ((amountAdd == null || amountDel == null) && date == null) {
-            println("Please fill in either the amount to add or delete and select a date.")
+        if (date == null) {
+            println("Please select a date.")
             return
         }
 
         val supplyID = ReadSupplyType.getSupplyTypeByName(getConnection(), currentSupplyType.toString())?.supplyTypeId ?: return
 
         val sqlDate = Date.valueOf(date)
-        val added = BigDecimal(amountAdd!!)
-        val consumed = BigDecimal(amountDel!!)
+        val added = BigDecimal(amountAdd)
+        val consumed = BigDecimal(amountDel)
 
         val result = createSupplyRecord(getConnection(), supplyID, sqlDate, added, consumed, false)
         if (result != null) {
@@ -144,12 +144,22 @@ class SuppliesUpdateAddConsumeController: Initializable {
             PopupUtil.showPopup("error", "Failed to create supply record.")
             println("DEBUG: createSupplyRecord returned null")
         }
+
+        updatePaneState()
     }
 
     private fun capitalizeWords(input: String): String =
         input.split(" ").joinToString(" ") { word ->
             word.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
         }
+
+    private fun updatePaneState() {
+        currentAmountLabel.text = SupplyTypeSingleton.getCurrentAmount().toString()
+        addAmountSupplyTextField.clear()
+        deductAmountSupplyTextField.clear()
+        dateDatePicker.value = null
+
+    }
 
     @FXML
     fun setDateToToday() {
