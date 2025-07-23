@@ -93,7 +93,7 @@
                               <Insets left="15.0" right="15.0" />
                            </GridPane.margin>
                         </Button>
-                        <Label fx:id="dateTodayLabel" styleClass="h4-bold" text="Month Day, Year" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label fx:id="dateTodayLabel" styleClass="h5-bold" text="Supply created at: " GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                      </children>
                      <GridPane.margin>
                         <Insets top="10.0" />

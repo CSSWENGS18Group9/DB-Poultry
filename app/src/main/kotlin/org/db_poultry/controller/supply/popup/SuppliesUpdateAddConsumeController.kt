@@ -99,9 +99,9 @@ class SuppliesUpdateAddConsumeController: Initializable {
         deductAmountSupplyTextField.textProperty().addListener { _ -> updateButtonAndLabel() }
         dateDatePicker.valueProperty().addListener { _, _, newValue ->
             if (newValue != null) {
-                dateTodayLabel.text = GeneralUtil.formatDatePretty(newValue)
+                dateTodayLabel.text = "Supply created at: " + GeneralUtil.formatDatePretty(newValue)
             } else {
-                dateTodayLabel.text = ""
+                dateTodayLabel.text = "Supply created at:"
             }
             updateButtonAndLabel()
         }
@@ -151,7 +151,7 @@ class SuppliesUpdateAddConsumeController: Initializable {
     fun setDateToToday() {
         val today = java.time.LocalDate.now()
         dateDatePicker.value = today
-        dateTodayLabel.text = GeneralUtil.formatDatePretty(today)
+        dateTodayLabel.text = "Supply created at: " + GeneralUtil.formatDatePretty(today)
     }
 
     @FXML

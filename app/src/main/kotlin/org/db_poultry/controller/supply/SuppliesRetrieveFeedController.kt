@@ -17,7 +17,6 @@ import java.net.URL
 import java.time.LocalDate
 import java.sql.Date
 import java.util.ResourceBundle
-import kotlin.text.compareTo
 
 class SuppliesRetrieveFeedController: Initializable {
 
@@ -38,6 +37,9 @@ class SuppliesRetrieveFeedController: Initializable {
 
     @FXML
     private lateinit var dateTodayLabel: Label
+
+    @FXML
+    private lateinit var setTodayButton: Button
 
     @FXML
     private lateinit var confirmButton: Button
@@ -79,8 +81,10 @@ class SuppliesRetrieveFeedController: Initializable {
             if (newValue != null) {
                 sqlDate = Date.valueOf(newValue)
                 dateTodayLabel.text = "Feed Retrieval: " + GeneralUtil.formatDatePretty(newValue)
+                setTodayButton.isDisable = newValue == LocalDate.now()
             } else {
                 dateTodayLabel.text = "Feed Retrieval:"
+                setTodayButton.isDisable = false
             }
         }
     }
