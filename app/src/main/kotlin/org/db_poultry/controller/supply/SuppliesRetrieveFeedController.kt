@@ -8,8 +8,10 @@ import javafx.scene.control.Label
 
 import javafx.fxml.Initializable
 import javafx.scene.control.Button
+import javafx.scene.control.DatePicker
 import org.db_poultry.db.supplyRecordDAO.CreateSupplyRecord
 import org.db_poultry.db.supplyRecordDAO.ReadSupplyRecord
+import org.db_poultry.util.GeneralUtil
 import java.math.BigDecimal
 import java.net.URL
 import java.time.LocalDate
@@ -32,16 +34,22 @@ class SuppliesRetrieveFeedController: Initializable {
     private lateinit var currCountFinisherLabel: Label
 
     @FXML
+    private lateinit var dateDatePicker: DatePicker
+
+    @FXML
+    private lateinit var dateTodayLabel: Label
+
+    @FXML
     private lateinit var confirmButton: Button
 
-    private val sqlDate: Date = Date.valueOf(LocalDate.now())
+    private lateinit var sqlDate: Date
     private val feedArrayList: List<String> = listOf("booster feed", "starter feed", "grower feed", "finisher feed")
     private lateinit var feedSupplyTypeIDList: MutableList<Int>
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         feedSupplyTypeIDList = mutableListOf()
         setFeedCounts()
-
+        setDataLabelListener()
 
     }
 
@@ -64,6 +72,25 @@ class SuppliesRetrieveFeedController: Initializable {
         val allCountsZero = feedCountMap.values.all { it.compareTo(BigDecimal.ZERO) == 0 }
         confirmButton.isDisable = allCountsZero
 
+    }
+
+    private fun setDataLabelListener() {
+        dateDatePicker.valueProperty().addListener { _, _, newValue ->
+            if (newValue != null) {
+                sqlDate = Date.valueOf(newValue)
+                dateTodayLabel.text = "Feed Retrieval: " + GeneralUtil.formatDatePretty(newValue)
+            } else {
+                dateTodayLabel.text = "Feed Retrieval:"
+            }
+        }
+    }
+
+    @FXML
+    fun setDateToToday() {
+        val today = LocalDate.now()
+        dateDatePicker.value = today
+        dateTodayLabel.text = "Feed Retrieval: " + GeneralUtil.formatDatePretty(today)
+        sqlDate = Date.valueOf(today)
     }
 
     @FXML
