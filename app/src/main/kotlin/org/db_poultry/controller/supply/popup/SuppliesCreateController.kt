@@ -118,7 +118,8 @@ class SuppliesCreateController: Initializable {
             println("Failed to create Supply type.")
         }
 
-        resetFields()
+//        resetFields()
+        closePopup()
     }
 
     private fun initializeConfirmButton() {

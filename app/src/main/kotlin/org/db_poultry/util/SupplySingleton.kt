@@ -74,8 +74,8 @@ object SupplySingleton {
     }
 
     private val defaultSupplyNames = setOf(
-        "Apog", "Adulticide", "String", "Fuel", "Chicken Medicine",
-        "Larvicide", "Fly Glue", "Disinfectant", "Starter Feed",
-        "Grower Feed", "Booster Feed", "Finisher Feed"
+        "apog", "adulticide", "string", "fuel", "chicken medicine",
+        "larvicide", "fly glue", "disinfectant", "starter feed",
+        "grower feed", "booster feed", "finisher feed"
     )
 }

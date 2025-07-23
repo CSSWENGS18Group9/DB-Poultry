@@ -27,6 +27,7 @@ import java.io.File
 import java.net.URL
 import java.util.ResourceBundle
 import kotlin.text.compareTo
+import kotlin.toString
 
 class SuppliesGridHomeController: Initializable {
 
@@ -158,7 +159,7 @@ class SuppliesGridHomeController: Initializable {
             image = if (imageUrl != null) {
                 Image(imageUrl.toString(), true)
             } else {
-                Image(SupplySingleton.getUIDefaultImagePath(), true)
+                Image(File(SupplySingleton.getUIDefaultImagePath()).toURI().toURL().toString(), true)
             }
         }
         GridPane.setHalignment(imageView, HPos.CENTER)
