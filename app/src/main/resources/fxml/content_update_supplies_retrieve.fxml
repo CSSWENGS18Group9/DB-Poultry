@@ -133,7 +133,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="confirmButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Confirm Retrieval" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                  <Button fx:id="confirmButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#confirm" text="Confirm Retrieval" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                      <styleClass>
                         <String fx:value="confirm-button" />
                         <String fx:value="h3-bold" />
