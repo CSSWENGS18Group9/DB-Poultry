@@ -23,7 +23,6 @@ import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import org.db_poultry.util.SupplySingleton
 import java.io.File
-import kotlin.toString
 
 class SuppliesViewController: Initializable {
 
@@ -82,24 +81,16 @@ class SuppliesViewController: Initializable {
         dateCol.cellValueFactory = PropertyValueFactory("date")
         qtyAddedCol.cellValueFactory = PropertyValueFactory("added")
         qtyConsumedCol.cellValueFactory = PropertyValueFactory("consumed")
-        currQtyCol.setCellValueFactory { cellData: TableColumn.CellDataFeatures<SupplyComplete, BigDecimal> ->
-            val currentQty = ReadSupplyRecord.getCurrentCountForDate(
-                getConnection(),
-                cellData.value.supply_type_id,
-                cellData.value.date
-            )
-            SimpleObjectProperty(currentQty)
-        }
+        currQtyCol.cellValueFactory = PropertyValueFactory("current")
     }
 
     private fun loadSupplyData() {
         val currentSupplyName = SupplySingleton.getCurrentSupplyName()
-        val supplyList = ReadSupplyRecord.getFromName(getConnection(), currentSupplyName)
+        val supplyList: ArrayList<SupplyComplete>? = ReadSupplyRecord.getFromName(getConnection(), currentSupplyName)
         if (supplyList != null) {
             val observableList = FXCollections.observableArrayList(supplyList)
             supplyViewTable.items = observableList
         }
-
     }
 
     @FXML

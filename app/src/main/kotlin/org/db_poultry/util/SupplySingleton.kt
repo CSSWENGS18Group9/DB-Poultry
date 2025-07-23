@@ -32,7 +32,7 @@ object SupplySingleton {
     }
 
     fun getCurrentSupplyName(): String {
-        return GeneralUtil.capitalizeWords(currentSupplyType?.name)
+        return currentSupplyType?.name ?: "Unknown Supply"
     }
 
     fun getCurrentSupplyImageDir(): String {
