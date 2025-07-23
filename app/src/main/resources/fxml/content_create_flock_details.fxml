@@ -34,6 +34,9 @@
                <font>
                   <Font size="10.0" />
                </font>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
             </Label>
             <GridPane prefHeight="276.0" prefWidth="579.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
               <columnConstraints>
@@ -72,7 +75,7 @@
                         <Insets bottom="20.0" />
                      </GridPane.margin>
                   </Button>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.columnSpan="3">
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
                      <children>
                         <Label styleClass="h3" text="Date">
                            <padding>
@@ -82,7 +85,7 @@
                         <DatePicker fx:id="cFDDatePicker" prefHeight="26.0" prefWidth="339.0" />
                      </children>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
                      <children>
                         <Label styleClass="h3" text="Depleted Count">
                            <padding>
