@@ -13,14 +13,14 @@ import java.sql.Date
 object SupplySingleton {
 
     private var UIDefaultImagePath: String = "src/main/resources/img/supply-img/default.png"
-    private var currentSupplyComplete: SupplyComplete? = null
+    private var latestSupplyComplete: SupplyComplete? = null
     private var currentSupplyType: SupplyType? = null
     private var currentSupplyID: Int = -1
 
     fun setCurrentSupply(supply: String) {
         currentSupplyType = ReadSupplyType.getSupplyTypeByName(getConnection(), supply)
         currentSupplyID = currentSupplyType?.supplyTypeId ?: -1
-        currentSupplyComplete = if (currentSupplyID != -1) {
+        latestSupplyComplete = if (currentSupplyID != -1) {
             ReadSupplyRecord.getLatest(getConnection(), currentSupplyID)
         } else {
             null
@@ -32,7 +32,7 @@ object SupplySingleton {
     }
 
     fun getCurrentSupplyName(): String {
-        return capitalizeWords(currentSupplyComplete?.supply_name)
+        return capitalizeWords(currentSupplyType?.name)
     }
 
     fun getCurrentSupplyImageDir(): String? {
@@ -42,27 +42,27 @@ object SupplySingleton {
     }
 
     fun getCurrentAmount(): BigDecimal {
-        return currentSupplyComplete?.current ?: BigDecimal.ZERO
+        return latestSupplyComplete?.current ?: BigDecimal.ZERO
     }
 
     fun getCurrentSupplyComplete(): SupplyComplete? {
-        return currentSupplyComplete
+        return latestSupplyComplete
     }
 
     fun getSupplyUnit(): String? {
-        return currentSupplyComplete?.unit
+        return currentSupplyType?.unit
     }
 
     fun getSupplyAdded(): BigDecimal {
-        return currentSupplyComplete?.added ?: BigDecimal.ZERO
+        return latestSupplyComplete?.added ?: BigDecimal.ZERO
     }
 
     fun getSupplyConsumed(): BigDecimal {
-        return currentSupplyComplete?.consumed ?: BigDecimal.ZERO
+        return latestSupplyComplete?.consumed ?: BigDecimal.ZERO
     }
 
     fun getSupplyDate(): Date? {
-        return currentSupplyComplete?.date
+        return latestSupplyComplete?.date
     }
 
     fun getUIDefaultImagePath(): String {
