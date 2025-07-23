@@ -177,6 +177,11 @@ class GeneralUtil {
         fun formatDatePretty(date: LocalDate?): String {
             val formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH)
             return date?.format(formatter) ?: String.format("No date provided")
-        } 
+        }
+
+        fun capitalizeCase(input: String?): String =
+            input?.split(" ")?.joinToString(" ") { word ->
+                word.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+            } ?: "BACKEND ERROR: MUST FIX"
     }
 }

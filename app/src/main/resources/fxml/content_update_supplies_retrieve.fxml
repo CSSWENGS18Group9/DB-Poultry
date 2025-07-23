@@ -4,6 +4,7 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -27,7 +28,7 @@
             <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label fx:id="headerText" styleClass="h1-bold" text="Retrieve Chicken Feed" textFill="#8f250c" GridPane.halignment="CENTER">
+            <Label fx:id="headerText" styleClass="h1-bold" text="Chicken Feed Retrieval" textFill="#8f250c" GridPane.halignment="CENTER">
                <font>
                   <Font name="HelveticaNowDisplay-Bold" size="64.0" />
                </font>
@@ -46,6 +47,7 @@
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" spacing="20.0" GridPane.columnIndex="1">
@@ -120,6 +122,30 @@
                         <Label fx:id="currCountFinisherLabel" alignment="CENTER" prefHeight="37.0" prefWidth="223.0" styleClass="h5" text="Current Count: XXXX" />
                      </children>
                   </VBox>
+                  <GridPane GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" percentHeight="35.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <DatePicker fx:id="dateDatePicker" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                        <Button fx:id="setTodayButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#setDateToToday" text="Set Today" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                           <styleClass>
+                              <String fx:value="sub-button" />
+                              <String fx:value="h5-bold" />
+                           </styleClass>
+                           <GridPane.margin>
+                              <Insets left="15.0" right="15.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Label fx:id="dateTodayLabel" styleClass="h5-bold" text="Feed Retrieval: " GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
                </children>
             </GridPane>
             <GridPane GridPane.rowIndex="3">
@@ -129,11 +155,12 @@
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
+                  <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="confirmButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Confirm Retrieval" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                  <Button fx:id="confirmButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#confirm" text="Confirm Retrieval" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <styleClass>
                         <String fx:value="confirm-button" />
                         <String fx:value="h3-bold" />

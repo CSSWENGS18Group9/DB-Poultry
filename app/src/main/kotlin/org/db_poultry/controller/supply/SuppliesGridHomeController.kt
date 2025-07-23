@@ -4,7 +4,7 @@ import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 import org.db_poultry.pojo.SupplyPOJO.SupplyType
 import org.db_poultry.util.GeneralUtil
-import org.db_poultry.util.SupplyTypeSingleton
+import org.db_poultry.util.SupplySingleton
 
 import javafx.fxml.FXML
 import javafx.scene.control.Label
@@ -20,11 +20,14 @@ import javafx.scene.layout.RowConstraints
 import javafx.geometry.HPos
 import javafx.geometry.VPos
 import javafx.fxml.Initializable
+import javafx.scene.control.ComboBox
 import javafx.scene.layout.TilePane
 import org.db_poultry.util.PopupUtil
 import java.io.File
 import java.net.URL
 import java.util.ResourceBundle
+import kotlin.text.compareTo
+import kotlin.toString
 
 class SuppliesGridHomeController: Initializable {
 
@@ -35,26 +38,76 @@ class SuppliesGridHomeController: Initializable {
     private lateinit var mainTilePane: TilePane
 
     @FXML
-    private lateinit var currentAmountLabel: Label
-    
+    private lateinit var sortByComboBox: ComboBox<String>
+
+    @FXML
+    private lateinit var createSupplyTypeGridPane: GridPane
+
+    @FXML
+    private lateinit var exampleSupplyTypeGridPane: GridPane
+
+
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         loadSupplyGrid()
+        initializeSortByComboBox()
     }
 
-    private fun loadSupplyGrid() {
-        val supplyTypeList = ReadSupplyType.getAllSupplyTypes(getConnection())
-
-        if (supplyTypeList != null && supplyTypeList.isNotEmpty()) {
-            for (supplyType in supplyTypeList) {
-                val gridPane = createSupplyGridPane(supplyType)
-                mainTilePane.children.add(gridPane)
-            }
-        } else {
-            println("No supply types found")
+    private fun initializeSortByComboBox() {
+        sortByComboBox.items.addAll("Ascending", "Descending", "Last Updated")
+        sortByComboBox.value = "Ascending"
+        sortByComboBox.setOnAction {
+            loadSupplyGrid(sortByComboBox.value)
         }
     }
 
+    private fun loadSupplyGrid(sortType: String = "Ascending") {
+        resetMainTilePane()
+
+        val supplyTypeList = when (sortType) {
+            "Ascending" -> ReadSupplyType.getSupplyTypeAscending(getConnection())
+            "Descending" -> ReadSupplyType.getSupplyTypeDescending(getConnection())
+            "Last Updated" -> ReadSupplyType.getSupplyTypeByLastUpdate(getConnection())
+            else -> ReadSupplyType.getSupplyTypeAscending(getConnection())
+        }
+
+        if (supplyTypeList != null && supplyTypeList.isNotEmpty()) {
+            val feedTypes = listOf("starter feed", "grower feed", "booster feed", "finisher feed")
+
+            // Separate feed types from non-feed types
+            val feedSupplies = supplyTypeList.filter { supply ->
+                feedTypes.contains(supply.name.lowercase())
+            }
+            val nonFeedSupplies = supplyTypeList.filter { supply ->
+                !feedTypes.contains(supply.name.lowercase())
+            }
+
+            // Sort feed types by their priority order
+            val sortedFeeds = feedSupplies.sortedBy { supply ->
+                feedTypes.indexOf(supply.name.lowercase())
+            }
+
+            // Combine: feeds first, then non-feeds in their original order
+            val sortedList = sortedFeeds + nonFeedSupplies
+
+            for (supplyType in sortedList) {
+                val gridPane = createSupplyGridPane(supplyType)
+                mainTilePane.children.add(gridPane)
+            }
+        }
+    }
+
+    private fun resetMainTilePane() {
+        val childrenToKeep = mainTilePane.children.filter { child ->
+            child == createSupplyTypeGridPane || child == exampleSupplyTypeGridPane
+        }
+
+        mainTilePane.children.clear()
+        mainTilePane.children.addAll(childrenToKeep)
+    }
+
     private fun createSupplyGridPane(supplyType: SupplyType): GridPane {
+        SupplySingleton.setCurrentSupply(supplyType.name)
+
         val gridPane = GridPane().apply {
             prefHeight = 101.0
             prefWidth = 455.0
@@ -95,20 +148,18 @@ class SuppliesGridHomeController: Initializable {
             isPickOnBounds = true
             isPreserveRatio = true
 
-            val imageFileName = supplyType.imagePath.substringAfterLast('/')
-            val resourcePath = "/img/supply-img/$imageFileName"
-            val isDefaultSupplyType = SupplyTypeSingleton.isDefaultSupplyType(supplyType.name)
+            val isDefaultSupplyType = SupplySingleton.isDefaultSupplyType(supplyType.name)
 
             val imageUrl = if (isDefaultSupplyType) {
-                javaClass.getResource(resourcePath)
+                javaClass.getResource(SupplySingleton.getCurrentSupplyImageDir())
             } else {
-                File(supplyType.imagePath).toURI().toURL()
+                File(SupplySingleton.getCurrentSupplyImageDir()).toURI().toURL()
             }
 
             image = if (imageUrl != null) {
                 Image(imageUrl.toString(), true)
             } else {
-                Image(javaClass.getResource("/img/supply-img/default.png")?.toString(), true)
+                Image(File(SupplySingleton.getUIDefaultImagePath()).toURI().toURL().toString(), true)
             }
         }
         GridPane.setHalignment(imageView, HPos.CENTER)
@@ -117,7 +168,7 @@ class SuppliesGridHomeController: Initializable {
         gridPane.add(imageView, 0, 0)
 
         // Create name label
-        val nameLabel = Label(supplyType.name).apply {
+        val nameLabel = Label(GeneralUtil.capitalizeCase(supplyType.name)).apply {
             styleClass.add("supply-label")
         }
         GridPane.setHalignment(nameLabel, HPos.CENTER)
@@ -125,16 +176,17 @@ class SuppliesGridHomeController: Initializable {
         gridPane.add(nameLabel, 1, 1)
 
         // Create count label
-        SupplyTypeSingleton.setCurrentSupply(supplyType.name)
-        val currentCount = SupplyTypeSingleton.getCurrentAmount()
-        val formattedCount = currentCount?.stripTrailingZeros()?.toPlainString()
+        SupplySingleton.setCurrentSupply(supplyType.name)
+        val currentCount = SupplySingleton.getCurrentAmount()
+        val formattedCount = currentCount.stripTrailingZeros().toPlainString()
 
         val unit = if (supplyType.unit.isNotEmpty()) " (${supplyType.unit})" else ""
-        currentAmountLabel = Label("Current Quantity: $formattedCount $unit").apply {
+        val countLabel = Label("$formattedCount $unit").apply {
             styleClass.add("h5")
         }
-        GridPane.setHalignment(currentAmountLabel, HPos.CENTER)
-        gridPane.add(currentAmountLabel, 1, 3)
+
+        GridPane.setHalignment(countLabel, HPos.CENTER)
+        gridPane.add(countLabel, 1, 3)
 
         // Create buttons
         val viewHistoryButton = Button("View History").apply {
@@ -143,8 +195,8 @@ class SuppliesGridHomeController: Initializable {
             styleClass.addAll("main-button-reversed", "h6-bold")
             setOnAction { navigateToViewSupplies() }
             setOnMousePressed { event ->
-                SupplyTypeSingleton.setCurrentSupply(supplyType.name)
-                SupplyTypeSingleton.setCurrentSupplyImageDir(supplyType.imagePath)
+                SupplySingleton.setCurrentSupply(supplyType.name)
+                println("Current supply set to: ${SupplySingleton.getCurrentSupplyName()}")
             }
         }
         GridPane.setHalignment(viewHistoryButton, HPos.CENTER)
@@ -157,9 +209,8 @@ class SuppliesGridHomeController: Initializable {
             styleClass.addAll("main-button-reversed", "h6-bold")
             setOnAction { navigateToUpdateSupplies() }
             setOnMousePressed { event ->
-                SupplyTypeSingleton.setCurrentSupply(supplyType.name)
-                SupplyTypeSingleton.setCurrentSupplyImageDir(supplyType.imagePath)
-                SupplyTypeSingleton.getCurrentAmount()
+                SupplySingleton.setCurrentSupply(supplyType.name)
+                println("Current supply set to: ${SupplySingleton.getCurrentSupplyName()}")
             }
         }
         GridPane.setHalignment(updateCountButton, HPos.CENTER)
