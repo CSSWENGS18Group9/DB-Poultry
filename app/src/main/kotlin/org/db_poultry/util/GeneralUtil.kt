@@ -179,7 +179,7 @@ class GeneralUtil {
             return date?.format(formatter) ?: String.format("No date provided")
         }
 
-        fun capitalizeWords(input: String?): String =
+        fun capitalizeCase(input: String?): String =
             input?.split(" ")?.joinToString(" ") { word ->
                 word.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
             } ?: "BACKEND ERROR: MUST FIX"

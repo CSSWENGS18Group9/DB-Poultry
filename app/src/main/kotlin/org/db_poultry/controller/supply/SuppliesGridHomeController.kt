@@ -168,7 +168,7 @@ class SuppliesGridHomeController: Initializable {
         gridPane.add(imageView, 0, 0)
 
         // Create name label
-        val nameLabel = Label(supplyType.name).apply {
+        val nameLabel = Label(GeneralUtil.capitalizeCase(supplyType.name)).apply {
             styleClass.add("supply-label")
         }
         GridPane.setHalignment(nameLabel, HPos.CENTER)

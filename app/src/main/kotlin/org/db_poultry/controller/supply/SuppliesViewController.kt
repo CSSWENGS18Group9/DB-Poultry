@@ -58,7 +58,7 @@ class SuppliesViewController: Initializable {
     }
 
     private fun setSupply() {
-        suppliesLabel.text = SupplySingleton.getCurrentSupplyName()
+        suppliesLabel.text = GeneralUtil.capitalizeCase(SupplySingleton.getCurrentSupplyName())
 
         val isDefaultSupplyType = SupplySingleton.isDefaultSupplyType(SupplySingleton.getCurrentSupplyName())
 
