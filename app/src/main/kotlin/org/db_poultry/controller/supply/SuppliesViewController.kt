@@ -19,9 +19,11 @@ import java.util.*
 
 import javafx.beans.property.SimpleObjectProperty
 import javafx.scene.control.cell.PropertyValueFactory
+import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import org.db_poultry.util.SupplySingleton
 import java.io.File
+import kotlin.toString
 
 class SuppliesViewController: Initializable {
 
@@ -58,8 +60,22 @@ class SuppliesViewController: Initializable {
 
     private fun setSupply() {
         suppliesLabel.text = SupplySingleton.getCurrentSupplyName()
-        val supplyImage = SupplySingleton.getCurrentSupplyImageDir() ?: SupplySingleton.getUIDefaultImagePath()
-        supplyImageView = ImageView(File(supplyImage).toURI().toString())
+
+        val isDefaultSupplyType = SupplySingleton.isDefaultSupplyType(SupplySingleton.getCurrentSupplyName())
+
+        val imageUrl = if (isDefaultSupplyType) {
+            javaClass.getResource(SupplySingleton.getCurrentSupplyImageDir())
+        } else {
+            File(SupplySingleton.getCurrentSupplyImageDir()).toURI().toURL()
+        }
+
+        val image = if (imageUrl != null) {
+            Image(imageUrl.toString(), true)
+        } else {
+            Image(File(SupplySingleton.getUIDefaultImagePath()).toURI().toURL().toString(), true)
+        }
+
+        supplyImageView.image = image
     }
 
     private fun setupTableColumns() {
@@ -78,13 +94,12 @@ class SuppliesViewController: Initializable {
 
     private fun loadSupplyData() {
         val currentSupplyName = SupplySingleton.getCurrentSupplyName()
-        if (currentSupplyName != null) {
-            val supplyList = ReadSupplyRecord.getFromName(getConnection(), currentSupplyName)
-            if (supplyList != null) {
-                val observableList = FXCollections.observableArrayList(supplyList)
-                supplyViewTable.items = observableList
-            }
+        val supplyList = ReadSupplyRecord.getFromName(getConnection(), currentSupplyName)
+        if (supplyList != null) {
+            val observableList = FXCollections.observableArrayList(supplyList)
+            supplyViewTable.items = observableList
         }
+
     }
 
     @FXML

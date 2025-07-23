@@ -135,7 +135,8 @@ class SuppliesUpdateAddConsumeController: Initializable {
             println("DEBUG: createSupplyRecord returned null")
         }
 
-        updatePaneState()
+//        updatePaneState()
+        closePopup()
     }
 
     private fun updatePaneState() {
