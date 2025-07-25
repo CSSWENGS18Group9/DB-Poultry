@@ -2,6 +2,7 @@ package org.db_poultry.controller.general_popup
 
 import org.db_poultry.db.DBConnect
 import org.db_poultry.util.undoSingleton
+import org.db_poultry.controller.NotificationController
 
 import javafx.fxml.FXML
 import javafx.scene.control.Button
@@ -46,7 +47,6 @@ class PopupController {
 
         if (connection != null) {
             undoSingleton.undo(connection)
-            closePopup()
         } else {
             generateErrorMessage(
                 "Database Connection Error",
@@ -56,6 +56,14 @@ class PopupController {
         }
 
         closePopup()
+
+        NotificationController.showNotification(
+            "Undo Success",
+            "The action has been undone successfully."
+        )
+
+        println("Notif should have showed, if not, edi wow")
+
     }
 
 
