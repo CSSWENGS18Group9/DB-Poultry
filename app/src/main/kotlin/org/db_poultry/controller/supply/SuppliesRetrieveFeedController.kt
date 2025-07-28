@@ -127,7 +127,6 @@ class SuppliesRetrieveFeedController: Initializable {
                     undoSingleton.undo(getConnection())
                 }
             }
-
             return
         }
 

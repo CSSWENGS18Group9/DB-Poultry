@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane
 import javafx.scene.text.Text
 import javafx.stage.Stage
 import org.db_poultry.errors.generateErrorMessage
+import org.db_poultry.util.undoTypes
 
 class PopupController {
 
@@ -49,6 +50,7 @@ class PopupController {
 
             if (undoSingleton.getIsFeedRetrieval()) {
                 for (i in 0 until 4) {
+                    undoSingleton.setUndoMode(undoTypes.doUndoSupplyRecord) // Set mode before each call
                     undoSingleton.undo(connection)
                 }
                 undoSingleton.setIsFeedRetrieval(false)
