@@ -3,15 +3,20 @@ package org.db_poultry.controller.supply
 import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 
+
 import javafx.fxml.FXML
 import javafx.scene.control.Label
 
 import javafx.fxml.Initializable
 import javafx.scene.control.Button
 import javafx.scene.control.DatePicker
+import org.db_poultry.controller.NotificationController
 import org.db_poultry.db.supplyRecordDAO.CreateSupplyRecord
 import org.db_poultry.db.supplyRecordDAO.ReadSupplyRecord
 import org.db_poultry.util.GeneralUtil
+import org.db_poultry.util.PopupUtil
+import org.db_poultry.util.undoSingleton
+import org.db_poultry.util.undoTypes
 import java.math.BigDecimal
 import java.net.URL
 import java.time.LocalDate
@@ -70,7 +75,7 @@ class SuppliesRetrieveFeedController: Initializable {
         currCountGrowerLabel.text = "Current Count: ${feedCountMap["grower feed"] ?: "ERROR"}"
         currCountFinisherLabel.text = "Current Count: ${feedCountMap["finisher feed"] ?: "ERROR"}"
 
-        // Disalble confirm button if all counts are zero
+        // Disable confirm button if all counts are zero
         val allCountsZero = feedCountMap.values.all { it.compareTo(BigDecimal.ZERO) == 0 }
         confirmButton.isDisable = allCountsZero
 
@@ -99,10 +104,39 @@ class SuppliesRetrieveFeedController: Initializable {
 
     @FXML
     fun confirm() {
-        for (supplyTypeID in feedSupplyTypeIDList) {
+
+        undoSingleton.setIsFeedRetrieval(true)
+        undoSingleton.setUndoMode(undoTypes.doUndoSupplyRecord)
+
+        val results = feedSupplyTypeIDList.map { supplyTypeID ->
             CreateSupplyRecord.createSupplyRecord(getConnection(), supplyTypeID,
                 sqlDate, BigDecimal.ZERO, BigDecimal.ZERO, true)
         }
+
+        // Check if any of the results are null, indicating failure
+        if (results.any { it == null }) {
+            PopupUtil.showPopup("error", "Failed to create supply records for feed retrieval.")
+
+            /*
+            For resetting the non-null created supply records,
+            since all feed retrievals should be done at once,
+            reset all those that were retrieved.
+            */
+            results.forEach { result ->
+                if (result != null) {
+                    undoSingleton.undo(getConnection())
+                }
+            }
+
+            return
+        }
+
+        NotificationController.setNotification(
+            "error",
+            "Chicken Feed Retrieval Undo",
+            "Supply record for '${feedArrayList}' retrieval was undone."
+        )
+        PopupUtil.showPopup("success", "Feed retrieval transaction successful.")
 
         setFeedCounts()
     }

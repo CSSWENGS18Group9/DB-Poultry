@@ -16,10 +16,13 @@ object undoSingleton {
      */
     private var undoMode = 0
 
+    // For multiple undo actions
+    private var isFeedRetrieval = false
+
     /**
      * Undo button will use this function
      */
-    fun undo(conn: Connection) {
+    fun undo(conn: Connection?) {
         when (undoMode) {
             1 -> undoCreateFlock(conn)
             2 -> getFlockDetailsToDelete(conn)
@@ -39,5 +42,12 @@ object undoSingleton {
         this.undoMode = undoMode
     }
 
+    fun setIsFeedRetrieval(isFeedRetrieval: Boolean) {
+        this.isFeedRetrieval = isFeedRetrieval
+    }
+
+    fun getIsFeedRetrieval(): Boolean {
+        return isFeedRetrieval
+    }
 
 }

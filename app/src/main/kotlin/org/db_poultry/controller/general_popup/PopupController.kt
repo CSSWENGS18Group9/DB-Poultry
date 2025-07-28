@@ -46,7 +46,15 @@ class PopupController {
         val connection = DBConnect.getConnection()
 
         if (connection != null) {
+
+            if (undoSingleton.getIsFeedRetrieval()) {
+                for (i in 0 until 4) {
+                    undoSingleton.undo(connection)
+                }
+                undoSingleton.setIsFeedRetrieval(false)
+            }
             undoSingleton.undo(connection)
+
 
             NotificationController.showNotification()
 
