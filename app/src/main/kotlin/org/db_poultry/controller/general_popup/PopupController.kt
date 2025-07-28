@@ -47,6 +47,9 @@ class PopupController {
 
         if (connection != null) {
             undoSingleton.undo(connection)
+
+            NotificationController.showNotification()
+
         } else {
             generateErrorMessage(
                 "Database Connection Error",
@@ -56,13 +59,6 @@ class PopupController {
         }
 
         closePopup()
-
-        NotificationController.showNotification(
-            "Undo Success",
-            "The action has been undone successfully."
-        )
-
-        println("Notif should have showed, if not, edi wow")
 
     }
 
