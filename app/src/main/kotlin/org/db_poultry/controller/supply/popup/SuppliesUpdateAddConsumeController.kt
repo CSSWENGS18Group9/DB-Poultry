@@ -16,6 +16,7 @@ import javafx.fxml.Initializable
 import javafx.scene.control.Button
 import javafx.scene.layout.AnchorPane
 import javafx.stage.Stage
+import org.db_poultry.controller.NotificationController
 import org.db_poultry.util.GeneralUtil
 import org.db_poultry.util.PopupUtil
 import org.db_poultry.util.SupplySingleton
@@ -128,6 +129,11 @@ class SuppliesUpdateAddConsumeController: Initializable {
         val result = createSupplyRecord(getConnection(), supplyID, sqlDate, added, consumed, false)
         if (result != null) {
             undoSingleton.setUndoMode(undoTypes.doUndoSupplyRecord)
+            NotificationController.setNotification(
+                "error",
+                "Supply-Add Undo",
+                "Supply record for '${SupplySingleton.getCurrentSupplyName()}' removed successfully."
+            )
             PopupUtil.showPopup("success", "Supply record created successfully.")
             println("Successfully created supply record.")
         } else {

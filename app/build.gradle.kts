@@ -56,6 +56,9 @@ dependencies {
     implementation("org.kordamp.ikonli:ikonli-javafx:12.4.0")
     implementation("org.kordamp.ikonli:ikonli-fontawesome6-pack:12.4.0")
 
+    // https://mvnrepository.com/artifact/org.controlsfx/controlsfx
+    implementation("org.controlsfx:controlsfx:11.2.2")
+
     // Dependencies for Database
     // PostgresSQL
     implementation("org.postgresql:postgresql:42.7.3")

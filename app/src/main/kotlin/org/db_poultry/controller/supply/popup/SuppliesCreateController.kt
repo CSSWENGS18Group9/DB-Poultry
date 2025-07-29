@@ -17,6 +17,7 @@ import javafx.fxml.Initializable
 import javafx.scene.control.Label
 import javafx.scene.layout.FlowPane
 import javafx.stage.Stage
+import org.db_poultry.controller.NotificationController
 import java.awt.image.BufferedImage
 import java.io.File
 import java.net.URL
@@ -93,6 +94,11 @@ class SuppliesCreateController: Initializable {
                 imagePath, SupplySingleton.getUIDefaultImagePath()) != null) {
 
             undoSingleton.setUndoMode(undoTypes.doUndoSupplyType)
+            NotificationController.setNotification(
+                "error",
+                "Create-Supply Undo",
+                "Supply type '$supplyName' removed successfully."
+            )
             PopupUtil.showPopup("success", "Supply type created successfully.")
 
             // Delete temp image
@@ -118,7 +124,6 @@ class SuppliesCreateController: Initializable {
             println("Failed to create Supply type.")
         }
 
-//        resetFields()
         closePopup()
     }
 

@@ -90,6 +90,8 @@ class MainLayoutController : Initializable {
 
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
 
+        GeneralUtil.setMainContentPane(mainAnchorPane)
+
         val today = LocalDate.now()
         sideBarDateLabel.text = GeneralUtil.formatDatePretty(today)
 //        sideBarDateLabel.text = "September 30, 2023" // For testing purposes, set the longest fixed date
