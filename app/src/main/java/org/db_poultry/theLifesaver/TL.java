@@ -1,14 +1,21 @@
 package org.db_poultry.theLifesaver;
 
-import org.db_poultry.App;
-import org.jetbrains.annotations.NotNull;
-
-import java.io.*;
-import java.nio.file.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 
+import org.db_poultry.App;
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
+import org.jetbrains.annotations.NotNull;
 
 /*
  * dotConfigFile contents:
@@ -221,7 +228,9 @@ public class TL {
         System.out.println("~ TL ../ Initialize -- Backups.");
         Backup.TL_makeBackupFolder();
 
-        // if it is the first open, we will clean all tables
+        // then create the first database backup
+        System.out.println("~ TL ../ Initialize -- Creating first database backup.");
+        Backup.TL_createDatabaseBackup(app.getDatabaseName(), app.getDatabasePass());
     }
 }
 
