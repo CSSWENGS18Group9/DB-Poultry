@@ -65,7 +65,7 @@ fun cleanTables(conn: Connection?) {
         "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('adulticide', 'ml', 'src/main/resources/img/supply-img/Adulticide.png')",
         "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('string', 'cm', 'src/main/resources/img/supply-img/String.png')",
         "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('fuel', 'l', 'src/main/resources/img/supply-img/Fuel.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('chicken Medicine', 'bottles', 'src/main/resources/img/supply-img/Chicken_Medicine.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('chicken medicine', 'bottles', 'src/main/resources/img/supply-img/Chicken_Medicine.png')",
         "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('larvicide', 'ml', 'src/main/resources/img/supply-img/Larvicide.png')",
         "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('fly glue', 'ml', 'src/main/resources/img/supply-img/Fly_Glue.png')",
         "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('disinfectant', 'ml', 'src/main/resources/img/supply-img/Disinfectant.png')",

@@ -5,7 +5,8 @@ import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.supplyTypeDAO.CreateSupplyType.createSupplyType
 import org.db_poultry.util.undoSingleton
 import org.db_poultry.util.undoTypes
-import org.db_poultry.util.SupplyTypeSingleton
+import org.db_poultry.util.SupplySingleton
+import org.db_poultry.util.PopupUtil
 
 import javafx.fxml.FXML
 import javafx.scene.control.Button
@@ -15,10 +16,8 @@ import javafx.stage.FileChooser
 import javafx.fxml.Initializable
 import javafx.scene.control.Label
 import javafx.scene.layout.FlowPane
-import javafx.scene.layout.GridPane
-import javafx.scene.text.Text
 import javafx.stage.Stage
-import org.db_poultry.util.PopupUtil
+import org.db_poultry.controller.NotificationController
 import java.awt.image.BufferedImage
 import java.io.File
 import java.net.URL
@@ -92,9 +91,14 @@ class SuppliesCreateController: Initializable {
         imagePath = tempFile.absolutePath
 
         if (createSupplyType(getConnection(), supplyName, supplyUnit,
-                imagePath, SupplyTypeSingleton.getUIDefaultImagePath()) != null) {
+                imagePath, SupplySingleton.getUIDefaultImagePath()) != null) {
 
             undoSingleton.setUndoMode(undoTypes.doUndoSupplyType)
+            NotificationController.setNotification(
+                "error",
+                "Create-Supply Undo",
+                "Supply type '$supplyName' removed successfully."
+            )
             PopupUtil.showPopup("success", "Supply type created successfully.")
 
             // Delete temp image
@@ -120,7 +124,7 @@ class SuppliesCreateController: Initializable {
             println("Failed to create Supply type.")
         }
 
-        resetFields()
+        closePopup()
     }
 
     private fun initializeConfirmButton() {

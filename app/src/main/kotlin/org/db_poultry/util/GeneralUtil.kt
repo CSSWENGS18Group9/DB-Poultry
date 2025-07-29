@@ -45,6 +45,8 @@ class GeneralUtil {
 
         private var inUseContentPane: AnchorPane? = null
 
+        private var mainContentPane: AnchorPane? = null
+
         fun getInUseContentPane(): AnchorPane? = inUseContentPane
 
         fun registerSectionChangeCallback(callback: (String) -> Unit) {
@@ -52,6 +54,12 @@ class GeneralUtil {
         }
 
         fun getCurrentSection(): String? = currentSection
+
+        fun setMainContentPane(mainContentPane: AnchorPane) {
+            this.mainContentPane = mainContentPane
+        }
+
+        fun getMainContentPane(): AnchorPane? = mainContentPane
 
         fun loadContentView(contentAnchorPane: AnchorPane, fxmlPath: String) {
             inUseContentPane = contentAnchorPane
@@ -177,6 +185,11 @@ class GeneralUtil {
         fun formatDatePretty(date: LocalDate?): String {
             val formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH)
             return date?.format(formatter) ?: String.format("No date provided")
-        } 
+        }
+
+        fun capitalizeCase(input: String?): String =
+            input?.split(" ")?.joinToString(" ") { word ->
+                word.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+            } ?: "BACKEND ERROR: MUST FIX"
     }
 }
