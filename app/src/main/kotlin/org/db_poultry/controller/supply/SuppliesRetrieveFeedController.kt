@@ -133,7 +133,7 @@ class SuppliesRetrieveFeedController: Initializable {
         NotificationController.setNotification(
             "error",
             "Chicken Feed Retrieval Undo",
-            "Supply record for '${feedArrayList}' retrieval was undone."
+            "Supply record for '${feedArrayList.joinToString(", ")}' retrieval was undone."
         )
         PopupUtil.showPopup("success", "Feed retrieval transaction successful.")
 
