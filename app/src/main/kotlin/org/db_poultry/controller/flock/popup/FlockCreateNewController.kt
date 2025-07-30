@@ -7,6 +7,7 @@ import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
 import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
+import javafx.stage.Stage
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDAO.CreateFlock
 import org.db_poultry.util.PopupUtil
@@ -18,7 +19,7 @@ class FlockCreateNewController {
     // private var jdbcURL: String
 
     @FXML
-    private lateinit var anchorPane: AnchorPane
+    private lateinit var createNewFlockAnchorPane: AnchorPane
 
     @FXML
     private lateinit var createNewFlockDatePicker: DatePicker
@@ -59,6 +60,12 @@ class FlockCreateNewController {
             PopupUtil.showPopup("error", "Flock creation error, retry again.")
             println("Failed to create Flock.")
         }
+    }
+
+    @FXML
+    fun closePopup() {
+        val stage = createNewFlockDatePicker.scene.window as Stage
+        stage.close()
     }
 
 

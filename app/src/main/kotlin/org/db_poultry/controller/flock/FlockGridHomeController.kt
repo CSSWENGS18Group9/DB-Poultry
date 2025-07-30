@@ -12,6 +12,7 @@ import org.db_poultry.controller.backend.CurrentFlockInUse
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.pojo.FlockPOJO.FlockComplete
+import org.db_poultry.util.PopupUtil
 import java.net.URL
 import java.util.ResourceBundle
 // Line removed as it is unnecessary
@@ -83,7 +84,8 @@ class FlockGridHomeController: Initializable {
 
     @FXML
     fun navigateToCreateFlock() {
-        GeneralUtil.navigateToMainContent(selectFlockAnchorPane, "/fxml/content_create_new_flock.fxml")
+//        GeneralUtil.navigateToMainContent(selectFlockAnchorPane, "/fxml/content_create_new_flock.fxml")
+        PopupUtil.showContentPopup("/fxml/content_create_new_flock.fxml")
     }
 
     @FXML
