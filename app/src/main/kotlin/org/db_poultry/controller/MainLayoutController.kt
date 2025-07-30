@@ -186,7 +186,7 @@ class MainLayoutController : Initializable {
 
     @FXML
     fun navigateToFlockSelection() {
-        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_flock.fxml")
+        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_view_flock.fxml")
     }
 
     @FXML

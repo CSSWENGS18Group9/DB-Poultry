@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane fx:id="mainAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="998.4" styleClass="main-pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.flock.FlockGridHomeController">
+<AnchorPane fx:id="selectFlockAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="998.4" styleClass="main-pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.flock.FlockGridHomeController">
    <children>
       <GridPane prefHeight="630.0" prefWidth="998.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -66,7 +66,7 @@
                                     <Font name="HelveticaNowDisplay-Light" size="12.0" />
                                  </font>
                               </Label>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="21.0" prefWidth="136.0" text="View History" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navigateToViewFlockDetails" prefHeight="21.0" prefWidth="136.0" text="View History" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                  <styleClass>
                                     <String fx:value="main-button-reversed" />
                                     <String fx:value="h6-bold" />
@@ -75,7 +75,7 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Button layoutX="339.0" layoutY="34.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Update Record" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                              <Button layoutX="339.0" layoutY="34.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navigateToCreateFlockDetails" text="Update Record" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                                  <styleClass>
                                     <String fx:value="main-button-reversed" />
                                     <String fx:value="h6-bold" />
