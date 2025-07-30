@@ -16,6 +16,8 @@
 
 /* Popup (Topmost)AnchorPanes */
 #createSuppliesAnchorPane,
+#createNewFlockAnchorPane,
+#updateFlockAnchorPane,
 #updateSuppliesAnchorPane {
     -fx-background-color: transparent;
 }
