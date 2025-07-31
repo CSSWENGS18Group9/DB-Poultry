@@ -17,6 +17,8 @@ def loading_screen(stop_event, label):
     print()
 
 def find_jar(libs_path: Path):
+    if not libs_path.exists() or not libs_path.is_dir():
+        return None
     jars = sorted(libs_path.glob("*.jar"), key=os.path.getmtime, reverse=True)
     return jars[0] if jars else None
 
