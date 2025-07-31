@@ -52,6 +52,7 @@ os.chdir(libs_dir)
 try:
     subprocess.run(["java", "-jar", str(jar)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
     print(f"Finished successfully; size of Fat Jar {jar_size_kb:.6f} KB")
+    print(f"Where: {jar}")
 except subprocess.CalledProcessError:
     print("\nTest failed during execution of Fat Jar")
 except FileNotFoundError:
