@@ -1,5 +1,10 @@
 package org.db_poultry.theLifesaver;
 
+import java.io.File;
+import java.nio.file.Paths;
+
+import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
+
 public class Variables {
     // ================ DOT CONFIG VARIABLES ============
     private static final String DOT_CONFIG_PATH = "config.🐔";
@@ -15,7 +20,20 @@ public class Variables {
     }
 
     public static String getBackupFolderPath() {
-        return BACKUP_FOLDER_PATH;
+        try {
+            // Get the location of the running JAR file
+            String jarPath = new File(Variables.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent();
+            return Paths.get(jarPath, BACKUP_FOLDER_PATH).toString();
+        } catch (Exception e) {
+            generateErrorMessage(
+                    "Error at `TL_loadConfig` in `Variables`.",
+                    "FATAL. Get file location.",
+                    "",
+                    e
+            );
+        }
+
+        return null;
     }
 
     public static int getBackupIntervals() {
