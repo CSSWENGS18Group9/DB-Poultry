@@ -38,7 +38,7 @@ public class TL {
 
         // Delete the entire .🐔 folder recursively
         try {
-            Path dotChickenFolder = Paths.get(System.getProperty("user.home"), ".🐔");
+            Path dotChickenFolder = Paths.get(System.getProperty("user.home"), Variables.getAppFolder());
 
             if (Files.exists(dotChickenFolder)) {
                 Files.walkFileTree(dotChickenFolder, new SimpleFileVisitor<>() {
@@ -58,14 +58,14 @@ public class TL {
                         return FileVisitResult.CONTINUE;
                     }
                 });
-                System.out.println("~ TL ../ `.🐔` directory has been deleted.");
+                System.out.println("~ TL ../ `.db_poultry` directory has been deleted.");
             } else {
-                System.out.println("~ TL ../ `.🐔` directory does not exist.");
+                System.out.println("~ TL ../ `.db_poultry` directory does not exist.");
             }
         } catch (IOException e) {
             generateErrorMessage(
                     "Error at `wipe` in `TL`",
-                    "Failed to delete `.🐔` directory.",
+                    "Failed to delete `.db_poultry` directory.",
                     "",
                     e);
         }
@@ -185,12 +185,15 @@ public class TL {
      * configuration file.
      */
     public static void TL_firstOpen(App app) {
+
         // the basis of checking for the "first open" of the DBMS
         // is if the `.config.dbpoultry` exists
         if (!Files.exists(Paths.get(Variables.getDotConfigPath()))) {
             // if it doesn't. Make it immediately!
             System.out.println("~ TL ../ Detected first startup.");
             System.out.println("~ TL ../ Initialize -- Config.");
+
+            // create config inside dot folder
             Config.TL_writeConfig(Util.getDateNow());
         } else {
             return;
@@ -204,6 +207,10 @@ public class TL {
         // make the backup folder
         System.out.println("~ TL ../ Initialize -- Backups.");
         Backup.TL_makeBackupFolder();
+
+        // make the supply_type_images directory
+        System.out.println("~ TL ../ Initialize -- Supply Type Images Directory.");
+        Util.makeSupplyTypeImagesDirectory();
 
         // then create the first database backup
         System.out.println("~ TL ../ Initialize -- Creating first database backup.");

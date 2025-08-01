@@ -1,15 +1,42 @@
 package org.db_poultry.theLifesaver;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 public class Config {
+    public static void makeDotFolder() {
+        try {
+            Files.createDirectories(Paths.get(Variables.getHomeDirectory(), Variables.getAppFolder()));
+            System.out.println("~ TL ../ Created Dot Folder Directory.");
+
+        } catch (FileAlreadyExistsException e) {
+            generateErrorMessage(
+                    "Error at `makeDotFolder` in `Config`",
+                    "Cannot create Dot Folder directory since it exists already.",
+                    "",
+                    e
+            );
+
+        } catch (IOException e) {
+            generateErrorMessage(
+                    "Error at `makeDotFolder` in `Config`",
+                    "FATAL. Cannot create Dot Folder directory, due to IOException.",
+                    "",
+                    e
+            );
+
+        }
+    }
+
     /**
      * writes the configuration file for the DBMS, contains important information such as the backup folder path,
      * the date of the last backup, and others
@@ -21,8 +48,14 @@ public class Config {
      */
     public static void TL_writeConfig(String lastBackupDate) {
         try {
-            File f = new File(Variables.getDotConfigPath());
-            try (FileWriter fw = new FileWriter(Variables.getDotConfigPath())) {
+            // Resolve the config file path
+            Path configPath = Paths.get(Variables.getDotConfigPath());
+
+            // Ensure the parent directory exists
+            Files.createDirectories(configPath.getParent());
+
+            // Write the config file
+            try (FileWriter fw = new FileWriter(configPath.toFile())) {
                 fw.write("backup_folder_location " + Variables.getBackupFolderPath() + "\n");
                 fw.write("last_backup_date " + lastBackupDate + "\n");
                 fw.write("backup_interval " + Variables.getBackupIntervals() + "\n");
@@ -30,12 +63,13 @@ public class Config {
         } catch (IOException e) {
             generateErrorMessage(
                     "Error at `TL_writeDotConfig` in `Config`",
-                    "FATAL. Cannot config file, due to IOException.",
+                    "FATAL. Cannot write config file: " + Variables.getDotConfigPath(),
                     "",
                     e
             );
         }
     }
+
 
     /**
      * loads the configuration file and returns a hashmap of each data in the config and its value.

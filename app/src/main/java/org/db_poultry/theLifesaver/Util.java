@@ -1,7 +1,13 @@
 package org.db_poultry.theLifesaver;
 
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 public class Util {
     /**
@@ -14,5 +20,19 @@ public class Util {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM-dd-yyyy");
 
         return now.format(formatter);
+    }
+
+    public static void makeSupplyTypeImagesDirectory() {
+        try {
+            Files.createDirectories(Paths.get(Variables.getSTImageFolderName()));
+        } catch (IOException e) {
+            generateErrorMessage(
+                    "Error at `makeSupplyTypeImagesDirectory` in `Util`",
+                    "FATAL. Cannot create Supply Type Images Directory folder, due to IOException.",
+                    "",
+                    e
+            );
+
+        }
     }
 }
