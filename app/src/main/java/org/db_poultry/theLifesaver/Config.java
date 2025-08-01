@@ -15,7 +15,7 @@ import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 public class Config {
     public static void makeDotFolder() {
         try {
-            Files.createDirectories(Paths.get(Variables.getAppFolder()));
+            Files.createDirectories(Paths.get(Variables.getHomeDirectory(), Variables.getAppFolder()));
             System.out.println("~ TL ../ Created Dot Folder Directory.");
 
         } catch (FileAlreadyExistsException e) {
