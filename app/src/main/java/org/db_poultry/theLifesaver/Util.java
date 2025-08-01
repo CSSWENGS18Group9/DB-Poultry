@@ -25,17 +25,9 @@ public class Util {
     public static void makeSupplyTypeImagesDirectory() {
         try {
             Files.createDirectories(Paths.get(Variables.getSTImageFolderName()));
-        } catch (FileAlreadyExistsException e) {
-            generateErrorMessage(
-                    "Error at `makeSupplyTypeImagesDirectory` in `Util`",
-                    "Cannot make Supply Type Images Directory since it exists already.",
-                    "",
-                    e
-            );
-
         } catch (IOException e) {
             generateErrorMessage(
-                    "Error at `makeSupplyTypeImagesDirectory` in `TL`",
+                    "Error at `makeSupplyTypeImagesDirectory` in `Util`",
                     "FATAL. Cannot create Supply Type Images Directory folder, due to IOException.",
                     "",
                     e
