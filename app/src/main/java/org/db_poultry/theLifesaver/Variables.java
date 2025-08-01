@@ -1,39 +1,60 @@
 package org.db_poultry.theLifesaver;
 
-import java.io.File;
 import java.nio.file.Paths;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 public class Variables {
     // ================ DOT CONFIG VARIABLES ============
-    private static final String DOT_CONFIG_PATH = "config.🐔";
+    private static final String APP_FOLDER = ".db_poultry";
+    private static final String DOT_CONFIG_FILENAME = "db_config";
 
     // ================ BACKUP VARIABLES ================
-    private static final String BACKUP_FOLDER_PATH = "dbp_backups";
-    private static final int BACKUP_INTERVALS = 7; // every X days, we create a backup
+    private static final String BACKUP_FOLDER_NAME = "dbp_backups";
+    private static final int BACKUP_INTERVALS = 7;                  // every X days, we create a backup
     private static final String BACKUP_FILE_PREFIX = "dbp_backup_"; // what comes after this is the date
-    private static final int BACKUP_FOLDER_CAPACITY = 10; // the number of backups we want to store at a time
+    private static final int BACKUP_FOLDER_CAPACITY = 10;           // number of backups to store
 
-    public static String getDotConfigPath() {
-        return DOT_CONFIG_PATH;
+    // ================ ST IMAGE DIR VARIABLES ==========
+    private static final String ST_IMAGE_FOLDER_NAME = "supply_type_images";
+
+    // Getters
+    public static String getHomeDirectory(){
+        return System.getProperty("user.home");
     }
 
-    public static String getBackupFolderPath() {
+    public static String getAppFolder(){
+        return APP_FOLDER;
+    }
+
+    public static String getDotConfigPath() {
         try {
-            // Get the location of the running JAR file
-            String jarPath = new File(Variables.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent();
-            return Paths.get(jarPath, BACKUP_FOLDER_PATH).toString();
+            return Paths.get(getHomeDirectory(), APP_FOLDER, DOT_CONFIG_FILENAME).toString();
         } catch (Exception e) {
             generateErrorMessage(
-                    "Error at `TL_loadConfig` in `Variables`.",
-                    "FATAL. Get file location.",
+                    "Error at `getDotConfigPath` in `Variables`.",
+                    "FATAL. Could not resolve config file location.",
                     "",
                     e
             );
         }
 
-        return null;
+        return "";
+    }
+
+    public static String getBackupFolderPath() {
+        try {
+            return Paths.get(getHomeDirectory(), APP_FOLDER, BACKUP_FOLDER_NAME).toString();
+        } catch (Exception e) {
+            generateErrorMessage(
+                    "Error at `getBackupFolderPath` in `Variables`.",
+                    "FATAL. Could not resolve backup directory inside app folder.",
+                    "",
+                    e
+            );
+        }
+
+        return "";
     }
 
     public static int getBackupIntervals() {
@@ -46,5 +67,20 @@ public class Variables {
 
     public static int getBackupFolderCapacity() {
         return BACKUP_FOLDER_CAPACITY;
+    }
+
+    public static String getSTImageFolderName() {
+        try {
+            return Paths.get(getHomeDirectory(), APP_FOLDER, ST_IMAGE_FOLDER_NAME).toString();
+        } catch (Exception e) {
+            generateErrorMessage(
+                    "Error at `getSTImageFolderName` in `Variables`.",
+                    "FATAL. Could not resolve `supply_type_images` directory inside app folder",
+                    "",
+                    e
+            );
+        }
+
+        return "";
     }
 }
