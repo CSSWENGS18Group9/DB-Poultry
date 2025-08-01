@@ -18,14 +18,6 @@ public class Config {
             Files.createDirectories(Paths.get(Variables.getHomeDirectory(), Variables.getAppFolder()));
             System.out.println("~ TL ../ Created Dot Folder Directory.");
 
-        } catch (FileAlreadyExistsException e) {
-            generateErrorMessage(
-                    "Error at `makeDotFolder` in `Config`",
-                    "Cannot create Dot Folder directory since it exists already.",
-                    "",
-                    e
-            );
-
         } catch (IOException e) {
             generateErrorMessage(
                     "Error at `makeDotFolder` in `Config`",
