@@ -18,7 +18,8 @@
 #createSuppliesAnchorPane,
 #createNewFlockAnchorPane,
 #updateFlockAnchorPane,
-#updateSuppliesAnchorPane {
+#updateSuppliesAnchorPane,
+#backupAnchorPane {
     -fx-background-color: transparent;
 }
 
