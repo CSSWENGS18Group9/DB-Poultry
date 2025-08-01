@@ -25,6 +25,13 @@ public class Util {
     public static void makeSupplyTypeImagesDirectory() {
         try {
             Files.createDirectories(Paths.get(Variables.getSTImageFolderName()));
+        } catch (FileAlreadyExistsException e) {
+            generateErrorMessage(
+                    "Error at `makeSupplyTypeImagesDirectory` in `Util`",
+                    "A file already exists at the target path for the Supply Type Images Directory. Please remove the file or choose a different directory name.",
+                    "",
+                    e
+            );
         } catch (IOException e) {
             generateErrorMessage(
                     "Error at `makeSupplyTypeImagesDirectory` in `Util`",
