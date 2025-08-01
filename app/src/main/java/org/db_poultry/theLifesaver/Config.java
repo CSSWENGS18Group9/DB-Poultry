@@ -20,16 +20,16 @@ public class Config {
 
         } catch (FileAlreadyExistsException e) {
             generateErrorMessage(
-                    "Error at `makeSupplyTypeImagesDirectory` in `TL`",
-                    "Cannot make Supply Type Images Directory since it exists already.",
+                    "Error at `makeDotFolder` in `Config`",
+                    "Cannot create Dot Folder directory since it exists already.",
                     "",
                     e
             );
 
         } catch (IOException e) {
             generateErrorMessage(
-                    "Error at `makeSupplyTypeImagesDirectory` in `TL`",
-                    "FATAL. Cannot Supply Type Images Directory folder, due to IOException.",
+                    "Error at `makeDotFolder` in `Config`",
+                    "FATAL. Cannot create Dot Folder directory, due to IOException.",
                     "",
                     e
             );
