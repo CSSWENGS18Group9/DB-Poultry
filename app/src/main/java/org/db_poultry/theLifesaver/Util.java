@@ -36,7 +36,7 @@ public class Util {
         } catch (IOException e) {
             generateErrorMessage(
                     "Error at `makeSupplyTypeImagesDirectory` in `TL`",
-                    "FATAL. Cannot Supply Type Images Directory folder, due to IOException.",
+                    "FATAL. Cannot create Supply Type Images Directory folder, due to IOException.",
                     "",
                     e
             );
