@@ -36,17 +36,16 @@ public class TL {
     public static void wipe(String dbName) {
         System.out.println("~ TL ../ Wiping...");
 
-        // Delete the backup folder recursively
+        // Delete the entire .🐔 folder recursively
         try {
-            Path backupFolderPath = Paths.get(Variables.getBackupFolderPath());
+            Path dotChickenFolder = Paths.get(System.getProperty("user.home"), ".🐔");
 
-            if (Files.exists(backupFolderPath)) {
-                Files.walkFileTree(backupFolderPath, new SimpleFileVisitor<>() {
+            if (Files.exists(dotChickenFolder)) {
+                Files.walkFileTree(dotChickenFolder, new SimpleFileVisitor<>() {
                     @NotNull
                     @Override
                     public FileVisitResult visitFile(@NotNull Path file, @NotNull BasicFileAttributes attrs)
                             throws IOException {
-
                         Files.delete(file);
                         return FileVisitResult.CONTINUE;
                     }
@@ -55,44 +54,23 @@ public class TL {
                     @Override
                     public FileVisitResult postVisitDirectory(@NotNull Path dir, IOException exc)
                             throws IOException {
-
                         Files.delete(dir);
                         return FileVisitResult.CONTINUE;
                     }
                 });
-                System.out.println("~ TL ../ Backup folder has been deleted.");
-
+                System.out.println("~ TL ../ `.🐔` directory has been deleted.");
             } else {
-                System.out.println("~ TL ../ Backup folder does not exist.");
+                System.out.println("~ TL ../ `.🐔` directory does not exist.");
             }
         } catch (IOException e) {
             generateErrorMessage(
                     "Error at `wipe` in `TL`",
-                    "Failed to delete backup folder.",
+                    "Failed to delete `.🐔` directory.",
                     "",
                     e);
         }
 
-        // Delete the config file
-        try {
-            Path configFilePath = Paths.get(Variables.getDotConfigPath());
-
-            if (Files.exists(configFilePath)) {
-                Files.delete(configFilePath);
-                System.out.println("~ TL ../ Config file has been deleted.");
-            } else {
-                System.out.println("~ TL ../ Config files does not exist.");
-            }
-        } catch (IOException e) {
-            generateErrorMessage(
-                    "Error at `wipe` in `TL`",
-                    "Failed to delete config file.",
-                    "",
-                    e
-            );
-        }
-
-        // drop the database and user
+        // Drop the database and user
         System.out.println("~ TL ../ Dropping database and user: " + dbName);
         String dropDatabaseCommand = "DROP DATABASE IF EXISTS " + dbName + ";";
         String dropUserCommand = "DROP USER IF EXISTS " + dbName + ";";
@@ -104,7 +82,6 @@ public class TL {
 
             Process psql = pb.start();
 
-            // run commands
             try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(psql.getOutputStream()))) {
                 writer.write(dropDatabaseCommand);
                 writer.newLine();
