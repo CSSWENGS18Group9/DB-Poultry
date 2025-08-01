@@ -22,7 +22,7 @@ public class Variables {
             return Paths.get(userHome, DOT_FOLDER_NAME, DOT_CONFIG_FILENAME).toString();
         } catch (Exception e) {
             generateErrorMessage(
-                    "Error at `TL_loadConfig` in `Variables`.",
+                    "Error at `getDotConfigPath` in `Variables`.",
                     "FATAL. Could not resolve config.🐔 file location.",
                     "",
                     e
