@@ -27,7 +27,7 @@ public class Util {
             Files.createDirectories(Paths.get(Variables.getSTImageFolderName()));
         } catch (FileAlreadyExistsException e) {
             generateErrorMessage(
-                    "Error at `makeSupplyTypeImagesDirectory` in `TL`",
+                    "Error at `makeSupplyTypeImagesDirectory` in `Util`",
                     "Cannot make Supply Type Images Directory since it exists already.",
                     "",
                     e
