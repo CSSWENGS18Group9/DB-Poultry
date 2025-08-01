@@ -38,7 +38,7 @@ public class Variables {
             return Paths.get(userHome, DOT_FOLDER_NAME, BACKUP_FOLDER_NAME).toString();
         } catch (Exception e) {
             generateErrorMessage(
-                    "Error at `TL_loadConfig` in `Variables`.",
+                    "Error at `getBackupFolderPath` in `Variables`.",
                     "FATAL. Could not resolve backup directory inside .🐔.",
                     "",
                     e
