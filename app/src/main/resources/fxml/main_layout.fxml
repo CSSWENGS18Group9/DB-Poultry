@@ -183,11 +183,6 @@
                                           <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h3-bold" text="Flock Selection" />
                                        </children>
                                     </FlowPane>
-                                    <FlowPane fx:id="flockGenerateReportFlowPane" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToFlockGenerateReport" styleClass="sidebar-pane" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
-                                       <children>
-                                          <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h3-bold" text="Generate Reports" />
-                                       </children>
-                                    </FlowPane>
                                  </children>
                               </GridPane>
                            </children>

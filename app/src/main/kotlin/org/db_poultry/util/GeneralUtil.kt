@@ -22,7 +22,6 @@ class GeneralUtil {
         // Mapping of FXML paths to sections
         private val fxmlSectionMapping = mapOf(
             "/fxml/main_layout.fxml" to "HOME",
-            "/fxml/content_home.fxml" to "HOME",
             "/fxml/login.fxml" to "HOME",
 
             "/fxml/content_create_flock_details.fxml" to "FLOCK_SELECT",
