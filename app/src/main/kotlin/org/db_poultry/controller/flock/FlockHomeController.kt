@@ -8,7 +8,7 @@ import java.net.URL
 
 import javafx.fxml.FXML
 import javafx.scene.layout.AnchorPane
-import org.db_poultry.controller.backend.FlockSingleton
+import org.db_poultry.util.FlockSingleton
 
 // TODO: Remove this and transfer to FlockGridHomeController @Dattebayo2505
 class FlockHomeController: Initializable {

@@ -2,7 +2,7 @@ package org.db_poultry.controller.flock
 
 import javafx.beans.property.SimpleIntegerProperty
 import org.db_poultry.util.GeneralUtil
-import org.db_poultry.controller.backend.FlockSingleton
+import org.db_poultry.util.FlockSingleton
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
 import org.db_poultry.pojo.FlockPOJO.FlockDetails

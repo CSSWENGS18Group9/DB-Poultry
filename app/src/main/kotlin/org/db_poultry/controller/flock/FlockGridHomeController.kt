@@ -14,7 +14,7 @@ import javafx.scene.layout.RowConstraints
 import javafx.scene.layout.Priority
 import javafx.geometry.HPos
 import javafx.geometry.Insets
-import org.db_poultry.controller.backend.FlockSingleton
+import org.db_poultry.util.FlockSingleton
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.pojo.FlockPOJO.FlockComplete

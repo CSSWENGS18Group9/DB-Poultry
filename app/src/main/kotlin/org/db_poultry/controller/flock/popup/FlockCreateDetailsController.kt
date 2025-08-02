@@ -5,7 +5,7 @@ import javafx.fxml.Initializable
 import javafx.scene.control.DatePicker
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
-import org.db_poultry.controller.backend.FlockSingleton
+import org.db_poultry.util.FlockSingleton
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
 import org.db_poultry.util.GeneralUtil

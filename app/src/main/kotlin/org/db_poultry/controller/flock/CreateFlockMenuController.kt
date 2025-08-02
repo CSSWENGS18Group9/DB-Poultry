@@ -3,7 +3,7 @@ package org.db_poultry.controller.flock
 import javafx.fxml.FXML
 import javafx.scene.layout.AnchorPane
 import org.db_poultry.util.PopupUtil
-import org.db_poultry.controller.backend.FlockSingleton
+import org.db_poultry.util.FlockSingleton
 
 // TODO: Remove this class and merge with FlockHomeController @Dattebayo2505
 class CreateFlockMenuController {

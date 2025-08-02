@@ -4,7 +4,7 @@ import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.Label
 import javafx.scene.layout.AnchorPane
-import org.db_poultry.controller.backend.FlockSingleton
+import org.db_poultry.util.FlockSingleton
 import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.reportDAO.ReadMortalityRate
 import org.db_poultry.errors.generateErrorMessage
