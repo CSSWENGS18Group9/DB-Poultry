@@ -109,18 +109,18 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <TextField fx:id="addAmountSupplyTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                        <TextField fx:id="addAmountSupplyTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextField fx:id="deductAmountSupplyTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
+                        <TextField fx:id="deductAmountSupplyTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Label styleClass="h4-bold" text="Added" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Label layoutX="10.0" layoutY="76.0" styleClass="h4-bold" text="Consumed" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label styleClass="h4-bold" text="Added" GridPane.halignment="CENTER" />
+                        <Label layoutX="10.0" layoutY="76.0" styleClass="h4-bold" text="Consumed" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                      </children>
                      <GridPane.margin>
                         <Insets bottom="15.0" />
