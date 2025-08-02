@@ -114,9 +114,14 @@ class GeneralUtil {
             }
         }
 
-        fun navigateToMainContent(currentPane: AnchorPane, fxmlPath: String) {
+        fun navigateToMainContent(currentPane: AnchorPane?, fxmlPath: String) {
+            val mainContentPane = if (currentPane != null) {
+                findMainContentPane(currentPane)
+            } else {
+                // Use the stored main content pane when currentPane is null
+                getMainContentPane()
+            }
 
-            val mainContentPane = findMainContentPane(currentPane)
             if (mainContentPane != null) {
                 loadContentView(mainContentPane, fxmlPath)
             } else {
@@ -124,7 +129,9 @@ class GeneralUtil {
             }
         }
 
-        private fun findMainContentPane(currentPane: AnchorPane): AnchorPane? {
+        private fun findMainContentPane(currentPane: AnchorPane?): AnchorPane? {
+            if (currentPane == null) return null
+
             // Traverse up the scene graph to find the main content pane
             var parent = currentPane.parent
             while (parent != null) {
