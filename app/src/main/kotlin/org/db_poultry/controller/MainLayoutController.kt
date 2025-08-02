@@ -18,7 +18,6 @@ import javafx.scene.layout.GridPane
 import javafx.scene.layout.StackPane
 import org.db_poultry.util.SceneSwitcher
 import org.kordamp.ikonli.javafx.FontIcon
-import kotlin.collections.remove
 
 class MainLayoutController : Initializable {
 
@@ -186,6 +185,6 @@ class MainLayoutController : Initializable {
 
     @FXML
     fun navigateToFlockSelection() {
-        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_view_flock.fxml")
+        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_flock_grid.fxml")
     }
 }

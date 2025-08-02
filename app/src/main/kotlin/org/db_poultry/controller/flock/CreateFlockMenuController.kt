@@ -13,7 +13,7 @@ class CreateFlockMenuController {
 
     @FXML
     private fun navigateToCreateFlockDetails() {
-        // GeneralUtil.navigateToMainContent(anchorPaneCreate, "/fxml/content_view_flock.fxml")
+        // GeneralUtil.navigateToMainContent(anchorPaneCreate, "/fxml/content_home_flock_grid.fxml")
         println("debugging")
         PopupUtil.showContentPopup("/fxml/content_create_new_flock.fxml")
         FlockSingleton.setCurrentFlockFXML("create_flock_details")

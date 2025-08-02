@@ -32,13 +32,13 @@ class FlockHomeController: Initializable {
 
     @FXML
     fun navigateToView() {
-        GeneralUtil.navigateToMainContent(flockHomeAnchorPane, "/fxml/content_view_flock.fxml")
+        GeneralUtil.navigateToMainContent(flockHomeAnchorPane, "/fxml/content_home_flock_grid.fxml")
         FlockSingleton.setCurrentFlockFXML("view_flock_details")
     }
 
     @FXML 
     fun navigateToGenerate() {
-        GeneralUtil.navigateToMainContent(flockHomeAnchorPane, "/fxml/content_view_flock.fxml")
+        GeneralUtil.navigateToMainContent(flockHomeAnchorPane, "/fxml/content_home_flock_grid.fxml")
         FlockSingleton.setCurrentFlockFXML("flock_generate_reports")
     }
 
