@@ -199,9 +199,4 @@ class FlockGridHomeController: Initializable {
     fun navigateToViewFlockDetails() {
         GeneralUtil.navigateToMainContent(selectFlockAnchorPane, "/fxml/content_view_flock_details.fxml")
     }
-
-    @FXML
-    fun navigateToViewFlockGenerateReport() {
-        GeneralUtil.navigateToMainContent(selectFlockAnchorPane, "/fxml/content_generate_report.fxml")
-    }
 }

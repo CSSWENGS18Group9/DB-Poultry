@@ -30,7 +30,6 @@ class GeneralUtil {
             "/fxml/content_create_new_flock.fxml" to "FLOCK_SELECT",
             "/fxml/content_view_flock_details.fxml" to "FLOCK_SELECT",
             "/fxml/content_view_flock.fxml" to "FLOCK_SELECT",
-            "/fxml/content_generate_report.fxml" to "FLOCK_GENERATE_REPORT",
             "/fxml/content_home_flock.fxml" to "FLOCK_SELECT",
 
             "/fxml/content_create_supplies.fxml" to "SUPPLIES_UPDATE",
