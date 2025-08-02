@@ -29,6 +29,8 @@ import java.util.ResourceBundle
 import kotlin.text.compareTo
 import kotlin.toString
 
+// TODO: Implement dynamic refresh and multiple page (implemented in flock grid home already) @Dattebayo25
+// TODO: Add util for dynamic refresh loading? @Dattebayo25
 class SuppliesGridHomeController: Initializable {
 
     @FXML

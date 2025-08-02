@@ -26,11 +26,9 @@ class GeneralUtil {
             "/fxml/login.fxml" to "HOME",
 
             "/fxml/content_create_flock_details.fxml" to "FLOCK_SELECT",
-            "/fxml/content_create_flock.fxml" to "FLOCK_SELECT",
             "/fxml/content_create_new_flock.fxml" to "FLOCK_SELECT",
             "/fxml/content_view_flock_details.fxml" to "FLOCK_SELECT",
-            "/fxml/content_view_flock.fxml" to "FLOCK_SELECT",
-            "/fxml/content_home_flock.fxml" to "FLOCK_SELECT",
+            "/fxml/content_home_flock_grid.fxml" to "FLOCK_SELECT",
 
             "/fxml/content_create_supplies.fxml" to "SUPPLIES_UPDATE",
             "/fxml/content_home_supplies_grid.fxml" to "SUPPLIES_UPDATE",
@@ -71,7 +69,8 @@ class GeneralUtil {
                     return
                 }
 
-                if (contentAnchorPane.children.isNotEmpty() && fxmlPath != "/fxml/content_view_flock.fxml") {
+                // TODO: Add for supplies section too @Dattebayo25
+                if (contentAnchorPane.children.isNotEmpty() && fxmlPath != "/fxml/content_home_flock_grid.fxml") {
                     val currentRoot = contentAnchorPane.children[0]
                     val currentFXML = currentRoot.properties["fxmlPath"]
                     if (currentFXML != null && currentFXML == fxmlPath) {
