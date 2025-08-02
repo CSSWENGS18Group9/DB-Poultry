@@ -22,6 +22,7 @@ import org.db_poultry.db.flockDAO.ReadFlock
 import org.db_poultry.pojo.FlockPOJO.FlockComplete
 import org.db_poultry.util.PopupUtil
 import java.net.URL
+import java.sql.Date
 import java.util.ResourceBundle
 
 class FlockGridHomeController: Initializable {
@@ -41,31 +42,44 @@ class FlockGridHomeController: Initializable {
     @FXML
     private lateinit var flockPageSpinner: Spinner<Int>
 
+    private var currentPage = 1
+    private var totalPages = 1
+    private var allFlockRecords: List<Pair<Date, FlockComplete>> = emptyList()
+
+
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        loadFlockGrid()
+        loadAllFlockRecords()
         setSpinner()
+        loadCurrentPage()
     }
 
-    private fun setSpinner() {
-        flockPageSpinner.styleClass.add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL)
-        val valueFactory = SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10, 1)
-        flockPageSpinner.valueFactory = valueFactory
-        flockPageSpinner.editor.alignment = javafx.geometry.Pos.CENTER
+    private fun loadAllFlockRecords() {
+        val flockMap = ReadFlock.allByDate(DBConnect.getConnection())
+        allFlockRecords = flockMap?.toList()?.sortedByDescending { it.first } ?: emptyList()
+
+        totalPages = if (allFlockRecords.isNotEmpty()) {
+            (allFlockRecords.size + 6) / 7
+        } else {
+            1
+        }
     }
 
-    private fun loadFlockGrid() {
+    private fun loadCurrentPage() {
         resetMainTilePane()
 
-        val flockMap = ReadFlock.allByID(DBConnect.getConnection())
-        val sortedFlockMap = flockMap.toList().sortedByDescending { it.first }
+        if (allFlockRecords.isEmpty()) return
 
-        if (flockMap != null && flockMap.isNotEmpty()) {
+        val recordsToShow = getRecordsForPage(currentPage)
 
-            for ((flockId, flockComplete) in sortedFlockMap) {
-                val gridPane = createFlockGridPane(flockComplete)
-                mainTilePane.children.add(gridPane)
-            }
+        for ((_, flockComplete) in recordsToShow) {
+            val gridPane = createFlockGridPane(flockComplete)
+            mainTilePane.children.add(gridPane)
         }
+    }
+
+    private fun getRecordsForPage(page: Int): List<Pair<Date, FlockComplete>> {
+        val startIndex = (page - 1) * 7
+        return allFlockRecords.drop(startIndex).take(7)
     }
 
     private fun resetMainTilePane() {
@@ -75,6 +89,19 @@ class FlockGridHomeController: Initializable {
 
         mainTilePane.children.clear()
         mainTilePane.children.addAll(childrenToKeep)
+    }
+
+    private fun setSpinner() {
+        flockPageSpinner.styleClass.add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL)
+        val valueFactory = SpinnerValueFactory.IntegerSpinnerValueFactory(1, maxOf(1, totalPages), 1)
+        flockPageSpinner.valueFactory = valueFactory
+        flockPageSpinner.editor.alignment = javafx.geometry.Pos.CENTER
+
+        // Add listener for page changes
+        flockPageSpinner.valueProperty().addListener { _, _, newValue ->
+            currentPage = newValue as Int
+            loadCurrentPage()
+        }
     }
 
     private fun createFlockGridPane(flockComplete: FlockComplete): GridPane {
