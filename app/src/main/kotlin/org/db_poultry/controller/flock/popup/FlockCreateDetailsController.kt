@@ -5,6 +5,8 @@ import javafx.fxml.Initializable
 import javafx.scene.control.DatePicker
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
+import javafx.scene.layout.AnchorPane
+import org.db_poultry.controller.NotificationController
 import org.db_poultry.util.FlockSingleton
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
@@ -17,6 +19,9 @@ import java.sql.Date
 import java.util.ResourceBundle
 
 class FlockCreateDetailsController : Initializable {
+
+    @FXML
+    private lateinit var updateFlockAnchorPane: AnchorPane
 
     @FXML
     private lateinit var flockNameLabel: Label
@@ -58,12 +63,37 @@ class FlockCreateDetailsController : Initializable {
 
         if (CreateFlockDetails.createFlockDetails(DBConnect.getConnection(), flockDate, detailDate, depletedCount) != null) {
             undoSingleton.setUndoMode(undoTypes.doUndoFlockDetail)
+
+            NotificationController.setNotification(
+                "info",
+                    "Flock Update Records Undo",
+                "Flock details not updated. Current count is retained."
+            )
+
             PopupUtil.showPopup("success", "Flock details created successfully.")
             println("Successfully created Flock.")
         } else {
+
+            NotificationController.setNotification(
+                "error",
+                "Flock Update Records Error",
+                "Failed to create flock details with date: $detailDate and depleted count: $depletedCount"
+            )
+
+            NotificationController.showNotification()
+
             PopupUtil.showPopup("error", "Failed to create flock details.")
             println("Failed to create Flock.")
         }
+
+        GeneralUtil.refreshPage(null, "/fxml/content_view_flock.fxml")
+        closePopup()
+    }
+
+    @FXML
+    fun closePopup() {
+        val stage = updateFlockAnchorPane.scene.window as javafx.stage.Stage
+        stage.close()
     }
 
 }

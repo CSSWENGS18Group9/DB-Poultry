@@ -1,5 +1,6 @@
 package org.db_poultry.util
 
+import javafx.application.Platform.runLater
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 
@@ -14,11 +15,6 @@ import javafx.beans.property.SimpleDoubleProperty
 import java.time.format.DateTimeFormatter
 import java.time.LocalDate
 import java.util.Locale
-import kotlin.collections.containsKey
-import kotlin.collections.get
-import kotlin.invoke
-import kotlin.text.clear
-import kotlin.text.get
 
 class GeneralUtil {
     companion object {
@@ -146,6 +142,12 @@ class GeneralUtil {
                 parent = parent.parent
             }
             return null
+        }
+
+        fun refreshPage(currentPane: AnchorPane?, fxmlPath: String) {
+            runLater {
+                navigateToMainContent(currentPane, fxmlPath)
+            }
         }
 
         /**
