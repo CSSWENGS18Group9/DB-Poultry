@@ -276,3 +276,11 @@ HelveticaNowDisplay HairlineIta
     -fx-background-position: center center;
     -fx-opacity: 0.5;
 }
+
+.spinner .text-field {
+    -fx-text-fill: #8F250C;
+    -fx-border-radius: 5px;
+}
+.spinner {
+    -fx-background-radius: 5px;
+}

@@ -14,6 +14,8 @@ import javafx.scene.layout.RowConstraints
 import javafx.scene.layout.Priority
 import javafx.geometry.HPos
 import javafx.geometry.Insets
+import javafx.scene.control.Spinner
+import javafx.scene.control.SpinnerValueFactory
 import org.db_poultry.util.FlockSingleton
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDAO.ReadFlock
@@ -36,17 +38,30 @@ class FlockGridHomeController: Initializable {
     @FXML
     private lateinit var exampleFlockGridPane: GridPane
 
+    @FXML
+    private lateinit var flockPageSpinner: Spinner<Int>
+
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         loadFlockGrid()
+        setSpinner()
+    }
+
+    private fun setSpinner() {
+        flockPageSpinner.styleClass.add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL)
+        val valueFactory = SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10, 1)
+        flockPageSpinner.valueFactory = valueFactory
+        flockPageSpinner.editor.alignment = javafx.geometry.Pos.CENTER
     }
 
     private fun loadFlockGrid() {
         resetMainTilePane()
 
         val flockMap = ReadFlock.allByID(DBConnect.getConnection())
+        val sortedFlockMap = flockMap.toList().sortedByDescending { it.first }
 
         if (flockMap != null && flockMap.isNotEmpty()) {
-            for ((flockId, flockComplete) in flockMap) {
+
+            for ((flockId, flockComplete) in sortedFlockMap) {
                 val gridPane = createFlockGridPane(flockComplete)
                 mainTilePane.children.add(gridPane)
             }
@@ -55,7 +70,7 @@ class FlockGridHomeController: Initializable {
 
     private fun resetMainTilePane() {
         val childrenToKeep = mainTilePane.children.filter { child ->
-            child == createFlockGridPane || child == exampleFlockGridPane
+            child == createFlockGridPane /* ||  child == exampleFlockGridPane */ // DEBUGGING TO ENABLE
         }
 
         mainTilePane.children.clear()
