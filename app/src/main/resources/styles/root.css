@@ -18,7 +18,8 @@
 #createSuppliesAnchorPane,
 #createNewFlockAnchorPane,
 #updateFlockAnchorPane,
-#updateSuppliesAnchorPane {
+#updateSuppliesAnchorPane,
+#backupAnchorPane {
     -fx-background-color: transparent;
 }
 
@@ -274,4 +275,39 @@ HelveticaNowDisplay HairlineIta
     -fx-background-size: cover;
     -fx-background-position: center center;
     -fx-opacity: 0.5;
+}
+
+.spinner {
+    -fx-background-radius: 5px;
+    -fx-background-color: transparent;
+}
+
+.spinner .text-field {
+    -fx-text-fill: #8F250C;
+    -fx-background-color: transparent;
+}
+
+.spinner .increment-arrow-button,
+.spinner .decrement-arrow-button {
+    -fx-background-color: #8F250C;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+}
+
+.spinner .increment-arrow,
+.spinner .decrement-arrow {
+    -fx-background-color: white;
+}
+
+.spinner .increment-arrow-button:hover,
+.spinner .decrement-arrow-button:hover {
+    -fx-background-color: white;
+    -fx-border-color: #8F250C;
+    -fx-border-width: 1px;
+}
+
+.spinner .increment-arrow-button:hover .increment-arrow,
+.spinner .decrement-arrow-button:hover .decrement-arrow {
+    -fx-background-color: #8F250C;
 }

@@ -1,5 +1,6 @@
 package org.db_poultry.util
 
+import javafx.application.Platform.runLater
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 
@@ -21,16 +22,12 @@ class GeneralUtil {
         // Mapping of FXML paths to sections
         private val fxmlSectionMapping = mapOf(
             "/fxml/main_layout.fxml" to "HOME",
-            "/fxml/content_home.fxml" to "HOME",
             "/fxml/login.fxml" to "HOME",
 
             "/fxml/content_create_flock_details.fxml" to "FLOCK_SELECT",
-            "/fxml/content_create_flock.fxml" to "FLOCK_SELECT",
             "/fxml/content_create_new_flock.fxml" to "FLOCK_SELECT",
             "/fxml/content_view_flock_details.fxml" to "FLOCK_SELECT",
-            "/fxml/content_view_flock.fxml" to "FLOCK_SELECT",
-            "/fxml/content_generate_report.fxml" to "FLOCK_GENERATE_REPORT",
-            "/fxml/content_home_flock.fxml" to "FLOCK_SELECT",
+            "/fxml/content_home_flock_grid.fxml" to "FLOCK_SELECT",
 
             "/fxml/content_create_supplies.fxml" to "SUPPLIES_UPDATE",
             "/fxml/content_home_supplies_grid.fxml" to "SUPPLIES_UPDATE",
@@ -71,7 +68,8 @@ class GeneralUtil {
                     return
                 }
 
-                if (contentAnchorPane.children.isNotEmpty()) {
+                // TODO: Add for supplies section too @Dattebayo25
+                if (contentAnchorPane.children.isNotEmpty() && fxmlPath != "/fxml/content_home_flock_grid.fxml") {
                     val currentRoot = contentAnchorPane.children[0]
                     val currentFXML = currentRoot.properties["fxmlPath"]
                     if (currentFXML != null && currentFXML == fxmlPath) {
@@ -114,9 +112,14 @@ class GeneralUtil {
             }
         }
 
-        fun navigateToMainContent(currentPane: AnchorPane, fxmlPath: String) {
+        fun navigateToMainContent(currentPane: AnchorPane?, fxmlPath: String) {
+            val mainContentPane = if (currentPane != null) {
+                findMainContentPane(currentPane)
+            } else {
+                // Use the stored main content pane when currentPane is null
+                getMainContentPane()
+            }
 
-            val mainContentPane = findMainContentPane(currentPane)
             if (mainContentPane != null) {
                 loadContentView(mainContentPane, fxmlPath)
             } else {
@@ -124,7 +127,9 @@ class GeneralUtil {
             }
         }
 
-        private fun findMainContentPane(currentPane: AnchorPane): AnchorPane? {
+        private fun findMainContentPane(currentPane: AnchorPane?): AnchorPane? {
+            if (currentPane == null) return null
+
             // Traverse up the scene graph to find the main content pane
             var parent = currentPane.parent
             while (parent != null) {
@@ -134,6 +139,12 @@ class GeneralUtil {
                 parent = parent.parent
             }
             return null
+        }
+
+        fun refreshPage(currentPane: AnchorPane?, fxmlPath: String) {
+            runLater {
+                navigateToMainContent(currentPane, fxmlPath)
+            }
         }
 
         /**

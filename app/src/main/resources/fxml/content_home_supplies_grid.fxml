@@ -122,6 +122,6 @@
    </children>
    <stylesheets>
       <URL value="@../styles/root.css" />
-      <URL value="@../styles/supply_home.css" />
+      <URL value="@../styles/grid_home.css" />
    </stylesheets>
 </AnchorPane>

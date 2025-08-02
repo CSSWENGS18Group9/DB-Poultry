@@ -18,7 +18,6 @@ import javafx.scene.layout.GridPane
 import javafx.scene.layout.StackPane
 import org.db_poultry.util.SceneSwitcher
 import org.kordamp.ikonli.javafx.FontIcon
-import kotlin.collections.remove
 
 class MainLayoutController : Initializable {
 
@@ -84,13 +83,9 @@ class MainLayoutController : Initializable {
     @FXML
     private lateinit var flockSelectionFlowPane: FlowPane
 
-    @FXML
-    private lateinit var flockGenerateReportFlowPane: FlowPane
-
-
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
 
-        GeneralUtil.setMainContentPane(mainAnchorPane)
+        GeneralUtil.setMainContentPane(contentAnchorPane)
 
         val today = LocalDate.now()
         sideBarDateLabel.text = GeneralUtil.formatDatePretty(today)
@@ -148,7 +143,6 @@ class MainLayoutController : Initializable {
             "SUPPLIES_UPDATE" -> updateSuppliesFlowPane.styleClass.add("sidebar-pane-active")
             "SUPPLIES_RETRIEVE" -> retrieveChickenFeedPane.styleClass.add("sidebar-pane-active")
             "FLOCK_SELECT" -> flockSelectionFlowPane.styleClass.add("sidebar-pane-active")
-            "FLOCK_GENERATE_REPORT" -> flockGenerateReportFlowPane.styleClass.add("sidebar-pane-active")
         }
     }
 
@@ -160,18 +154,12 @@ class MainLayoutController : Initializable {
         updateSuppliesFlowPane.styleClass.remove("sidebar-pane-active")
         retrieveChickenFeedPane.styleClass.remove("sidebar-pane-active")
         flockSelectionFlowPane.styleClass.remove("sidebar-pane-active")
-        flockGenerateReportFlowPane.styleClass.remove("sidebar-pane-active")
     }
 
     @FXML
     fun switchToLogin() {
         println("Switching to login")
         SceneSwitcher.switchTo("/fxml/login.fxml")
-    }
-
-    @FXML
-    fun navigateToHome() {
-        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home.fxml")
     }
 
     @FXML
@@ -186,11 +174,6 @@ class MainLayoutController : Initializable {
 
     @FXML
     fun navigateToFlockSelection() {
-        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_flock.fxml")
-    }
-
-    @FXML
-    fun navigateToFlockGenerateReport() {
-        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_generate_report.fxml")
+        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_flock_grid.fxml")
     }
 }

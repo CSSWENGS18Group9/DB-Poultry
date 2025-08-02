@@ -1,12 +1,3 @@
-.grid {
-    -fx-background-color: white;
-    -fx-background-radius: 20;
-}
-
-.grid:hover {
-    -fx-background-color: Gainsboro;
-}
-
 .supply-label {
     -fx-font-size: 1.5em;
     -fx-font-family: "HelveticaNowDisplay-Bold";

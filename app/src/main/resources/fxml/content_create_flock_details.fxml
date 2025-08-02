@@ -17,20 +17,20 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane fx:id="updateFlockAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="307.0" prefWidth="548.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.flock.popup.FlockCreateDetailsController">
+<AnchorPane fx:id="updateFlockAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.db_poultry.controller.flock.popup.FlockCreateDetailsController">
    <children>
-      <GridPane prefHeight="307.0" prefWidth="548.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <GridPane prefHeight="307.0" prefWidth="548.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
-            <Label styleClass="h3-bold" text="Update Records" GridPane.columnSpan="3" GridPane.halignment="CENTER">
+            <Label styleClass="h3-bold" text="Update Flock Record" GridPane.columnSpan="3" GridPane.halignment="CENTER">
                <font>
                   <Font size="10.0" />
                </font>
@@ -39,28 +39,22 @@
                </padding>
             </Label>
             <GridPane prefHeight="276.0" prefWidth="579.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" percentHeight="15.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="15.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
-                  <Label fx:id="flockNameLabel" styleClass="h5" text="Flock Start: &lt;Placeholder Date&gt;" textFill="#8f250c" GridPane.columnSpan="2" GridPane.halignment="CENTER">
-                     <padding>
-                        <Insets right="50.0" />
-                     </padding>
-                  </Label>
-                  <Button fx:id="confirmBtn" mnemonicParsing="false" onAction="#confirm" prefHeight="25.0" prefWidth="82.0" styleClass="confirm-button" stylesheets="@../styles/root.css" text="Confirm" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                  <Label fx:id="flockNameLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="21.0" prefWidth="241.0" styleClass="h3-bold" text="Flock Start: &lt;Placeholder Date&gt;" textFill="#8f250c" GridPane.columnSpan="3" GridPane.halignment="CENTER" />
+                  <Button fx:id="confirmBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#confirm" stylesheets="@../../../../build/resources/main/styles/root.css" text="Confirm" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                      <font>
                         <Font name="HelveticaNowDisplay-Bold" size="13.0" />
                      </font>
@@ -74,33 +68,75 @@
                      <GridPane.margin>
                         <Insets bottom="20.0" />
                      </GridPane.margin>
+                     <styleClass>
+                        <String fx:value="confirm-button" />
+                        <String fx:value="h3-bold" />
+                     </styleClass>
                   </Button>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Label styleClass="h3" text="Date">
-                           <padding>
-                              <Insets right="50.0" />
-                           </padding>
+                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h4-bold" text="Chicken Quantity" textFill="#8f250c">
+                           <font>
+                              <Font name="HelveticaNowDisplay-Bold" size="64.0" />
+                           </font>
                         </Label>
-                        <DatePicker fx:id="cFDDatePicker" prefHeight="26.0" prefWidth="339.0" />
+                        <GridPane>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <FontIcon fx:id="homeFontIcon1" iconLiteral="fas-arrow-right" iconSize="30" onMouseClicked="#closePopup" styleClass="back-icon" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                              <Label fx:id="currentChickenLabel" styleClass="h4-bold" text="XXXX" GridPane.halignment="RIGHT" />
+                              <Label fx:id="updatedChickenLabel" styleClass="h4-bold" text="XXXX" GridPane.columnIndex="2" GridPane.halignment="LEFT" />
+                           </children>
+                        </GridPane>
                      </children>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <Label styleClass="h3" text="Depleted Count">
-                           <padding>
-                              <Insets right="50.0" />
-                           </padding>
+                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="h4-bold" text="Depleted Count">
                            <font>
                               <Font size="4.0" />
                            </font>
                         </Label>
                         <TextField fx:id="depleteCountCFDTextField" prefHeight="30.0" prefWidth="250.0" />
                      </children>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </VBox>
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" percentHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="40.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <DatePicker fx:id="dateDatePicker" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                        <Button fx:id="setTodayButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#setDateToToday" text="Set Today" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                           <styleClass>
+                              <String fx:value="sub-button" />
+                              <String fx:value="h5-bold" />
+                           </styleClass>
+                           <GridPane.margin>
+                              <Insets left="15.0" right="15.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Label fx:id="dateTodayLabel" styleClass="h5-bold" text="Flock record created at: " GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
                </children>
             </GridPane>
-            <FontIcon fx:id="homeFontIcon" iconLiteral="fas-times-circle" iconSize="30" onMouseClicked="#closePopup" styleClass="back-icon" text="" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+            <FontIcon fx:id="homeFontIcon" iconLiteral="fas-times-circle" iconSize="30" onMouseClicked="#closePopup" styleClass="back-icon" text="" textAlignment="CENTER" wrappingWidth="30.0" GridPane.halignment="RIGHT">
                <GridPane.margin>
                   <Insets right="20.0" />
                </GridPane.margin>
@@ -112,11 +148,11 @@
          </styleClass>
       </GridPane>
    </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
    <stylesheets>
       <URL value="@../styles/root.css" />
       <URL value="@../styles/create_supplies.css" />
    </stylesheets>
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-   </padding>
 </AnchorPane>
