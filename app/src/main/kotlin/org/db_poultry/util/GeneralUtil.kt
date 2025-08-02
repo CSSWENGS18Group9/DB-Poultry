@@ -14,6 +14,11 @@ import javafx.beans.property.SimpleDoubleProperty
 import java.time.format.DateTimeFormatter
 import java.time.LocalDate
 import java.util.Locale
+import kotlin.collections.containsKey
+import kotlin.collections.get
+import kotlin.invoke
+import kotlin.text.clear
+import kotlin.text.get
 
 class GeneralUtil {
     companion object {
@@ -71,7 +76,7 @@ class GeneralUtil {
                     return
                 }
 
-                if (contentAnchorPane.children.isNotEmpty()) {
+                if (contentAnchorPane.children.isNotEmpty() && fxmlPath != "/fxml/content_view_flock.fxml") {
                     val currentRoot = contentAnchorPane.children[0]
                     val currentFXML = currentRoot.properties["fxmlPath"]
                     if (currentFXML != null && currentFXML == fxmlPath) {

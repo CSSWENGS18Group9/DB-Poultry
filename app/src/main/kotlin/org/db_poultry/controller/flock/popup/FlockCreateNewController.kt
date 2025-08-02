@@ -10,6 +10,7 @@ import javafx.scene.text.Text
 import javafx.stage.Stage
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDAO.CreateFlock
+import org.db_poultry.util.GeneralUtil
 import org.db_poultry.util.PopupUtil
 import org.db_poultry.util.undoSingleton
 import org.db_poultry.util.undoTypes
@@ -60,12 +61,23 @@ class FlockCreateNewController {
             PopupUtil.showPopup("error", "Flock creation error, retry again.")
             println("Failed to create Flock.")
         }
+
+        closePopup()
+        refreshFlockGrid()
     }
 
     @FXML
     fun closePopup() {
         val stage = createNewFlockDatePicker.scene.window as Stage
         stage.close()
+    }
+
+    private fun refreshFlockGrid() {
+        // Get the main stage and find the FlockGridHomeController
+        val mainStage = javafx.application.Platform.runLater {
+            // Navigate back to refresh the grid
+            GeneralUtil.navigateToMainContent(null, "/fxml/content_view_flock.fxml")
+        }
     }
 
 

@@ -90,7 +90,7 @@ class MainLayoutController : Initializable {
 
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
 
-        GeneralUtil.setMainContentPane(mainAnchorPane)
+        GeneralUtil.setMainContentPane(contentAnchorPane)
 
         val today = LocalDate.now()
         sideBarDateLabel.text = GeneralUtil.formatDatePretty(today)
