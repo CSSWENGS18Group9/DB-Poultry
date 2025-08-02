@@ -206,4 +206,242 @@ class ReadFlockTest {
 
         assertNull(flockList)
     }
+
+    @Test
+    fun testSearchFlocksWithValidInputForFetchByYear() {
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateOne)
+        CreateFlock.createFlock(conn, 200, dateTwo)
+        CreateFlock.createFlock(conn, 300, dateThree)
+
+        val result = ReadFlock.searchFlocks(conn, "1000")
+
+        assertEquals(3, result.size)
+        assertEquals(dateOne, result[0].startingDate)
+        assertEquals(100, result[0].startingCount)
+    }
+
+    @Test
+    fun testSearchFlocksWithValidInputForFetchByFullDateFirstVariation() {
+        val date = Date.valueOf("1000-02-01")
+        CreateFlock.createFlock(conn, 100, date)
+
+        val result = ReadFlock.searchFlocks(conn, "February 1, 1000")
+
+        assertEquals(1, result.size)
+        assertEquals(date, result[0].startingDate)
+        assertEquals(100, result[0].startingCount)
+    }
+
+    @Test
+    fun testSearchFlocksWithValidInputForFetchByFullDateSecondVariation() {
+        val date = Date.valueOf("1000-02-01")
+        CreateFlock.createFlock(conn, 100, date)
+
+        val result = ReadFlock.searchFlocks(conn, "Feb 1, 1000")
+
+        assertEquals(1, result.size)
+        assertEquals(date, result[0].startingDate)
+        assertEquals(100, result[0].startingCount)
+    }
+
+    @Test
+    fun testSearchFlocksWithValidInputForFetchByFullDateThirdVariation() {
+        val date = Date.valueOf("1000-02-01")
+        CreateFlock.createFlock(conn, 100, date)
+
+        val result = ReadFlock.searchFlocks(conn, "02-01-1000")
+
+        assertEquals(1, result.size)
+        assertEquals(date, result[0].startingDate)
+        assertEquals(100, result[0].startingCount)
+    }
+
+    @Test
+    fun testSearchFlocksWithValidInputForMonthOnly() {
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-02-02")
+        val dateThree = Date.valueOf("1000-02-03")
+        val dateOther = Date.valueOf("1000-03-01")
+
+        CreateFlock.createFlock(conn, 100, dateOne)
+        CreateFlock.createFlock(conn, 200, dateTwo)
+        CreateFlock.createFlock(conn, 300, dateThree)
+        CreateFlock.createFlock(conn, 400, dateOther)
+
+        val result = ReadFlock.searchFlocks(conn, "February")
+
+        assertEquals(3, result.size)
+        assertEquals(dateOne, result[0].startingDate)
+        assertEquals(100, result[0].startingCount)
+        assertEquals(dateTwo, result[1].startingDate)
+        assertEquals(200, result[1].startingCount)
+        assertEquals(dateThree, result[2].startingDate)
+        assertEquals(300, result[2].startingCount)
+    }
+
+    @Test
+    fun testSearchFlocksWithValidInputForMonthAndYearText() {
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateOne)
+        CreateFlock.createFlock(conn, 200, dateTwo)
+        CreateFlock.createFlock(conn, 300, dateThree)
+
+        val result = ReadFlock.searchFlocks(conn, "February 1000")
+        assertEquals(1, result.size)
+        assertEquals(dateOne, result[0].startingDate)
+        assertEquals(100, result[0].startingCount)
+    }
+
+    @Test
+    fun testSearchFlocksWithValidInputForMonthAndYearNumeric() {
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateOne)
+        CreateFlock.createFlock(conn, 200, dateTwo)
+        CreateFlock.createFlock(conn, 300, dateThree)
+
+        val result = ReadFlock.searchFlocks(conn, "2 1000")
+        assertEquals(1, result.size)
+        assertEquals(dateOne, result[0].startingDate)
+        assertEquals(100, result[0].startingCount)
+    }
+
+    @Test
+    fun testSearchFlocksWithValidInputForMonthAndYearDash() {
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateOne)
+        CreateFlock.createFlock(conn, 200, dateTwo)
+        CreateFlock.createFlock(conn, 300, dateThree)
+
+        val result = ReadFlock.searchFlocks(conn, "02-1000")
+        assertEquals(1, result.size)
+        assertEquals(dateOne, result[0].startingDate)
+        assertEquals(100, result[0].startingCount)
+    }
+
+    @Test
+    fun testSearchFlocksWithInvalidInputForYear() {
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateOne)
+        CreateFlock.createFlock(conn, 200, dateTwo)
+        CreateFlock.createFlock(conn, 300, dateThree)
+
+        val result = ReadFlock.searchFlocks(conn, "1001")
+        assertEquals(0, result.size)
+    }
+
+    @Test
+    fun testSearchFlocksWithInvalidInputForMonth() {
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateOne)
+        CreateFlock.createFlock(conn, 200, dateTwo)
+        CreateFlock.createFlock(conn, 300, dateThree)
+
+        val result = ReadFlock.searchFlocks(conn, "December")
+        assertEquals(0, result.size)
+    }
+
+    @Test
+    fun testSearchFlocksWithValidInputForMonthNumericBuffer() {
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateOne)
+        CreateFlock.createFlock(conn, 200, dateTwo)
+        CreateFlock.createFlock(conn, 300, dateThree)
+
+        val result = ReadFlock.searchFlocks(conn, "5") // May doesn't exist, fallback to April
+        assertEquals(1, result.size)
+        assertEquals(dateThree, result[0].startingDate)
+        assertEquals(300, result[0].startingCount)
+    }
+
+    @Test
+    fun testSearchFlocksWithInvalidInputForMonthAndYearText() {
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateOne)
+        CreateFlock.createFlock(conn, 200, dateTwo)
+        CreateFlock.createFlock(conn, 300, dateThree)
+
+        val result = ReadFlock.searchFlocks(conn, "March 2000")
+        assertEquals(0, result.size)
+    }
+
+    @Test
+    fun testSearchFlocksInputForMonthAndYearNumericDNE() {
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateOne)
+        CreateFlock.createFlock(conn, 200, dateTwo)
+        CreateFlock.createFlock(conn, 300, dateThree)
+
+        val result = ReadFlock.searchFlocks(conn, "3 2000")
+        assertEquals(0, result.size)
+    }
+
+    @Test
+    fun testSearchFlocksWithInvalidInputForFullDateFirstVariation() {
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateOne)
+        CreateFlock.createFlock(conn, 200, dateTwo)
+        CreateFlock.createFlock(conn, 300, dateThree)
+
+        val result = ReadFlock.searchFlocks(conn, "December 1, 1000")
+        assertEquals(0, result.size)
+    }
+
+    @Test
+    fun testSearchFlocksWithInvalidInputForFullDateSecondVariation() {
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateOne)
+        CreateFlock.createFlock(conn, 200, dateTwo)
+        CreateFlock.createFlock(conn, 300, dateThree)
+
+        val result = ReadFlock.searchFlocks(conn, "Dec 1, 1000")
+        assertEquals(0, result.size)
+    }
+
+    @Test
+    fun testSearchFlocksWithInvalidInputForFullDateThirdVariation() {
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateOne)
+        CreateFlock.createFlock(conn, 200, dateTwo)
+        CreateFlock.createFlock(conn, 300, dateThree)
+
+        val result = ReadFlock.searchFlocks(conn, "12-01-1000")
+        assertEquals(0, result.size)
+    }
 }
