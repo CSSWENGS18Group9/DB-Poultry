@@ -2,7 +2,7 @@ package org.db_poultry.controller.flock
 
 import javafx.beans.property.SimpleIntegerProperty
 import org.db_poultry.util.GeneralUtil
-import org.db_poultry.controller.backend.CurrentFlockInUse
+import org.db_poultry.controller.backend.FlockSingleton
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
 import org.db_poultry.pojo.FlockPOJO.FlockDetails
@@ -57,7 +57,7 @@ class FlockViewDetailsController : Initializable {
     }
 
     private fun initializeFlockData() {
-        val currentFlockComplete = CurrentFlockInUse.getCurrentFlockComplete()
+        val currentFlockComplete = FlockSingleton.getCurrentFlockComplete()
         currentFlockData = Triple(
             currentFlockComplete?.flock?.flockId,
             currentFlockComplete?.flock?.startingDate,

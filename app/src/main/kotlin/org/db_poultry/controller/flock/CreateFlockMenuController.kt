@@ -1,11 +1,9 @@
 package org.db_poultry.controller.flock
 
-import org.db_poultry.util.GeneralUtil
-
 import javafx.fxml.FXML
 import javafx.scene.layout.AnchorPane
 import org.db_poultry.util.PopupUtil
-import org.db_poultry.controller.backend.CurrentFlockInUse
+import org.db_poultry.controller.backend.FlockSingleton
 
 // TODO: Remove this class and merge with FlockHomeController @Dattebayo2505
 class CreateFlockMenuController {
@@ -18,7 +16,7 @@ class CreateFlockMenuController {
         // GeneralUtil.navigateToMainContent(anchorPaneCreate, "/fxml/content_view_flock.fxml")
         println("debugging")
         PopupUtil.showContentPopup("/fxml/content_create_new_flock.fxml")
-        CurrentFlockInUse.setCurrentFlockFXML("create_flock_details")
+        FlockSingleton.setCurrentFlockFXML("create_flock_details")
     }
 
     @FXML

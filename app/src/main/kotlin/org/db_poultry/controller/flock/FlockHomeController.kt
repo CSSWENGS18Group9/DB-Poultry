@@ -8,7 +8,7 @@ import java.net.URL
 
 import javafx.fxml.FXML
 import javafx.scene.layout.AnchorPane
-import org.db_poultry.controller.backend.CurrentFlockInUse
+import org.db_poultry.controller.backend.FlockSingleton
 
 // TODO: Remove this and transfer to FlockGridHomeController @Dattebayo2505
 class FlockHomeController: Initializable {
@@ -33,13 +33,13 @@ class FlockHomeController: Initializable {
     @FXML
     fun navigateToView() {
         GeneralUtil.navigateToMainContent(flockHomeAnchorPane, "/fxml/content_view_flock.fxml")
-        CurrentFlockInUse.setCurrentFlockFXML("view_flock_details")
+        FlockSingleton.setCurrentFlockFXML("view_flock_details")
     }
 
     @FXML 
     fun navigateToGenerate() {
         GeneralUtil.navigateToMainContent(flockHomeAnchorPane, "/fxml/content_view_flock.fxml")
-        CurrentFlockInUse.setCurrentFlockFXML("flock_generate_reports")
+        FlockSingleton.setCurrentFlockFXML("flock_generate_reports")
     }
 
 }
