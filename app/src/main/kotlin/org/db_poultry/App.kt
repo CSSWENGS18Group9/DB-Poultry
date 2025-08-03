@@ -105,7 +105,6 @@ fun main() {
 
     if (config == null) {
         cleanTables(App.getConnection());
-        App.connect()
     }
 
     // Open MainFrame (index GUI)
