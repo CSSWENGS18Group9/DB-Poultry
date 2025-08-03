@@ -2,19 +2,17 @@ package org.db_poultry.controller
 
 import org.db_poultry.theLifesaver.Variables
 import org.db_poultry.App
+import org.db_poultry.theLifesaver.Backup
+import org.db_poultry.util.GeneralUtil
 
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
-import javafx.scene.control.Label
 import javafx.scene.control.PasswordField
 import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
-import javafx.scene.layout.GridPane
 import javafx.stage.Stage
-import org.db_poultry.theLifesaver.Backup
-import org.db_poultry.util.GeneralUtil
 import org.kordamp.ikonli.javafx.FontIcon
 import java.io.File
 import java.net.URL
@@ -112,6 +110,13 @@ class BackupController : Initializable {
         )
 
         println("Restoring database from backup: $backupDate")
+
+        NotificationController.setNotification(
+            "success",
+            "Database Restore",
+            "Database backup from $backupDate has been successfully restored."
+        )
+        NotificationController.showNotification()
 
         closePopup()
         GeneralUtil.loadContentView(GeneralUtil.getMainContentPane()!!, "/fxml/content_home.fxml")
