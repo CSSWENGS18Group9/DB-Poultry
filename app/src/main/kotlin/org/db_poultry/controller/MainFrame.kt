@@ -20,7 +20,7 @@ class MainFrame : Application() {
         SceneSwitcher.setPrimaryStage(primaryStage)
 
         try {
-            val loader = FXMLLoader(javaClass.getResource("fxml/login.fxml"))
+            val loader = FXMLLoader(javaClass.getResource("/fxml/login.fxml"))
             loader.controllerFactory = ControllerManager.controllerFactory
             val root = loader.load<Parent>()
             val mainScene = Scene(root)

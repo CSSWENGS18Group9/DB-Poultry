@@ -104,7 +104,7 @@ class MainLayoutController : Initializable {
             updateSidebarHighlight(section)
         }
 
-        GeneralUtil.loadContentView(contentAnchorPane, "fxml/content_home.fxml")
+        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home.fxml")
     }
 
     private fun updateSidebarHighlight(section: String) {
@@ -163,31 +163,31 @@ class MainLayoutController : Initializable {
     @FXML
     fun switchToLogin() {
         println("Switching to login")
-        SceneSwitcher.switchTo("fxml/login.fxml")
+        SceneSwitcher.switchTo("/fxml/login.fxml")
     }
 
     @FXML
     fun navigateToHome() {
-        GeneralUtil.loadContentView(contentAnchorPane, "fxml/content_home.fxml")
+        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home.fxml")
     }
 
     @FXML
     fun navigateToUpdateSupplies() {
-        GeneralUtil.loadContentView(contentAnchorPane, "fxml/content_home_supplies_grid.fxml")
+        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_supplies_grid.fxml")
     }
 
     @FXML
     fun navigateToRetrieveChickenFeed() {
-        GeneralUtil.loadContentView(contentAnchorPane, "fxml/content_update_supplies_retrieve.fxml")
+        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_update_supplies_retrieve.fxml")
     }
 
     @FXML
     fun navigateToFlockSelection() {
-        GeneralUtil.loadContentView(contentAnchorPane, "fxml/content_home_flock_grid.fxml")
+        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_flock_grid.fxml")
     }
 
     @FXML
     fun navigateToBackup() {
-        PopupUtil.showContentPopup("fxml/popup/backup/popup_backup_restore.fxml")
+        PopupUtil.showContentPopup("/fxml/popup/backup/popup_backup_restore.fxml")
     }
 }

@@ -21,20 +21,20 @@ class GeneralUtil {
 
         // Mapping of FXML paths to sections
         private val fxmlSectionMapping = mapOf(
-            "fxml/main_layout.fxml" to "HOME",
-            "fxml/content_home.fxml" to "HOME",
-            "fxml/login.fxml" to "HOME",
+            "/fxml/main_layout.fxml" to "HOME",
+            "/fxml/content_home.fxml" to "HOME",
+            "/fxml/login.fxml" to "HOME",
 
-            "fxml/content_create_flock_details.fxml" to "FLOCK_SELECT",
-            "fxml/content_create_new_flock.fxml" to "FLOCK_SELECT",
-            "fxml/content_view_flock_details.fxml" to "FLOCK_SELECT",
-            "fxml/content_home_flock_grid.fxml" to "FLOCK_SELECT",
+            "/fxml/content_create_flock_details.fxml" to "FLOCK_SELECT",
+            "/fxml/content_create_new_flock.fxml" to "FLOCK_SELECT",
+            "/fxml/content_view_flock_details.fxml" to "FLOCK_SELECT",
+            "/fxml/content_home_flock_grid.fxml" to "FLOCK_SELECT",
 
-            "fxml/content_create_supplies.fxml" to "SUPPLIES_UPDATE",
-            "fxml/content_home_supplies_grid.fxml" to "SUPPLIES_UPDATE",
-            "fxml/content_update_supplies_add_delete.fxml" to "SUPPLIES_UPDATE",
-            "fxml/content_update_supplies_retrieve.fxml" to "SUPPLIES_RETRIEVE",
-            "fxml/content_view_supplies.fxml" to "SUPPLIES_UPDATE",
+            "/fxml/content_create_supplies.fxml" to "SUPPLIES_UPDATE",
+            "/fxml/content_home_supplies_grid.fxml" to "SUPPLIES_UPDATE",
+            "/fxml/content_update_supplies_add_delete.fxml" to "SUPPLIES_UPDATE",
+            "/fxml/content_update_supplies_retrieve.fxml" to "SUPPLIES_RETRIEVE",
+            "/fxml/content_view_supplies.fxml" to "SUPPLIES_UPDATE",
         )
 
         private var currentSection: String? = null
@@ -70,7 +70,7 @@ class GeneralUtil {
                 }
 
                 // TODO: Add for supplies section too @Dattebayo25
-                if (contentAnchorPane.children.isNotEmpty() && fxmlPath != "fxml/content_home_flock_grid.fxml") {
+                if (contentAnchorPane.children.isNotEmpty() && fxmlPath != "/fxml/content_home_flock_grid.fxml") {
                     val currentRoot = contentAnchorPane.children[0]
                     val currentFXML = currentRoot.properties["fxmlPath"]
                     if (currentFXML != null && currentFXML == fxmlPath) {

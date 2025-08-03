@@ -15,8 +15,8 @@ object PopupUtil {
 
     fun showPopup(status: String, text: String) {
         val fxmlPath = when (status.lowercase()) {
-            "success" -> "fxml/popup/popup_success.fxml"
-            "error" -> "fxml/popup/popup_error.fxml"
+            "success" -> "/fxml/popup/popup_success.fxml"
+            "error" -> "/fxml/popup/popup_error.fxml"
             else -> throw IllegalArgumentException("Invalid status: $status")
         }
 

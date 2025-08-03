@@ -126,6 +126,6 @@ class FlockViewDetailsController : Initializable {
 
     @FXML
     fun backToViewFlocks() {
-        GeneralUtil.navigateToMainContent(mainAnchorPane, "fxml/content_home_flock_grid.fxml")
+        GeneralUtil.navigateToMainContent(mainAnchorPane, "/fxml/content_home_flock_grid.fxml")
     }
 }
