@@ -43,6 +43,8 @@ class BackupController : Initializable {
     @FXML
     private lateinit var showPassButton: Button
 
+    private val fileToDateMap = mutableMapOf<String, String>()
+
     private val backupDirectory: String
         get() = Variables.getBackupFolderPath()
 
@@ -55,8 +57,21 @@ class BackupController : Initializable {
 
     private fun setupComboBox() {
         val dir = File(backupDirectory)
-        val files = dir.listFiles()?.filter { it.isFile }?.map { it.name }?.sortedDescending() ?: emptyList()
-        backupDatesComboBox.items.setAll(files)
+        val files = dir.listFiles()?.filter { it.isFile }?.map { it.name } ?: emptyList()
+
+        fileToDateMap.clear()
+        val formattedDates = files.mapNotNull { filename ->
+            val date = extractFormattedDate(filename)
+            if (date != null) {
+                fileToDateMap[date] = filename
+                date
+            } else null
+
+        }
+
+        formattedDates.sortedByDescending { LocalDate.parse(it, DateTimeFormatter.ofPattern("MMMM-dd-yyyy", Locale.ENGLISH)) }
+
+        backupDatesComboBox.items.setAll(formattedDates)
     }
 
     // TODO: Add to main login @Dattebayo25
@@ -89,16 +104,15 @@ class BackupController : Initializable {
     @FXML
     fun confirm() {
         val app = App()
-        val filename = backupDatesComboBox.value
-        val stringDate = extractFormattedDate(filename)
+        val backupDate = backupDatesComboBox.value
 
-//        Backup.TL_restoreDatabase(
-//            stringDate,
-//            app.databaseName,
-//            app.databasePass
-//        )
+        Backup.TL_restoreDatabase(
+            backupDate,
+            app.databaseName,
+            app.databasePass
+        )
 
-        println("Restoring database from backup: $filename")
+        println("Restoring database from backup: $backupDate")
         closePopup()
 
         GeneralUtil.loadContentView(GeneralUtil.getMainContentPane()!!, "/fxml/content_home.fxml")
