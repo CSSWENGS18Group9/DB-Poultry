@@ -59,7 +59,7 @@ class FlockCreateDetailsController : Initializable {
     private fun setFlock() {
         val currentFlock = FlockSingleton.getCurrentFlockComplete()
         flockDate = currentFlock?.flock?.startingDate
-        currentChickenCount = currentFlock?.flock?.startingCount ?: 0
+        currentChickenCount = FlockSingleton.getCurrentCount()
 
         val dateToDisplay = GeneralUtil.formatDatePretty(flockDate?.toLocalDate())
         flockNameLabel.text = "Flock Start: $dateToDisplay"

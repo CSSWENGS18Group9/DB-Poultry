@@ -59,8 +59,8 @@ class FlockViewDetailsController : Initializable {
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         setupLabels()
-        setupTableColumns()
         loadFlockDetails()
+        setupTableColumns()
         clearTableSelection()
     }
 
