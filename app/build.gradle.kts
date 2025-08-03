@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "org.db_poultry"
-version = "2.0"
+version = "4.0"
 
 repositories {
     mavenCentral()
