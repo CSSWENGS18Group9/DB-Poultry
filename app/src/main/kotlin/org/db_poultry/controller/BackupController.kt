@@ -103,18 +103,17 @@ class BackupController : Initializable {
 
     @FXML
     fun confirm() {
-        val app = App()
         val backupDate = backupDatesComboBox.value
 
         Backup.TL_restoreDatabase(
             backupDate,
-            app.databaseName,
-            app.databasePass
+            App.databaseName,
+            App.databasePass
         )
 
         println("Restoring database from backup: $backupDate")
-        closePopup()
 
+        closePopup()
         GeneralUtil.loadContentView(GeneralUtil.getMainContentPane()!!, "/fxml/content_home.fxml")
     }
 
