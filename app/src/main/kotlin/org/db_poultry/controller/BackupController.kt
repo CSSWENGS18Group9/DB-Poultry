@@ -13,6 +13,7 @@ import javafx.scene.control.PasswordField
 import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
 import javafx.stage.Stage
+import org.db_poultry.util.GUIUtil
 import org.kordamp.ikonli.javafx.FontIcon
 import java.io.File
 import java.net.URL
@@ -53,7 +54,7 @@ class BackupController : Initializable {
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         setupComboBox()
-        setupPassword()
+        setupBackupPassword()
         setupConfirmButtonState()
     }
 
@@ -77,21 +78,8 @@ class BackupController : Initializable {
     }
 
     // TODO: Add to main login @Dattebayo25
-    private fun setupPassword() {
-        passTextField.isVisible = false
-
-        showPassButton.setOnAction {
-            if (!isPasswordShown) {
-                passTextField.text = passPasswordField.text
-                passPasswordField.isVisible = false
-                passTextField.isVisible = true
-            } else {
-                passPasswordField.text = passTextField.text
-                passTextField.isVisible = false
-                passPasswordField.isVisible = true
-            }
-            isPasswordShown = !isPasswordShown
-        }
+    private fun setupBackupPassword() {
+        GUIUtil.setupPassword(passTextField, passPasswordField, showPassButton)
     }
 
     private fun setupConfirmButtonState() {
@@ -118,6 +106,18 @@ class BackupController : Initializable {
 
     @FXML
     fun confirm() {
+
+        if (passPasswordField.text != App.databasePass
+            || passTextField.text != App.databasePass) {
+            NotificationController.setNotification(
+                "error",
+                "Invalid Password",
+                "The provided password does not match the database password."
+            )
+            NotificationController.showNotification()
+            return
+        }
+
         val backupDate = backupDatesComboBox.value
 
         Backup.TL_restoreDatabase(
