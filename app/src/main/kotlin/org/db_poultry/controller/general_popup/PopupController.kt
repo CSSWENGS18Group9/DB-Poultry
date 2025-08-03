@@ -53,8 +53,8 @@ class PopupController {
                     undoSingleton.setUndoMode(undoTypes.doUndoSupplyRecord) // Set mode before each call
                     undoSingleton.undo(connection)
                 }
-                undoSingleton.setIsFeedRetrieval(false)
             }
+            undoSingleton.setIsFeedRetrieval(false)
             undoSingleton.undo(connection)
 
 
