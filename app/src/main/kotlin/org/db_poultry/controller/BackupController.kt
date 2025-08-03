@@ -33,6 +33,9 @@ class BackupController : Initializable {
     private lateinit var closeButton: FontIcon
 
     @FXML
+    private lateinit var confirmButton: Button
+
+    @FXML
     private lateinit var passPasswordField: PasswordField
 
     @FXML
@@ -51,6 +54,7 @@ class BackupController : Initializable {
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         setupComboBox()
         setupPassword()
+        setupConfirmButtonState()
     }
 
     private fun setupComboBox() {
@@ -88,6 +92,19 @@ class BackupController : Initializable {
             }
             isPasswordShown = !isPasswordShown
         }
+    }
+
+    private fun setupConfirmButtonState() {
+        val updateButtonState = {
+            val hasDate = !backupDatesComboBox.value.isNullOrEmpty()
+            val hasPassword = !passPasswordField.text.isNullOrEmpty() || !passTextField.text.isNullOrEmpty()
+            confirmButton.isDisable = !(hasDate && hasPassword)
+        }
+
+        backupDatesComboBox.valueProperty().addListener { _, _, _ -> updateButtonState() }
+        passPasswordField.textProperty().addListener { _, _, _ -> updateButtonState() }
+        passTextField.textProperty().addListener { _, _, _ -> updateButtonState() }
+        updateButtonState()
     }
 
     fun extractFormattedDate(filename: String): String? {
