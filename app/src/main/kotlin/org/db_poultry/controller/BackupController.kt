@@ -1,6 +1,7 @@
 package org.db_poultry.controller
 
 import org.db_poultry.theLifesaver.Variables
+import org.db_poultry.App
 
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
@@ -12,9 +13,14 @@ import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.GridPane
 import javafx.stage.Stage
+import org.db_poultry.theLifesaver.Backup
+import org.db_poultry.util.GeneralUtil
 import org.kordamp.ikonli.javafx.FontIcon
 import java.io.File
 import java.net.URL
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import java.util.ResourceBundle
 
 class BackupController : Initializable {
@@ -71,11 +77,31 @@ class BackupController : Initializable {
         }
     }
 
+    fun extractFormattedDate(filename: String): String? {
+        val regex = Regex("""dbp_backup_([A-Za-z]+-\d{2}-\d{4})\.sql""")
+        val match = regex.find(filename) ?: return null
+        val datePart = match.groupValues[1]
+        val inputFormatter = DateTimeFormatter.ofPattern("MMMM-dd-yyyy", Locale.ENGLISH)
+        val date = LocalDate.parse(datePart, inputFormatter)
+        return date.format(inputFormatter)
+    }
+
     @FXML
     fun confirm() {
+        val app = App()
+        val filename = backupDatesComboBox.value
+        val stringDate = extractFormattedDate(filename)
 
+//        Backup.TL_restoreDatabase(
+//            stringDate,
+//            app.databaseName,
+//            app.databasePass
+//        )
 
+        println("Restoring database from backup: $filename")
         closePopup()
+
+        GeneralUtil.loadContentView(GeneralUtil.getMainContentPane()!!, "/fxml/content_home.fxml")
     }
 
     @FXML
