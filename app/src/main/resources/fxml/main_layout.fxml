@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -119,21 +120,12 @@
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="15.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
-                           <children>
-                              <Label fx:id="backupBtn" alignment="CENTER" styleClass="h4" text="Restore from Backup">
-                                 <padding>
-                                    <Insets left="60.0" top="50.0" />
-                                 </padding>
-                              </Label>
-                           </children>
-                        </FlowPane>
                         <StackPane fx:id="mainStackPane" prefHeight="150.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowSpan="2">
                            <children>
                               <GridPane fx:id="supplyGridPane">
@@ -198,6 +190,16 @@
                            <GridPane.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </GridPane.margin>
+                        </FlowPane>
+                        <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
+                           <children>
+                              <Label fx:id="backupLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToBackup" text="Restore from Backup">
+                                 <styleClass>
+                                    <String fx:value="h4" />
+                                    <String fx:value="highlight-brown" />
+                                 </styleClass>
+                              </Label>
+                           </children>
                         </FlowPane>
                      </children>
                      <padding>

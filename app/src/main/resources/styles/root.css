@@ -277,6 +277,10 @@ HelveticaNowDisplay HairlineIta
     -fx-opacity: 0.5;
 }
 
+.highlight-brown:hover {
+    -fx-text-fill: #8F250C;
+}
+
 .spinner {
     -fx-background-radius: 5px;
     -fx-background-color: transparent;
