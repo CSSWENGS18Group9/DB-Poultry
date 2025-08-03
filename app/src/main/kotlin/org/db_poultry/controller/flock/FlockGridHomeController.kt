@@ -187,16 +187,16 @@ class FlockGridHomeController: Initializable {
 
     @FXML
     fun navigateToCreateFlock() {
-        PopupUtil.showContentPopup("/fxml/content_create_new_flock.fxml")
+        PopupUtil.showContentPopup("fxml/content_create_new_flock.fxml")
     }
 
     @FXML
     fun navigateToCreateFlockDetails() {
-        PopupUtil.showContentPopup("/fxml/content_create_flock_details.fxml")
+        PopupUtil.showContentPopup("fxml/content_create_flock_details.fxml")
     }
 
     @FXML
     fun navigateToViewFlockDetails() {
-        GeneralUtil.navigateToMainContent(selectFlockAnchorPane, "/fxml/content_view_flock_details.fxml")
+        GeneralUtil.navigateToMainContent(selectFlockAnchorPane, "fxml/content_view_flock_details.fxml")
     }
 }

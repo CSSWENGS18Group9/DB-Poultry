@@ -95,12 +95,12 @@ class SuppliesViewController: Initializable {
 
     @FXML
     fun navigateToViewSupplies() {
-        GeneralUtil.navigateToMainContent(viewSupplyAnchorPane, "/fxml/content_view_supplies.fxml")
+        GeneralUtil.navigateToMainContent(viewSupplyAnchorPane, "fxml/content_view_supplies.fxml")
     }
 
     @FXML
     fun backToSuppliesGridHome() {
-        GeneralUtil.navigateToMainContent(viewSupplyAnchorPane, "/fxml/content_home_supplies_grid.fxml")
+        GeneralUtil.navigateToMainContent(viewSupplyAnchorPane, "fxml/content_home_supplies_grid.fxml")
     }
 
 }

@@ -136,7 +136,7 @@ class BackupController : Initializable {
         NotificationController.showNotification()
 
         closePopup()
-        GeneralUtil.loadContentView(GeneralUtil.getMainContentPane()!!, "/fxml/content_home.fxml")
+        GeneralUtil.loadContentView(GeneralUtil.getMainContentPane()!!, "fxml/content_home.fxml")
     }
 
     @FXML

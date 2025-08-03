@@ -224,16 +224,16 @@ class SuppliesGridHomeController: Initializable {
 
     @FXML
     private fun navigateToCreateSupplies() {
-        PopupUtil.showContentPopup("/fxml/content_create_supplies.fxml")
+        PopupUtil.showContentPopup("fxml/content_create_supplies.fxml")
     }
 
     @FXML
     private fun navigateToUpdateSupplies() {
-        PopupUtil.showContentPopup("/fxml/content_update_supplies_add_delete.fxml")
+        PopupUtil.showContentPopup("fxml/content_update_supplies_add_delete.fxml")
     }
 
     @FXML
     private fun navigateToViewSupplies() {
-        GeneralUtil.navigateToMainContent(mainAnchorPane, "/fxml/content_view_supplies.fxml")
+        GeneralUtil.navigateToMainContent(mainAnchorPane, "fxml/content_view_supplies.fxml")
     }
 }

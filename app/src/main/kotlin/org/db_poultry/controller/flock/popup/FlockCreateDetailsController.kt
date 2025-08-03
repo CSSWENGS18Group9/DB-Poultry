@@ -157,7 +157,7 @@ class FlockCreateDetailsController : Initializable {
             println("Failed to create Flock details.")
         }
 
-        GeneralUtil.refreshPage(null, "/fxml/content_home_flock_grid.fxml")
+        GeneralUtil.refreshPage(null, "fxml/content_home_flock_grid.fxml")
         closePopup()
     }
 
