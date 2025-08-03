@@ -1,0 +1,10 @@
+.intro-pane {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+}
+
+.img-container {
+    -fx-background-image: url("../img/main_bg.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-opacity: 0.5;
+}
