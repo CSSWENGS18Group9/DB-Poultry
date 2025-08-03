@@ -16,10 +16,9 @@ class CreateSupplyRecordTest {
     private var conn: Connection
 
     init {
-        val app = App()
-        app.getDotEnv()
-        jdbcURL = "jdbc:postgresql://localhost:${app.databasePort}/${app.databaseName}"
-        DBConnect.init(jdbcURL, app.databaseName, app.databasePass)
+        App.getDotEnv()
+        jdbcURL = "jdbc:postgresql://localhost:${App.databasePort}/${App.databaseName}"
+        DBConnect.init(jdbcURL, App.databaseName, App.databasePass)
         conn = DBConnect.getConnection()!!
         cleanTables(conn)
     }

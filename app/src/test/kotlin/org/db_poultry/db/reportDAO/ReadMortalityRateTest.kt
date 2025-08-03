@@ -16,13 +16,11 @@ class ReadMortalityRateTest {
     private var conn: Connection
 
     init {
-        val app = App()
+        App.getDotEnv()
 
-        app.getDotEnv()
+        jdbcURL = "jdbc:postgresql://localhost:${App.databasePort}/${App.databaseName}"
 
-        jdbcURL = "jdbc:postgresql://localhost:${app.databasePort}/${app.databaseName}"
-
-        DBConnect.init(jdbcURL, app.databaseName, app.databasePass)
+        DBConnect.init(jdbcURL, App.databaseName, App.databasePass)
         conn = DBConnect.getConnection()!!
         cleanTables(conn)
     }
@@ -224,7 +222,7 @@ class ReadMortalityRateTest {
     }
 
     @Test
-    fun testReadMortalityRateForFlockDateWithOverlappingDates() {
+    fun testReadMortalityRateForFlockDateWithOverlAppingDates() {
         val flockOneDate = Date.valueOf("1000-01-01")
         val flockTwoDate = Date.valueOf("1000-06-01")
         val fdDateOne = Date.valueOf("1000-02-01")
