@@ -5,15 +5,14 @@ import javafx.application.Application
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
-import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
 import org.db_poultry.errors.generateErrorMessage
-import org.db_poultry.theLifesaver.Backup.TL_checkLastBackupDate
+import org.db_poultry.theLifesaver.Backup
 import org.db_poultry.theLifesaver.Config.TL_loadConfig
 import org.db_poultry.theLifesaver.TL.TL_firstOpen
 import org.db_poultry.theLifesaver.TL.wipe
 import java.sql.Connection
 
-class App {
+object App {
     lateinit var databaseName: String
     lateinit var databasePass: String
     lateinit var databasePort: String
@@ -90,33 +89,32 @@ val __CLIENT_MODE: Boolean = true
 val __DO_WIPE: Boolean = false
 
 fun main() {
-    val app = App()
-    app.start()
+    App.start()
 
     var config: HashMap<String, String>? = null
     if (__CLIENT_MODE) {
         // Check if this is the first open
         config = TL_loadConfig()
         if (config == null)
-            TL_firstOpen(app)
+            TL_firstOpen(App)
         else
-            TL_checkLastBackupDate(config, app.databaseName, app.databasePass)
+            Backup.TL_checkLastBackupDate(config, App.databaseName, App.databasePass)
     }
 
-    app.connect()
+    App.connect()
 
     if (config == null) {
-        cleanTables(app.getConnection());
+        cleanTables(App.getConnection());
     }
 
     // Open MainFrame (index GUI)
-    app.openMainFrame()
+    App.openMainFrame()
 
     // ==================================================
     // Keep this here but remove before shipping or every release
     // ==================================================
     if (__DO_WIPE) {
-        app.getConnection()?.close()
-        wipe(app.databaseName)
+        App.getConnection()?.close()
+        wipe(App.databaseName)
     }
 }

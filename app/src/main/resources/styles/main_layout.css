@@ -36,7 +36,7 @@
 }
 
 .sidebar-pane:hover .label {
-     -fx-translate-x: -15;
+     -fx-translate-x: 15;
      -fx-text-fill: white;
  }
 

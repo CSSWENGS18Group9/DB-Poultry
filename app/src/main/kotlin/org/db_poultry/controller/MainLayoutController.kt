@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView
 import javafx.scene.layout.FlowPane
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.StackPane
+import org.db_poultry.util.PopupUtil
 import org.db_poultry.util.SceneSwitcher
 import org.kordamp.ikonli.javafx.FontIcon
 
@@ -82,6 +83,9 @@ class MainLayoutController : Initializable {
 
     @FXML
     private lateinit var flockSelectionFlowPane: FlowPane
+
+    @FXML
+    private lateinit var backupLabel: Label
 
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
 
@@ -163,6 +167,11 @@ class MainLayoutController : Initializable {
     }
 
     @FXML
+    fun navigateToHome() {
+        GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home.fxml")
+    }
+
+    @FXML
     fun navigateToUpdateSupplies() {
         GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_supplies_grid.fxml")
     }
@@ -175,5 +184,10 @@ class MainLayoutController : Initializable {
     @FXML
     fun navigateToFlockSelection() {
         GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home_flock_grid.fxml")
+    }
+
+    @FXML
+    fun navigateToBackup() {
+        PopupUtil.showContentPopup("/fxml/popup/backup/popup_backup_restore.fxml")
     }
 }

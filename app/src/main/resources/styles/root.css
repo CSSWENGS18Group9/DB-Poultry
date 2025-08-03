@@ -58,13 +58,14 @@
     -fx-text-fill: white;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
+    -fx-border-width: 2;
+    -fx-border-color: transparent;
 }
 
 .sub-button:hover {
     -fx-background-color: transparent;
     -fx-text-fill: #BC6C25;
     -fx-border-color: #BC6C25;
-    -fx-border-width: 2;
 }
 
 
@@ -275,6 +276,10 @@ HelveticaNowDisplay HairlineIta
     -fx-background-size: cover;
     -fx-background-position: center center;
     -fx-opacity: 0.5;
+}
+
+.highlight-brown:hover {
+    -fx-text-fill: #8F250C;
 }
 
 .spinner {
