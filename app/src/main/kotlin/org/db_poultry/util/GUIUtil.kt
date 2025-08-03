@@ -5,6 +5,7 @@ import javafx.scene.control.PasswordField
 import javafx.scene.control.TextField
 
 object GUIUtil {
+
     fun setupPassword(passTextField: TextField, passPasswordField: PasswordField,
                       showPassButton: Button
     ): () -> Unit {
