@@ -38,12 +38,13 @@
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" percentHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label styleClass="h2-bold" text="Update Supplies" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <ComboBox fx:id="sortByComboBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Ascending" styleClass="h5" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                  <Label styleClass="h4-bold" text="Sort By: " GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <Label styleClass="h2-bold" text="Update Supplies" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+                  <ComboBox fx:id="sortByComboBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Ascending" styleClass="h5" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.rowSpan="2" />
+                  <Label styleClass="h4-bold" text="Sort By: " GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.rowSpan="2" />
                </children>
             </GridPane>
             <TilePane fx:id="mainTilePane" alignment="TOP_CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="main-pane" vgap="20.0" GridPane.rowIndex="1">

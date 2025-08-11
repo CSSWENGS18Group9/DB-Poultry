@@ -22,6 +22,8 @@ import javafx.geometry.VPos
 import javafx.fxml.Initializable
 import javafx.scene.control.ComboBox
 import javafx.scene.layout.TilePane
+import javafx.scene.control.Spinner
+import javafx.scene.control.SpinnerValueFactory
 import org.db_poultry.util.PopupUtil
 import java.io.File
 import java.net.URL
@@ -29,8 +31,6 @@ import java.util.ResourceBundle
 import kotlin.text.compareTo
 import kotlin.toString
 
-// TODO: Implement dynamic refresh and multiple page (implemented in flock grid home already) @Dattebayo25
-// TODO: Add util for dynamic refresh loading? @Dattebayo25
 class SuppliesGridHomeController: Initializable {
 
     @FXML
@@ -48,24 +48,35 @@ class SuppliesGridHomeController: Initializable {
     @FXML
     private lateinit var exampleSupplyTypeGridPane: GridPane
 
+    @FXML
+    private lateinit var supplyPageSpinner: Spinner<Int>
+
+    private var currentPage = 1
+    private var totalPages = 1
+    private var allSupplyRecords: List<SupplyType> = emptyList()
+    private var currentSortType = "Ascending"
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        loadSupplyGrid()
+        loadAllSupplyRecords()
         initializeSortByComboBox()
+        setSpinner()
+        loadCurrentPage()
     }
 
     private fun initializeSortByComboBox() {
         sortByComboBox.items.addAll("Ascending", "Descending", "Last Updated")
         sortByComboBox.value = "Ascending"
         sortByComboBox.setOnAction {
-            loadSupplyGrid(sortByComboBox.value)
+            currentSortType = sortByComboBox.value
+            currentPage = 1
+            loadAllSupplyRecords()
+            setSpinner()
+            loadCurrentPage()
         }
     }
 
-    private fun loadSupplyGrid(sortType: String = "Ascending") {
-        resetMainTilePane()
-
-        val supplyTypeList = when (sortType) {
+    private fun loadAllSupplyRecords() {
+        val supplyTypeList = when (currentSortType) {
             "Ascending" -> ReadSupplyType.getSupplyTypeAscending(getConnection())
             "Descending" -> ReadSupplyType.getSupplyTypeDescending(getConnection())
             "Last Updated" -> ReadSupplyType.getSupplyTypeByLastUpdate(getConnection())
@@ -89,18 +100,52 @@ class SuppliesGridHomeController: Initializable {
             }
 
             // Combine: feeds first, then non-feeds in their original order
-            val sortedList = sortedFeeds + nonFeedSupplies
+            allSupplyRecords = sortedFeeds + nonFeedSupplies
+        } else {
+            allSupplyRecords = emptyList()
+        }
 
-            for (supplyType in sortedList) {
-                val gridPane = createSupplyGridPane(supplyType)
-                mainTilePane.children.add(gridPane)
-            }
+        totalPages = if (allSupplyRecords.isNotEmpty()) {
+            (allSupplyRecords.size + 6) / 7
+        } else {
+            1
+        }
+    }
+
+    private fun loadCurrentPage() {
+        resetMainTilePane()
+
+        if (allSupplyRecords.isEmpty()) return
+
+        val recordsToShow = getRecordsForPage(currentPage)
+
+        for (supplyType in recordsToShow) {
+            val gridPane = createSupplyGridPane(supplyType)
+            mainTilePane.children.add(gridPane)
+        }
+    }
+
+    private fun getRecordsForPage(page: Int): List<SupplyType> {
+        val startIndex = (page - 1) * 7
+        return allSupplyRecords.drop(startIndex).take(7)
+    }
+
+    private fun setSpinner() {
+        supplyPageSpinner.styleClass.add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL)
+        val valueFactory = SpinnerValueFactory.IntegerSpinnerValueFactory(1, maxOf(1, totalPages), 1)
+        supplyPageSpinner.valueFactory = valueFactory
+        supplyPageSpinner.editor.alignment = javafx.geometry.Pos.CENTER
+
+        // Add listener for page changes
+        supplyPageSpinner.valueProperty().addListener { _, _, newValue ->
+            currentPage = newValue as Int
+            loadCurrentPage()
         }
     }
 
     private fun resetMainTilePane() {
         val childrenToKeep = mainTilePane.children.filter { child ->
-            child == createSupplyTypeGridPane || child == exampleSupplyTypeGridPane
+            child == createSupplyTypeGridPane  /* || child == exampleSupplyTypeGridPane  TODO Retain in prod */
         }
 
         mainTilePane.children.clear()
