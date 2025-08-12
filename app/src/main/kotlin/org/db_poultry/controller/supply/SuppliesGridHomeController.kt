@@ -133,6 +133,7 @@ class SuppliesGridHomeController: Initializable {
         val valueFactory = SpinnerValueFactory.IntegerSpinnerValueFactory(1, maxOf(1, totalPages), 1)
         supplyPageSpinner.valueFactory = valueFactory
         supplyPageSpinner.editor.alignment = javafx.geometry.Pos.CENTER
+        supplyPageSpinner.editor.isFocusTraversable = false
 
         // Add listener for page changes
         supplyPageSpinner.valueProperty().addListener { _, _, newValue ->
@@ -197,7 +198,10 @@ class SuppliesGridHomeController: Initializable {
             val isDefaultSupplyType = SupplySingleton.isDefaultSupplyType(supplyType.name)
 
             val imageUrl = if (isDefaultSupplyType) {
-                javaClass.getResource(SupplySingleton.getCurrentSupplyImageDir())
+                // Convert file system path to resource path for default supplies
+                val imagePath = SupplySingleton.getCurrentSupplyImageDir()
+                val resourcePath = imagePath.replace("src/main/resources", "")
+                javaClass.getResource(resourcePath)
             } else {
                 File(SupplySingleton.getCurrentSupplyImageDir()).toURI().toURL()
             }
