@@ -28,8 +28,6 @@ import org.db_poultry.util.PopupUtil
 import java.io.File
 import java.net.URL
 import java.util.ResourceBundle
-import kotlin.text.compareTo
-import kotlin.toString
 
 class SuppliesGridHomeController: Initializable {
 
@@ -145,7 +143,8 @@ class SuppliesGridHomeController: Initializable {
 
     private fun resetMainTilePane() {
         val childrenToKeep = mainTilePane.children.filter { child ->
-            child == createSupplyTypeGridPane  /* || child == exampleSupplyTypeGridPane  TODO Retain in prod */
+            child == createSupplyTypeGridPane  /* || child == exampleSupplyTypeGridPane */
+            // For testing purposes (styling for FXML), uncomment the above line
         }
 
         mainTilePane.children.clear()
@@ -268,17 +267,17 @@ class SuppliesGridHomeController: Initializable {
     }
 
     @FXML
-    private fun navigateToCreateSupplies() {
+    fun navigateToCreateSupplies() {
         PopupUtil.showContentPopup("/fxml/content_create_supplies.fxml")
     }
 
     @FXML
-    private fun navigateToUpdateSupplies() {
+    fun navigateToUpdateSupplies() {
         PopupUtil.showContentPopup("/fxml/content_update_supplies_add_delete.fxml")
     }
 
     @FXML
-    private fun navigateToViewSupplies() {
+    fun navigateToViewSupplies() {
         GeneralUtil.navigateToMainContent(mainAnchorPane, "/fxml/content_view_supplies.fxml")
     }
 }
