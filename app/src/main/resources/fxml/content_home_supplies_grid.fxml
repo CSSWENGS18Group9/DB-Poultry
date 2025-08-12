@@ -59,7 +59,7 @@
                      </rowConstraints>
                      <children>
                         <FontIcon fx:id="addSupplyFontIcon" iconLiteral="fas-plus-circle" iconSize="50" textAlignment="CENTER" wrappingWidth="50.0" GridPane.halignment="CENTER" />
-                        <Label styleClass="h2-bold" text="Create Supply" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
+                        <Label maxWidth="1.7976931348623157E308" styleClass="h3-bold" text="Create New Supply" GridPane.columnIndex="1" />
                      </children>
                      <styleClass>
                         <String fx:value="grid-supply" />

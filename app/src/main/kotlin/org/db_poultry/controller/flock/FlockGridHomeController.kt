@@ -155,7 +155,7 @@ class FlockGridHomeController: Initializable {
         GridPane.setHalignment(countLabel, HPos.CENTER)
         gridPane.add(countLabel, 0, 3)
 
-        // Create buttons
+        // Create view history button
         val viewHistoryButton = Button("View History").apply {
             maxHeight = Double.MAX_VALUE
             maxWidth = Double.MAX_VALUE
@@ -166,21 +166,33 @@ class FlockGridHomeController: Initializable {
             }
         }
         GridPane.setHalignment(viewHistoryButton, HPos.CENTER)
-        GridPane.setMargin(viewHistoryButton, Insets(10.0, 10.0, 10.0, 10.0))
-        gridPane.add(viewHistoryButton, 1, 1)
+        GridPane.setMargin(viewHistoryButton, Insets(20.0, 10.0, 20.0, 10.0))
 
-        val updateRecordButton = Button("Update Record").apply {
-            maxHeight = Double.MAX_VALUE
-            maxWidth = Double.MAX_VALUE
-            styleClass.addAll("main-button-reversed", "h6-bold")
-            setOnAction { navigateToCreateFlockDetails() }
-            setOnMousePressed { event ->
-                FlockSingleton.setCurrentFlockComplete(flockComplete)
+        // Check if this is the most recent flock (first in sorted list)
+        val isRecentMostFlock = allFlockRecords.isNotEmpty() &&
+                allFlockRecords.first().second.flock.startingDate == flockComplete.flock.startingDate
+
+        if (isRecentMostFlock) {
+            // For most recent flock, add both buttons
+            gridPane.add(viewHistoryButton, 1, 1)
+
+            val updateRecordButton = Button("Update Record").apply {
+                maxHeight = Double.MAX_VALUE
+                maxWidth = Double.MAX_VALUE
+                styleClass.addAll("main-button-reversed", "h6-bold")
+                setOnAction { navigateToCreateFlockDetails() }
+                setOnMousePressed { event ->
+                    FlockSingleton.setCurrentFlockComplete(flockComplete)
+                }
             }
+            GridPane.setHalignment(updateRecordButton, HPos.CENTER)
+            GridPane.setMargin(updateRecordButton, Insets(10.0, 10.0, 10.0, 10.0))
+            gridPane.add(updateRecordButton, 1, 3)
+        } else {
+            // For older flocks, center the view history button vertically
+            GridPane.setRowSpan(viewHistoryButton, 3)
+            gridPane.add(viewHistoryButton, 1, 1)
         }
-        GridPane.setHalignment(updateRecordButton, HPos.CENTER)
-        GridPane.setMargin(updateRecordButton, Insets(10.0, 10.0, 10.0, 10.0))
-        gridPane.add(updateRecordButton, 1, 3)
 
         return gridPane
     }
