@@ -44,7 +44,7 @@ jobs:
           done
 
       - name: Build project (with fatJar)
-        run: ./gradlew clean fatJar
+        run: gradlew clean fatJar
         env:
           DB_URL: jdbc:postgresql://localhost:5432/db_poultry_test
           DB_USERNAME: postgres
