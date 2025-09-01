@@ -16,6 +16,7 @@ import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.layout.AnchorPane
+import org.db_poultry.pojo.FlockPOJO.FlockComplete
 import java.net.URL
 import java.sql.Date
 import java.util.*
@@ -52,10 +53,10 @@ class FlockViewDetailsController : Initializable {
     @FXML
     lateinit var colChickenCount: TableColumn<FlockDetails, Int>
 
-    private val currentFlockComplete = FlockSingleton.getCurrentFlockComplete()
+    private var currentFlockComplete: FlockComplete? = null
     private var cumulativeDepletion: List<Int> = emptyList()
-    private val startingDate = currentFlockComplete?.flock?.startingDate
-    private val startingCount = currentFlockComplete?.flock?.startingCount
+    private var startingDate: Date? = null
+    private var startingCount: Int? = null
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         setupLabels()
@@ -65,6 +66,14 @@ class FlockViewDetailsController : Initializable {
     }
 
     private fun setupLabels() {
+        val currentFlock = FlockSingleton.getCurrentFlockComplete()
+        currentFlockComplete = currentFlock
+
+        val startDate = currentFlockComplete?.flock?.startingDate
+        val startCount = currentFlockComplete?.flock?.startingCount ?: 0
+
+        startingDate = startDate
+        startingCount = startCount
 
         val mortalityRateData = ReadMortalityRate.calculateMortalityRateForFlock(
             getConnection(),
