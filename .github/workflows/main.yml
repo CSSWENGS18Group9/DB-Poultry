@@ -44,15 +44,15 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
 
-    - name: Build (Gradle)
+    - name: Build
       run: gradle build
       env:
         DB_URL: jdbc:postgresql://localhost:5432/db_poultry_test
         DB_USERNAME: db_poultry_test
         DB_PASSWORD: db_poultry_test
 
-    - name: Build (Fat Jar)
-      run: gradle shadowJar
+    - name: Build Package
+      run: gradle jpackage
 
     - name: GitHub Release
       uses: softprops/action-gh-release@v2
@@ -61,10 +61,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Upload Mr. fat JAR
+    - name: Upload Package
       uses: softprops/action-gh-release@v2
       with:
-        files: build/libs/db-poultry-*.jar
-        # this should follow file naming convension
-        # db-poultry-* is used for any version number
-        # this may be a problem later on as the version is left unspecified!
+        files: build/installer/*

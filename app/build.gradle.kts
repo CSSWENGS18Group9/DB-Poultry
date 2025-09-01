@@ -2,7 +2,6 @@ plugins {
     application
     kotlin("jvm") version "2.1.21"
     java
-    id("com.github.johnrengelman.shadow") version "8.1.1" // Fat JAR
 }
 
 group = "org.db_poultry"
@@ -70,16 +69,6 @@ java {
 
 tasks.test {
     useJUnitPlatform()
-}
-
-// Fat JAR
-tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
-    archiveBaseName.set("db-poultry")
-    archiveVersion.set(project.version.toString())
-    archiveClassifier.set("")
-    manifest {
-        attributes["Main-Class"] = appMainClass
-    }
 }
 
 // Native (jpackage) packaging
