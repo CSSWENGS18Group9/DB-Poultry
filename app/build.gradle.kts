@@ -73,7 +73,7 @@ tasks.test {
 
 // Native (jpackage) packaging
 tasks.register<Exec>("jpackage") {
-    dependsOn("shadowJar") // use fat jar
+    dependsOn("build")
 
     val jarName = "db-poultry-${project.version}.jar"
     val imageName = "DB-Poultry"
@@ -81,12 +81,12 @@ tasks.register<Exec>("jpackage") {
 
     commandLine(
         "jpackage",
-        "--input", "$buildDir/libs",
+        "--input", "${layout.buildDirectory.asFile.get()}/libs",
         "--name", imageName,
         "--main-jar", jarName,
         "--main-class", appMainClass,
         "--type", "exe",
         "--app-version", project.version.toString(),
-        "--dest", "$buildDir/installer"
+        "--dest", "${layout.buildDirectory.asFile.get()}/installer"
     )
 }
