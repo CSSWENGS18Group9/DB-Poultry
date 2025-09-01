@@ -36,13 +36,13 @@ jobs:
 
     - name: SETUP# PostgreSQL (init)
       run: |
-        # Create the DB
+        psql -U postgres -c "ALTER USER postgres WITH PASSWORD 'db_poultry_test';"
         psql -U postgres -c "CREATE DATABASE db_poultry_test;"
         psql -U postgres -c "CREATE USER db_poultry_test WITH PASSWORD 'db_poultry_test';"
         psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE db_poultry_test TO db_poultry_test;"
       env:
         PGPASSWORD: db_poultry_test
-
+        
     - name: BUILD
       run: gradle build
       env:

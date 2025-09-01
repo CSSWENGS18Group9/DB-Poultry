@@ -1,4 +1,4 @@
-// 
+
 plugins {
     application
     java
@@ -90,4 +90,26 @@ tasks.register<Exec>("jpackage") {
         "--app-version", project.version.toString(),
         "--dest", "${layout.buildDirectory.asFile.get()}/installer"
     )
+}
+
+// make a Fat Jar instead (testing this for CI/CD @zrygan)
+tasks.register<Jar>("fatJar") {
+    group = "build"
+    description = "Creates a fat jar including all dependencies"
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from(sourceSets.main.get().output)
+
+    // Include runtime dependencies (all the libraries)
+    dependsOn(configurations.runtimeClasspath)
+    from({
+        configurations.runtimeClasspath.get()
+            .filter { it.name.endsWith("jar") }
+            .map { zipTree(it) }
+    })
+
+    manifest {
+        attributes["Main-Class"] = appMainClass
+    }
 }
