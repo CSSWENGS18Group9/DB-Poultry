@@ -92,4 +92,6 @@ tasks.register<Jar>("fatJar") {
     manifest {
         attributes["Main-Class"] = appMainClass
     }
+
+    archiveBaseName.set("db-poultry-${project.version}-all")
 }

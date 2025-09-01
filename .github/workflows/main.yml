@@ -53,6 +53,9 @@ jobs:
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
 
+      - name: List build/libs directory
+        run: ls -l build/libs
+
       - name: Create Git tag
         run: |
           git config user.name "github-actions"
@@ -64,6 +67,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v5.0.${{ github.run_number }}
-          files: build/libs/*.jar
+          files: build/libs/db-poultry-*-all.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
