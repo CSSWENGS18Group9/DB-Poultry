@@ -96,6 +96,10 @@ application {
     mainClass.set("org.db_poultry.AppKt")
 }
 
+project.extensions.configure<JavaApplication> {
+    mainClass.set("org.db_poultry.AppKt")
+}
+
 kotlin {
     jvmToolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
