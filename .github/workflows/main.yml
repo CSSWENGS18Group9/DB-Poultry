@@ -43,6 +43,9 @@ jobs:
             sleep 5
           done
 
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
       - name: Build project (with fatJar)
         run: ./gradlew clean fatJar
         env:
