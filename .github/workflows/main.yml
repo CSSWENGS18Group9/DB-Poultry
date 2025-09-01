@@ -60,14 +60,10 @@ jobs:
           git tag v5.0.${{ github.run_number }}
           git push origin v5.0.${{ github.run_number }}
 
-      - name: Create GitHub Release
+      - name: Create GitHub Release and upload FatJar
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v5.0.${{ github.run_number }}
+          files: build/libs/*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload FatJar
-        uses: softprops/action-gh-release@v2
-        with:
-          files: build/libs/*.jar
