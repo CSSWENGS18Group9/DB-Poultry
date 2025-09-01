@@ -93,7 +93,7 @@ tasks.register<Jar>("fatJar") {
         attributes["Main-Class"] = appMainClass
     }
 
-    archiveBaseName.set("db-poultry-${project.version}-all")
+    archiveBaseName.set("db-poultry-all")
 
     doLast {
         println("Fat jar created at: ${archiveFile.get().asFile.absolutePath}")

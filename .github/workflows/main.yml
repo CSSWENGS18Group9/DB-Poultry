@@ -53,8 +53,8 @@ jobs:
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
 
-      - name: List build/libs directory
-        run: ls -l build/libs || echo "UH OH~ build/libs does not exist"
+      - name: List app/build/libs directory
+        run: ls -l app/build/libs || echo "UH OH~ app/build/libs does not exist"
 
 
       - name: Create Git tag
@@ -68,6 +68,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v5.0.${{ github.run_number }}
-          files: build/libs/db-poultry-*-all.jar
+          files: app/build/libs/db-poultry-all-*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
