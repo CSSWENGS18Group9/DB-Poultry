@@ -54,7 +54,7 @@ jobs:
           DB_PASSWORD: postgres
 
       - name: List build/libs directory
-          run: ls -l build/libs || echo "UH OH~ build/libs does not exist"
+        run: ls -l build/libs || echo "UH OH~ build/libs does not exist"
 
 
       - name: Create Git tag
