@@ -1,3 +1,11 @@
+# Continuous Integration/Delivery (CI/CD) Workflow
+# By Zhean Ganituen
+# DB-Poultry Project 
+# 
+# For:          CSSWENG, Mr. Mar Hererra
+#               STSWENG, Dr. Alon Alvin
+# Last Updated: September 1, 2025
+
 name: CI (Java, PostgreSQL)
 
 on:
@@ -30,15 +38,33 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Set up JDK
+    - name: Java 21
       uses: actions/setup-java@v4
       with:
         java-version: '21'
         distribution: 'temurin'
 
-    - name: Build with Gradle
+    - name: Build (Gradle)
       run: gradle build
       env:
         DB_URL: jdbc:postgresql://localhost:5432/db_poultry_test
         DB_USERNAME: db_poultry_test
         DB_PASSWORD: db_poultry_test
+
+    - name: Build (Fat Jar)
+      run: gradle shadowJar
+
+    - name: GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v5.0.${{ github.run_number }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Mr. fat JAR
+      uses: softprops/action-gh-release@v2
+      with:
+        files: build/libs/db-poultry-*.jar
+        # this should follow file naming convension
+        # db-poultry-* is used for any version number
+        # this may be a problem later on as the version is left unspecified!
