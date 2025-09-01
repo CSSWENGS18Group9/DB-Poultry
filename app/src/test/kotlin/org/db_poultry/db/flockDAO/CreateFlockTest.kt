@@ -15,7 +15,7 @@ class CreateFlockTest {
 
     init {
         jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
-        DBConnect.init(jdbcURL, db_poultry_test, db_poultry_test)
+        DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
         conn = DBConnect.getConnection()!!
         cleanTables(conn)
     }
