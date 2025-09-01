@@ -1,7 +1,7 @@
 plugins {
     application
-    kotlin("jvm") version "2.1.21"
     java
+    kotlin("jvm") version "2.1.21"
 }
 
 group = "org.db_poultry"
