@@ -9,7 +9,6 @@ plugins {
     application
     kotlin("jvm") version "2.1.21"
     java
-    id("com.gradleup.shadow") version "8.3.6"
 }
 
 group = "org.db_poultry"
@@ -96,10 +95,6 @@ application {
     mainClass.set("org.db_poultry.AppKt")
 }
 
-project.extensions.configure<JavaApplication> {
-    mainClass.set("org.db_poultry.AppKt")
-}
-
 kotlin {
     jvmToolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
@@ -114,22 +109,4 @@ java {
 
 tasks.test {
     useJUnitPlatform()
-}
-
-// Shadow JAR configuration for creating fat JAR
-tasks.shadowJar {
-    archiveBaseName.set("db-poultry")
-    archiveClassifier.set(version.toString())
-    archiveVersion.set("")
-
-    // Ensure the main class is set in the manifest
-    manifest {
-        attributes["Main-Class"] = "org.db_poultry.AppKt"
-    }
-
-    // Include all runtime dependencies
-    configurations = listOf(project.configurations.runtimeClasspath.get())
-
-    // Merge service files to avoid conflicts
-    mergeServiceFiles()
 }
