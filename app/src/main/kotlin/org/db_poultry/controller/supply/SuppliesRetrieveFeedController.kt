@@ -102,8 +102,35 @@ class SuppliesRetrieveFeedController: Initializable {
         sqlDate = Date.valueOf(today)
     }
 
+    private fun isDateValid(): Boolean {
+        val selectedDate = dateDatePicker.value
+        if (selectedDate == null) {
+            PopupUtil.showPopup("error", "Please select a date for feed retrieval.")
+            return false
+        }
+
+        for (supplyTypeID in feedSupplyTypeIDList) {
+            val latestSupply = ReadSupplyRecord.getLatest(getConnection(), supplyTypeID)
+            if (latestSupply != null) {
+                val latestDate = latestSupply.date.toLocalDate()
+                if (selectedDate <= latestDate) {
+                    PopupUtil.showPopup(
+                        "error",
+                        "Selected date must be after the latest supply record date (${GeneralUtil.formatDatePretty(latestDate)}).")
+                    return false
+                }
+            }
+        }
+
+        return true
+    }
+
     @FXML
     fun confirm() {
+
+        if (!isDateValid()) {
+            return
+        }
 
         undoSingleton.setIsFeedRetrieval(true)
         undoSingleton.setUndoMode(undoTypes.doUndoSupplyRecord)
@@ -113,25 +140,26 @@ class SuppliesRetrieveFeedController: Initializable {
                 sqlDate, BigDecimal.ZERO, BigDecimal.ZERO, true)
         }
 
-        // Check if any of the results are null, indicating failure
-        if (results.any { it == null }) {
-            PopupUtil.showPopup("error", "Failed to create supply records for feed retrieval.")
-
-            /*
-            For resetting the non-null created supply records,
-            since all feed retrievals should be done at once,
-            reset all those that were retrieved.
-            */
-            results.forEach { result ->
-                if (result != null) {
-                    undoSingleton.undo(getConnection())
-                }
-            }
-            return
-        }
+//
+//        // Check if any of the results are null, indicating failure
+//        if (results.any { it == null }) {
+//            PopupUtil.showPopup("error", "Failed to create supply records for feed retrieval.")
+//
+//            /*
+//            For resetting the non-null created supply records,
+//            since all feed retrievals should be done at once,
+//            reset all those that were retrieved.
+//            */
+//            results.forEach { result ->
+//                if (result != null) {
+//                    undoSingleton.undo(getConnection())
+//                }
+//            }
+//            return
+//        }
 
         NotificationController.setNotification(
-            "error",
+            "info",
             "Chicken Feed Retrieval Undo",
             "Supply record for '${feedArrayList.joinToString(", ")}' retrieval was undone."
         )
