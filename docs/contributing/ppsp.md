@@ -173,24 +173,18 @@ tagging, and deployment—all without manual intervention.
 tasks.register<Jar>("fatJar") {
     group = "build"
     description = "Creates a fat jar including all dependencies"
-
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
     from(sourceSets.main.get().output)
-
     dependsOn(configurations.runtimeClasspath)
     from({
         configurations.runtimeClasspath.get()
             .filter { it.name.endsWith("jar") }
             .map { zipTree(it) }
     })
-
     manifest {
         attributes["Main-Class"] = appMainClass
     }
-
     archiveBaseName.set("db-poultry-all")
-
     doLast {
         println("Fat jar created at: ${archiveFile.get().asFile.absolutePath}")
     }
@@ -198,19 +192,18 @@ tasks.register<Jar>("fatJar") {
 ```
 
 ### Pipeline Configuration File (via GitHub actions)
+
+**Listing: pipeline configuration `YAML` file**
 ```yaml
 name: CI (FatJar + PostgreSQL)
-
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     services:
       postgres:
         image: postgres:14
@@ -225,17 +218,14 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Setup Java 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
-
       - name: Wait for PostgreSQL
         run: |
           for i in {1..10}; do
@@ -243,28 +233,22 @@ jobs:
             echo "Waiting for PostgreSQL..."
             sleep 5
           done
-
       - name: Make gradlew executable
         run: chmod +x gradlew
-
       - name: Build project (with fatJar)
         run: ./gradlew clean fatJar
         env:
           DB_URL: jdbc:postgresql://localhost:5432/db_poultry_test
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
-
       - name: List app/build/libs directory
         run: ls -l app/build/libs || echo "UH OH~ app/build/libs does not exist"
-
-
       - name: Create Git tag
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git tag v5.0.${{ github.run_number }}
           git push origin v5.0.${{ github.run_number }}
-
       - name: Create GitHub Release and upload FatJar
         uses: softprops/action-gh-release@v2
         with:
