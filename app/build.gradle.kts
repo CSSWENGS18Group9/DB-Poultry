@@ -1,4 +1,3 @@
-
 plugins {
     application
     java
@@ -72,27 +71,7 @@ tasks.test {
     useJUnitPlatform()
 }
 
-// Native (jpackage) packaging
-tasks.register<Exec>("jpackage") {
-    dependsOn("build")
-
-    val jarName = "db-poultry-${project.version}.jar"
-    val imageName = "DB-Poultry"
-    val installerName = "DBP-Installer"
-
-    commandLine(
-        "jpackage",
-        "--input", "${layout.buildDirectory.asFile.get()}/libs",
-        "--name", imageName,
-        "--main-jar", jarName,
-        "--main-class", appMainClass,
-        "--type", "exe",
-        "--app-version", project.version.toString(),
-        "--dest", "${layout.buildDirectory.asFile.get()}/installer"
-    )
-}
-
-// make a Fat Jar instead (testing this for CI/CD @zrygan)
+// make a Fat Jar (testing this for CI/CD @zrygan)
 tasks.register<Jar>("fatJar") {
     group = "build"
     description = "Creates a fat jar including all dependencies"
