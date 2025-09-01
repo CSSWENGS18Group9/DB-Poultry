@@ -1,6 +1,7 @@
-# Project Proposal, Standards, and Plan
+# 1. Project Proposal, Standards, and Plan
 
-**DB-Poultry Development Team**:  
+**DB-Poultry Development Team**:
+
 - Vienn Balcita* [`Viennbalcita`](https://github.com/Viennbalcita),  
 - Stephen Borja* [`OutForMilks`](https://github.com/OutForMilks),  
 - Justin Ching† [`JustinChing30`](https://github.com/JustinChing30),  
@@ -20,7 +21,23 @@
 ---
 GitHub Organization: [`DB-Poultry`](https://github.com/DB-Poultry)
 
-## Background, Software Specifications, & Solution Stack
+- [1. Project Proposal, Standards, and Plan](#1-project-proposal-standards-and-plan)
+  - [1.1. Background, Software Specifications, \& Solution Stack](#11-background-software-specifications--solution-stack)
+  - [1.2. Software Development Methodology](#12-software-development-methodology)
+  - [1.3. Team Standard and Workflow](#13-team-standard-and-workflow)
+    - [1.3.1. Branching Strategy](#131-branching-strategy)
+    - [1.3.2. Issues](#132-issues)
+    - [1.3.3. Branching](#133-branching)
+    - [1.3.4. Development Standards](#134-development-standards)
+    - [1.3.5. Pull Requests and Review](#135-pull-requests-and-review)
+    - [1.3.6. Merging](#136-merging)
+  - [1.4. Gradle](#14-gradle)
+    - [1.4.1. Testing via Gradle](#141-testing-via-gradle)
+  - [1.5. Continuous Integration and Continious Deployment](#15-continuous-integration-and-continious-deployment)
+    - [1.5.1. Pipeline Configuration File (via GitHub actions)](#151-pipeline-configuration-file-via-github-actions)
+  - [1.6. References](#16-references)
+
+## 1.1. Background, Software Specifications, & Solution Stack
 
 **Background** |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DB Poultry is a poultry farm based
 in Tanauan City, Batangas. Founded by William Balahadia and Kenneth Dasal in 
@@ -60,13 +77,14 @@ packages. While for the database, the group will be using PostgreSQL due to its
 speed and modern features. 
 
 In summary, our goal characteristics for the DBMS are the following:
+
 - **Performant**: can handle real-time database operations with minimal delay.
 - **Secure**: ensures data confidentiality by user authentication.
 - **Usable**: usable without much training; intuitive and user-friendly GUI.
 - **Complete**: ensures data organization is complete and relevant.
 - **Portable**: operating system-agnostic.
 
-## Software Development Methodology
+## 1.2. Software Development Methodology
 
 > 👷🚧 Working on software development methodology... <br>
 > ~From the specs:
@@ -79,24 +97,26 @@ In summary, our goal characteristics for the DBMS are the following:
 
 
 
-## Team Standard and Workflow
+## 1.3. Team Standard and Workflow
 
 This section outlines the team workflow and standards we follow for contributing to the DB-Poultry project. It is based on **trunk-based development** (inspired by Git Flow) and is designed to ensure clarity, consistency, and maintainability.
 
-### Branching Strategy
+### 1.3.1. Branching Strategy
 
 We use both **long-lived** and **short-lived** branches:
 
 **Long-Lived Branches**
+
 - **`main`**: Production-ready code. Always stable and deployable.
 - **`development`**: Used for integrating new features. We merge into `main` only after significant milestones or stable releases.
 
 **Short-Lived Branches**
+
 - Created for individual issues or tasks.
 - Always based on the naming of the Issue it addresses.
 - Merged into `development` and deleted after successful integration.
 
-### Issues
+### 1.3.2. Issues
 All development tasks must begin with the creation of a GitHub Issue. This includes bug reports, feature requests, documentation efforts, and enhancements.
 
 Issues must follow the established naming conventions:
@@ -107,17 +127,17 @@ Issues must follow the established naming conventions:
 
 Each issue should clearly describe the task, include necessary details, and be assigned to the appropriate contributors. Labels should be applied to indicate the nature and priority of the issue. Contributors are encouraged to use the templates provided in the `ISSUE_TEMPLATES/` directory to ensure consistency and completeness.
 
-### Branching
+### 1.3.3. Branching
 A dedicated branch must be created for each issue. The branch name must **exactly match** the name of the corresponding issue to maintain traceability. Only one branch should exist per issue. In cases where sub-tasks are defined under a single issue, contributors may optionally create sub-branches for better organization.
 
-### Development Standards
+### 1.3.4. Development Standards
 All implementation must adhere to the project's coding standards and guidelines. The following practices are mandatory:
 
 - Code must follow the Java/Kotlin standards defined in the project's documentation.
 - Recursive functions and obfuscated logic must be avoided unless explicitly justified.
 - Code must pass all **unit tests** and **integration tests** written using **JUnit**. Failing tests must be resolved before moving forward.
 
-### Pull Requests and Review
+### 1.3.5. Pull Requests and Review
 Once development on a branch is complete and the contributor has verified correctness, a **Pull Request (PR)** must be opened.
 
 - The PR title must follow the same naming convention as the issue and branch.
@@ -125,20 +145,20 @@ Once development on a branch is complete and the contributor has verified correc
 - All relevant tests must pass before the PR is eligible for review.
 - The QA team will review the submitted work to verify correctness, adherence to standards, and functionality.
 
-### Merging
+### 1.3.6. Merging
 Upon successful review and testing, the Pull Request may be merged into the `development` branch. After merging, the short-lived branch associated with the issue must be deleted to keep the repository clean and organized.
 
 ---
 
 By adhering to this structured workflow, the development team ensures high-quality code, maintains a clear project history, and supports effective collaboration among all project contributors.
 
-## Gradle
+## 1.4. Gradle
 
 _Gradle_ will be used as the build automation tool for the project. 
 Specifically, Gradle will be used for building the project, conducting the 
 automated unit and integration tests.
 
-### Testing via Gradle
+### 1.4.1. Testing via Gradle
 
 Testing in this project is built around JUnit and automated through Gradle, ensuring that every commit and pull request maintains the reliability of the codebase.
 
@@ -146,7 +166,7 @@ At the core, we use unit testing to verify the behavior of individual functions.
 
 Lastly, we're using unit tests as **regression tests**. By not deleting or bypassing existing tests, we ensure that any new change doesn't break existing features. This makes the test suite increasingly valuable over time, acting as a safeguard for the whole codebase.
 
-## Continuous Integration and Continious Deployment
+## 1.5. Continuous Integration and Continious Deployment
 
 The team will use GitHub Actions for CI/CD.
 
@@ -197,7 +217,7 @@ tasks.register<Jar>("fatJar") {
 }
 ```
 
-### Pipeline Configuration File (via GitHub actions)
+### 1.5.1. Pipeline Configuration File (via GitHub actions)
 ```yaml
 name: CI (FatJar + PostgreSQL)
 
@@ -274,7 +294,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-## References
+## 1.6. References
 <!-- List in alphabetical order -->
 
 **Programming Languages**: 
