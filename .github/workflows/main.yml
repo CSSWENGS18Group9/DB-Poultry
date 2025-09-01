@@ -14,19 +14,19 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: SETUP: Java 21
+    - name: SETUP# Java 21
       uses: actions/setup-java@v4
       with:
         java-version: '21'
         distribution: 'temurin'
 
-    - name: SETUP: PostgreSQL (install via Choco)
+    - name: SETUP# PostgreSQL (install via Choco)
       run: |
         choco install postgresql14 --params '/Password:db_poultry_test' -y
         # Add PostgreSQL bin to PATH
         echo "C:\Program Files\PostgreSQL\14\bin" >> $env:GITHUB_PATH
 
-    - name: SETUP: PostgreSQL (init)
+    - name: SETUP# PostgreSQL (init)
       run: |
         # Create the DB
         psql -U postgres -c "CREATE DATABASE db_poultry_test;"
@@ -45,14 +45,14 @@ jobs:
     - name: PACK
       run: gradle jpackage
 
-    - name: DEPLOY: Make GitHub Release
+    - name: DEPLOY# Make GitHub Release
       uses: softprops/action-gh-release@v2
       with:
         tag_name: v5.0.${{ github.run_number }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: DEPLOY: Upload Package
+    - name: DEPLOY# Upload Package
       uses: softprops/action-gh-release@v2
       with:
         files: build/installer/*
