@@ -94,4 +94,8 @@ tasks.register<Jar>("fatJar") {
     }
 
     archiveBaseName.set("db-poultry-${project.version}-all")
+
+    doLast {
+        println("Fat jar created at: ${archiveFile.get().asFile.absolutePath}")
+    }
 }
