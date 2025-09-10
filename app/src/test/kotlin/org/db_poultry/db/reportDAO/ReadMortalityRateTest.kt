@@ -1,6 +1,5 @@
 package org.db_poultry.db.reportDAO
 
-import org.db_poultry.App
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import org.db_poultry.db.flockDAO.CreateFlock
@@ -12,11 +11,10 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class ReadMortalityRateTest {
-    private var jdbcURL: String
+    private var jdbcURL: String = "jdbc:postgresql://localhost:5432/db_poultry_test"
     private var conn: Connection
 
     init {
-        jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
         DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
         conn = DBConnect.getConnection()!!
         cleanTables(conn)
@@ -168,7 +166,7 @@ class ReadMortalityRateTest {
 
         assertEquals(flockTwoDate, resultFour.startDate)
         assertEquals(fdDateFour, resultFour.endDate)
-        assertEquals(4.1237113f, resultFour.mortalityRate)
+        assertEquals(4.123711f, resultFour.mortalityRate)
         assertEquals(1000, resultFour.startCount)
         assertEquals(870, resultFour.curCount)
 

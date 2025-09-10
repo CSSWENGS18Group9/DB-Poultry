@@ -1,21 +1,19 @@
 package org.db_poultry.db.flockDetailsDAO
 
-import org.db_poultry.App
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import org.db_poultry.db.flockDAO.CreateFlock
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
 import java.sql.Connection
 import java.sql.Date
 
 
 class DeleteFlockDetailTest {
-    private var jdbcURL: String
+    private var jdbcURL: String = "jdbc:postgresql://localhost:5432/db_poultry_test"
     private var conn: Connection
 
     init {
-        jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
         DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
         conn = DBConnect.getConnection()!!
         cleanTables(conn)

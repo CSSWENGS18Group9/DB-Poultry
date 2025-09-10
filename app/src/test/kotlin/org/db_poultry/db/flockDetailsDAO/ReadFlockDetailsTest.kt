@@ -1,24 +1,20 @@
 package org.db_poultry.db.flockDetailsDAO
 
-import org.db_poultry.App
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import org.db_poultry.db.flockDAO.CreateFlock
-import org.db_poultry.db.flockDAO.ReadFlock
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import java.sql.Connection
 import java.sql.Date
-import kotlin.test.assertNotNull
 
 class ReadFlockDetailsTest {
-    private var jdbcURL: String
+    private var jdbcURL: String = "jdbc:postgresql://localhost:5432/db_poultry_test"
     private var conn: Connection
 
     init {
-        jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
         DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
         conn = DBConnect.getConnection()!!
         cleanTables(conn)
@@ -42,7 +38,7 @@ class ReadFlockDetailsTest {
 
 
         Assertions.assertEquals(1, result.flockId)
-        Assertions.assertEquals(dateThree, result.fdDate)
+        assertEquals(dateThree, result.fdDate)
         Assertions.assertEquals(15, result.depletedCount)
     }
 
@@ -141,7 +137,7 @@ class ReadFlockDetailsTest {
 
         val result = ReadFlockDetails.getMostRecent(conn, dateFlock)
 
-        Assertions.assertNull(result)
+        assertNull(result)
     }
 
     // TEST FOR public static List<FlockDetails> getFlockDetailsFromDate(Connection conn, Date flockDate, Date fdStartDate, Date fdEndDate) {

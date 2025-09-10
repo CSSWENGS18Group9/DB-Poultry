@@ -1,20 +1,17 @@
 package org.db_poultry.db.flockDAO
 
-import com.sun.jdi.connect.Connector
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.db_poultry.db.DBConnect
-import org.db_poultry.App
 import org.db_poultry.db.cleanTables
 import java.sql.Connection
 import java.sql.Date
 
 class CreateFlockTest {
-    private var jdbcURL: String
+    private var jdbcURL: String = "jdbc:postgresql://localhost:5432/db_poultry_test"
     private var conn: Connection
 
     init {
-        jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
         DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
         conn = DBConnect.getConnection()!!
         cleanTables(conn)
