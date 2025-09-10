@@ -50,7 +50,6 @@ sourceSets {
         kotlin.srcDirs("src/main/kotlin")
     }
     test {
-        java.srcDirs("src/test/java")
         kotlin.srcDirs("src/test/kotlin")
     }
 }
