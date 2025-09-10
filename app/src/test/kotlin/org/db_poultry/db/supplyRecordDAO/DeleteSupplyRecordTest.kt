@@ -18,8 +18,8 @@ will work if there is no data
  */
 
 class DeleteSupplyRecordTest {
-    private var jdbcURL: String = "jdbc:postgresql://localhost:5432/db_poultry_test"
-    private var conn: Connection
+    private val jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
+    private val conn: Connection
 
     init {
         DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
