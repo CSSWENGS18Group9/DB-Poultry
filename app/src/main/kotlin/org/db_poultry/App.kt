@@ -8,6 +8,7 @@ import org.db_poultry.db.cleanTables
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.theLifesaver.Backup
 import org.db_poultry.theLifesaver.Config.TL_loadConfig
+import org.db_poultry.theLifesaver.ENV
 import org.db_poultry.theLifesaver.TL.TL_firstOpen
 import org.db_poultry.theLifesaver.TL.wipe
 import java.sql.Connection
@@ -61,14 +62,8 @@ object App {
     }
 
     fun start() {
-        if (!getDotEnv()) {
-            generateErrorMessage(
-                "Error at `start()` in `App.kt`.",
-                "Dot env file has a missing variable.",
-                "Check if the dot env file has DATABASE_NAME, DATABASE_PASS, and DATABASE_PORT"
-            )
-
-            return
+        if (!getDotEnv()) { // create missing .env file in .db_poultry
+            ENV.makeENVfile()
         }
     }
 
@@ -104,7 +99,7 @@ fun main() {
     App.connect()
 
     if (config == null) {
-        cleanTables(App.getConnection());
+        cleanTables(App.getConnection())
     }
 
     // Open MainFrame (index GUI)

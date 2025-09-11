@@ -57,6 +57,21 @@ public class Variables {
         return "";
     }
 
+    public static String getENVFilePath() {
+        try {
+            return Paths.get(getHomeDirectory(), APP_FOLDER, ".env").toString();
+        } catch (Exception e) {
+            generateErrorMessage(
+                    "Error at `getENVFilePath` in `Variables`.",
+                    "FATAL. Could not resolve env file inside app folder.",
+                    "",
+                    e
+            );
+        }
+
+        return "";
+    }
+
     public static int getBackupIntervals() {
         return BACKUP_INTERVALS;
     }
