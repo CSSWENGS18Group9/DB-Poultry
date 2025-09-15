@@ -11,6 +11,9 @@ import org.db_poultry.theLifesaver.Config.TL_loadConfig
 import org.db_poultry.theLifesaver.ENV
 import org.db_poultry.theLifesaver.TL.TL_firstOpen
 import org.db_poultry.theLifesaver.TL.wipe
+import org.db_poultry.theLifesaver.Variables
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.sql.Connection
 
 object App {
@@ -19,9 +22,14 @@ object App {
     lateinit var databasePort: String
 
     fun getDotEnv(): Boolean {
+        val envPath = Variables.getENVFilePath()
+        if (!Files.exists(envPath)) { // if .env does not exist
+            return false
+        }
+
         try {
             val dotenv = Dotenv.configure()
-                .ignoreIfMissing()
+                .directory(envPath.parent.toString()) // .db_poultry folder
                 .load()
 
             databaseName = (dotenv["DATABASE_NAME"] ?: "Missing DATABASE_NAME")
@@ -37,7 +45,7 @@ object App {
             generateErrorMessage(
                 "Error at `getDotEnv()` in `App.kt`",
                 "Failed to load environment variables",
-                "In local dev, ensure .env exists in `app/src/main/resources`.",
+                "Ensure .env exists in `\"Username\"/.db_poultry`.",
                 e
             )
             return false
@@ -63,7 +71,9 @@ object App {
 
     fun start() {
         if (!getDotEnv()) { // create missing .env file in .db_poultry
-            ENV.makeENVfile()
+            println(".env not found")
+            ENV.makeENVfile() // create the .env file
+            // write the contents of .env file with empty databasePass to be set by the user
         }
     }
 

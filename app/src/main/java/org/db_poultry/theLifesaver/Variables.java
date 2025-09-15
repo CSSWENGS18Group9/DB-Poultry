@@ -1,5 +1,6 @@
 package org.db_poultry.theLifesaver;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
@@ -57,19 +58,19 @@ public class Variables {
         return "";
     }
 
-    public static String getENVFilePath() {
+    public static Path getENVFilePath() {
         try {
-            return Paths.get(getHomeDirectory(), APP_FOLDER, ".env").toString();
+            return Paths.get(getHomeDirectory(), APP_FOLDER, ".env"); // "Username"/.db_poultry
         } catch (Exception e) {
             generateErrorMessage(
                     "Error at `getENVFilePath` in `Variables`.",
-                    "FATAL. Could not resolve env file inside app folder.",
+                    "FATAL. Could not resolve .env file inside app folder.",
                     "",
                     e
             );
         }
 
-        return "";
+        return null;
     }
 
     public static int getBackupIntervals() {
