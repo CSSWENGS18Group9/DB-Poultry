@@ -25,6 +25,7 @@ public class CreateSupplyRecord {
      *                     decimal places)
      * @param consumed     the number of the supply that was consumed
      * @param retrieved    the retrieved boolean
+     * @param price        supply price
      * @return {String} if the SQL query was successful, returns the SQL query that was executed. {null} for any
      * other case.
      * <p>
@@ -40,7 +41,7 @@ public class CreateSupplyRecord {
      * {@code @zrygan}
      */
     public static String createSupplyRecord(Connection connect, int supplyTypeID, Date srDate, BigDecimal added,
-                                            BigDecimal consumed, boolean retrieved) {
+                                            BigDecimal consumed, boolean retrieved, BigDecimal price) {
 
         SupplyComplete latestRecord = ReadSupplyRecord.getLatest(connect, supplyTypeID);
 
@@ -119,7 +120,7 @@ public class CreateSupplyRecord {
 
         // if all tests pass then run the query
         try (PreparedStatement preparedStatement = connect.prepareStatement("""
-                INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (?, ?, ?, ?, ?, ?)
+                INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (?, ?, ?, ?, ?, ?, ?)
                 """)) {
 
             preparedStatement.setInt(1, supplyTypeID);
@@ -128,14 +129,15 @@ public class CreateSupplyRecord {
             preparedStatement.setBigDecimal(4, consumed);
             preparedStatement.setBigDecimal(5, currentCount);
             preparedStatement.setBoolean(6, retrieved);
+            preparedStatement.setBigDecimal(7, price);
 
             preparedStatement.executeUpdate();
 
             undoSingleton.INSTANCE.setUndoMode(undoTypes.doUndoSupplyRecord);
 
             return String.format(
-                            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES " +
-                            "(%d, '%s', %.4f, %.4f, %.4f, %b)",
+                            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES " +
+                            "(%d, '%s', %.4f, %.4f, %.4f, %b, %.4f)",
                     supplyTypeID, srDate, added, consumed, currentCount, retrieved);
         } catch (SQLException e) {
             generateErrorMessage(
