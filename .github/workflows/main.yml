@@ -80,3 +80,10 @@ jobs:
           files: app/build/libs/db-poultry-all-*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy test reports to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: build/reports
+          publish_branch: gh-pages
