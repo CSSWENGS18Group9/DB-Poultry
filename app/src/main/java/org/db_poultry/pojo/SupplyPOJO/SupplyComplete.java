@@ -26,7 +26,7 @@ public class SupplyComplete {
         this.consumed = (consumed == null) ? null : consumed.setScale(4, RoundingMode.DOWN);
         this.current = (current == null) ? null : current.setScale(4, RoundingMode.DOWN);
         this.retrieved = retrieved;
-        this.price = (price == null) ? null : price.setScale(4, RoundingMode.DOWN);
+        this.price = price;
     }
 
     public int getSupply_id() {

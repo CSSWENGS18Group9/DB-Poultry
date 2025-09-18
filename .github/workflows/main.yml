@@ -12,9 +12,9 @@ name: CI/CD (FatJar + PostgreSQL)
 
 on:
   push:
-    branches: [ main ]
+    branches: [ development ]
   pull_request:
-    branches: [ main ]
+    branches: [ development ]
 
 jobs:
   build:
@@ -65,7 +65,6 @@ jobs:
 
       - name: List app/build/libs directory
         run: ls -l app/build/libs || echo "UH OH~ app/build/libs does not exist"
-
 
       - name: Create Git tag
         run: |

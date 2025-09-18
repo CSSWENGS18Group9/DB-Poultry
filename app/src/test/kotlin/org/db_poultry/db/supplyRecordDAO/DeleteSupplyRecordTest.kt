@@ -1,10 +1,10 @@
 package org.db_poultry.db.supplyRecordDAO
 
-import org.db_poultry.App
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 import java.sql.Connection
@@ -18,11 +18,10 @@ will work if there is no data
  */
 
 class DeleteSupplyRecordTest {
-    private var jdbcURL: String
-    private var conn: Connection
+    private val jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
+    private val conn: Connection
 
     init {
-        jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
         DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
         conn = DBConnect.getConnection()!!
         cleanTables(conn)

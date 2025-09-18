@@ -1,12 +1,12 @@
 package org.db_poultry.db.supplyTypeDAO
 
-import org.db_poultry.App
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import java.sql.Connection
+
 // Test class for CreateSupplyType
 // This class tests the functionality of creating supply types in the database.
 // Restrictions include:
@@ -15,11 +15,10 @@ import java.sql.Connection
 // - Unit cannot be empty.
 
 class CreateSupplyTypeTest {
-    private var jdbcURL: String
-    private var conn: Connection
+    private val jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
+    private val conn: Connection
 
     init {
-        jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
         DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
         conn = DBConnect.getConnection()!!
         cleanTables(conn)
