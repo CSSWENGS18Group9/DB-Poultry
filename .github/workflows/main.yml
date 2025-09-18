@@ -9,6 +9,17 @@
 # LAST UPDATE:
 #   September 1, 2025
 
+# CI/CD for DB-Poultry
+# Zhean Ganituen
+# DB-Poultry Development Team
+#
+# FOR:
+#   CSSWENG, Mar Hererra
+#   STSWENG, Dr. Alvin Alon
+#
+# LAST UPDATE:
+#   September 18, 2025
+
 name: CI/CD (FatJar + PostgreSQL)
 
 on:
@@ -57,6 +68,13 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
 
+      - name: Run tests
+        run: ./gradlew test --info --stacktrace
+        env:
+          DB_URL: jdbc:postgresql://localhost:5432/db_poultry_test
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
+
       - name: Build project (with fatJar)
         run: ./gradlew clean fatJar
         env:
@@ -82,7 +100,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Prepare test report directory
+        if: always()
+        run: |
+          if [ ! -d build/reports/tests/test ]; then
+            mkdir -p build/reports/tests/test
+            echo "<h1>No test report available</h1><p>Build failed before tests ran.</p>" > build/reports/tests/test/index.html
+          fi
+
       - name: Deploy JUnit test reports to GitHub Pages
+        if: always()
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
