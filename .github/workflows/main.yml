@@ -26,7 +26,7 @@ jobs:
         image: postgres:14
         env:
           DATABASE_NAME: db_poultry_test
-          DATABASE_NAME: postgres
+          DATABASE_PASS: postgres
           DATABASE_PORT: 5432
         ports:
           - 5432:5432
@@ -62,7 +62,7 @@ jobs:
         env:
           DB_URL: jdbc:postgresql://localhost:5432/db_poultry_test
           DATABASE_NAME: db_poultry_test
-          DATABASE_NAME: postgres
+          DATABASE_PASS: postgres
           DATABASE_PORT: 5432
 
       - name: Build project (with fatJar)
@@ -70,7 +70,7 @@ jobs:
         env:
           DB_URL: jdbc:postgresql://localhost:5432/db_poultry_test
           DATABASE_NAME: db_poultry_test
-          DATABASE_NAME: postgres
+          DATABASE_PASS: postgres
           DATABASE_PORT: 5432
 
       - name: List app/build/libs directory
@@ -86,8 +86,8 @@ jobs:
       - name: Prepare test report directory
         if: always()
         run: |
-          if [ ! -d build/reports/tests/test ]; then
-            mkdir -p build/reports/tests/test
+          if [ ! -d app/build/reports/tests/test ]; then
+            mkdir -p app/build/reports/tests/test
             echo "<h1>No test report available</h1><p>Build failed before tests ran.</p>" > build/reports/tests/test/index.html
           fi
 
@@ -96,5 +96,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build/reports/tests/test
+          publish_dir: app/build/reports/tests/test
           publish_branch: gh-pages
