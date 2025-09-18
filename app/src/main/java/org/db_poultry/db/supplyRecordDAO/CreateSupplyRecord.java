@@ -25,7 +25,7 @@ public class CreateSupplyRecord {
      *                     decimal places)
      * @param consumed     the number of the supply that was consumed
      * @param retrieved    the retrieved boolean
-     * @param price        supply price
+     * @param price        the price of a single unit of the supply type
      * @return {String} if the SQL query was successful, returns the SQL query that was executed. {null} for any
      * other case.
      * <p>
@@ -42,7 +42,6 @@ public class CreateSupplyRecord {
      */
     public static String createSupplyRecord(Connection connect, int supplyTypeID, Date srDate, BigDecimal added,
                                             BigDecimal consumed, boolean retrieved, BigDecimal price) {
-
         SupplyComplete latestRecord = ReadSupplyRecord.getLatest(connect, supplyTypeID);
 
         BigDecimal currentCount;
@@ -134,11 +133,13 @@ public class CreateSupplyRecord {
             preparedStatement.executeUpdate();
 
             undoSingleton.INSTANCE.setUndoMode(undoTypes.doUndoSupplyRecord);
-
+            
+            // FIXME: @justinching30 ensure no error here
+            // there was no price variable in the insert function call
             return String.format(
                             "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES " +
                             "(%d, '%s', %.4f, %.4f, %.4f, %b, %.4f)",
-                    supplyTypeID, srDate, added, consumed, currentCount, retrieved);
+                    supplyTypeID, srDate, added, consumed, currentCount, retrieved, price);
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `createSupplyRecord()` in `createSupplyRecord.",
