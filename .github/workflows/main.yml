@@ -56,6 +56,13 @@ jobs:
 
       - name: Make gradlew executable
         run: chmod +x gradlew
+      
+      - name: Run tests
+        run: ./gradlew clean test
+        env:
+          DB_URL: jdbc:postgresql://localhost:5432/db_poultry_test
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
 
       - name: Build project (with fatJar)
         run: ./gradlew clean fatJar
