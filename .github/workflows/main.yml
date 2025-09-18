@@ -5,6 +5,7 @@
 # FOR:
 #   CSSWENG, Mar Hererra
 #   STSWENG, Dr. Alvin Alon
+#
 # LAST UPDATE:
 #   September 1, 2025
 
@@ -81,9 +82,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Deploy test reports to GitHub Pages
+      - name: Deploy JUnit test reports to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build/reports
+          publish_dir: build/reports/tests/test
           publish_branch: gh-pages
