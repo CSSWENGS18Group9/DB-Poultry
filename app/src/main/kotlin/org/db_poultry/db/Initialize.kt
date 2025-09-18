@@ -3,7 +3,7 @@ package org.db_poultry.db
 import java.sql.Connection
 import java.sql.SQLException
 import org.db_poultry.errors.generateErrorMessage
-fun cleanTables(conn: Connection?) {
+fun cleanTables(conn: Connection?, databasePass: String) {
     if (conn == null) {
         generateErrorMessage(
             "Error at `cleanTables()` in `Initialize.kt`.",
@@ -75,6 +75,13 @@ fun cleanTables(conn: Connection?) {
         "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('finisher feed', 'kg', 'src/main/resources/img/supply-img/Finisher_Feed.png')",
     )
 
+    val initUser = "CREATE USER db_poultry WITH PASSWORD ?"
+
+    val initDB = listOf(
+        "CREATE DATABASE db_poultry OWNER db_poultry;",
+        "ALTER USER db_poultry WITH SUPERUSER;"
+    )
+
     try {
         // Drop tables in reverse order
         for (table in databaseTables.keys.reversed()) {
@@ -100,6 +107,17 @@ fun cleanTables(conn: Connection?) {
         }
 
         for (query in defaultSupplyTypes) {
+            conn.createStatement().use { stmt ->
+                stmt.execute(query)
+            }
+        }
+
+        conn.prepareStatement(initUser).use { stmt ->
+            stmt.setString(1, databasePass)
+            stmt.execute()
+        }
+
+        for (query in initDB) {
             conn.createStatement().use { stmt ->
                 stmt.execute(query)
             }

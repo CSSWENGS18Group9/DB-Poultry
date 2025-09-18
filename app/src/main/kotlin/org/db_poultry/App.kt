@@ -2,6 +2,7 @@ package org.db_poultry
 
 import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
+import org.db_poultry.App.databasePass
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
@@ -104,7 +105,7 @@ fun main() {
     App.connect()
 
     if (config == null) {
-        cleanTables(App.getConnection());
+        cleanTables(App.getConnection(), databasePass);
     }
 
     // Open MainFrame (index GUI)
