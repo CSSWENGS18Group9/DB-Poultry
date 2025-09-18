@@ -13,9 +13,11 @@ name: CI/CD (FatJar + PostgreSQL)
 
 on:
   push:
-    branches: [ development ]
+    branches-ignore:
+      - main
   pull_request:
-    branches: [ development ]
+    branches-ignore:
+      - main
 
 jobs:
   build:
