@@ -54,11 +54,6 @@ jobs:
         env:
           DB_URL: jdbc:postgresql://localhost:5432/db_poultry_test
 
-      - name: Build project (via FatJar)
-        run: ./gradlew clean fatJar
-        env:
-          DB_URL: jdbc:postgresql://localhost:5432/db_poultry_test
-
       - name: Prepare test report directory
         if: always()
         run: |
@@ -94,7 +89,7 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Build project (FatJar)
+      - name: Build project (via FatJar)
         run: ./gradlew clean fatJar
 
       - name: Extract version from Gradle
