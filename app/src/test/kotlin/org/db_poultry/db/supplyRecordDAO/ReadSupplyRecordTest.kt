@@ -35,7 +35,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -44,7 +45,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("300.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -53,7 +55,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val supplyCompList = ReadSupplyRecord.getFromDate(conn, date)
@@ -102,7 +105,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("300.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -111,7 +115,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         // I changed this from (conn, date) to (conn, oldDate)
@@ -138,7 +143,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -147,7 +153,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("300.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -156,7 +163,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val supplyCompList = ReadSupplyRecord.getFromName(conn, "test_1")
@@ -212,7 +220,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("300.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -221,7 +230,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val supplyCompList = ReadSupplyRecord.getFromName(conn, "Test_1")
@@ -246,7 +256,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -255,7 +266,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("300.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -264,7 +276,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val supplyComp = ReadSupplyRecord.getOneByDateAndName(conn, date, "test_1")
@@ -291,7 +304,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -300,7 +314,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("300.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -309,7 +324,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -318,7 +334,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("600.00"),
             BigDecimal("60.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val supplyComp = ReadSupplyRecord.getOneByDateAndName(conn, date, "test_1")
@@ -365,7 +382,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -374,7 +392,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("300.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -383,7 +402,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val supplyComp = ReadSupplyRecord.getOneByDateAndName(conn, oldDate, "test_2")
@@ -408,7 +428,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -417,7 +438,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("300.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -426,7 +448,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "test_1")
@@ -453,7 +476,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -462,7 +486,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("300.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -471,7 +496,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -480,7 +506,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("600.00"),
             BigDecimal("60.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "test_1")
@@ -527,7 +554,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -536,7 +564,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("300.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -545,7 +574,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val supplyComp = ReadSupplyRecord.getMostRecentFromID(conn, 1)
@@ -572,7 +602,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -581,7 +612,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("300.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -590,7 +622,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -599,7 +632,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("600.00"),
             BigDecimal("60.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val supplyComp = ReadSupplyRecord.getMostRecentFromID(conn, 1)
@@ -646,7 +680,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -655,7 +690,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("300.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -664,7 +700,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val oldCount = ReadSupplyRecord.getCurrentCountForDate(conn, 1, oldDate)
@@ -689,7 +726,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -698,7 +736,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("300.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -707,7 +746,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -716,7 +756,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("600.00"),
             BigDecimal("60.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val oldCount = ReadSupplyRecord.getCurrentCountForDate(conn, 1, oldDate)
@@ -727,7 +768,7 @@ class ReadSupplyRecordTest {
     }
 
     @Test
-    fun testGetMostRecenCountWithOnlyAdd() {
+    fun testGetMostRecentountWithOnlyAdd() {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
@@ -741,7 +782,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -750,7 +792,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("0.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -759,7 +802,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("300.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -768,7 +812,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("0.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val currCount = ReadSupplyRecord.getCurrentCountForDate(conn, 2, date)
@@ -792,7 +837,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("0.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -801,7 +847,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("0.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -810,7 +857,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("0.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -819,7 +867,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("0.00"),
             BigDecimal("70.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -828,7 +877,8 @@ class ReadSupplyRecordTest {
             newDate,
             BigDecimal("0.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
 
@@ -853,7 +903,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("0.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -862,7 +913,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("0.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -871,7 +923,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("0.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -880,7 +933,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("0.00"),
             BigDecimal("70.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -889,7 +943,8 @@ class ReadSupplyRecordTest {
             newDate,
             BigDecimal("0.00"),
             BigDecimal("1000.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
 
@@ -899,7 +954,7 @@ class ReadSupplyRecordTest {
     }
 
     @Test
-    fun testGetMostRecenCountWithRetrived() {
+    fun testGetMostRecentCountWithRetrived() {
         val newDate = Date.valueOf("2025-03-02")
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
@@ -914,7 +969,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("0.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -923,7 +979,8 @@ class ReadSupplyRecordTest {
             oldDate,
             BigDecimal("200.00"),
             BigDecimal("0.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -932,7 +989,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("0.00"),
             BigDecimal("30.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -941,7 +999,8 @@ class ReadSupplyRecordTest {
             date,
             BigDecimal("0.00"),
             BigDecimal("70.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -950,7 +1009,8 @@ class ReadSupplyRecordTest {
             newDate,
             BigDecimal("0.00"),
             BigDecimal("10.00"),
-            true
+            true,
+            BigDecimal("50.00")
         )
 
 
