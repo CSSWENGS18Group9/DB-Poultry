@@ -3,16 +3,90 @@ package org.db_poultry.db
 import java.sql.Connection
 import java.sql.SQLException
 import org.db_poultry.errors.generateErrorMessage
-fun cleanTables(conn: Connection?, databasePass: String) {
+fun cleanTables(conn: Connection?) {
+    if (conn == null) {
+        generateErrorMessage("Error at `cleanTables()` in `Initialize.kt`",
+            "Connection is null.",
+            "Ensure a connection exists."
+        )
+
+        return
+    }
+
+    val indices = listOf(
+        "DROP INDEX IF EXISTS idx_flock_R_starting_date",
+        "DROP INDEX IF EXISTS idx_flock_details_R_flockid_fddate",
+        "DROP INDEX IF EXISTS idx_flock_R_details_flockid"
+    )
+
+    val tables = listOf(
+        "Supply_Record",
+        "Supply_Type",
+        "Flock_Details",
+        "Flock"
+    )
+
+    val DBandUser = listOf(
+        "DROP DATABASE IF EXISTS db_poultry",
+        "DROP USER IF EXISTS db_poultry"
+    )
+
+    try {
+
+        for (query in indices) {
+            conn.createStatement().use { stmt ->
+                stmt.execute(query)
+            }
+        }
+
+        for (query in tables) {
+            conn.createStatement().use { stmt ->
+                stmt.execute(query)
+            }
+        }
+
+        for (query in DBandUser) {
+            conn.createStatement().use { stmt ->
+                stmt.execute(query)
+            }
+        }
+
+    } catch (e: SQLException) {
+        generateErrorMessage(
+            "Error at `initTables()` in `Initialize.kt`",
+            "Creating tables caused an error.",
+            "",
+            e
+        )
+    }
+
+}
+
+fun initTables() {
+    val jdbcUrl = "jdbc:postgresql://localhost:5432/postgres"
+
+    DBConnect.init(jdbcUrl, "postgres", "password") // default
+
+    val conn = DBConnect.getConnection() // connect to default DB
+
     if (conn == null) {
         generateErrorMessage(
-            "Error at `cleanTables()` in `Initialize.kt`.",
-            "Connection is null.",
-            "Ensure valid connection is given."
+            "Error at `initTables()` in `Initialize.kt`.",
+            "Default connection is null.",
+            "Ensure valid connection exists."
         )
         return
     }
 
+    // Create user and DB_POULTRY DB
+    val initUserDB = listOf(
+        "CREATE USER db_poultry WITH PASSWORD 'dbp1174'",
+        "CREATE DATABASE db_poultry OWNER db_poultry;",
+        "GRANT ALL PRIVILEGES ON DATABASE db_poultry TO db_poultry;",
+        "ALTER USER db_poultry WITH SUPERUSER;"
+    )
+
+    // Create tables
     val databaseTables = linkedMapOf(
         "Flock" to """
             Flock_ID SERIAL PRIMARY KEY,
@@ -48,6 +122,7 @@ fun cleanTables(conn: Connection?, databasePass: String) {
         """.trimIndent(),
     )
 
+    // Create indices
     val indexQueries = listOf(
         "CREATE INDEX idx_flock_R_starting_date ON Flock (Starting_Date);",
 
@@ -75,19 +150,11 @@ fun cleanTables(conn: Connection?, databasePass: String) {
         "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('finisher feed', 'kg', 'src/main/resources/img/supply-img/Finisher_Feed.png')",
     )
 
-    val initUser = "CREATE USER db_poultry WITH PASSWORD ?"
-
-    val initDB = listOf(
-        "CREATE DATABASE db_poultry OWNER db_poultry;",
-        "ALTER USER db_poultry WITH SUPERUSER;"
-    )
-
     try {
-        // Drop tables in reverse order
-        for (table in databaseTables.keys.reversed()) {
-            val dropQuery = "DROP TABLE IF EXISTS $table CASCADE"
+        // Create user and DB
+        for (query in initUserDB) {
             conn.createStatement().use { stmt ->
-                stmt.execute(dropQuery)
+                stmt.execute(query)
             }
         }
 
@@ -112,23 +179,15 @@ fun cleanTables(conn: Connection?, databasePass: String) {
             }
         }
 
-        conn.prepareStatement(initUser).use { stmt ->
-            stmt.setString(1, databasePass)
-            stmt.execute()
-        }
-
-        for (query in initDB) {
-            conn.createStatement().use { stmt ->
-                stmt.execute(query)
-            }
-        }
-
     } catch (e: SQLException) {
         generateErrorMessage(
-            "Error at `cleanTables()` in `Initialize.kt`",
-            "Cleaning tables caused an error.",
+            "Error at `initTables()` in `Initialize.kt`",
+            "Creating tables caused an error.",
             "",
             e
         )
     }
+
+    conn.close()
+
 }

@@ -2,10 +2,13 @@ package org.db_poultry
 
 import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
+import org.db_poultry.App.databaseName
 import org.db_poultry.App.databasePass
+import org.db_poultry.App.databasePort
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
+import org.db_poultry.db.initTables
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.theLifesaver.Backup
 import org.db_poultry.theLifesaver.Config.TL_loadConfig
@@ -102,11 +105,11 @@ fun main() {
             Backup.TL_checkLastBackupDate(config, App.databaseName, App.databasePass)
     }
 
-    App.connect()
-
     if (config == null) {
-        cleanTables(App.getConnection(), databasePass);
+        initTables()
     }
+
+    App.connect()
 
     // Open MainFrame (index GUI)
     App.openMainFrame()
@@ -116,6 +119,7 @@ fun main() {
     // ==================================================
     if (__DO_WIPE) {
         App.getConnection()?.close()
+        cleanTables(App.getConnection());
         wipe(App.databaseName)
     }
 }
