@@ -1,26 +1,16 @@
-# CI/CD for DB-Poultry
-# Zhean Ganituen
-# DB-Poultry Development Team
-#
-# FOR:
-#   CSSWENG, Mar Hererra
-#   STSWENG, Dr. Alvin Alon
-#
-# LAST UPDATE:
-#   September 1, 2025
-
 name: CI/CD (FatJar + PostgreSQL)
 
 on:
   push:
-    branches-ignore:
-      - main
+    branches: 
+      - '**'
   pull_request:
-    branches-ignore:
-      - main
+    branches:
+      - '**'
 
 jobs:
-  build:
+  ci:
+    name: Continuous Integration
     runs-on: ubuntu-latest
 
     services:
@@ -58,26 +48,16 @@ jobs:
 
       - name: Make gradlew executable
         run: chmod +x gradlew
-      
+
       - name: Run tests
         run: ./gradlew clean test
         env:
           DB_URL: jdbc:postgresql://localhost:5432/db_poultry_test
 
-      - name: Build project (with fatJar)
+      - name: Build project (via FatJar)
         run: ./gradlew clean fatJar
         env:
           DB_URL: jdbc:postgresql://localhost:5432/db_poultry_test
-
-      - name: List app/build/libs directory
-        run: ls -l app/build/libs || echo "UH OH~ app/build/libs does not exist"
-
-      - name: Create Git tag
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git tag v5.0.${{ github.run_number }}
-          git push origin v5.0.${{ github.run_number }}
 
       - name: Prepare test report directory
         if: always()
@@ -94,3 +74,41 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: app/build/reports/tests/test
           publish_branch: gh-pages
+
+  cd:
+    name: Continuous Deployment
+    runs-on: ubuntu-latest
+    # ASSERT:
+    #   CI succeeds
+    #   on main branch
+    needs: ci        
+    if: github.ref == 'refs/heads/main'   
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build project (FatJar)
+        run: ./gradlew clean fatJar
+
+      - name: Extract version from Gradle
+        id: get_version
+        run: |
+          VERSION=$(./gradlew properties -q | grep "^version:" | awk '{print $2}')
+          echo "version=$VERSION" >> $GITHUB_ENV
+          echo "Detected version: $VERSION"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.version }}
+          name: Release v${{ env.version }}
+          files: app/build/libs/*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
