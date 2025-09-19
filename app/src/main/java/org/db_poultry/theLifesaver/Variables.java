@@ -60,7 +60,7 @@ public class Variables {
 
     public static Path getENVFilePath() {
         try {
-            return Paths.get(getHomeDirectory(), APP_FOLDER, ".env"); // "Username"/.db_poultry
+            return Paths.get(getHomeDirectory(), APP_FOLDER, ".env"); // "Username"/.db_poultry/.env
         } catch (Exception e) {
             generateErrorMessage(
                     "Error at `getENVFilePath` in `Variables`.",

@@ -1,10 +1,7 @@
 package org.db_poultry.theLifesaver;
 
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
@@ -34,6 +31,30 @@ public class ENV {
                     "",
                     e
             );
+
+        } catch (IOException e) {
+            generateErrorMessage(
+                    "Error at `makeENVfile` in `ENV`",
+                    "FATAL. Cannot make file due to IOException.",
+                    "",
+                    e
+            );
+
+        }
+    }
+
+    public static void writeENVfile() {
+        String content = """
+                DATABASE_NAME=db_poultry
+                DATABASE_PASS=
+                DATABASE_PORT=5432
+                """;
+
+        try {
+
+            Path envPath = Variables.getENVFilePath();
+
+            Files.writeString(envPath, content, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
         } catch (IOException e) {
             generateErrorMessage(

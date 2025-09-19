@@ -13,7 +13,6 @@ import org.db_poultry.theLifesaver.TL.TL_firstOpen
 import org.db_poultry.theLifesaver.TL.wipe
 import org.db_poultry.theLifesaver.Variables
 import java.nio.file.Files
-import java.nio.file.Paths
 import java.sql.Connection
 
 object App {
@@ -73,7 +72,7 @@ object App {
         if (!getDotEnv()) { // create missing .env file in .db_poultry
             println(".env not found")
             ENV.makeENVfile() // create the .env file
-            // write the contents of .env file with empty databasePass to be set by the user
+            ENV.writeENVfile() // write contents with filled-in db nme and port. password to be filled-in by user
         }
     }
 
