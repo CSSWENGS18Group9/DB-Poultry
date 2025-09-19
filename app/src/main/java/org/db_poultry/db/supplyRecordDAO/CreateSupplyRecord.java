@@ -119,7 +119,7 @@ public class CreateSupplyRecord {
 
         // if all tests pass then run the query. add price here too
         try (PreparedStatement preparedStatement = connect.prepareStatement("""
-                INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (?, ?, ?, ?, ?, ?)
+                INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (?, ?, ?, ?, ?, ?, ?)
                 """)) {
 
             preparedStatement.setInt(1, supplyTypeID);
@@ -133,13 +133,11 @@ public class CreateSupplyRecord {
             preparedStatement.executeUpdate();
 
             undoSingleton.INSTANCE.setUndoMode(undoTypes.doUndoSupplyRecord);
-            
-            // FIXME: @justinching30 ensure no error here
-            // there was no price variable in the insert function call
+
             return String.format(
-                            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES " +
+                            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES " +
                             "(%d, '%s', %.4f, %.4f, %.4f, %b, %.4f)",
-                    supplyTypeID, srDate, added, consumed, currentCount, retrieved, price); // pass in price too later also %.4f
+                    supplyTypeID, srDate, added, consumed, currentCount, retrieved, price);
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `createSupplyRecord()` in `createSupplyRecord.",
