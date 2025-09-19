@@ -134,7 +134,7 @@
 //
 //        undoSingleton.setIsFeedRetrieval(true)
 //        undoSingleton.setUndoMode(undoTypes.doUndoSupplyRecord)
-//
+//        @FIXME: missing price argument
 //        val results = feedSupplyTypeIDList.map { supplyTypeID ->
 //            CreateSupplyRecord.createSupplyRecord(getConnection(), supplyTypeID,
 //                sqlDate, BigDecimal.ZERO, BigDecimal.ZERO, true)

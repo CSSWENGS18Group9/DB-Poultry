@@ -126,6 +126,7 @@
 //        val added = BigDecimal(amountAdd)
 //        val consumed = BigDecimal(amountDel)
 //
+//          @FIXME: missing price argument
 //        val result = createSupplyRecord(getConnection(), supplyID, sqlDate, added, consumed, false)
 //        if (result != null) {
 //            undoSingleton.setUndoMode(undoTypes.doUndoSupplyRecord)
