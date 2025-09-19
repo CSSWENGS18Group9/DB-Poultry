@@ -5,6 +5,7 @@
 # FOR:
 #   CSSWENG, Mar Hererra
 #   STSWENG, Dr. Alvin Alon
+#
 # LAST UPDATE:
 #   September 1, 2025
 
@@ -12,9 +13,11 @@ name: CI/CD (FatJar + PostgreSQL)
 
 on:
   push:
-    branches: [ development ]
+    branches-ignore:
+      - main
   pull_request:
-    branches: [ development ]
+    branches-ignore:
+      - main
 
 jobs:
   build:
@@ -24,9 +27,9 @@ jobs:
       postgres:
         image: postgres:14
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
           POSTGRES_DB: db_poultry_test
+          POSTGRES_USER: db_poultry_test
+          POSTGRES_PASSWORD: db_poultry_test
         ports:
           - 5432:5432
         options: >-
@@ -55,13 +58,16 @@ jobs:
 
       - name: Make gradlew executable
         run: chmod +x gradlew
+      
+      - name: Run tests
+        run: ./gradlew clean test
+        env:
+          DB_URL: jdbc:postgresql://localhost:5432/db_poultry_test
 
       - name: Build project (with fatJar)
         run: ./gradlew clean fatJar
         env:
           DB_URL: jdbc:postgresql://localhost:5432/db_poultry_test
-          DB_USERNAME: postgres
-          DB_PASSWORD: postgres
 
       - name: List app/build/libs directory
         run: ls -l app/build/libs || echo "UH OH~ app/build/libs does not exist"
@@ -73,10 +79,18 @@ jobs:
           git tag v5.0.${{ github.run_number }}
           git push origin v5.0.${{ github.run_number }}
 
-      - name: Create GitHub Release and upload FatJar
-        uses: softprops/action-gh-release@v2
+      - name: Prepare test report directory
+        if: always()
+        run: |
+          mkdir -p app/build/reports/tests/test
+          if [ ! -f app/build/reports/tests/test/index.html ]; then
+            echo "<h1>No test report available</h1><p>Build failed before tests ran.</p>" > app/build/reports/tests/test/index.html
+          fi
+
+      - name: Deploy JUnit test reports to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          tag_name: v5.0.${{ github.run_number }}
-          files: app/build/libs/db-poultry-all-*.jar
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: app/build/reports/tests/test
+          publish_branch: gh-pages
