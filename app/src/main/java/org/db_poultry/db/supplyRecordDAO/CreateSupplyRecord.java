@@ -1,9 +1,6 @@
 package org.db_poultry.db.supplyRecordDAO;
 
-import org.db_poultry.db.supplyTypeDAO.ReadSupplyType;
-import org.db_poultry.pojo.SupplyPOJO.SupplyComplete;
-import org.db_poultry.util.undoSingleton;
-import org.db_poultry.util.undoTypes;
+import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -12,7 +9,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
+import org.db_poultry.db.supplyTypeDAO.ReadSupplyType;
+import org.db_poultry.pojo.SupplyPOJO.SupplyComplete;
 
 public class CreateSupplyRecord {
     /**
@@ -117,6 +115,31 @@ public class CreateSupplyRecord {
             return null;
         }
 
+        // Check price is not negative
+        if (verify_price(price)) {
+            generateErrorMessage(
+                "Error at `createSupplyRecord()` in `CreateSupplyRecord`.",
+                "Price value is invalid.",
+                "Make sure the price is not negative.",
+                null
+            );
+            return null;
+        }
+
+        // Check price precision like other numeric values
+        if (verify_precision(price)) {
+            generateErrorMessage(
+                "Error at `createSupplyRecord()` in CreateSupplyRecord.",
+                "The precision of price is greater than 4.",
+                "Ensure that the precision of price is at most 4.",
+                null
+            );
+            return null;
+        }
+
+        // Scale price to 4 decimal places before insert
+        price = price.setScale(4, RoundingMode.DOWN);
+
         // if all tests pass then run the query. add price here too
         try (PreparedStatement preparedStatement = connect.prepareStatement("""
                 INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -209,6 +232,16 @@ public class CreateSupplyRecord {
 
         // Check if consuming more than what's currently available
         return current.compareTo(BigDecimal.ZERO) < 0;
+    }
+
+    /**
+     * Validates the price value to ensure the value is not negative
+     *
+     * @param price the price to validate
+     * @return {true} if the price is invalid, {false} otherwise
+     */
+    private static boolean verify_price(BigDecimal price) {
+        return price == null || price.compareTo(BigDecimal.ZERO) < 0;
     }
 
 }
