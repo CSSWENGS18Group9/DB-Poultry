@@ -137,7 +137,7 @@ public class CreateSupplyRecord {
             // FIXME: @justinching30 ensure no error here
             // there was no price variable in the insert function call
             return String.format(
-                            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES " +
+                            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES " +
                             "(%d, '%s', %.4f, %.4f, %.4f, %b)",
                     supplyTypeID, srDate, added, consumed, currentCount, retrieved); // pass in price too later also %.4f
         } catch (SQLException e) {
