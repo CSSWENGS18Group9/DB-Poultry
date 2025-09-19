@@ -54,21 +54,15 @@ jobs:
         env:
           DB_URL: jdbc:postgresql://localhost:5432/db_poultry_test
 
-      - name: Prepare test report directory
-        if: always()
-        run: |
-          mkdir -p app/build/reports/tests/test
-          if [ ! -f app/build/reports/tests/test/index.html ]; then
-            echo "<h1>No test report available</h1><p>Build failed before tests ran.</p>" > app/build/reports/tests/test/index.html
-          fi
+      - name: Run tests
+        run: ./gradlew test
 
-      - name: Deploy JUnit test reports to GitHub Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: app/build/reports/tests/test
-          publish_branch: gh-pages
+          name: test-report
+          path: app/build/reports/tests/test
+
 
   cd:
     name: Continuous Deployment
