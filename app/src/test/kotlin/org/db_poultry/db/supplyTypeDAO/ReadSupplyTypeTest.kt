@@ -28,9 +28,12 @@ class ReadSupplyTypeTest {
     private val conn: Connection
 
     init {
+        initDBAndUser()
+
         DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
         conn = DBConnect.getConnection()!!
-        cleanTables(conn)
+
+        initTables(conn)
     }
 
     // - getAllSupplyTypes should return an empty list if no supply types exist.
