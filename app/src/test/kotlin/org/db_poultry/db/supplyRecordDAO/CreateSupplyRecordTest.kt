@@ -32,10 +32,11 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-01-01', 100.0000, 50.0000, 50.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-01-01', 100.0000, 50.0000, 50.0000, false, 50.0000)",
             result
         )
     }
@@ -50,7 +51,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
 
@@ -69,7 +71,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val result = CreateSupplyRecord.createSupplyRecord(
@@ -78,7 +81,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
 
@@ -99,7 +103,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val result = CreateSupplyRecord.createSupplyRecord(
@@ -108,12 +113,13 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (2, '2025-01-02', 100.0000, 50.0000, 50.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (2, '2025-01-02', 100.0000, 50.0000, 50.0000, 50.0000)",
             result
         )
     }
@@ -133,7 +139,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val result = CreateSupplyRecord.createSupplyRecord(
@@ -142,7 +149,8 @@ class CreateSupplyRecordTest {
             oldDate,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
 
@@ -164,7 +172,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val result = CreateSupplyRecord.createSupplyRecord(
@@ -173,12 +182,13 @@ class CreateSupplyRecordTest {
             oldDate,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (2, '2025-01-02', 100.0000, 50.0000, 50.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (2, '2025-01-02', 100.0000, 50.0000, 50.0000, false, 50.0000)",
             result,
         )
     }
@@ -196,11 +206,12 @@ class CreateSupplyRecordTest {
             dateOne,
             BigDecimal("50.00"),
             BigDecimal("0.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-02-02', 50.0000, 0.0000, 50.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-02-02', 50.0000, 0.0000, 50.0000, false, 50.0000)",
             resultOne
         )
 
@@ -210,12 +221,13 @@ class CreateSupplyRecordTest {
             dateTwo,
             BigDecimal("0.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-02-03', 0.0000, 50.0000, 0.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-02-03', 0.0000, 50.0000, 0.0000, false, 50.0000)",
             resultTwo
         )
     }
@@ -232,7 +244,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("0.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
 
@@ -251,12 +264,13 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("0.00"),
             BigDecimal("0.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         assertEquals(
             result,
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-01-01', 0.0000, 0.0000, 0.0000, false)"
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-01-01', 0.0000, 0.0000, 0.0000, false, 50.0000)"
         )
     }
 
@@ -272,7 +286,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("10.00"),
             BigDecimal("-50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         assertNull(resultOne)
@@ -283,7 +298,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("-50.00"),
             BigDecimal("10.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         assertNull(resultTwo)
@@ -294,7 +310,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("-50.00"),
             BigDecimal("-10.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         assertNull(resultThree)
@@ -313,7 +330,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("100.00005"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         assertNull(resultOne)
@@ -331,11 +349,12 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("100"),
             BigDecimal("50"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-01-01', 100.0000, 50.0000, 50.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-01-01', 100.0000, 50.0000, 50.0000, false, 50.0000)",
             resultOne
         )
     }
