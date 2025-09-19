@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "org.db_poultry"
-version = "4.0"
+version = "5.0"
 val appMainClass = "org.db_poultry.AppKt"
 
 application {
