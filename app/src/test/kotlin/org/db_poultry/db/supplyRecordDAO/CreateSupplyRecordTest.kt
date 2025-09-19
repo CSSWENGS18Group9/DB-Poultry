@@ -123,7 +123,7 @@ class CreateSupplyRecordTest {
 
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (2, '2025-01-02', 100.0000, 50.0000, 50.0000, 50.0000)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (2, '2025-01-02', 100.0000, 50.0000, 50.0000, false, 50.0000)",
             result
         )
     }
@@ -241,7 +241,7 @@ class CreateSupplyRecordTest {
             "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-02-01', 100.0000, 50.0000, 50.0000, false, 45.0000)",
             result
         )
-        
+
     }
 
     // ZERO INPUT TESTS
@@ -508,10 +508,10 @@ class CreateSupplyRecordTest {
             conn,
             1,
             date,
-            BigDecimal("3210987654321.00.00005"),
-            BigDecimal("3210987654321.00.00005"),
+            BigDecimal("3210987654321.0000005"),
+            BigDecimal("3210987654321.0000005"),
             false,
-            BigDecimal("3210987654321.00.00005")
+            BigDecimal("3210987654321.0000005")
         )
 
         assertNull(resultFour)
