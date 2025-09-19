@@ -2,12 +2,10 @@ package org.db_poultry
 
 import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
-import org.db_poultry.App.databaseName
-import org.db_poultry.App.databasePass
-import org.db_poultry.App.databasePort
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
+import org.db_poultry.db.initDBAndUser
 import org.db_poultry.db.initTables
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.theLifesaver.Backup
@@ -106,9 +104,14 @@ fun main() {
     }
 
     if (config == null) {
-        initTables()
+        initDBAndUser()
+        println("initialized DB and User")
+        App.connect()
+        println("Connecting to DB_Poultry")
+        initTables(App.getConnection())
     }
 
+    println("passed initialization")
     App.connect()
 
     // Open MainFrame (index GUI)
@@ -119,7 +122,7 @@ fun main() {
     // ==================================================
     if (__DO_WIPE) {
         App.getConnection()?.close()
-        cleanTables(App.getConnection());
+        cleanTables(App.getConnection())
         wipe(App.databaseName)
     }
 }

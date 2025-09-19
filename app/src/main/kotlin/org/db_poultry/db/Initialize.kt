@@ -3,6 +3,11 @@ package org.db_poultry.db
 import java.sql.Connection
 import java.sql.SQLException
 import org.db_poultry.errors.generateErrorMessage
+import kotlin.collections.component1
+import kotlin.collections.component2
+import kotlin.collections.iterator
+import kotlin.use
+
 fun cleanTables(conn: Connection?) {
     if (conn == null) {
         generateErrorMessage("Error at `cleanTables()` in `Initialize.kt`",
@@ -62,7 +67,7 @@ fun cleanTables(conn: Connection?) {
 
 }
 
-fun initTables() {
+fun initDBAndUser() {
     val jdbcUrl = "jdbc:postgresql://localhost:5432/postgres"
 
     DBConnect.init(jdbcUrl, "postgres", "password") // default
@@ -71,7 +76,7 @@ fun initTables() {
 
     if (conn == null) {
         generateErrorMessage(
-            "Error at `initTables()` in `Initialize.kt`.",
+            "Error at `initDBAndUser()` in `Initialize.kt`.",
             "Default connection is null.",
             "Ensure valid connection exists."
         )
@@ -80,11 +85,49 @@ fun initTables() {
 
     // Create user and DB_POULTRY DB
     val initUserDB = listOf(
+        "DROP DATABASE IF EXISTS db_poultry;",
+        "DROP USER IF EXISTS db_poultry;",
         "CREATE USER db_poultry WITH PASSWORD 'dbp1174'",
         "CREATE DATABASE db_poultry OWNER db_poultry;",
         "GRANT ALL PRIVILEGES ON DATABASE db_poultry TO db_poultry;",
         "ALTER USER db_poultry WITH SUPERUSER;"
     )
+
+    try {
+        conn.autoCommit = true
+
+        // Create user and DB
+        for (query in initUserDB) {
+            conn.createStatement().use { stmt ->
+                stmt.execute(query)
+            }
+        }
+
+        conn.autoCommit = false
+
+    } catch (e: SQLException) {
+        generateErrorMessage(
+            "Error at `initDBAndUser()` in `Initialize.kt`",
+            "Creating user and/or database caused an error.",
+            "",
+            e
+        )
+    }
+
+    conn.close()
+
+}
+
+fun initTables(conn: Connection?) {
+
+    if (conn == null) {
+        generateErrorMessage(
+            "Error at `initTables()` in `Initialize.kt`.",
+            "Connection to db_poultry is null.",
+            "Ensure valid connection exists."
+        )
+        return
+    }
 
     // Create tables
     val databaseTables = linkedMapOf(
@@ -151,13 +194,6 @@ fun initTables() {
     )
 
     try {
-        // Create user and DB
-        for (query in initUserDB) {
-            conn.createStatement().use { stmt ->
-                stmt.execute(query)
-            }
-        }
-
         // Create tables in original order
         for ((table, columns) in databaseTables) {
             val createQuery = "CREATE TABLE $table ($columns)"
@@ -178,16 +214,12 @@ fun initTables() {
                 stmt.execute(query)
             }
         }
-
     } catch (e: SQLException) {
         generateErrorMessage(
             "Error at `initTables()` in `Initialize.kt`",
-            "Creating tables caused an error.",
+            "Creating tables in db_poultry caused an error.",
             "",
             e
         )
     }
-
-    conn.close()
-
 }
