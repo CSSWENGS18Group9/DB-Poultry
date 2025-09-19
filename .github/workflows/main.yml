@@ -1,3 +1,13 @@
+# CI/CD for DB-Poultry
+# Zhean Ganituen
+# DB-Poultry Development Team
+#
+# FOR:
+#   CSSWENG, Mar Hererra
+#   STSWENG, Dr. Alvin Alon
+# LAST UPDATE:
+#   September 20, 2025
+
 name: CI/CD (FatJar + PostgreSQL)
 
 on:
