@@ -41,7 +41,8 @@ class DeleteSupplyRecordTest {
             date,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -50,7 +51,8 @@ class DeleteSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val result = DeleteSupplyRecord.undoCreateSupplyRecord(conn)
@@ -74,7 +76,8 @@ class DeleteSupplyRecordTest {
             dateOne,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -83,7 +86,8 @@ class DeleteSupplyRecordTest {
             dateTwo,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val result = DeleteSupplyRecord.undoCreateSupplyRecord(conn)
