@@ -327,6 +327,30 @@ class CreateSupplyRecordTest {
     }
 
 
+    // RETRIVED START TEST
+    @Test
+    fun testCreateSupplyRecordWithRetrievedStart() {
+        val date = Date.valueOf("2025-01-01")
+
+        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+
+        val result = CreateSupplyRecord.createSupplyRecord(
+            conn,
+            1,
+            date,
+            BigDecimal("10.00"),
+            BigDecimal("20.00"),
+            true,
+            BigDecimal("50.00")
+        )
+
+        assertEquals(
+            result,
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-01-01', 0.0000, 0.0000, 0.0000, true, 50.0000)"
+        )
+    }
+
+
     //NUMBER CONSTRAINT TEST
 
     @Test
