@@ -41,7 +41,7 @@ public class CreateSupplyRecord {
      * {@code @zrygan}
      */
     public static String createSupplyRecord(Connection connect, int supplyTypeID, Date srDate, BigDecimal added,
-                                            BigDecimal consumed, boolean retrieved, BigDecimal price) {
+                                            BigDecimal consumed, boolean retrieved) {
         SupplyComplete latestRecord = ReadSupplyRecord.getLatest(connect, supplyTypeID);
 
         BigDecimal currentCount;
@@ -128,7 +128,7 @@ public class CreateSupplyRecord {
             preparedStatement.setBigDecimal(4, consumed);
             preparedStatement.setBigDecimal(5, currentCount);
             preparedStatement.setBoolean(6, retrieved);
-            preparedStatement.setBigDecimal(7, price);
+            // preparedStatement.setBigDecimal(7, price);
 
             preparedStatement.executeUpdate();
 
@@ -138,8 +138,8 @@ public class CreateSupplyRecord {
             // there was no price variable in the insert function call
             return String.format(
                             "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES " +
-                            "(%d, '%s', %.4f, %.4f, %.4f, %b, %.4f)",
-                    supplyTypeID, srDate, added, consumed, currentCount, retrieved, price);
+                            "(%d, '%s', %.4f, %.4f, %.4f, %b)",
+                    supplyTypeID, srDate, added, consumed, currentCount, retrieved); // pass in price too later also %.4f
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `createSupplyRecord()` in `createSupplyRecord.",
