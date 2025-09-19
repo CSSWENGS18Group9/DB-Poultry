@@ -1,8 +1,7 @@
 package org.db_poultry.db.supplyTypeDAO
 
 import org.db_poultry.db.DBConnect
-import org.db_poultry.db.cleanTables
-import org.db_poultry.db.supplyRecordDAO.CreateSupplyRecord
+import org.db_poultry.db.cleanTablesimport org.db_poultry.db.supplyRecordDAO.CreateSupplyRecord
 import org.db_poultry.db.supplyRecordDAO.ReadSupplyRecord
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull

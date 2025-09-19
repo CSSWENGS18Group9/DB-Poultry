@@ -1,8 +1,7 @@
 package org.db_poultry.db.reportDAO
 
 import org.db_poultry.db.DBConnect
-import org.db_poultry.db.cleanTables
-import org.db_poultry.db.flockDAO.CreateFlock
+import org.db_poultry.db.cleanTablesimport org.db_poultry.db.flockDAO.CreateFlock
 import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
 import org.junit.jupiter.api.Test
 import java.sql.Connection
