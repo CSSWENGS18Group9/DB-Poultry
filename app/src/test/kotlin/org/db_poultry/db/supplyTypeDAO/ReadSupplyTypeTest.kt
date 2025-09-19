@@ -169,7 +169,8 @@ class ReadSupplyTypeTest {
             Date.valueOf("2025-01-01"),
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val result = ReadSupplyType.getSupplyTypeByLastUpdate(conn)
