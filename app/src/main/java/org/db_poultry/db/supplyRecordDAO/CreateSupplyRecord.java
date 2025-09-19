@@ -25,7 +25,7 @@ public class CreateSupplyRecord {
      *                     decimal places)
      * @param consumed     the number of the supply that was consumed
      * @param retrieved    the retrieved boolean
-     * @param price        the price of a single unit of the supply type
+     * // @param price        the price of a single unit of the supply type
      * @return {String} if the SQL query was successful, returns the SQL query that was executed. {null} for any
      * other case.
      * <p>
@@ -117,9 +117,9 @@ public class CreateSupplyRecord {
             return null;
         }
 
-        // if all tests pass then run the query
+        // if all tests pass then run the query. add price here too
         try (PreparedStatement preparedStatement = connect.prepareStatement("""
-                INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (?, ?, ?, ?, ?, ?)
                 """)) {
 
             preparedStatement.setInt(1, supplyTypeID);
