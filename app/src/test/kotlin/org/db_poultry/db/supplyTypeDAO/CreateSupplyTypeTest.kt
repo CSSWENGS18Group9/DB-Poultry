@@ -1,7 +1,6 @@
 package org.db_poultry.db.supplyTypeDAO
 
 import org.db_poultry.db.DBConnect
-import org.db_poultry.db
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test

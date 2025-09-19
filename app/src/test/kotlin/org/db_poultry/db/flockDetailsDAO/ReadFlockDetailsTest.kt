@@ -1,7 +1,9 @@
 package org.db_poultry.db.flockDetailsDAO
 
 import org.db_poultry.db.DBConnect
-import org.db_poultry.db.cleanTablesimport org.db_poultry.db.flockDAO.CreateFlock
+import org.db_poultry.db.initDBAndUser
+import org.db_poultry.db.initTables
+import org.db_poultry.db.flockDAO.CreateFlock
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
