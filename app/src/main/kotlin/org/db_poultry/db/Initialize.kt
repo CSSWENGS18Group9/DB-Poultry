@@ -18,39 +18,16 @@ fun cleanTables(conn: Connection?) {
         return
     }
 
-    val indices = listOf(
-        "DROP INDEX IF EXISTS idx_flock_R_starting_date",
-        "DROP INDEX IF EXISTS idx_flock_details_R_flockid_fddate",
-        "DROP INDEX IF EXISTS idx_flock_R_details_flockid"
-    )
-
     val tables = listOf(
-        "Supply_Record",
-        "Supply_Type",
-        "Flock_Details",
-        "Flock"
-    )
-
-    val DBandUser = listOf(
-        "DROP DATABASE IF EXISTS db_poultry",
-        "DROP USER IF EXISTS db_poultry"
+        "DROP TABLE IF EXISTS Supply_Record",
+        "DROP TABLE IF EXISTS Flock_Details",
+        "DROP TABLE IF EXISTS Supply_Type",
+        "DROP TABLE IF EXISTS Flock"
     )
 
     try {
 
-        for (query in indices) {
-            conn.createStatement().use { stmt ->
-                stmt.execute(query)
-            }
-        }
-
         for (query in tables) {
-            conn.createStatement().use { stmt ->
-                stmt.execute(query)
-            }
-        }
-
-        for (query in DBandUser) {
             conn.createStatement().use { stmt ->
                 stmt.execute(query)
             }
@@ -65,14 +42,52 @@ fun cleanTables(conn: Connection?) {
         )
     }
 
+    conn.close()
+
+    println("closed db_poultry database connection")
+
+    val defaultConn = connectToDefault()
+
+    println("connected to default database")
+
+    if (defaultConn == null) {
+        generateErrorMessage(
+            "Error at `cleanTables()` in `Initialize.kt`.",
+            "Default connection is null.",
+            "Ensure valid connection exists."
+        )
+        return
+    }
+
+    val DBandUser = listOf(
+        "DROP DATABASE IF EXISTS db_poultry",
+        "DROP USER IF EXISTS db_poultry"
+    )
+
+    try {
+
+        for (query in DBandUser) {
+            defaultConn.createStatement().use { stmt ->
+                stmt.execute(query)
+            }
+        }
+
+    } catch (e: SQLException) {
+        generateErrorMessage(
+            "Error at `initTables()` in `Initialize.kt`",
+            "Creating tables caused an error.",
+            "",
+            e
+        )
+    }
+
+    defaultConn.close()
+
 }
 
 fun initDBAndUser() {
-    val jdbcUrl = "jdbc:postgresql://localhost:5432/postgres"
 
-    DBConnect.init(jdbcUrl, "postgres", "password") // default
-
-    val conn = DBConnect.getConnection() // connect to default DB
+    val conn = connectToDefault()
 
     if (conn == null) {
         generateErrorMessage(
@@ -116,6 +131,16 @@ fun initDBAndUser() {
 
     conn.close()
 
+}
+
+fun connectToDefault(): Connection? {
+    val jdbcUrl = "jdbc:postgresql://localhost:5432/postgres"
+
+    DBConnect.init(jdbcUrl, "postgres", "password") // default
+
+    val conn = DBConnect.getConnection() // connect to default DB
+
+    return conn
 }
 
 fun initTables(conn: Connection?) {
