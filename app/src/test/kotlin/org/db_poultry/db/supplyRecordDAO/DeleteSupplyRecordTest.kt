@@ -1,7 +1,9 @@
 package org.db_poultry.db.supplyRecordDAO
 
 import org.db_poultry.db.DBConnect
-import org.db_poultry.db.cleanTables
+import org.db_poultry.db.initDBAndUser
+import org.db_poultry.db.initTables
+import org.db_poultry.db.cleanAndInitTables
 import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
@@ -22,17 +24,32 @@ class DeleteSupplyRecordTest {
     private val conn: Connection
 
     init {
+        initDBAndUser()
+
         DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
         conn = DBConnect.getConnection()!!
-        cleanTables(conn)
+
+        initTables(conn)
     }
 
     @Test
     fun testDeleteRecordWithDataOne() {
         val date = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -57,6 +74,7 @@ class DeleteSupplyRecordTest {
 
         assertEquals("DELETE FROM Supply_Record ORDER BY Supply_ID DESC LIMIT 1", result)
         assertNull(ReadSupplyRecord.getOneByDateAndName(conn, date, "Test_2"))
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -64,8 +82,20 @@ class DeleteSupplyRecordTest {
         val dateOne = Date.valueOf("2025-01-03")
         val dateTwo = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -90,6 +120,6 @@ class DeleteSupplyRecordTest {
 
         assertEquals("DELETE FROM Supply_Record ORDER BY Supply_ID DESC LIMIT 1", result)
         assertNull(ReadSupplyRecord.getOneByDateAndName(conn, dateTwo, "Test_2"))
+        cleanAndInitTables(conn)
     }
-
 }

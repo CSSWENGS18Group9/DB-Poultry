@@ -7,6 +7,8 @@ import org.db_poultry.controller.DatabasePasswordNameController
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
+import org.db_poultry.db.initDBAndUser
+import org.db_poultry.db.initTables
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.theLifesaver.Backup
 import org.db_poultry.theLifesaver.Config.TL_loadConfig
@@ -119,11 +121,16 @@ fun main() {
             Backup.TL_checkLastBackupDate(config, App.databaseName, App.databasePass)
     }
 
-    App.connect()
-
     if (config == null) {
-        cleanTables(App.getConnection())
+        initDBAndUser()
+        println("initialized DB and User")
+        App.connect()
+        println("Connecting to DB_Poultry")
+        initTables(App.getConnection())
     }
+
+    println("passed initialization")
+    App.connect()
 
     // Open MainFrame (index GUI)
     App.openMainFrame()
@@ -133,6 +140,7 @@ fun main() {
     // ==================================================
     if (__DO_WIPE) {
         App.getConnection()?.close()
+        cleanTables(App.getConnection())
         wipe(App.databaseName)
     }
 }

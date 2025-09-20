@@ -1,7 +1,9 @@
 package org.db_poultry.db.flockDetailsDAO
 
 import org.db_poultry.db.DBConnect
-import org.db_poultry.db.cleanTables
+import org.db_poultry.db.initDBAndUser
+import org.db_poultry.db.initTables
+import org.db_poultry.db.cleanAndInitTables
 import org.db_poultry.db.flockDAO.CreateFlock
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -15,9 +17,12 @@ class ReadFlockDetailsTest {
     private val conn: Connection
 
     init {
+        initDBAndUser()
+
         DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
         conn = DBConnect.getConnection()!!
-        cleanTables(conn)
+
+        initTables(conn)
     }
 
     @Test
@@ -40,6 +45,7 @@ class ReadFlockDetailsTest {
         Assertions.assertEquals(1, result.flockId)
         assertEquals(dateThree, result.fdDate)
         Assertions.assertEquals(15, result.depletedCount)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -67,6 +73,7 @@ class ReadFlockDetailsTest {
             conn, 1
         )
         Assertions.assertEquals(30, result)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -97,6 +104,7 @@ class ReadFlockDetailsTest {
         )
 
         Assertions.assertEquals(15, result)
+        cleanAndInitTables(conn)
     }
 
     //Test getMostRecent(
@@ -128,6 +136,7 @@ class ReadFlockDetailsTest {
 
         assertEquals(dateThree, result.fdDate)
         assertEquals(15, result.depletedCount)
+        cleanAndInitTables(conn)
     }
 
 
@@ -138,11 +147,12 @@ class ReadFlockDetailsTest {
         val result = ReadFlockDetails.getMostRecent(conn, dateFlock)
 
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 
     // TEST FOR public static List<FlockDetails> getFlockDetailsFromDate(Connection conn, Date flockDate, Date fdStartDate, Date fdEndDate) {
     @Test
-    fun testGetFlockDetailsFromDateWithDataOne(){
+    fun testGetFlockDetailsFromDateWithDataOne() {
         val dateFlockOne = Date.valueOf("1000-05-01")
         val dateFDOne = Date.valueOf("1000-06-01")
         val dateFDTwo = Date.valueOf("1000-07-01")
@@ -170,11 +180,12 @@ class ReadFlockDetailsTest {
 
         assertEquals(dateFDThree, third.fdDate)
         assertEquals(2, third.depletedCount)
+        cleanAndInitTables(conn)
     }
 
 
     @Test
-    fun testGetFlockDetailsFromDateWithDataTwo(){
+    fun testGetFlockDetailsFromDateWithDataTwo() {
         val dateFlockOne = Date.valueOf("1000-05-01")
         val dateFDOne = Date.valueOf("1000-06-01")
         val dateFDTwo = Date.valueOf("1000-07-01")
@@ -208,10 +219,11 @@ class ReadFlockDetailsTest {
 
         assertEquals(dateFDThree, third.fdDate)
         assertEquals(2, third.depletedCount)
+        cleanAndInitTables(conn)
     }
 
     @Test
-    fun testGetFlockDetailsFromSelectSlice(){
+    fun testGetFlockDetailsFromSelectSlice() {
         val dateFlockOne = Date.valueOf("1000-05-01")
         val dateFDOne = Date.valueOf("1000-06-01")
         val dateFDTwo = Date.valueOf("1000-07-01")
@@ -241,10 +253,11 @@ class ReadFlockDetailsTest {
 
         assertEquals(dateFDTwo, second.fdDate)
         assertEquals(1, second.depletedCount)
+        cleanAndInitTables(conn)
     }
 
     @Test
-    fun testGetFlockDetailsFromDateNoData(){
+    fun testGetFlockDetailsFromDateNoData() {
         val dateFlockOne = Date.valueOf("1000-05-01")
         val dateFDOne = Date.valueOf("1000-06-01")
         val dateFDTwo = Date.valueOf("1000-07-01")
@@ -254,10 +267,11 @@ class ReadFlockDetailsTest {
         val flockDetailsList = ReadFlockDetails.getFlockDetailsFromDate(conn, dateFlockOne, dateFDOne, dateFDTwo)
 
         assertNull(flockDetailsList)
+        cleanAndInitTables(conn)
     }
 
     @Test
-    fun testGetFlockDetailsFromDateEndDateBeforeStartDate(){
+    fun testGetFlockDetailsFromDateEndDateBeforeStartDate() {
         val dateFlockOne = Date.valueOf("1000-05-01")
         val dateFDOne = Date.valueOf("1000-06-01")
         val dateFDTwo = Date.valueOf("1000-07-01")
@@ -267,10 +281,11 @@ class ReadFlockDetailsTest {
         val flockDetailsList = ReadFlockDetails.getFlockDetailsFromDate(conn, dateFlockOne, dateFDTwo, dateFDOne)
 
         assertNull(flockDetailsList)
+        cleanAndInitTables(conn)
     }
 
     @Test
-    fun testGetFlockDetailsFromDateDNEFlock(){
+    fun testGetFlockDetailsFromDateDNEFlock() {
         val dateFlockOne = Date.valueOf("1000-05-01")
         val dateFlockTwo = Date.valueOf("1000-06-01")
         val dateFDOne = Date.valueOf("1000-06-01")
@@ -281,12 +296,13 @@ class ReadFlockDetailsTest {
         val flockDetailsList = ReadFlockDetails.getFlockDetailsFromDate(conn, dateFlockTwo, dateFDOne, dateFDTwo)
 
         assertNull(flockDetailsList)
+        cleanAndInitTables(conn)
     }
 
     //TEST for getFlockDetailsFromFlock(Connection conn, Date flockDate)
 
     @Test
-    fun testGetFlockDetailsFromFlockWithValidInput(){
+    fun testGetFlockDetailsFromFlockWithValidInput() {
         val dateFlockOne = Date.valueOf("1000-05-01")
         val dateFDOne = Date.valueOf("1000-06-01")
         val dateFDTwo = Date.valueOf("1000-07-01")
@@ -315,10 +331,11 @@ class ReadFlockDetailsTest {
 
         assertEquals(dateFDTwo, second.fdDate)
         assertEquals(1, second.depletedCount)
+        cleanAndInitTables(conn)
     }
 
     @Test
-    fun testGetFlockDetailsFromFlockNoData(){
+    fun testGetFlockDetailsFromFlockNoData() {
         val dateFlockOne = Date.valueOf("1000-05-01")
 
         CreateFlock.createFlock(conn, 100, dateFlockOne)
@@ -326,10 +343,11 @@ class ReadFlockDetailsTest {
         val flockDetailsList = ReadFlockDetails.getFlockDetailsFromFlock(conn, dateFlockOne)
 
         assertNull(flockDetailsList)
+        cleanAndInitTables(conn)
     }
 
     @Test
-    fun testGetFlockDetailsFromFlockDNEFlock(){
+    fun testGetFlockDetailsFromFlockDNEFlock() {
         val dateFlockOne = Date.valueOf("1000-05-01")
         val dateFlockTwo = Date.valueOf("1000-06-01")
 
@@ -338,5 +356,6 @@ class ReadFlockDetailsTest {
         val flockDetailsList = ReadFlockDetails.getFlockDetailsFromFlock(conn, dateFlockTwo)
 
         assertNull(flockDetailsList)
+        cleanAndInitTables(conn)
     }
 }
