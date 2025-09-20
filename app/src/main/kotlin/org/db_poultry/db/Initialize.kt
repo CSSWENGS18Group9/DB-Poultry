@@ -248,3 +248,17 @@ fun initTables(conn: Connection?) {
         )
     }
 }
+
+fun cleanAndInitTables(conn: Connection?) {
+    if (conn == null) {
+        generateErrorMessage(
+            "Error at `initTables()` in `Initialize.kt`.",
+            "Connection to db_poultry is null.",
+            "Ensure valid connection exists."
+        )
+        return
+    }
+
+    cleanTables(conn)
+    initTables(conn)
+}
