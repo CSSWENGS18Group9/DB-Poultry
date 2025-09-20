@@ -2,14 +2,19 @@ package org.db_poultry
 
 import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
+import org.db_poultry.App.getDotEnv
+import org.db_poultry.controller.DatabasePasswordNameController
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
 import org.db_poultry.errors.generateErrorMessage
 import org.db_poultry.theLifesaver.Backup
 import org.db_poultry.theLifesaver.Config.TL_loadConfig
+import org.db_poultry.theLifesaver.ENV
 import org.db_poultry.theLifesaver.TL.TL_firstOpen
 import org.db_poultry.theLifesaver.TL.wipe
+import org.db_poultry.theLifesaver.Variables
+import java.nio.file.Files
 import java.sql.Connection
 
 object App {
@@ -18,9 +23,14 @@ object App {
     lateinit var databasePort: String
 
     fun getDotEnv(): Boolean {
+        val envPath = Variables.getENVFilePath()
+        if (!Files.exists(envPath)) { // if .env does not exist
+            return false
+        }
+
         try {
             val dotenv = Dotenv.configure()
-                .ignoreIfMissing()
+                .directory(envPath.parent.toString()) // .db_poultry folder
                 .load()
 
             databaseName = (dotenv["DATABASE_NAME"] ?: "Missing DATABASE_NAME")
@@ -36,11 +46,16 @@ object App {
             generateErrorMessage(
                 "Error at `getDotEnv()` in `App.kt`",
                 "Failed to load environment variables",
-                "In local dev, ensure .env exists in `app/src/main/resources`.",
+                "Ensure .env exists in `\"Username\"/.db_poultry`.",
                 e
             )
             return false
         }
+    }
+
+    fun fillDatabasePasswordName(inputPassword: String, inputName: String) {
+        databasePass = inputPassword
+        databaseName = inputName
     }
 
 
@@ -60,15 +75,12 @@ object App {
         }
     }
 
-    fun start() {
-        if (!getDotEnv()) {
-            generateErrorMessage(
-                "Error at `start()` in `App.kt`.",
-                "Dot env file has a missing variable.",
-                "Check if the dot env file has DATABASE_NAME, DATABASE_PASS, and DATABASE_PORT"
-            )
-
-            return
+    fun start(inputPassword: String, inputUsername: String) {
+        if (!getDotEnv()) { // create missing .env file in .db_poultry
+            println(".env not found. creating")
+            ENV.makeENVfile() // create the .env file
+            ENV.writeENVfile(inputPassword, inputUsername) // write contents with filled-in db nme and port. password to be filled-in by user
+            getDotEnv()
         }
     }
 
@@ -89,7 +101,13 @@ val __CLIENT_MODE: Boolean = true
 val __DO_WIPE: Boolean = false
 
 fun main() {
-    App.start()
+    if (!getDotEnv()) { // if .env missing
+        // FIXME: UI opens here, takes user input for password and name (use DatabasePasswordUsernameController)
+        DatabasePasswordNameController().userPasswordName("test", "test")
+        println(".env missing")
+    }
+
+    App.start(App.databasePass, App.databaseName)
 
     var config: HashMap<String, String>? = null
     if (__CLIENT_MODE) {
@@ -104,7 +122,7 @@ fun main() {
     App.connect()
 
     if (config == null) {
-        cleanTables(App.getConnection());
+        cleanTables(App.getConnection())
     }
 
     // Open MainFrame (index GUI)
