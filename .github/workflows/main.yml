@@ -54,26 +54,13 @@ jobs:
         env:
           DB_URL: jdbc:postgresql://localhost:5432/db_poultry_test
 
-      - name: Build project (via FatJar)
-        run: ./gradlew clean fatJar
-        env:
-          DB_URL: jdbc:postgresql://localhost:5432/db_poultry_test
-
-      - name: Prepare test report directory
-        if: always()
-        run: |
-          mkdir -p app/build/reports/tests/test
-          if [ ! -f app/build/reports/tests/test/index.html ]; then
-            echo "<h1>No test report available</h1><p>Build failed before tests ran.</p>" > app/build/reports/tests/test/index.html
-          fi
-
-      - name: Deploy JUnit test reports to GitHub Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload test report
+        if: always() # always run this even if job::Run tests fail
+        uses: actions/upload-artifact@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: app/build/reports/tests/test
-          publish_branch: gh-pages
+          name: test-report
+          path: app/build/reports/tests/test
+
 
   cd:
     name: Continuous Deployment
@@ -94,7 +81,7 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Build project (FatJar)
+      - name: Build project (via FatJar)
         run: ./gradlew clean fatJar
 
       - name: Extract version from Gradle
