@@ -1,7 +1,8 @@
 package org.db_poultry.db.supplyTypeDAO
 
 import org.db_poultry.db.DBConnect
-import org.db_poultry.db.cleanTables
+import org.db_poultry.db.initDBAndUser
+import org.db_poultry.db.initTables
 import org.db_poultry.db.supplyRecordDAO.CreateSupplyRecord
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
@@ -28,9 +29,12 @@ class ReadSupplyTypeTest {
     private val conn: Connection
 
     init {
+        initDBAndUser()
+
         DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
         conn = DBConnect.getConnection()!!
-        cleanTables(conn)
+
+        initTables(conn)
     }
 
     // - getAllSupplyTypes should return an empty list if no supply types exist.

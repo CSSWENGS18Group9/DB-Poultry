@@ -11,12 +11,11 @@ object DBConnect {
     fun init(jdbcURL: String, username: String, password: String) {
         try {
             connection = DriverManager.getConnection(jdbcURL, username, password)
-            println("Welcome to DBPoultry's DBMS")
             println("Connected to: $jdbcURL")
         } catch (e: SQLException) {
             generateErrorMessage(
                 "Error at `init` in `DBConnect.kt`",
-                "Could not connect to DBPoultry DBMS",
+                "Could not connect to database",
                 "Check if the database is created in PostgresSQL", e
             )
         }
