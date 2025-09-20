@@ -3,6 +3,7 @@ package org.db_poultry.db.supplyRecordDAO
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.initDBAndUser
 import org.db_poultry.db.initTables
+import org.db_poultry.db.cleanAndInitTables
 import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
@@ -29,8 +30,20 @@ class ReadSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -78,6 +91,7 @@ class ReadSupplyRecordTest {
         assertEquals(BigDecimal("100.0000"), second.added)
         assertEquals(BigDecimal("50.0000"), second.consumed)
         assertEquals(false, second.isRetrieved)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -87,6 +101,7 @@ class ReadSupplyRecordTest {
         val supplyCompList = ReadSupplyRecord.getFromDate(conn, date)
 
         assertNull(supplyCompList)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -96,8 +111,20 @@ class ReadSupplyRecordTest {
         // this variable was UNUSED
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -123,6 +150,7 @@ class ReadSupplyRecordTest {
         val supplyCompList = ReadSupplyRecord.getFromDate(conn, oldDate)
 
         assertNull(supplyCompList)
+        cleanAndInitTables(conn)
     }
 
     //getFromName
@@ -132,8 +160,20 @@ class ReadSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -182,16 +222,24 @@ class ReadSupplyRecordTest {
         assertEquals(BigDecimal("100.0000"), second.added)
         assertEquals(BigDecimal("50.0000"), second.consumed)
         assertEquals(false, second.isRetrieved)
+        cleanAndInitTables(conn)
     }
 
     @Test
     fun testReadSupplyGetFromNameWithNoData() {
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
         val supplyCompList = ReadSupplyRecord.getFromName(conn, "Test_1")
 
         assertNull(supplyCompList)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -200,14 +248,27 @@ class ReadSupplyRecordTest {
         val supplyCompList = ReadSupplyRecord.getFromName(conn, "Test_1")
 
         assertNull(supplyCompList)
+        cleanAndInitTables(conn)
     }
 
     @Test
     fun testReadSupplyGetFromNameWithNameNoData() {
         val date = Date.valueOf("2025-02-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -231,6 +292,7 @@ class ReadSupplyRecordTest {
         val supplyCompList = ReadSupplyRecord.getFromName(conn, "Test_1")
 
         assertNull(supplyCompList)
+        cleanAndInitTables(conn)
     }
 
     //GetOneByDateAndName
@@ -240,8 +302,20 @@ class ReadSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -278,6 +352,7 @@ class ReadSupplyRecordTest {
         assertEquals(BigDecimal("300.0000"), supplyComp.added)
         assertEquals(BigDecimal("30.0000"), supplyComp.consumed)
         assertEquals(false, supplyComp.isRetrieved)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -285,8 +360,20 @@ class ReadSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -332,17 +419,25 @@ class ReadSupplyRecordTest {
         assertEquals(BigDecimal("300.0000"), supplyComp.added)
         assertEquals(BigDecimal("30.0000"), supplyComp.consumed)
         assertEquals(false, supplyComp.isRetrieved)
+        cleanAndInitTables(conn)
     }
 
     @Test
     fun testGetOneByDateAndNameWithNoData() {
         val date = Date.valueOf("2025-02-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
         val supplyComp = ReadSupplyRecord.getOneByDateAndName(conn, date, "test_1")
 
         assertNull(supplyComp)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -352,6 +447,7 @@ class ReadSupplyRecordTest {
         val supplyComp = ReadSupplyRecord.getOneByDateAndName(conn, date, "test_1")
 
         assertNull(supplyComp)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -359,8 +455,20 @@ class ReadSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -393,6 +501,7 @@ class ReadSupplyRecordTest {
         val supplyComp = ReadSupplyRecord.getOneByDateAndName(conn, oldDate, "test_2")
 
         assertNull(supplyComp)
+        cleanAndInitTables(conn)
     }
 
     //getMostRecentFromName
@@ -402,8 +511,20 @@ class ReadSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -440,6 +561,7 @@ class ReadSupplyRecordTest {
         assertEquals(BigDecimal("300.0000"), supplyComp.added)
         assertEquals(BigDecimal("30.0000"), supplyComp.consumed)
         assertEquals(false, supplyComp.isRetrieved)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -447,8 +569,20 @@ class ReadSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -494,16 +628,24 @@ class ReadSupplyRecordTest {
         assertEquals(BigDecimal("300.0000"), supplyComp.added)
         assertEquals(BigDecimal("30.0000"), supplyComp.consumed)
         assertEquals(false, supplyComp.isRetrieved)
+        cleanAndInitTables(conn)
     }
 
     @Test
     fun testtGetMostRecentFromNameWithNoData() {
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
         val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "test_1")
 
         assertNull(supplyComp)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -512,6 +654,7 @@ class ReadSupplyRecordTest {
         val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "test_1")
 
         assertNull(supplyComp)
+        cleanAndInitTables(conn)
     }
 
     //GetMostRecentFromID
@@ -521,8 +664,20 @@ class ReadSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -559,6 +714,7 @@ class ReadSupplyRecordTest {
         assertEquals(BigDecimal("300.0000"), supplyComp.added)
         assertEquals(BigDecimal("30.0000"), supplyComp.consumed)
         assertEquals(false, supplyComp.isRetrieved)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -566,8 +722,20 @@ class ReadSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -613,16 +781,24 @@ class ReadSupplyRecordTest {
         assertEquals(BigDecimal("300.0000"), supplyComp.added)
         assertEquals(BigDecimal("30.0000"), supplyComp.consumed)
         assertEquals(false, supplyComp.isRetrieved)
+        cleanAndInitTables(conn)
     }
 
     @Test
     fun testtGetMostRecentFromIDWithNoData() {
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
         val supplyComp = ReadSupplyRecord.getMostRecentFromID(conn, 1)
 
         assertNull(supplyComp)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -631,6 +807,7 @@ class ReadSupplyRecordTest {
         val supplyComp = ReadSupplyRecord.getMostRecentFromID(conn, 1)
 
         assertNull(supplyComp)
+        cleanAndInitTables(conn)
     }
 
     //GetCurrentCountForDate
@@ -640,8 +817,20 @@ class ReadSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -676,6 +865,7 @@ class ReadSupplyRecordTest {
 
         assertEquals(BigDecimal("180.0000"), oldCount)
         assertEquals(BigDecimal("450.0000"), currCount)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -683,8 +873,20 @@ class ReadSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -728,6 +930,7 @@ class ReadSupplyRecordTest {
 
         assertEquals(BigDecimal("180.0000"), oldCount)
         assertEquals(BigDecimal("450.0000"), currCount)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -735,8 +938,20 @@ class ReadSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -778,6 +993,7 @@ class ReadSupplyRecordTest {
         val currCount = ReadSupplyRecord.getCurrentCountForDate(conn, 2, date)
 
         assertEquals(BigDecimal("300.0000"), currCount)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -786,8 +1002,20 @@ class ReadSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -839,6 +1067,7 @@ class ReadSupplyRecordTest {
         val currCount = ReadSupplyRecord.getCurrentCountForDate(conn, 2, newDate)
 
         assertEquals(BigDecimal("100.0000"), currCount)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -847,8 +1076,20 @@ class ReadSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -900,6 +1141,7 @@ class ReadSupplyRecordTest {
         val currCount = ReadSupplyRecord.getCurrentCountForDate(conn, 14, newDate)
 
         assertNull(currCount)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -908,8 +1150,20 @@ class ReadSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -961,6 +1215,7 @@ class ReadSupplyRecordTest {
         val currCount = ReadSupplyRecord.getCurrentCountForDate(conn, 2, newDate)
 
         assertEquals(BigDecimal("0.0000"), currCount)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -968,11 +1223,18 @@ class ReadSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
 
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
         val currCount = ReadSupplyRecord.getCurrentCountForDate(conn, 13, date)
 
         assertNull(currCount)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -983,5 +1245,6 @@ class ReadSupplyRecordTest {
         val currCount = ReadSupplyRecord.getCurrentCountForDate(conn, 1, date)
 
         assertNull(currCount)
+        cleanAndInitTables(conn)
     }
 }

@@ -2,7 +2,7 @@ package org.db_poultry.db.flockDetailsDAO
 
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanAndInitTables
-import org.db_poultry.db.cleanTables
+import org.db_poultry.db.cleanAndInitTables
 import org.db_poultry.db.initDBAndUser
 import org.db_poultry.db.initTables
 import org.db_poultry.db.flockDAO.CreateFlock
@@ -56,6 +56,7 @@ class CreateFlockDetailsTest {
         )
 
         cleanAndInitTables(conn)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -68,6 +69,7 @@ class CreateFlockDetailsTest {
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, -1)
         assertNull(result)
 
+        cleanAndInitTables(conn)
         cleanAndInitTables(conn)
     }
 
@@ -95,6 +97,7 @@ class CreateFlockDetailsTest {
         CreateFlockDetails.createFlockDetails(conn, flockDate, fdDateOne, 500)
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDateTwo, 600)
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -121,6 +124,7 @@ class CreateFlockDetailsTest {
         CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 100)
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 100)
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 
     @Test

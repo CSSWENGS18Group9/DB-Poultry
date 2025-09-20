@@ -20,7 +20,7 @@ class DeleteFlockTest {
         conn = DBConnect.getConnection()!!
 
         initTables(conn)
-    }
+}
 
     @Test
     fun testDeleteFlockWithDataOne() {
@@ -31,7 +31,8 @@ class DeleteFlockTest {
 
         assertEquals("DELETE FROM Flock WHERE ctid IN (SELECT ctid FROM Flock ORDER BY flock_id DESC LIMIT 1)", result)
         assertNull(ReadFlock.getFlockFromADate(conn, date))
-    }
+    cleanAndInitTables(conn)
+}
 
     fun testDeleteFlockWithDataTwo() {
         val dateOne = Date.valueOf("1000-01-02")
@@ -44,11 +45,14 @@ class DeleteFlockTest {
 
         assertEquals("DELETE FROM Flock ORDER BY flock_id DESC LIMIT 1", result)
         assertNull(ReadFlock.getFlockFromADate(conn, dateTwo))
-    }
+    cleanAndInitTables(conn)
+}
 
     fun testDeleteFlockWithNoData() {
         val result = DeleteFlock.undoCreateFlock(conn)
 
         assertNull(result)
-    }
+    cleanAndInitTables(conn)
+}
+cleanAndInitTables(conn)
 }

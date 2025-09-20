@@ -1,6 +1,7 @@
 package org.db_poultry.db.flockDetailsDAO
 
 import org.db_poultry.db.DBConnect
+import org.db_poultry.db.cleanAndInitTables
 import org.db_poultry.db.initDBAndUser
 import org.db_poultry.db.initTables
 import org.db_poultry.db.flockDAO.CreateFlock
@@ -44,6 +45,7 @@ class DeleteFlockDetailTest {
         val flockDetail = ReadFlockDetails.getMostRecent(conn, flockOneDate)
         assertEquals(fdDateOne, flockDetail.fdDate)
 
+        cleanAndInitTables(conn)
     }
 
 }

@@ -2,6 +2,7 @@ package org.db_poultry.db.supplyRecordDAO
 
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.initDBAndUser
+import org.db_poultry.db.cleanAndInitTables
 import org.db_poultry.db.initTables
 import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -28,7 +29,13 @@ class CreateSupplyRecordTest {
     fun testCreateSupplyRecordValidInputs() {
         val date = Date.valueOf("2025-01-01")
 
-        CreateSupplyType.createSupplyType(conn, "Test", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
         val result = CreateSupplyRecord.createSupplyRecord(
             conn,
@@ -42,6 +49,7 @@ class CreateSupplyRecordTest {
             "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-01-01', 100.0000, 50.0000, 50.0000, false)",
             result
         )
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -59,13 +67,20 @@ class CreateSupplyRecordTest {
 
 
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 
     @Test
     fun testCreateSupplyRecordWithSameDateAndSameSupplyID() {
         val date = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
         CreateSupplyRecord.createSupplyRecord(
             conn,
@@ -87,14 +102,27 @@ class CreateSupplyRecordTest {
 
 
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 
     @Test
     fun testCreateSupplyRecordWithSameDateAndDiffSupplyID() {
         val date = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -120,6 +148,7 @@ class CreateSupplyRecordTest {
             "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (2, '2025-01-02', 100.0000, 50.0000, 50.0000, false)",
             result
         )
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -127,8 +156,20 @@ class CreateSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -151,6 +192,7 @@ class CreateSupplyRecordTest {
 
 
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -158,8 +200,20 @@ class CreateSupplyRecordTest {
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
-        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_2",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
 
         CreateSupplyRecord.createSupplyRecord(
@@ -185,6 +239,7 @@ class CreateSupplyRecordTest {
             "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (2, '2025-01-02', 100.0000, 50.0000, 50.0000, false)",
             result,
         )
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -192,7 +247,13 @@ class CreateSupplyRecordTest {
         val dateOne = Date.valueOf("2025-02-02")
         val dateTwo = Date.valueOf("2025-02-03")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
         val resultOne = CreateSupplyRecord.createSupplyRecord(
             conn,
@@ -222,13 +283,20 @@ class CreateSupplyRecordTest {
             "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-02-03', 0.0000, 50.0000, 0.0000, false)",
             resultTwo
         )
+        cleanAndInitTables(conn)
     }
 
     @Test
     fun testCreateSupplyRecordWithOnlyConsume() {
         val date = Date.valueOf("2025-02-03")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
         val result = CreateSupplyRecord.createSupplyRecord(
             conn,
@@ -241,13 +309,20 @@ class CreateSupplyRecordTest {
 
 
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 
     @Test
     fun testCreateSupplyRecordWithZeroConsumedAndZeroAdded() {
         val date = Date.valueOf("2025-01-01")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
         val result = CreateSupplyRecord.createSupplyRecord(
             conn,
@@ -262,13 +337,20 @@ class CreateSupplyRecordTest {
             result,
             "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-01-01', 0.0000, 0.0000, 0.0000, false)"
         )
+        cleanAndInitTables(conn)
     }
 
     @Test
     fun testCreateSupplyRecordWithNegativeInputs() {
         val date = Date.valueOf("2025-02-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
         val resultOne = CreateSupplyRecord.createSupplyRecord(
             conn,
@@ -303,13 +385,20 @@ class CreateSupplyRecordTest {
 
         assertNull(resultThree)
 
+        cleanAndInitTables(conn)
     }
 
     @Test
     fun testCreateSupplyRecordWithFiveDecimals() {
         val date = Date.valueOf("2025-02-02")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
         val resultOne = CreateSupplyRecord.createSupplyRecord(
             conn,
@@ -321,13 +410,20 @@ class CreateSupplyRecordTest {
         )
 
         assertNull(resultOne)
+        cleanAndInitTables(conn)
     }
 
     @Test
     fun testCreateSupplyRecordWithZeroDecimalPlace() {
         val date = Date.valueOf("2025-01-01")
 
-        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(
+            conn,
+            "Test_1",
+            "kg",
+            "src/main/resources/img/supply-img/Apog.png",
+            "src/main/resources/img/supply-img/default.png"
+        )
 
         val resultOne = CreateSupplyRecord.createSupplyRecord(
             conn,
@@ -342,5 +438,6 @@ class CreateSupplyRecordTest {
             "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-01-01', 100.0000, 50.0000, 50.0000, false)",
             resultOne
         )
+        cleanAndInitTables(conn)
     }
 }
