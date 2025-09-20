@@ -204,6 +204,14 @@ HelveticaNowDisplay HairlineIta
     -fx-text-fill: #8F250C;
 }
 
+.text-dark {
+    -fx-text-fill: #EDEDED;
+}
+
+.icon-dark {
+    -fx-icon-color: #EDEDED;
+}
+
 .h1-bold {
     -fx-font-size: 4em;
     -fx-font-family: "HelveticaNowDisplay Bold";
@@ -212,7 +220,6 @@ HelveticaNowDisplay HairlineIta
 .h2-bold {
     -fx-font-size: 3em;
     -fx-font-family: "HelveticaNowDisplay Bold";
-
 }
 
 .h3-bold {
