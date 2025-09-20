@@ -13,8 +13,9 @@ public class SupplyRecord {
     private final String unit;
     private final Date date;
     private final boolean retrieved;
+    private final BigDecimal price;
 
-    public SupplyRecord(int supplyRecordId, int supplyTypeId, BigDecimal currentQuantity, BigDecimal deleted, BigDecimal added, String unit, Date date, boolean retrieved) {
+    public SupplyRecord(int supplyRecordId, int supplyTypeId, BigDecimal currentQuantity, BigDecimal deleted, BigDecimal added, String unit, Date date, boolean retrieved, BigDecimal price) {
         this.supplyRecordId = supplyRecordId;
         this.supplyTypeId = supplyTypeId;
         this.currentQuantity = scale(currentQuantity);
@@ -23,6 +24,7 @@ public class SupplyRecord {
         this.unit = unit;
         this.date = date;
         this.retrieved = retrieved;
+        this.price = price;
     }
 
     private static BigDecimal scale(BigDecimal value) {
@@ -60,4 +62,9 @@ public class SupplyRecord {
     public boolean isRetrieved() {
         return retrieved;
     }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
 }

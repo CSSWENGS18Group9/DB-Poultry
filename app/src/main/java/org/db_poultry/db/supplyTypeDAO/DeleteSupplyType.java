@@ -17,7 +17,11 @@ public class DeleteSupplyType {
     public static String undoCreateSupplyType(Connection conn) {
         try (PreparedStatement preppedStatement = conn.prepareStatement("DELETE FROM Supply_Type WHERE ctid IN (SELECT ctid FROM Supply_Type ORDER BY Supply_Type_ID DESC LIMIT 1)")) {
 
-            preppedStatement.executeUpdate();
+            int rows = preppedStatement.executeUpdate();
+
+            if (rows == 0) {
+                return null;
+            }
 
             return "DELETE FROM Supply_Type ORDER BY Supply_Type_ID DESC LIMIT 1";
         } catch (SQLException e) {

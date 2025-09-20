@@ -17,7 +17,11 @@ public class DeleteSupplyRecord {
     public static String undoCreateSupplyRecord(Connection conn) {
         try (PreparedStatement preppedStatement = conn.prepareStatement("DELETE FROM Supply_Record WHERE ctid IN (SELECT ctid FROM Supply_Record ORDER BY Supply_ID DESC LIMIT 1)")) {
 
-            preppedStatement.executeUpdate();
+            int rows = preppedStatement.executeUpdate();
+
+            if (rows == 0) {
+                return null;
+            }
 
             return "DELETE FROM Supply_Record ORDER BY Supply_ID DESC LIMIT 1";
         } catch (SQLException e) {

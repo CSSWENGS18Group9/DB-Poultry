@@ -32,13 +32,16 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-01-01', 100.0000, 50.0000, 50.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-01-01', 100.0000, 50.0000, 50.0000, false, 50.0000)",
             result
         )
     }
+
+    // SUPPLY TYPE ID TESTS
 
     @Test
     fun testCreateSupplyRecordWithDNESupplyID() {
@@ -50,12 +53,15 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
 
         assertNull(result)
     }
+
+    //DATE CONSTRAINT TESTS
 
     @Test
     fun testCreateSupplyRecordWithSameDateAndSameSupplyID() {
@@ -69,7 +75,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val result = CreateSupplyRecord.createSupplyRecord(
@@ -78,7 +85,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
 
@@ -99,7 +107,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val result = CreateSupplyRecord.createSupplyRecord(
@@ -108,12 +117,13 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (2, '2025-01-02', 100.0000, 50.0000, 50.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (2, '2025-01-02', 100.0000, 50.0000, 50.0000, false, 50.0000)",
             result
         )
     }
@@ -133,7 +143,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val result = CreateSupplyRecord.createSupplyRecord(
@@ -142,7 +153,8 @@ class CreateSupplyRecordTest {
             oldDate,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
 
@@ -164,7 +176,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val result = CreateSupplyRecord.createSupplyRecord(
@@ -173,15 +186,65 @@ class CreateSupplyRecordTest {
             oldDate,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (2, '2025-01-02', 100.0000, 50.0000, 50.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (2, '2025-01-02', 100.0000, 50.0000, 50.0000, false, 50.0000)",
             result,
         )
     }
+
+    //PRICE CHANGE TEST
+
+    fun testCreateSupplyRecordChangingPrice(){
+        val date = Date.valueOf("2025-02-02")
+        val oldDate = Date.valueOf("2025-01-02")
+
+        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+
+        CreateSupplyRecord.createSupplyRecord(
+            conn,
+            1,
+            oldDate,
+            BigDecimal("200.00"),
+            BigDecimal("20.00"),
+            false,
+            BigDecimal("50.00")
+        )
+
+        CreateSupplyRecord.createSupplyRecord(
+            conn,
+            2,
+            date,
+            BigDecimal("200.00"),
+            BigDecimal("20.00"),
+            false,
+            BigDecimal("45.00")
+        )
+
+
+        val result = CreateSupplyRecord.createSupplyRecord(
+            conn,
+            1,
+            date,
+            BigDecimal("100.00"),
+            BigDecimal("50.00"),
+            false,
+            BigDecimal("45.00")
+        )
+
+        assertEquals(
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-02-01', 100.0000, 50.0000, 50.0000, false, 45.0000)",
+            result
+        )
+
+    }
+
+    // ZERO INPUT TESTS
 
     @Test
     fun testCreateSupplyRecordWithZeroAddedOrZeroConsumed() {
@@ -196,11 +259,12 @@ class CreateSupplyRecordTest {
             dateOne,
             BigDecimal("50.00"),
             BigDecimal("0.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-02-02', 50.0000, 0.0000, 50.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-02-02', 50.0000, 0.0000, 50.0000, false, 50.0000)",
             resultOne
         )
 
@@ -210,12 +274,13 @@ class CreateSupplyRecordTest {
             dateTwo,
             BigDecimal("0.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-02-03', 0.0000, 50.0000, 0.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-02-03', 0.0000, 50.0000, 0.0000, false, 50.0000)",
             resultTwo
         )
     }
@@ -232,9 +297,9 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("0.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
-
 
         assertNull(result)
     }
@@ -251,14 +316,42 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("0.00"),
             BigDecimal("0.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         assertEquals(
             result,
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-01-01', 0.0000, 0.0000, 0.0000, false)"
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-01-01', 0.0000, 0.0000, 0.0000, false, 50.0000)"
         )
     }
+
+
+    // RETRIVED START TEST
+    @Test
+    fun testCreateSupplyRecordWithRetrievedStart() {
+        val date = Date.valueOf("2025-01-01")
+
+        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+
+        val result = CreateSupplyRecord.createSupplyRecord(
+            conn,
+            1,
+            date,
+            BigDecimal("10.00"),
+            BigDecimal("20.00"),
+            true,
+            BigDecimal("50.00")
+        )
+
+        assertEquals(
+            result,
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-01-01', 0.0000, 0.0000, 0.0000, true, 50.0000)"
+        )
+    }
+
+
+    //NUMBER CONSTRAINT TEST
 
     @Test
     fun testCreateSupplyRecordWithNegativeInputs() {
@@ -272,7 +365,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("10.00"),
             BigDecimal("-50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         assertNull(resultOne)
@@ -283,7 +377,8 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("-50.00"),
             BigDecimal("10.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         assertNull(resultTwo)
@@ -292,12 +387,25 @@ class CreateSupplyRecordTest {
             conn,
             1,
             date,
-            BigDecimal("-50.00"),
-            BigDecimal("-10.00"),
-            false
+            BigDecimal("50.00"),
+            BigDecimal("10.00"),
+            false,
+            BigDecimal("-50.00")
         )
 
         assertNull(resultThree)
+
+        val resultFour = CreateSupplyRecord.createSupplyRecord(
+            conn,
+            1,
+            date,
+            BigDecimal("-50.00"),
+            BigDecimal("-10.00"),
+            false,
+            BigDecimal("-50.00")
+        )
+
+        assertNull(resultFour)
 
     }
 
@@ -313,10 +421,47 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("100.00005"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         assertNull(resultOne)
+
+        val resultTwo = CreateSupplyRecord.createSupplyRecord(
+            conn,
+            1,
+            date,
+            BigDecimal("100.00"),
+            BigDecimal("50.00005"),
+            false,
+            BigDecimal("50.00")
+        )
+
+        assertNull(resultTwo)
+
+        val resultThree = CreateSupplyRecord.createSupplyRecord(
+            conn,
+            1,
+            date,
+            BigDecimal("100.00"),
+            BigDecimal("50.00"),
+            false,
+            BigDecimal("50.00005")
+        )
+
+        assertNull(resultThree)
+
+        val resultFour = CreateSupplyRecord.createSupplyRecord(
+            conn,
+            1,
+            date,
+            BigDecimal("100.00005"),
+            BigDecimal("50.00005"),
+            false,
+            BigDecimal("50.00005")
+        )
+
+        assertNull(resultFour)
     }
 
     @Test
@@ -331,12 +476,72 @@ class CreateSupplyRecordTest {
             date,
             BigDecimal("100"),
             BigDecimal("50"),
-            false
+            false,
+            BigDecimal("50")
         )
 
         assertEquals(
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (1, '2025-01-01', 100.0000, 50.0000, 50.0000, false)",
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-01-01', 100.0000, 50.0000, 50.0000, false, 50.0000)",
             resultOne
         )
     }
+
+    @Test
+    fun testCreateSupplyRecordWithThirteenNonDecimalPlace(){
+        val date = Date.valueOf("2025-02-02")
+
+        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+
+        val resultOne = CreateSupplyRecord.createSupplyRecord(
+            conn,
+            1,
+            date,
+            BigDecimal("3210987654321.00"),
+            BigDecimal("50.00"),
+            false,
+            BigDecimal("50.00")
+        )
+
+        assertNull(resultOne)
+
+        val resultTwo = CreateSupplyRecord.createSupplyRecord(
+            conn,
+            1,
+            date,
+            BigDecimal("100.00"),
+            BigDecimal("3210987654321.00"),
+            false,
+            BigDecimal("50.00")
+        )
+
+        assertNull(resultTwo)
+
+        val resultThree = CreateSupplyRecord.createSupplyRecord(
+            conn,
+            1,
+            date,
+            BigDecimal("100.00"),
+            BigDecimal("50.00"),
+            false,
+            BigDecimal("3210987654321.00")
+        )
+
+        assertNull(resultThree)
+
+        val resultFour = CreateSupplyRecord.createSupplyRecord(
+            conn,
+            1,
+            date,
+            BigDecimal("3210987654321.0000005"),
+            BigDecimal("3210987654321.0000005"),
+            false,
+            BigDecimal("3210987654321.0000005")
+        )
+
+        assertNull(resultFour)
+    }
+
+
+
+
 }

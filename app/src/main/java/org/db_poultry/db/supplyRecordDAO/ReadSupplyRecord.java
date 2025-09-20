@@ -40,7 +40,12 @@ public class ReadSupplyRecord {
 
         boolean retrieved = rs.getBoolean("Retrieved");
 
-        return new SupplyComplete(supply_id, supply_type_id, srDate, supply_name, unit, added, consumed, current, retrieved);
+        BigDecimal price = rs.getBigDecimal("Price");
+        if (price != null) {
+            price = price.setScale(4, RoundingMode.DOWN);
+        }
+
+        return new SupplyComplete(supply_id, supply_type_id, srDate, supply_name, unit, added, consumed, current, retrieved, price);
     }
 
 
@@ -81,7 +86,7 @@ public class ReadSupplyRecord {
     public static ArrayList<SupplyComplete> getFromDate(Connection conn, Date date) {
         try (PreparedStatement pstmt = conn.prepareStatement("""
                 SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, st.Supply_Name, st.Unit, sr.Added, 
-                sr.Consumed, sr.Current_Count, sr.Retrieved FROM Supply_Record sr JOIN Supply_Type st 
+                sr.Consumed, sr.Current_Count, sr.Retrieved, sr.Price FROM Supply_Record sr JOIN Supply_Type st 
                 ON sr.Supply_Type_ID = st.Supply_Type_ID WHERE sr.SR_Date = ?
                 """)) {
 
@@ -119,7 +124,8 @@ public class ReadSupplyRecord {
                         sr.Added,
                         sr.Consumed,
                         sr.Current_Count,
-                        sr.Retrieved
+                        sr.Retrieved,
+                        sr.Price
                     FROM Supply_Record sr
                     JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID
                     WHERE st.Supply_Name = ?;
@@ -160,7 +166,8 @@ public class ReadSupplyRecord {
                         sr.Added,
                         sr.Consumed,
                         sr.Current_Count,
-                        sr.Retrieved
+                        sr.Retrieved,
+                        sr.Price
                     FROM Supply_Record sr
                     JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID
                     WHERE st.Supply_Type_ID = ?
@@ -181,8 +188,9 @@ public class ReadSupplyRecord {
                     BigDecimal consumed = rs.getBigDecimal("consumed");
                     BigDecimal current_count = rs.getBigDecimal("current_count");
                     boolean retrieved = rs.getBoolean("retrieved");
+                    BigDecimal price = rs.getBigDecimal("price");
 
-                    return new SupplyComplete(supply_id, supply_type_id, sr_date, supply_name, unit, added, consumed, current_count, retrieved);
+                    return new SupplyComplete(supply_id, supply_type_id, sr_date, supply_name, unit, added, consumed, current_count, retrieved, price);
                 }
 
                 return null; // No matching record found
@@ -212,7 +220,7 @@ public class ReadSupplyRecord {
         try (PreparedStatement pstmt =
                      conn.prepareStatement("""
                              SELECT sr.Supply_ID, sr.Supply_Type_ID, sr.SR_Date, 
-                                    st.Supply_Name, st.Unit, sr.Added, sr.Consumed, sr.Current_Count, sr.Retrieved 
+                                    st.Supply_Name, st.Unit, sr.Added, sr.Consumed, sr.Current_Count, sr.Retrieved, sr.Price 
                              FROM Supply_Record sr JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID 
                              WHERE st.Supply_Name = ? AND sr.SR_Date = ?
                              """)) {
@@ -256,7 +264,8 @@ public class ReadSupplyRecord {
                         sr.Added,
                         sr.Consumed,
                         sr.Current_Count,
-                        sr.Retrieved
+                        sr.Retrieved,
+                        sr.Price
                     FROM Supply_Record sr
                     JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID
                     WHERE st.Supply_Name = ?
@@ -303,7 +312,8 @@ public class ReadSupplyRecord {
                         sr.Added,
                         sr.Consumed,
                         sr.Current_Count,
-                        sr.Retrieved
+                        sr.Retrieved,
+                        sr.Price
                     FROM Supply_Record sr
                     JOIN Supply_Type st ON sr.Supply_Type_ID = st.Supply_Type_ID
                     WHERE sr.Supply_Type_ID = ?
