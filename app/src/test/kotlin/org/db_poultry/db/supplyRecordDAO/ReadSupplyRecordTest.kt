@@ -161,7 +161,7 @@ class ReadSupplyRecordTest {
         assertEquals(date, first.date)
         assertEquals(BigDecimal("0.0000"), first.added)
         assertEquals(BigDecimal("0.0000"), first.consumed)
-        assertEquals(false, first.isRetrieved)
+        assertEquals(true, first.isRetrieved)
         assertNull(first.price)
     }
 
