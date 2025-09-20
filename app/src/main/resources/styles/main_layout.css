@@ -15,6 +15,7 @@
 
 .navbar-pane-dark:hover .label {
     -fx-border-color: transparent transparent #A4AE81 transparent;
+    -fx-border-width: 0 0 5 0;
 }
 
 .underline-label {
@@ -24,6 +25,7 @@
 
 .underline-label-dark {
     -fx-border-color: transparent transparent #F7ECB7 transparent;
+    -fx-border-width: 0 0 5 0;
 }
 
 .right-pane {
@@ -92,4 +94,14 @@
 
 .sidebar-pane-active-dark FontIcon {
     -fx-icon-color: black;
+}
+
+.calendar {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+}
+
+.calendar-dark {
+    -fx-background-color: #2C2C2C;
+    -fx-background-radius: 10;
 }
