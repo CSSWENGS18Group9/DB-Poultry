@@ -52,10 +52,15 @@
  NewMember_26760d8_10012004; NewMember_872b363_10262004
  -->
 **ETR Code**:   %ExploratoryTestCode%
+
 **Tester**:     %TesterName%
+
 **Date**:       %DateConducted%
+
 **Scope**:      %Feature/Story%
+
 **Version**:    (%type%) %PointerTag%
+
 **Also See**:   %OtherExploratoryTestCodes%
 
 ## Assertions/Preconditions
