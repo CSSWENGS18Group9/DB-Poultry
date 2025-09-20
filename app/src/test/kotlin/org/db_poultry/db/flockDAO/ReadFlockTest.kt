@@ -32,7 +32,6 @@ class ReadFlockTest {
         connection.createStatement().use { stmt ->
             stmt.executeUpdate("INSERT INTO Flock VALUES (1, 100, '2025-01-01 00:00:00')")
             stmt.executeUpdate("INSERT INTO Flock_Details VALUES (10, 1, '2025-01-02 00:00:00', 5)")
-            cleanAndInitTables(conn)
         }
 
         // Call the allByID method to retrieve data
@@ -73,7 +72,6 @@ class ReadFlockTest {
         connection.createStatement().use { stmt ->
             stmt.executeUpdate("INSERT INTO Flock VALUES (1, 100, '2025-01-01 00:00:00')")
             stmt.executeUpdate("INSERT INTO Flock_Details VALUES (10, 1, '2025-01-02 00:00:00', 5)")
-            cleanAndInitTables(conn)
         }
 
         // Call the allByDate method to retrieve data grouped by date
