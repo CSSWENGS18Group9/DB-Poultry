@@ -43,17 +43,8 @@ object App {
         }
     }
 
-    fun fillDatabasePassword(inputPassword: String): Unit {
-        if (!inputPassword.isBlank()) {
-            databasePass = inputPassword
-        }
-        else {
-            generateErrorMessage(
-                "Error at `fillDatabasePassword()` in `App.kt`",
-                "Password is blank.",
-                "Password must not be blank."
-            )
-        }
+    fun fillDatabasePassword(inputPassword: String) {
+        databasePass = inputPassword
     }
 
 
