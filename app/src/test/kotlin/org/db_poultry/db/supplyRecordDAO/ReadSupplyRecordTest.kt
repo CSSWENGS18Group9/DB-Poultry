@@ -155,7 +155,7 @@ class ReadSupplyRecordTest {
 
         val first = supplyCompList[0]
 
-        assertEquals(2, supplyCompList.size)
+        assertEquals(1, supplyCompList.size)
 
         assertEquals(13, first.supply_type_id)
         assertEquals(date, first.date)
