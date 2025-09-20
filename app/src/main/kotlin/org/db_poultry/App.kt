@@ -3,7 +3,7 @@ package org.db_poultry
 import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
 import org.db_poultry.App.getDotEnv
-import org.db_poultry.controller.DatabasePasswordUsernameController
+import org.db_poultry.controller.DatabasePasswordNameController
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
@@ -53,9 +53,9 @@ object App {
         }
     }
 
-    fun fillDatabasePasswordUsername(inputPassword: String, inputUsername: String) {
+    fun fillDatabasePasswordName(inputPassword: String, inputName: String) {
         databasePass = inputPassword
-        databaseName = inputUsername
+        databaseName = inputName
     }
 
 
@@ -103,7 +103,7 @@ val __DO_WIPE: Boolean = false
 fun main() {
     if (!getDotEnv()) { // if .env missing
         // FIXME: UI opens here, takes user input for password and name (use DatabasePasswordUsernameController)
-        // DatabasePasswordUsernameController().userPasswordUsername("test", "test")
+        DatabasePasswordNameController().userPasswordName("test", "test")
         println(".env missing")
     }
 

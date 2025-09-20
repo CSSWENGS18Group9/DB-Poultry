@@ -43,12 +43,12 @@ public class ENV {
         }
     }
 
-    public static String writeENVfile(String inputPassword, String inputUsername) {
+    public static String writeENVfile(String inputPassword, String inputName) {
         String content = String.format("""
                 DATABASE_NAME=%s
                 DATABASE_PASS=%s
                 DATABASE_PORT=5432
-                """, inputUsername, inputPassword);
+                """, inputName, inputPassword);
 
         try {
 
@@ -56,7 +56,7 @@ public class ENV {
 
             Files.writeString(envPath, content, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
-            return String.format("Username: %s, Password: %s", inputUsername, inputPassword);
+            return String.format("Name: %s, Password: %s", inputName, inputPassword);
 
         } catch (IOException e) {
             generateErrorMessage(
