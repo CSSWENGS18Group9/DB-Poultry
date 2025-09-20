@@ -2,6 +2,7 @@ package org.db_poultry
 
 import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
+import org.db_poultry.App.getDotEnv
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
@@ -51,8 +52,9 @@ object App {
         }
     }
 
-    fun fillDatabasePassword(inputPassword: String) {
+    fun fillDatabasePasswordUsername(inputPassword: String, inputUsername: String) {
         databasePass = inputPassword
+        databaseName = inputUsername
     }
 
 
@@ -72,11 +74,11 @@ object App {
         }
     }
 
-    fun start() {
+    fun start(inputPassword: String, inputUsername: String) {
         if (!getDotEnv()) { // create missing .env file in .db_poultry
             println(".env not found")
             ENV.makeENVfile() // create the .env file
-            ENV.writeENVfile() // write contents with filled-in db nme and port. password to be filled-in by user
+            ENV.writeENVfile(inputPassword, inputUsername) // write contents with filled-in db nme and port. password to be filled-in by user
         }
     }
 
@@ -97,7 +99,11 @@ val __CLIENT_MODE: Boolean = true
 val __DO_WIPE: Boolean = false
 
 fun main() {
-    App.start()
+    if (!getDotEnv()) { // if .env missing
+        // FIXME: UI opens here, takes user input for password and name (use DatabasePasswordUsernameController)
+    }
+
+    App.start(App.databasePass, App.databaseName)
 
     var config: HashMap<String, String>? = null
     if (__CLIENT_MODE) {
