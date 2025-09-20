@@ -102,10 +102,10 @@ fun initDBAndUser() {
     val initUserDB = listOf(
         "DROP DATABASE IF EXISTS db_poultry;",
         "DROP USER IF EXISTS db_poultry;",
-        "CREATE USER db_poultry WITH PASSWORD 'dbp1174'",
-        "CREATE DATABASE db_poultry OWNER db_poultry;",
-        "GRANT ALL PRIVILEGES ON DATABASE db_poultry TO db_poultry;",
-        "ALTER USER db_poultry WITH SUPERUSER;"
+        "CREATE USER X WITH PASSWORD 'Y'",
+        "CREATE DATABASE db_poultry OWNER X;",
+        "GRANT ALL PRIVILEGES ON DATABASE db_poultry TO X;",
+        "ALTER USER X WITH SUPERUSER;"
     )
 
     try {
