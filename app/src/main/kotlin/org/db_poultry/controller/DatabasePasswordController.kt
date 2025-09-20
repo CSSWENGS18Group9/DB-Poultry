@@ -1,7 +1,6 @@
 package org.db_poultry.controller
 
 import org.db_poultry.App
-import org.db_poultry.App.databasePass
 import org.db_poultry.errors.generateErrorMessage
 
 class DatabasePasswordController {
