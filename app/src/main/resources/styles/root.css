@@ -4,6 +4,10 @@
     -fx-background-color: #FEFAE0;
 }
 
+.main-pane-dark {
+    -fx-background-color: #3B3B3B;
+}
+
 .inner-pane {
     -fx-background-color: white;
     -fx-background-radius: 35;
@@ -68,11 +72,33 @@
     -fx-border-color: #BC6C25;
 }
 
+.sub-button-dark {
+    -fx-background-color: #DDA15E;
+    -fx-text-fill: black;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-width: 2;
+}
+
+.sub-button-dark:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: #DDA15E;
+    -fx-border-color: #DDA15E;
+}
+
 
 .confirm-button {
     -fx-background-color: #8F250C;
     -fx-text-fill: white;
     -fx-border-color: #8F250C;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+}
+
+.confirm-button-dark{
+    -fx-background-color: #F7ECB7;
+    -fx-text-fill: black;
+    -fx-border-color: #F7ECB7;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
 }
@@ -84,12 +110,27 @@
     -fx-text-fill: #8F250C;
 }
 
+.confirm-button-dark:hover {
+    -fx-background-color: transparent;
+    -fx-border-color: #F7ECB7;
+    -fx-border-width: 2;
+    -fx-text-fill: #F7ECB7;
+}
+
 .back-icon {
     -fx-icon-color: black;
 }
 
 .back-icon:hover {
     -fx-icon-color: #8F250C;
+}
+
+.back-icon-dark {
+    -fx-icon-color: white;
+}
+
+.back-icon-dark:hover {
+    -fx-icon-color: #A4AE81;
 }
 
 /* For all tables */
@@ -202,6 +243,10 @@ HelveticaNowDisplay HairlineIta
     -fx-font-size: 6em;
     -fx-font-family: "HelveticaNowDisplay Bold";
     -fx-text-fill: #8F250C;
+}
+
+.title-dark {
+    -fx-text-fill: #F7ECB7;
 }
 
 .text-dark {
