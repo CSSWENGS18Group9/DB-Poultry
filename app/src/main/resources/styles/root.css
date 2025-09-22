@@ -13,6 +13,11 @@
     -fx-background-radius: 35;
 }
 
+.inner-pane-dark {
+    -fx-background-color: #717171;
+    -fx-background-radius: 35;
+}
+
 .popup-pane {
     -fx-effect: dropshadow(gaussian, black, 10, 0.6, 0, 0);
     -fx-background-radius: 20;
@@ -48,9 +53,20 @@
     -fx-background-radius: 20;
 }
 
+.main-button-reversed-dark {
+    -fx-background-color: #F7ECB7;
+    -fx-text-fill: black;
+    -fx-background-radius: 20;
+}
+
 .main-button-reversed:hover {
     -fx-background-color: white;
     -fx-text-fill: #8F250C;
+}
+
+.main-button-reversed-dark:hover {
+    -fx-background-color: white;
+    -fx-text-fill: #DDA15E;
 }
 
 .main-button-reversed:pressed {
