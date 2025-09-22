@@ -243,7 +243,11 @@ public class CreateSupplyRecord {
      * @return {true} if the price is invalid, {false} otherwise
      */
     private static boolean verify_price(BigDecimal price) {
-        return price == null || price.compareTo(BigDecimal.ZERO) < 0;
+        if (price == null) {
+            return false;
+        }
+        // Only check for negative if price is not null
+        return price.compareTo(BigDecimal.ZERO) < 0;
     }
 
 }
