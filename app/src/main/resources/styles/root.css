@@ -13,11 +13,6 @@
     -fx-background-radius: 35;
 }
 
-.inner-pane-dark {
-    -fx-background-color: #717171;
-    -fx-background-radius: 35;
-}
-
 .popup-pane {
     -fx-effect: dropshadow(gaussian, black, 10, 0.6, 0, 0);
     -fx-background-radius: 20;

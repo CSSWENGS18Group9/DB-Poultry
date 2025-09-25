@@ -181,13 +181,14 @@ object GUIUtil {
                         container.styleClass.remove("calendar-dark")
                     }
                 }
-                container.styleClass.contains("inner-pane") || container.styleClass.contains("inner-pane-dark") -> {
-                    if (darkMode) {
-                        container.styleClass.add("inner-pane-dark")
-                    } else {
-                        container.styleClass.remove("inner-pane-dark")
-                    }
-                }
+                // TODO: Verify if might not need or no
+//                container.styleClass.contains("inner-pane") || container.styleClass.contains("inner-pane-dark") -> {
+//                    if (darkMode) {
+//                        container.styleClass.add("inner-pane-dark")
+//                    } else {
+//                        container.styleClass.remove("inner-pane-dark")
+//                    }
+//                }
                 container.styleClass.contains("grid-supply") || container.styleClass.contains("grid-supply-dark") -> {
                     if (darkMode) {
                         container.styleClass.remove("grid-supply")
@@ -198,6 +199,20 @@ object GUIUtil {
                         container.styleClass.remove("grid-supply-dark")
                         if (!container.styleClass.contains("grid-supply")) {
                             container.styleClass.add("grid-supply")
+                        }
+                    }
+                }
+
+                container.styleClass.contains("supply-box") || container.styleClass.contains("supply-box-dark") -> {
+                    if (darkMode) {
+                        container.styleClass.remove("supply-box")
+                        if (!container.styleClass.contains("supply-box-dark")) {
+                            container.styleClass.add("supply-box-dark")
+                        }
+                    } else {
+                        container.styleClass.remove("supply-box-dark")
+                        if (!container.styleClass.contains("supply-box")) {
+                            container.styleClass.add("supply-box")
                         }
                     }
                 }
