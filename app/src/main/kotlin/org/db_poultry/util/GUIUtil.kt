@@ -167,13 +167,13 @@ object GUIUtil {
                         container.styleClass.remove("main-pane-dark")
                     }
                 }
-                container.styleClass.contains("right-pane") || container.styleClass.contains("right-pane-dark") -> {
-                    if (darkMode) {
-                        container.styleClass.add("right-pane-dark")
-                    } else {
-                        container.styleClass.remove("right-pane-dark")
-                    }
-                }
+//                container.styleClass.contains("right-pane") || container.styleClass.contains("right-pane-dark") -> {
+//                    if (darkMode) {
+//                        container.styleClass.add("right-pane-dark")
+//                    } else {
+//                        container.styleClass.remove("right-pane-dark")
+//                    }
+//                }
                 container.styleClass.contains("calendar") || container.styleClass.contains("calendar-dark") -> {
                     if (darkMode) {
                         container.styleClass.add("calendar-dark")

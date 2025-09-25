@@ -42,10 +42,6 @@
     -fx-effect: innershadow(gaussian, rgba(0,0,0,0.50), 4.75, 0, 4, 4);
 }
 
-.right-pane-dark {
-    -fx-effect: innershadow(gaussian, rgba(255,255,255,0.20), 4.75, 0, 4, 4);
-}
-
 .sidebar-pane {
     -fx-font-family: "HelveticaNowDisplay-Bold";
 }
