@@ -18,6 +18,9 @@ public class Variables {
     // ================ ST IMAGE DIR VARIABLES ==========
     private static final String ST_IMAGE_FOLDER_NAME = "supply_type_images";
 
+    // ================ DARK MODE CONFIG VARIABLES ======
+    private static final String DM_CONFIG_FILENAME = "dm_config";
+
     // Getters
     public static String getHomeDirectory(){
         return System.getProperty("user.home");
@@ -76,6 +79,21 @@ public class Variables {
             generateErrorMessage(
                     "Error at `getSTImageFolderName` in `Variables`.",
                     "FATAL. Could not resolve `supply_type_images` directory inside app folder",
+                    "",
+                    e
+            );
+        }
+
+        return "";
+    }
+
+    public static String getDMConfigPath() {
+        try {
+            return Paths.get(getHomeDirectory(), APP_FOLDER, DM_CONFIG_FILENAME).toString();
+        } catch (Exception e) {
+            generateErrorMessage(
+                    "Error at `getDMConfigPath` in `Variables`.",
+                    "FATAL. Could not resolve dark mode config file location.",
                     "",
                     e
             );

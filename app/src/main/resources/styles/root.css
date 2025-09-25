@@ -364,9 +364,22 @@ HelveticaNowDisplay HairlineIta
     -fx-background-color: transparent;
 }
 
+.spinner-dark .text-field {
+    -fx-text-fill: #F7ECB7;
+    -fx-background-color: transparent;
+}
+
 .spinner .increment-arrow-button,
 .spinner .decrement-arrow-button {
     -fx-background-color: #8F250C;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+}
+
+.spinner-dark .increment-arrow-button,
+.spinner-dark .decrement-arrow-button {
+    -fx-background-color: #F7ECB7;
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
     -fx-border-width: 1px;
@@ -377,6 +390,11 @@ HelveticaNowDisplay HairlineIta
     -fx-background-color: white;
 }
 
+.spinner-dark .increment-arrow,
+.spinner-dark .decrement-arrow {
+    -fx-background-color: black;
+}
+
 .spinner .increment-arrow-button:hover,
 .spinner .decrement-arrow-button:hover {
     -fx-background-color: white;
@@ -384,7 +402,19 @@ HelveticaNowDisplay HairlineIta
     -fx-border-width: 1px;
 }
 
+.spinner-dark .increment-arrow-button:hover,
+.spinner-dark .decrement-arrow-button:hover {
+    -fx-background-color: transparent;
+    -fx-border-color: #F7ECB7;
+    -fx-border-width: 1px;
+}
+
 .spinner .increment-arrow-button:hover .increment-arrow,
 .spinner .decrement-arrow-button:hover .decrement-arrow {
     -fx-background-color: #8F250C;
+}
+
+.spinner-dark .increment-arrow-button:hover .increment-arrow,
+.spinner-dark .decrement-arrow-button:hover .decrement-arrow {
+    -fx-background-color: #F7ECB7;
 }
