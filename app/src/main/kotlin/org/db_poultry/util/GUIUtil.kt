@@ -159,6 +159,7 @@ object GUIUtil {
                 }
                 container.styleClass.contains("main-pane") || container.styleClass.contains("main-pane-dark") -> {
                     if (darkMode) {
+//                        container.styleClass.remove("main-pane")
                         if (!container.styleClass.contains("main-pane-dark")) {
                             container.styleClass.add("main-pane-dark")
                         }
