@@ -126,7 +126,7 @@
                         <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="12.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" percentHeight="15.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
@@ -236,9 +236,12 @@
                            <children>
                               <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                  <children>
-                                    <FontIcon fx:id="homeFontIcon11" iconLiteral="fas-sun" iconSize="50" textAlignment="CENTER" wrappingWidth="50.0" />
-                                    <ToggleSwitch fx:id="darkModeToggleSwitch" />
-                                    <FontIcon fx:id="homeFontIcon12" iconLiteral="fas-moon" iconSize="50" textAlignment="CENTER" wrappingWidth="50.0" />
+                                    <FontIcon fx:id="homeFontIcon11" iconLiteral="fas-sun" iconSize="30" textAlignment="CENTER" wrappingWidth="30.0" />
+                                    <ToggleSwitch fx:id="darkModeToggleSwitch">
+                                       <padding>
+                                          <Insets right="20.0" />
+                                       </padding></ToggleSwitch>
+                                    <FontIcon fx:id="homeFontIcon12" iconLiteral="fas-moon" iconSize="30" textAlignment="CENTER" wrappingWidth="30.0" />
                                  </children>
                               </FlowPane>
                            </children>
