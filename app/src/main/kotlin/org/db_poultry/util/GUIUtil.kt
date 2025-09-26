@@ -182,13 +182,13 @@ object GUIUtil {
                     }
                 }
                 // TODO: Verify if might not need or no
-//                container.styleClass.contains("inner-pane") || container.styleClass.contains("inner-pane-dark") -> {
-//                    if (darkMode) {
-//                        container.styleClass.add("inner-pane-dark")
-//                    } else {
-//                        container.styleClass.remove("inner-pane-dark")
-//                    }
-//                }
+                container.styleClass.contains("inner-pane") || container.styleClass.contains("inner-pane-dark") -> {
+                    if (darkMode) {
+                        container.styleClass.add("inner-pane-dark")
+                    } else {
+                        container.styleClass.remove("inner-pane-dark")
+                    }
+                }
                 container.styleClass.contains("grid-supply") || container.styleClass.contains("grid-supply-dark") -> {
                     if (darkMode) {
                         container.styleClass.remove("grid-supply")
@@ -214,6 +214,16 @@ object GUIUtil {
                         if (!container.styleClass.contains("supply-box")) {
                             container.styleClass.add("supply-box")
                         }
+                    }
+                }
+                // TableView dark mode
+                container.styleClass.contains("table-view") || container.styleClass.contains("table-view-dark") -> {
+                    if (darkMode) {
+                        if (!container.styleClass.contains("table-view-dark")) {
+                            container.styleClass.add("table-view-dark")
+                        }
+                    } else {
+                        container.styleClass.remove("table-view-dark")
                     }
                 }
             }

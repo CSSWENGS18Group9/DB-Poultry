@@ -13,6 +13,12 @@
     -fx-background-radius: 35;
 }
 
+.inner-pane-dark {
+    -fx-background-color: black;
+    -fx-background-radius: 35;
+}
+
+
 .popup-pane {
     -fx-effect: dropshadow(gaussian, black, 10, 0.6, 0, 0);
     -fx-background-radius: 20;
@@ -224,7 +230,31 @@
     -fx-background-color: -fx-selection-bar;
 }
 
-/* Table End */
+/* Dark mode table styling overrides */
+.table-view-dark .column-header-background {
+  -fx-background-color: #535353;
+}
+.table-view-dark .filler {
+  -fx-background-color: #535353;
+}
+.table-view-dark .column-header-background .label {
+    -fx-text-fill: #F7ECB7;
+}
+.table-view-dark > .virtual-flow > .corner {
+    -fx-background-color: #535353;
+}
+.table-view-dark .scroll-bar .thumb {
+    -fx-background-color: #F7ECB7;
+}
+.table-view-dark .table-row-cell:odd {
+    -fx-background-color: #535353;
+}
+.table-view-dark .table-row-cell:even {
+    -fx-background-color: #3B3B3B;
+}
+.table-view-dark .cell {
+    -fx-text-fill: white;
+}
 
 /* Fonts for USE
 
