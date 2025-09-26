@@ -89,6 +89,7 @@ public class CreateSupplyRecord {
         if (retrieved) {
             added = BigDecimal.ZERO.setScale(4, RoundingMode.DOWN);
             consumed = currentCount;
+            price = null;  // Set price to null for retrieved records
 
         } else if (verifier) {
             // if retrieved is false and the numeric values are INVALID
@@ -129,7 +130,7 @@ public class CreateSupplyRecord {
         }
 
         // Check price precision like other numeric values
-        if (verify_precision(price)) {
+        if (price != null && verify_precision(price)) {
             generateErrorMessage(
                 "Error at `createSupplyRecord()` in CreateSupplyRecord.",
                 "The precision of price is greater than 4.",
@@ -139,8 +140,10 @@ public class CreateSupplyRecord {
             return null;
         }
 
-        // Scale price to 4 decimal places before insert
-        price = price.setScale(4, RoundingMode.DOWN);
+         // Scale price to 4 decimal places before insert
+        if (price != null) {
+            price = price.setScale(4, RoundingMode.DOWN);
+        }
 
         // if all tests pass then run the query. add price here too
         try (PreparedStatement preparedStatement = connect.prepareStatement("""
@@ -160,9 +163,10 @@ public class CreateSupplyRecord {
             undoSingleton.INSTANCE.setUndoMode(undoTypes.doUndoSupplyRecord);
 
             return String.format(
-                            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES " +
-                            "(%d, '%s', %.4f, %.4f, %.4f, %b, %.4f)",
-                    supplyTypeID, srDate, added, consumed, currentCount, retrieved, price);
+                "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES " +
+                "(%d, '%s', %.4f, %.4f, %.4f, %b, %s)",
+                supplyTypeID, srDate, added, consumed, currentCount, retrieved, 
+                price != null ? String.format("%.4f", price) : "NULL");
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `createSupplyRecord()` in `createSupplyRecord.",
