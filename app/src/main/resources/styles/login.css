@@ -2,6 +2,10 @@
     -fx-background-color: #606C38;
 }
 
+.upperleft-pane-dark {
+    -fx-background-color: #A4AE81;
+}
+
 .title {
     -fx-font-size: 9em;
     -fx-font-family: "HelveticaNowDisplay ExtraBold";
@@ -23,8 +27,20 @@
     -fx-background-radius: 30;
 }
 
+.login-button-dark {
+    -fx-background-color: #F7ECB7;
+    -fx-text-fill: black;
+    -fx-background-radius: 30;
+}
+
 .login-button:hover {
     -fx-background-color: white;
     -fx-text-fill: black;
     -fx-effect: innershadow(gaussian, #8F250C, 10, 0.5, 0, 0);
+}
+
+.login-button-dark:hover {
+    -fx-background-color: #2C2C2C;
+    -fx-text-fill: white;
+    -fx-effect: innershadow(gaussian, #F7ECB7, 10, 0.5, 0, 0);
 }
