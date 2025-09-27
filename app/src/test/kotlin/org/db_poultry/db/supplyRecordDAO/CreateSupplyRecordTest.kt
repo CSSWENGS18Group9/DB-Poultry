@@ -346,7 +346,7 @@ class CreateSupplyRecordTest {
 
         assertEquals(
             result,
-            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-01-01', 0.0000, 0.0000, 0.0000, true, 50.0000)"
+            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-01-01', 0.0000, 0.0000, 0.0000, true, NULL)"
         )
     }
 
