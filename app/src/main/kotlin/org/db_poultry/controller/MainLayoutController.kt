@@ -135,12 +135,20 @@ class MainLayoutController : Initializable {
             GUIUtil.applyDarkMode(mainAnchorPane, darkModeEnabled)
             updateActiveElementsForDarkMode(darkModeEnabled)
 
+            // Replace sidebar image based on dark mode
+            val imagePath = if (darkModeEnabled) "/img/CSSWENG_DB Poultry Logo Dark.png" else "/img/CSSWENG_DB Poultry Logo.png"
+            sideBarImageView.image = javafx.scene.image.Image(javaClass.getResourceAsStream(imagePath))
+
             // Apply to currently loaded content if it exists
             if (contentAnchorPane.children.isNotEmpty()) {
                 val currentContent = contentAnchorPane.children[0]
                 GUIUtil.applyDarkMode(currentContent as Parent, darkModeEnabled)
             }
         }
+
+        // Set initial sidebar image based on persisted dark mode state
+        val initialImagePath = if (GUIUtil.getDarkMode()) "/img/CSSWENG_DB Poultry Logo Dark.png" else "CSSWENG_DB Poultry Logo.png"
+        sideBarImageView.image = javafx.scene.image.Image(javaClass.getResourceAsStream(initialImagePath))
     }
 
     private fun updateActiveElementsForDarkMode(darkMode: Boolean) {
