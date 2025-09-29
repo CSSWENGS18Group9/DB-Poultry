@@ -231,6 +231,10 @@
 }
 
 /* Dark mode table styling overrides */
+.table-view-dark {
+    -fx-background-color: black;
+}
+
 .table-view-dark .column-header-background {
   -fx-background-color: #535353;
 }

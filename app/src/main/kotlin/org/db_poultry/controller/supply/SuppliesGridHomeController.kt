@@ -236,7 +236,8 @@ class SuppliesGridHomeController: Initializable {
 
         val unit = if (supplyType.unit.isNotEmpty()) " (${supplyType.unit})" else ""
         val countLabel = Label("$formattedCount $unit").apply {
-            styleClass.add("h5")
+            if (GUIUtil.getDarkMode()) { styleClass.add("text-dark"); styleClass.add("h5") }
+            else { styleClass.add("text") }
         }
 
         GridPane.setHalignment(countLabel, HPos.CENTER)

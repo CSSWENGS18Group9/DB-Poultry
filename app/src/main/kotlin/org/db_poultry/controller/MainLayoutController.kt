@@ -147,7 +147,7 @@ class MainLayoutController : Initializable {
         }
 
         // Set initial sidebar image based on persisted dark mode state
-        val initialImagePath = if (GUIUtil.getDarkMode()) "/img/CSSWENG_DB Poultry Logo Dark.png" else "CSSWENG_DB Poultry Logo.png"
+        val initialImagePath = if (GUIUtil.getDarkMode()) "/img/CSSWENG_DB Poultry Logo Dark.png" else "/img/CSSWENG_DB Poultry Logo.png"
         sideBarImageView.image = javafx.scene.image.Image(javaClass.getResourceAsStream(initialImagePath))
     }
 

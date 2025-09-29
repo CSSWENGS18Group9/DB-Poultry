@@ -259,7 +259,8 @@ class FlockGridHomeController: Initializable {
         val currentCount = flockComplete.flock.startingCount -
                 flockComplete.flockDetails.sumOf { it.depletedCount }
         val countLabel = Label("Current Count: $currentCount").apply {
-            styleClass.add("h5")
+            if (GUIUtil.getDarkMode()) { styleClass.add("text-dark"); styleClass.add("h5") }
+            else { styleClass.add("text") }
         }
         GridPane.setHalignment(countLabel, HPos.CENTER)
         gridPane.add(countLabel, 0, 3)
