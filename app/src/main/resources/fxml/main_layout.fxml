@@ -54,32 +54,6 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="sideBarDateLabel" graphicTextGap="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="35.0" text="September 23, XXXX" textAlignment="CENTER" GridPane.columnIndex="7" GridPane.rowSpan="2">
-                           <font>
-                              <Font name="HelveticaNowDisplay-Black" size="14.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="61.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" styleClass="icon_button">
-                                 <image>
-                                    <Image url="@../img/icons/calendar-date-range.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <effect>
-                              <DropShadow offsetY="1.5">
-                                 <color>
-                                    <Color opacity="0.4000000059604645" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                           <GridPane.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </GridPane.margin>
-                           <styleClass>
-                              <String fx:value="h4" />
-                              <String fx:value="calendar" />
-                           </styleClass>
-                        </Label>
                         <ImageView fx:id="sideBarImageView" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#navigateToHome" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowSpan="2">
                            <image>
                               <Image url="@../img/CSSWENG_DB%20Poultry%20Logo.png" />
@@ -109,6 +83,29 @@
                            </children>
                            <GridPane.margin>
                               <Insets />
+                           </GridPane.margin>
+                        </FlowPane>
+                        <FlowPane alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="200.0" styleClass="calendar" GridPane.columnIndex="7" GridPane.rowSpan="2">
+                           <children>
+                              <FontIcon fx:id="homeFontIcon121" iconLiteral="fas-calendar-alt" iconSize="35" textAlignment="CENTER" wrappingWidth="50.0" />
+                              <Label fx:id="sideBarDateLabel" graphicTextGap="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="35.0" styleClass="h4" text="September 23, XXXX" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="HelveticaNowDisplay-Black" size="14.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow offsetY="1.5">
+                                       <color>
+                                          <Color opacity="0.4000000059604645" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                                 <FlowPane.margin>
+                                    <Insets left="5.0" />
+                                 </FlowPane.margin>
+                              </Label>
+                           </children>
+                           <GridPane.margin>
+                              <Insets bottom="20.0" right="10.0" top="20.0" />
                            </GridPane.margin>
                         </FlowPane>
                      </children>
