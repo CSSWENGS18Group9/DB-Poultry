@@ -139,6 +139,14 @@ object GUIUtil {
     private fun applyDarkModeToContainers(parent: Parent, darkMode: Boolean) {
         findAllContainers(parent).forEach { container ->
             when {
+                container.styleClass.contains("upperleft-pane") || container.styleClass.contains("upperleft-pane-dark") -> {
+                    if (darkMode) {
+                        container.styleClass.add("upperleft-pane-dark")
+                    } else {
+                        container.styleClass.remove("upperleft-pane-dark")
+                    }
+                }
+
                 container.styleClass.contains("sidebar") || container.styleClass.contains("sidebar-dark") -> {
                     if (darkMode) {
                         container.styleClass.remove("sidebar")
@@ -270,6 +278,15 @@ object GUIUtil {
         // Handle buttons with dark mode variants
         findAllButtons(parent).forEach { button ->
             when {
+                button.styleClass.contains("login-button") || button.styleClass.contains("login-button-dark") -> {
+                    if (darkMode) {
+                        button.styleClass.remove("login-button")
+                        button.styleClass.add("login-button-dark")
+                    } else {
+                        button.styleClass.remove("login-button-dark")
+                        button.styleClass.add("login-button")
+                    }
+                }
                 button.styleClass.contains("main-button-reversed") || button.styleClass.contains("main-button-reversed-dark") -> {
                     if (darkMode) {
                         button.styleClass.remove("main-button-reversed")
@@ -317,6 +334,14 @@ object GUIUtil {
 
         // Handle labels with special styling
         findAllLabels(parent).forEach { label ->
+            if (darkMode && label.styleClass.contains("login-subtitle")) {
+                label.styleClass.remove("login-subtitle")
+                label.styleClass.add("login-subtitle-dark")
+            } else if (!darkMode && label.styleClass.contains("login-subtitle-dark")) {
+                label.styleClass.remove("login-subtitle-dark")
+                label.styleClass.add("login-subtitle")
+            }
+
             if (darkMode && label.styleClass.contains("underline-label")) {
                 label.styleClass.remove("underline-label")
                 label.styleClass.add("underline-label-dark")

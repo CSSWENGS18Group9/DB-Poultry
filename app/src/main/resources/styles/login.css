@@ -12,9 +12,16 @@
     -fx-text-fill: white;
 }
 
-.h1-bold {
+.login-subtitle {
     -fx-font-family: "HelveticaNowDisplay ExtraBold";
+    -fx-font-size: 4em;
     -fx-text-fill: #8F250C;
+}
+
+.login-subtitle-dark {
+    -fx-font-family: "HelveticaNowDisplay ExtraBold";
+    -fx-font-size: 4em;
+    -fx-text-fill: #FF9999;
 }
 
 .h2-bold {

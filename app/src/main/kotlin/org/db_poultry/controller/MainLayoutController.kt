@@ -13,6 +13,7 @@ import java.net.URL
 import java.time.LocalDate
 
 import javafx.scene.control.Label
+import javafx.scene.image.Image
 import javafx.scene.layout.AnchorPane
 import javafx.scene.image.ImageView
 import javafx.scene.layout.FlowPane
@@ -137,7 +138,7 @@ class MainLayoutController : Initializable {
 
             // Replace sidebar image based on dark mode
             val imagePath = if (darkModeEnabled) "/img/CSSWENG_DB Poultry Logo Dark.png" else "/img/CSSWENG_DB Poultry Logo.png"
-            sideBarImageView.image = javafx.scene.image.Image(javaClass.getResourceAsStream(imagePath))
+            sideBarImageView.image = Image(javaClass.getResourceAsStream(imagePath))
 
             // Apply to currently loaded content if it exists
             if (contentAnchorPane.children.isNotEmpty()) {
@@ -147,8 +148,8 @@ class MainLayoutController : Initializable {
         }
 
         // Set initial sidebar image based on persisted dark mode state
-        val initialImagePath = if (GUIUtil.getDarkMode()) "/img/CSSWENG_DB Poultry Logo Dark.png" else "/img/CSSWENG_DB Poultry Logo.png1"
-        sideBarImageView.image = javafx.scene.image.Image(javaClass.getResourceAsStream(initialImagePath))
+        val initialImagePath = if (GUIUtil.getDarkMode()) "/img/CSSWENG_DB Poultry Logo Dark.png" else "/img/CSSWENG_DB Poultry Logo.png"
+        sideBarImageView.image = Image(javaClass.getResourceAsStream(initialImagePath))
     }
 
     private fun updateActiveElementsForDarkMode(darkMode: Boolean) {
