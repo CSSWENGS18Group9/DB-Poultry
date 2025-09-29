@@ -22,6 +22,9 @@ class LoginController: Initializable {
     private lateinit var loginAnchorPane: AnchorPane
 
     @FXML
+    private lateinit var userLoginLabel: Label
+
+    @FXML
     private lateinit var loginButton: Button
 
     @FXML
@@ -38,6 +41,12 @@ class LoginController: Initializable {
 
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
         GeneralUtil.initializeFontSizeManager(loginAnchorPane)
+
+        // Apply the saved dark mode setting
+        GUIUtil.applyDarkMode(loginAnchorPane, GUIUtil.getDarkMode())
+
+        if(GUIUtil.getDarkMode()) { userLoginLabel.styleClass.add("login-subtitle-dark") }
+        else { userLoginLabel.styleClass.add("login-subtitle") }
 
         GUIUtil.setupPassword(passTextField, passPasswordField, showPassButton)
         incorrectPassLabel.isVisible = false

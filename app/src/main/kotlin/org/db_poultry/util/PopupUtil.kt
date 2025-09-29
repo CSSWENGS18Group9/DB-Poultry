@@ -22,6 +22,7 @@ object PopupUtil {
 
         val loader = FXMLLoader(GeneralUtil::class.java.getResource(fxmlPath))
         val root = loader.load<Parent>()
+        GUIUtil.applyDarkMode(root, GUIUtil.getDarkMode())
 
         // Set the popup text
         val textId = if (status.lowercase() == "success") "popupSuccessText" else "popupErrorText"
@@ -89,6 +90,7 @@ object PopupUtil {
 
         val loader = FXMLLoader(GeneralUtil::class.java.getResource(fxmlPath))
         val root = loader.load<Parent>()
+        GUIUtil.applyDarkMode(root, GUIUtil.getDarkMode())
 
         val ownerStage = Stage.getWindows()
             .filterIsInstance<Stage>()

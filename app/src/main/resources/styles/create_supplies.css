@@ -11,3 +11,12 @@
     -fx-border-width: 2;
 
 }
+
+.file-img-dark {
+    -fx-background-image: url("../img/create-supplies/insert-image.png");
+    -fx-background-size: 135%;
+    -fx-background-position: center center;
+    -fx-border-color: white;
+    -fx-border-width: 2;
+
+}

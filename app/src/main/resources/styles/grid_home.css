@@ -4,12 +4,28 @@
     -fx-text-fill: #8F250C;
 }
 
+.supply-label-dark {
+    -fx-font-size: 1.5em;
+    -fx-font-family: "HelveticaNowDisplay-Bold";
+    -fx-text-fill: #F7ECB7;
+}
+
 .grid-supply {
     -fx-background-color: #FEF5D0;
     -fx-background-radius: 20;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.50), 10, 0.6, 0, 0);
 }
 
+.grid-supply-dark {
+    -fx-background-color: #2C2C2C;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.50), 10, 0.6, 0, 0);
+}
+
 .grid-add-supply:hover {
     -fx-background-color: #c4bd9f;
+}
+
+.grid-add-supply-dark:hover {
+    -fx-background-color: #232323;
 }

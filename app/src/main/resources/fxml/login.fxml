@@ -79,9 +79,10 @@
                 <RowConstraints maxHeight="299.33331298828125" minHeight="10.0" percentHeight="15.0" prefHeight="299.33331298828125" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="114.66668701171875" minHeight="10.0" prefHeight="108.66668701171875" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="114.66668701171875" minHeight="10.0" prefHeight="108.66668701171875" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="114.66668701171875" minHeight="10.0" prefHeight="108.66668701171875" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h1-bold" text="User Login" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="userLoginLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="login-subtitle" text="User Login" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
                         <Label styleClass="h4-bold" text="Password" />

@@ -17,6 +17,7 @@ import javafx.scene.control.Button
 import javafx.scene.layout.AnchorPane
 import javafx.stage.Stage
 import org.db_poultry.controller.NotificationController
+import org.db_poultry.util.GUIUtil
 import org.db_poultry.util.GeneralUtil
 import org.db_poultry.util.PopupUtil
 import org.db_poultry.util.SupplySingleton
@@ -63,13 +64,15 @@ class SuppliesUpdateAddConsumeController: Initializable {
     }
 
     private fun setSupplyName() {
-        supplyNameLabel.text = SupplySingleton.getCurrentSupplyName()
+        supplyNameLabel.text = GeneralUtil.capitalizeCase(SupplySingleton.getCurrentSupplyName())
     }
 
     private fun setAmounts() {
         currentAmountLabel.text = SupplySingleton.getCurrentAmount().toString()
         updatedCurrentAmountLabel.text = currentAmountLabel.text
-        updatedCurrentAmountLabel.style = "-fx-text-fill: black;"
+        if(GUIUtil.getDarkMode()) { updatedCurrentAmountLabel.style = "-fx-text-fill: white;"
+        } else { updatedCurrentAmountLabel.style = "-fx-text-fill: black;" }
+
         confirmButton.isDisable = true
 
         val updateButtonAndLabel = {
@@ -89,10 +92,18 @@ class SuppliesUpdateAddConsumeController: Initializable {
             val today = java.time.LocalDate.now()
             setTodayButton.isDisable = dateDatePicker.value == today
 
-            updatedCurrentAmountLabel.style = when {
-                !isAmountEntered -> "-fx-text-fill: black;"
-                updatedAmount > currentAmount -> "-fx-text-fill: #606C38;"
-                else -> "-fx-text-fill: #8F250C;"
+            if(GUIUtil.getDarkMode()) {
+                updatedCurrentAmountLabel.style = when {
+                    !isAmountEntered -> "-fx-text-fill: white;"
+                    updatedAmount > currentAmount -> "-fx-text-fill: #D4FF43;"
+                    else -> "-fx-text-fill: #FF0000;"
+                }
+            } else {
+                updatedCurrentAmountLabel.style = when {
+                    !isAmountEntered -> "-fx-text-fill: black;"
+                    updatedAmount > currentAmount -> "-fx-text-fill: #606C38;"
+                    else -> "-fx-text-fill: #8F250C;"
+                }
             }
         }
 
