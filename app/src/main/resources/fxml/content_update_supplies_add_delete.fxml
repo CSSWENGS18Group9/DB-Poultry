@@ -67,7 +67,11 @@
                            <children>
                               <FontIcon fx:id="homeFontIcon1" iconLiteral="fas-arrow-right" iconSize="30" onMouseClicked="#closePopup" styleClass="back-icon" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                               <Label fx:id="currentAmountLabel" styleClass="h4-bold" text="XXXX" GridPane.halignment="RIGHT" />
-                              <Label fx:id="updatedCurrentAmountLabel" styleClass="h4-bold" text="XXXX" GridPane.columnIndex="2" GridPane.halignment="LEFT" />
+                              <Label fx:id="updatedCurrentAmountLabel" text="XXXX" GridPane.columnIndex="2" GridPane.halignment="LEFT">
+                                 <styleClass>
+                                    <String fx:value="h4-bold" />
+                                    <String fx:value="text" />
+                                 </styleClass></Label>
                            </children>
                         </GridPane>
                      </children>
