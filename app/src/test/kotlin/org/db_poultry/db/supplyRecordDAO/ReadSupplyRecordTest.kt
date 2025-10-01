@@ -85,8 +85,10 @@ class ReadSupplyRecordTest {
 
         println("first: $first")
         println("second: $second")
+        println("firstAdded: ${first.added}")
+        println("firstConsumed: ${first.consumed}")
         println("firstRetrieve: ${first.isRetrieved}")
-        println("firstRetrieve: ${second.isRetrieved}")
+        println("secondRetrieve: ${second.isRetrieved}")
 
         assertEquals(13, first.supply_type_id)
         assertEquals(date, first.date)
