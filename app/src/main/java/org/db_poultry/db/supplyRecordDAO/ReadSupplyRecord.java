@@ -190,11 +190,6 @@ public class ReadSupplyRecord {
                     boolean retrieved = rs.getBoolean("retrieved");
                     BigDecimal price = rs.getBigDecimal("price");
 
-                    System.out.println("insideGetLatest added:" + added);
-                    System.out.println("insideGetLatest date:" + sr_date);
-                    System.out.println("insideGetLatest consumed:" + consumed);
-                    System.out.println("insideGetLatest retrieved:" + retrieved);
-
                     return new SupplyComplete(supply_id, supply_type_id, sr_date, supply_name, unit, added, consumed, current_count, retrieved, price);
                 }
 

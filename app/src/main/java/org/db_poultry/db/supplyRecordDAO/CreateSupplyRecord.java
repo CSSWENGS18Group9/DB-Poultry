@@ -42,7 +42,6 @@ public class CreateSupplyRecord {
      */
     public static String createSupplyRecord(Connection connect, int supplyTypeID, Date srDate, BigDecimal added,
                                             BigDecimal consumed, boolean retrieved, BigDecimal price) {
-        System.out.println("checking latest...");
         SupplyComplete latestRecord = ReadSupplyRecord.getLatest(connect, supplyTypeID);
 
         BigDecimal currentCount;
@@ -158,11 +157,6 @@ public class CreateSupplyRecord {
             preparedStatement.setBigDecimal(5, currentCount);
             preparedStatement.setBoolean(6, retrieved);
             preparedStatement.setBigDecimal(7, price);
-
-            System.out.println("insideCreateRecord added:" + added);
-            System.out.println("insideCreateRecord date:" + srDate);
-            System.out.println("insideCreateRecord consumed:" + consumed);
-            System.out.println("insideCreateRecord retrieved:" + retrieved);
 
             preparedStatement.executeUpdate();
 
