@@ -33,7 +33,7 @@ class DeleteSupplyRecordTest {
     }
 
     @Test
-    fun testDeleteRecordWithDataOne() {
+    fun testDeleteRecordWithData() {
         val date = Date.valueOf("2025-01-02")
 
         CreateSupplyType.createSupplyType(
@@ -58,7 +58,8 @@ class DeleteSupplyRecordTest {
             date,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -67,7 +68,8 @@ class DeleteSupplyRecordTest {
             date,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val result = DeleteSupplyRecord.undoCreateSupplyRecord(conn)
@@ -78,9 +80,9 @@ class DeleteSupplyRecordTest {
     }
 
     @Test
-    fun testDeleteRecordWithDataTwo() {
-        val dateOne = Date.valueOf("2025-01-03")
-        val dateTwo = Date.valueOf("2025-01-02")
+    fun testDeleteRecordRecentDataOldDate() {
+        val dateNew = Date.valueOf("2025-01-03")
+        val dateOld = Date.valueOf("2025-01-02")
 
         CreateSupplyType.createSupplyType(
             conn,
@@ -101,25 +103,67 @@ class DeleteSupplyRecordTest {
         CreateSupplyRecord.createSupplyRecord(
             conn,
             1,
-            dateOne,
+            dateNew,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
             conn,
             2,
-            dateTwo,
+            dateOld,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val result = DeleteSupplyRecord.undoCreateSupplyRecord(conn)
 
         assertEquals("DELETE FROM Supply_Record ORDER BY Supply_ID DESC LIMIT 1", result)
-        assertNull(ReadSupplyRecord.getOneByDateAndName(conn, dateTwo, "Test_2"))
-        cleanAndInitTables(conn)
+        assertNull(ReadSupplyRecord.getOneByDateAndName(conn, dateOld, "Test_2"))
+    }
+
+    @Test
+    fun testDeleteRecordWithNoData() {
+        val date = Date.valueOf("2025-01-02")
+        val result = DeleteSupplyRecord.undoCreateSupplyRecord(conn)
+        assertNull(result)
+        assertNull(ReadSupplyRecord.getOneByDateAndName(conn, date, "Test_2"))
+    }
+
+    @Test
+    fun testDeleteRecordWithErrorInInput(){
+        val date = Date.valueOf("2025-01-03")
+
+        CreateSupplyType.createSupplyType(conn, "Test_1", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+        CreateSupplyType.createSupplyType(conn, "Test_2", "kg", "src/main/resources/img/supply-img/Apog.png", "src/main/resources/img/supply-img/default.png")
+
+        CreateSupplyRecord.createSupplyRecord(
+            conn,
+            1,
+            date,
+            BigDecimal("200.00"),
+            BigDecimal("20.00"),
+            false,
+            BigDecimal("50.00")
+        )
+
+        CreateSupplyRecord.createSupplyRecord(
+            conn,
+            2,
+            date,
+            BigDecimal("100.00"),
+            BigDecimal("50.00"),
+            false,
+            BigDecimal("-50.00")
+        )
+
+        val result = DeleteSupplyRecord.undoCreateSupplyRecord(conn)
+
+        assertEquals("DELETE FROM Supply_Record ORDER BY Supply_ID DESC LIMIT 1", result)
+        assertNull(ReadSupplyRecord.getOneByDateAndName(conn, date, "Test_1"))
     }
 }

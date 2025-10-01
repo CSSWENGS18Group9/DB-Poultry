@@ -17,7 +17,11 @@ public class DeleteFlock {
     public static String undoCreateFlock(Connection conn) {
         try (PreparedStatement preppedStatement = conn.prepareStatement("DELETE FROM Flock WHERE ctid IN (SELECT ctid FROM Flock ORDER BY flock_id DESC LIMIT 1)")) {
 
-            preppedStatement.executeUpdate();
+            int rows = preppedStatement.executeUpdate();
+
+            if (rows == 0) {
+                return null;
+            }
 
             return "DELETE FROM Flock WHERE ctid IN (SELECT ctid FROM Flock ORDER BY flock_id DESC LIMIT 1)";
         } catch (SQLException e) {

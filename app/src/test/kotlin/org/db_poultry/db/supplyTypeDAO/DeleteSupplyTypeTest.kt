@@ -78,7 +78,8 @@ class DeleteSupplyTypeTest {
             dateOne,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -87,7 +88,8 @@ class DeleteSupplyTypeTest {
             dateTwo,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val result = DeleteSupplyType.undoCreateSupplyType(conn)
