@@ -84,10 +84,15 @@ class ReadSupplyRecordTest {
         assertEquals(2, supplyCompList.size)
 
         println("first: $first")
-        println("second: $second")
+        println("firstID: ${first.supply_type_id}")
         println("firstAdded: ${first.added}")
         println("firstConsumed: ${first.consumed}")
         println("firstRetrieve: ${first.isRetrieved}")
+        println("second: $second")
+        println("first: $first")
+        println("secondID: ${second.supply_type_id}")
+        println("secondAdded: ${second.added}")
+        println("secondConsumed: ${second.consumed}")
         println("secondRetrieve: ${second.isRetrieved}")
 
         assertEquals(13, first.supply_type_id)
