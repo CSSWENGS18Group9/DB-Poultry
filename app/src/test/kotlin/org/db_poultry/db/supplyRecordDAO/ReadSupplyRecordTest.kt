@@ -83,11 +83,16 @@ class ReadSupplyRecordTest {
 
         assertEquals(2, supplyCompList.size)
 
+        println("first: $first")
+        println("second: $second")
+        println("firstRetrieve: ${first.isRetrieved}")
+        println("firstRetrieve: ${second.isRetrieved}")
+
         assertEquals(13, first.supply_type_id)
         assertEquals(date, first.date)
 //        assertEquals(BigDecimal("300.0000"), first.added) // Error here
 //        assertEquals(BigDecimal("30.0000"), first.consumed) // Error here
-        assertEquals(false, first.isRetrieved)
+        assertEquals(false, first.isRetrieved) // FIXME: note to self error here
         assertEquals(BigDecimal("45.0000"), first.price)
 
         assertEquals(14, second.supply_type_id)
