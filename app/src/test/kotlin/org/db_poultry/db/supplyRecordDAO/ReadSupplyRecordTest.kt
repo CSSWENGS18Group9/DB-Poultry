@@ -50,8 +50,8 @@ class ReadSupplyRecordTest {
             conn,
             13,
             oldDate,
-            BigDecimal("200.00"),
-            BigDecimal("20.00"),
+            BigDecimal("11111.00"),
+            BigDecimal("11.00"),
             false,
             BigDecimal("50.00")
         )
@@ -60,8 +60,8 @@ class ReadSupplyRecordTest {
             conn,
             13,
             date,
-            BigDecimal("300.00"),
-            BigDecimal("30.00"),
+            BigDecimal("22222.00"),
+            BigDecimal("22.00"),
             false,
             BigDecimal("45.00")
         )
@@ -70,8 +70,8 @@ class ReadSupplyRecordTest {
             conn,
             14,
             date,
-            BigDecimal("100.00"),
-            BigDecimal("50.00"),
+            BigDecimal("33333.00"),
+            BigDecimal("33.00"),
             false,
             BigDecimal("50.00")
         )
@@ -104,8 +104,8 @@ class ReadSupplyRecordTest {
 
         assertEquals(14, second.supply_type_id)
         assertEquals(date, second.date)
-        assertEquals(BigDecimal("100.0000"), second.added)
-        assertEquals(BigDecimal("50.0000"), second.consumed)
+        assertEquals(BigDecimal("33333.0000"), second.added)
+        assertEquals(BigDecimal("33.0000"), second.consumed)
         assertEquals(false, second.isRetrieved)
         assertEquals(BigDecimal("50.0000"), second.price)
     }
