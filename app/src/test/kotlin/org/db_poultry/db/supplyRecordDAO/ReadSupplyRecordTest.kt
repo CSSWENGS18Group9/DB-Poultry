@@ -31,7 +31,7 @@ class ReadSupplyRecordTest {
         cleanTablesTest(conn)
 
         val date = Date.valueOf("2025-02-02")
-        val oldDate = Date.valueOf("2024-03-06")
+        val oldDate = Date.valueOf("2025-01-02")
 
         CreateSupplyType.createSupplyType(
             conn,
@@ -53,8 +53,8 @@ class ReadSupplyRecordTest {
             conn,
             13,
             oldDate,
-            BigDecimal("11111.00"),
-            BigDecimal("11.00"),
+            BigDecimal("200.00"),
+            BigDecimal("20.00"),
             false,
             BigDecimal("50.00")
         )
@@ -63,8 +63,8 @@ class ReadSupplyRecordTest {
             conn,
             13,
             date,
-            BigDecimal("22222.00"),
-            BigDecimal("22.00"),
+            BigDecimal("300.00"),
+            BigDecimal("30.00"),
             false,
             BigDecimal("45.00")
         )
@@ -73,8 +73,8 @@ class ReadSupplyRecordTest {
             conn,
             14,
             date,
-            BigDecimal("33333.00"),
-            BigDecimal("33.00"),
+            BigDecimal("100.00"),
+            BigDecimal("50.00"),
             false,
             BigDecimal("50.00")
         )
@@ -95,8 +95,8 @@ class ReadSupplyRecordTest {
 
         assertEquals(14, second.supply_type_id)
         assertEquals(date, second.date)
-        assertEquals(BigDecimal("33333.0000"), second.added)
-        assertEquals(BigDecimal("33.0000"), second.consumed)
+        assertEquals(BigDecimal("100.0000"), second.added)
+        assertEquals(BigDecimal("50.0000"), second.consumed)
         assertEquals(false, second.isRetrieved)
         assertEquals(BigDecimal("50.0000"), second.price)
     }
