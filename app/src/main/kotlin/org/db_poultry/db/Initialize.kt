@@ -85,6 +85,34 @@ fun cleanTables(conn: Connection?) {
 
 }
 
+fun cleanTablesTest(conn: Connection?) {
+    if (conn == null) {
+        generateErrorMessage("Error at `cleanTablesTest()` in `Initialize.kt`",
+            "Connection is null.",
+            "Ensure a connection exists."
+        )
+
+        return
+    }
+
+    val tables = listOf("Supply_Record", "Flock_Details", "Supply_Type", "Flock")
+
+    try {
+        for (table in tables) {
+            conn.createStatement().use { stmt ->
+                stmt.execute("TRUNCATE TABLE $table RESTART IDENTITY CASCADE;")
+            }
+        }
+    } catch (e: SQLException) {
+        generateErrorMessage(
+            "Error at `cleanTablesTest()` in `Initialize.kt`",
+            "Cleaning tables caused an error.",
+            "",
+            e
+        )
+    }
+}
+
 fun initDBAndUser() {
 
     val conn = connectToDefault()

@@ -4,6 +4,7 @@ import org.db_poultry.db.DBConnect
 import org.db_poultry.db.initDBAndUser
 import org.db_poultry.db.initTables
 import org.db_poultry.db.cleanAndInitTables
+import org.db_poultry.db.cleanTablesTest
 import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
@@ -27,6 +28,8 @@ class ReadSupplyRecordTest {
 
     @Test
     fun testReadSupplyGetFromDateWithData() {
+        cleanTablesTest(conn)
+
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2024-03-06")
 
