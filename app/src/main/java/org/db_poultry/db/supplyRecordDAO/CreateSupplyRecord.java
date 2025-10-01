@@ -42,6 +42,7 @@ public class CreateSupplyRecord {
      */
     public static String createSupplyRecord(Connection connect, int supplyTypeID, Date srDate, BigDecimal added,
                                             BigDecimal consumed, boolean retrieved, BigDecimal price) {
+        System.out.println("checking latest...");
         SupplyComplete latestRecord = ReadSupplyRecord.getLatest(connect, supplyTypeID);
 
         BigDecimal currentCount;
