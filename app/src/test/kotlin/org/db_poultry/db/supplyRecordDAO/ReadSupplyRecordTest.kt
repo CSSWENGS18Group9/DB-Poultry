@@ -88,8 +88,8 @@ class ReadSupplyRecordTest {
 
         assertEquals(13, first.supply_type_id)
         assertEquals(date, first.date)
-//        assertEquals(BigDecimal("300.0000"), first.added) // Error here
-//        assertEquals(BigDecimal("30.0000"), first.consumed) // Error here
+        assertEquals(BigDecimal("300.0000"), first.added)
+        assertEquals(BigDecimal("30.0000"), first.consumed)
         assertEquals(false, first.isRetrieved)
         assertEquals(BigDecimal("45.0000"), first.price)
 
