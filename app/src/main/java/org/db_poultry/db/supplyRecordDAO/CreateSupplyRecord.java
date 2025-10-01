@@ -159,6 +159,7 @@ public class CreateSupplyRecord {
             preparedStatement.setBigDecimal(7, price);
 
             System.out.println("insideCreateRecord added:" + added);
+            System.out.println("insideCreateRecord date:" + srDate);
             System.out.println("insideCreateRecord consumed:" + consumed);
             System.out.println("insideCreateRecord retrieved:" + retrieved);
 

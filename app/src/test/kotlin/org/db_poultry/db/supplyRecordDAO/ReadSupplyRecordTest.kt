@@ -28,7 +28,7 @@ class ReadSupplyRecordTest {
     @Test
     fun testReadSupplyGetFromDateWithData() {
         val date = Date.valueOf("2025-02-02")
-        val oldDate = Date.valueOf("2025-01-02")
+        val oldDate = Date.valueOf("2024-03-06")
 
         CreateSupplyType.createSupplyType(
             conn,
