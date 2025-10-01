@@ -24,6 +24,7 @@ import javafx.scene.control.ComboBox
 import javafx.scene.layout.TilePane
 import javafx.scene.control.Spinner
 import javafx.scene.control.SpinnerValueFactory
+import org.db_poultry.util.GUIUtil
 import org.db_poultry.util.PopupUtil
 import java.io.File
 import java.net.URL
@@ -158,7 +159,9 @@ class SuppliesGridHomeController: Initializable {
         val gridPane = GridPane().apply {
             prefHeight = 101.0
             prefWidth = 455.0
-            styleClass.add("grid-supply")
+
+            if (GUIUtil.getDarkMode()) {styleClass.add("grid-supply-dark") }
+            else { styleClass.add("grid-supply") }
         }
 
         // Set up column constraints (same as FXML)
@@ -219,7 +222,8 @@ class SuppliesGridHomeController: Initializable {
 
         // Create name label
         val nameLabel = Label(GeneralUtil.capitalizeCase(supplyType.name)).apply {
-            styleClass.add("supply-label")
+            if (GUIUtil.getDarkMode()) { styleClass.add("supply-label-dark") }
+            else { styleClass.add("supply-label") }
         }
         GridPane.setHalignment(nameLabel, HPos.CENTER)
         GridPane.setRowSpan(nameLabel, 2)
@@ -232,7 +236,8 @@ class SuppliesGridHomeController: Initializable {
 
         val unit = if (supplyType.unit.isNotEmpty()) " (${supplyType.unit})" else ""
         val countLabel = Label("$formattedCount $unit").apply {
-            styleClass.add("h5")
+            if (GUIUtil.getDarkMode()) { styleClass.add("text-dark"); styleClass.add("h5") }
+            else { styleClass.add("text") }
         }
 
         GridPane.setHalignment(countLabel, HPos.CENTER)
@@ -242,7 +247,9 @@ class SuppliesGridHomeController: Initializable {
         val viewHistoryButton = Button("View History").apply {
             maxHeight = Double.MAX_VALUE
             maxWidth = Double.MAX_VALUE
-            styleClass.addAll("main-button-reversed", "h6-bold")
+
+            if (GUIUtil.getDarkMode()) { styleClass.addAll("main-button-reversed-dark", "h6-bold") }
+            else { styleClass.addAll("main-button-reversed", "h6-bold") }
             setOnAction { navigateToViewSupplies() }
             setOnMousePressed { event ->
                 SupplySingleton.setCurrentSupply(supplyType.name)
@@ -256,7 +263,8 @@ class SuppliesGridHomeController: Initializable {
         val updateCountButton = Button("Update Count").apply {
             maxHeight = Double.MAX_VALUE
             maxWidth = Double.MAX_VALUE
-            styleClass.addAll("main-button-reversed", "h6-bold")
+            if (GUIUtil.getDarkMode()) { styleClass.addAll("main-button-reversed-dark", "h6-bold") }
+            else { styleClass.addAll("main-button-reversed", "h6-bold") }
             setOnAction { navigateToUpdateSupplies() }
             setOnMousePressed { event ->
                 SupplySingleton.setCurrentSupply(supplyType.name)

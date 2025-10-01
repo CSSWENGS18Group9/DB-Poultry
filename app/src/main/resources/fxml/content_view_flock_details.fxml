@@ -68,7 +68,7 @@
                               <Label fx:id="mortalityRateLabel" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h4" text="&lt;Placeholder Rate&gt;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h4-bold" text="Quantity Started:" GridPane.columnIndex="3" />
                               <Label fx:id="quantityStartedLabel" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h4" text="&lt;Placeholder Quantity&gt;" GridPane.columnIndex="4" />
-                              <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h4-bold" text="Remaining Chicken Count:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h4-bold" text="Remaining Count:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                               <Label fx:id="currentCountLabel" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h4" text="&lt;Placeholder Count&gt;" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                            </children>
                            <GridPane.margin>

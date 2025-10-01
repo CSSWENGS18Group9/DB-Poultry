@@ -1,7 +1,9 @@
 package org.db_poultry.db.reportDAO
 
 import org.db_poultry.db.DBConnect
-import org.db_poultry.db.cleanTables
+import org.db_poultry.db.initDBAndUser
+import org.db_poultry.db.initTables
+import org.db_poultry.db.cleanAndInitTables
 import org.db_poultry.db.flockDAO.CreateFlock
 import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
 import org.junit.jupiter.api.Test
@@ -15,9 +17,12 @@ class ReadMortalityRateTest {
     private val conn: Connection
 
     init {
+        initDBAndUser()
+
         DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
         conn = DBConnect.getConnection()!!
-        cleanTables(conn)
+
+        initTables(conn)
     }
 
     @Test
@@ -55,6 +60,7 @@ class ReadMortalityRateTest {
         assertEquals(13.0f, resultTwo.mortalityRate)
         assertEquals(1000, resultTwo.startCount)
         assertEquals(870, resultTwo.curCount)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -80,6 +86,7 @@ class ReadMortalityRateTest {
         val result = ReadMortalityRate.calculateMortalityRateForFlock(conn, fdDateOne)
 
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -105,6 +112,7 @@ class ReadMortalityRateTest {
         assertEquals(0.0f, resultTwo.mortalityRate)
         assertEquals(1000, resultTwo.startCount)
         assertEquals(1000, resultTwo.curCount)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -114,6 +122,7 @@ class ReadMortalityRateTest {
         val result = ReadMortalityRate.calculateMortalityRateForFlock(conn, flockTwoDate)
 
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 
     //tests for calculateMortalityRateForFlockDate
@@ -177,6 +186,7 @@ class ReadMortalityRateTest {
         val resultSix = ReadMortalityRate.calculateMortalityRateForFlockDate(conn, fdDateThree, fdDateFour)
 
         assertNull(resultSix)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -214,6 +224,7 @@ class ReadMortalityRateTest {
         assertEquals(3.0f, resultTwo.mortalityRate)
         assertEquals(1000, resultTwo.startCount)
         assertEquals(870, resultTwo.curCount)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -239,6 +250,7 @@ class ReadMortalityRateTest {
         val result = ReadMortalityRate.calculateMortalityRateForFlockDate(conn, flockOneDate, fdDateFour)
 
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -255,6 +267,7 @@ class ReadMortalityRateTest {
         assertEquals(0.0f, result.mortalityRate)
         assertEquals(1000, result.startCount)
         assertEquals(1000, result.curCount)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -265,5 +278,6 @@ class ReadMortalityRateTest {
         val result = ReadMortalityRate.calculateMortalityRateForFlockDate(conn, flockOneDate, fdDateTwo)
 
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 }

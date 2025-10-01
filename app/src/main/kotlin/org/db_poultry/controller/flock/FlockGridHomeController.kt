@@ -1,6 +1,7 @@
 package org.db_poultry.controller.flock
 
 import org.db_poultry.util.GeneralUtil
+import org.db_poultry.util.GUIUtil
 
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
@@ -210,7 +211,12 @@ class FlockGridHomeController: Initializable {
         val gridPane = GridPane().apply {
             prefHeight = 101.0
             prefWidth = 455.0
-            styleClass.add("grid-supply")
+            // Check dark mode and apply appropriate CSS class
+            if (GUIUtil.getDarkMode()) {
+                styleClass.add("grid-supply-dark")
+            } else {
+                styleClass.add("grid-supply")
+            }
         }
 
         val col1 = ColumnConstraints().apply {
@@ -239,7 +245,12 @@ class FlockGridHomeController: Initializable {
 
         val formattedDate = GeneralUtil.formatDatePretty(flockComplete.flock.startingDate.toLocalDate())
         val dateLabel = Label(formattedDate).apply {
-            styleClass.add("supply-label")
+            // Check dark mode and apply appropriate CSS class
+            if (GUIUtil.getDarkMode()) {
+                styleClass.add("supply-label-dark")
+            } else {
+                styleClass.add("supply-label")
+            }
         }
         GridPane.setHalignment(dateLabel, HPos.CENTER)
         GridPane.setRowSpan(dateLabel, 2)
@@ -248,7 +259,8 @@ class FlockGridHomeController: Initializable {
         val currentCount = flockComplete.flock.startingCount -
                 flockComplete.flockDetails.sumOf { it.depletedCount }
         val countLabel = Label("Current Count: $currentCount").apply {
-            styleClass.add("h5")
+            if (GUIUtil.getDarkMode()) { styleClass.add("text-dark"); styleClass.add("h5") }
+            else { styleClass.add("text") }
         }
         GridPane.setHalignment(countLabel, HPos.CENTER)
         gridPane.add(countLabel, 0, 3)
@@ -256,7 +268,12 @@ class FlockGridHomeController: Initializable {
         val viewHistoryButton = Button("View History").apply {
             maxHeight = Double.MAX_VALUE
             maxWidth = Double.MAX_VALUE
-            styleClass.addAll("main-button-reversed", "h6-bold")
+            if (GUIUtil.getDarkMode()) {
+                styleClass.addAll("main-button-reversed-dark", "h6-bold")
+            }
+            else {
+                styleClass.addAll("main-button-reversed", "h6-bold")
+            }
             setOnAction { navigateToViewFlockDetails() }
             setOnMousePressed {
                 FlockSingleton.setCurrentFlockComplete(flockComplete)
@@ -274,7 +291,13 @@ class FlockGridHomeController: Initializable {
             val updateRecordButton = Button("Update Record").apply {
                 maxHeight = Double.MAX_VALUE
                 maxWidth = Double.MAX_VALUE
-                styleClass.addAll("main-button-reversed", "h6-bold")
+
+                if (GUIUtil.getDarkMode()) {
+                    styleClass.addAll("main-button-reversed-dark", "h6-bold")
+                }
+                else {
+                    styleClass.addAll("main-button-reversed", "h6-bold")
+                }
                 setOnAction { navigateToCreateFlockDetails() }
                 setOnMousePressed {
                     FlockSingleton.setCurrentFlockComplete(flockComplete)

@@ -3,3 +3,9 @@
     -fx-background-radius: 20;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.50), 10, 0.6, 0, 0);
 }
+
+.supply-box-dark {
+    -fx-background-color: #2C2C2C;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.50), 10, 0.6, 0, 0);
+}

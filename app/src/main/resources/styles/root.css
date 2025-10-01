@@ -4,10 +4,20 @@
     -fx-background-color: #FEFAE0;
 }
 
+.main-pane-dark {
+    -fx-background-color: #3B3B3B;
+}
+
 .inner-pane {
     -fx-background-color: white;
     -fx-background-radius: 35;
 }
+
+.inner-pane-dark {
+    -fx-background-color: black;
+    -fx-background-radius: 35;
+}
+
 
 .popup-pane {
     -fx-effect: dropshadow(gaussian, black, 10, 0.6, 0, 0);
@@ -44,9 +54,20 @@
     -fx-background-radius: 20;
 }
 
+.main-button-reversed-dark {
+    -fx-background-color: #F7ECB7;
+    -fx-text-fill: black;
+    -fx-background-radius: 20;
+}
+
 .main-button-reversed:hover {
     -fx-background-color: white;
     -fx-text-fill: #8F250C;
+}
+
+.main-button-reversed-dark:hover {
+    -fx-background-color: white;
+    -fx-text-fill: #DDA15E;
 }
 
 .main-button-reversed:pressed {
@@ -68,11 +89,33 @@
     -fx-border-color: #BC6C25;
 }
 
+.sub-button-dark {
+    -fx-background-color: #DDA15E;
+    -fx-text-fill: black;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-width: 2;
+}
+
+.sub-button-dark:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: #DDA15E;
+    -fx-border-color: #DDA15E;
+}
+
 
 .confirm-button {
     -fx-background-color: #8F250C;
     -fx-text-fill: white;
     -fx-border-color: #8F250C;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+}
+
+.confirm-button-dark{
+    -fx-background-color: #F7ECB7;
+    -fx-text-fill: black;
+    -fx-border-color: #F7ECB7;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
 }
@@ -84,12 +127,27 @@
     -fx-text-fill: #8F250C;
 }
 
+.confirm-button-dark:hover {
+    -fx-background-color: transparent;
+    -fx-border-color: #F7ECB7;
+    -fx-border-width: 2;
+    -fx-text-fill: #F7ECB7;
+}
+
 .back-icon {
     -fx-icon-color: black;
 }
 
 .back-icon:hover {
     -fx-icon-color: #8F250C;
+}
+
+.back-icon-dark {
+    -fx-icon-color: white;
+}
+
+.back-icon-dark:hover {
+    -fx-icon-color: #A4AE81;
 }
 
 /* For all tables */
@@ -172,7 +230,35 @@
     -fx-background-color: -fx-selection-bar;
 }
 
-/* Table End */
+/* Dark mode table styling overrides */
+.table-view-dark {
+    -fx-background-color: black;
+}
+
+.table-view-dark .column-header-background {
+  -fx-background-color: #535353;
+}
+.table-view-dark .filler {
+  -fx-background-color: #535353;
+}
+.table-view-dark .column-header-background .label {
+    -fx-text-fill: #F7ECB7;
+}
+.table-view-dark > .virtual-flow > .corner {
+    -fx-background-color: #535353;
+}
+.table-view-dark .scroll-bar .thumb {
+    -fx-background-color: #F7ECB7;
+}
+.table-view-dark .table-row-cell:odd {
+    -fx-background-color: #535353;
+}
+.table-view-dark .table-row-cell:even {
+    -fx-background-color: #3B3B3B;
+}
+.table-view-dark .cell {
+    -fx-text-fill: white;
+}
 
 /* Fonts for USE
 
@@ -204,6 +290,18 @@ HelveticaNowDisplay HairlineIta
     -fx-text-fill: #8F250C;
 }
 
+.title-dark {
+    -fx-text-fill: #F7ECB7;
+}
+
+.text-dark {
+    -fx-text-fill: #EDEDED;
+}
+
+.icon-dark {
+    -fx-icon-color: #EDEDED;
+}
+
 .h1-bold {
     -fx-font-size: 4em;
     -fx-font-family: "HelveticaNowDisplay Bold";
@@ -212,7 +310,6 @@ HelveticaNowDisplay HairlineIta
 .h2-bold {
     -fx-font-size: 3em;
     -fx-font-family: "HelveticaNowDisplay Bold";
-
 }
 
 .h3-bold {
@@ -278,8 +375,12 @@ HelveticaNowDisplay HairlineIta
     -fx-opacity: 0.5;
 }
 
-.highlight-brown:hover {
+.highlight:hover {
     -fx-text-fill: #8F250C;
+}
+
+.highlight-dark:hover {
+    -fx-text-fill: #A4AE81;
 }
 
 .spinner {
@@ -292,9 +393,22 @@ HelveticaNowDisplay HairlineIta
     -fx-background-color: transparent;
 }
 
+.spinner-dark .text-field {
+    -fx-text-fill: #F7ECB7;
+    -fx-background-color: transparent;
+}
+
 .spinner .increment-arrow-button,
 .spinner .decrement-arrow-button {
     -fx-background-color: #8F250C;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+}
+
+.spinner-dark .increment-arrow-button,
+.spinner-dark .decrement-arrow-button {
+    -fx-background-color: #F7ECB7;
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
     -fx-border-width: 1px;
@@ -305,6 +419,11 @@ HelveticaNowDisplay HairlineIta
     -fx-background-color: white;
 }
 
+.spinner-dark .increment-arrow,
+.spinner-dark .decrement-arrow {
+    -fx-background-color: black;
+}
+
 .spinner .increment-arrow-button:hover,
 .spinner .decrement-arrow-button:hover {
     -fx-background-color: white;
@@ -312,7 +431,19 @@ HelveticaNowDisplay HairlineIta
     -fx-border-width: 1px;
 }
 
+.spinner-dark .increment-arrow-button:hover,
+.spinner-dark .decrement-arrow-button:hover {
+    -fx-background-color: transparent;
+    -fx-border-color: #F7ECB7;
+    -fx-border-width: 1px;
+}
+
 .spinner .increment-arrow-button:hover .increment-arrow,
 .spinner .decrement-arrow-button:hover .decrement-arrow {
     -fx-background-color: #8F250C;
+}
+
+.spinner-dark .increment-arrow-button:hover .increment-arrow,
+.spinner-dark .decrement-arrow-button:hover .decrement-arrow {
+    -fx-background-color: #F7ECB7;
 }

@@ -1,5 +1,6 @@
 package org.db_poultry.theLifesaver;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
@@ -17,6 +18,9 @@ public class Variables {
 
     // ================ ST IMAGE DIR VARIABLES ==========
     private static final String ST_IMAGE_FOLDER_NAME = "supply_type_images";
+
+    // ================ DARK MODE CONFIG VARIABLES ======
+    private static final String DM_CONFIG_FILENAME = "dm_config";
 
     // Getters
     public static String getHomeDirectory(){
@@ -57,6 +61,21 @@ public class Variables {
         return "";
     }
 
+    public static Path getENVFilePath() {
+        try {
+            return Paths.get(getHomeDirectory(), APP_FOLDER, ".env"); // "Username"/.db_poultry/.env
+        } catch (Exception e) {
+            generateErrorMessage(
+                    "Error at `getENVFilePath` in `Variables`.",
+                    "FATAL. Could not resolve .env file inside app folder.",
+                    "",
+                    e
+            );
+        }
+
+        return null;
+    }
+
     public static int getBackupIntervals() {
         return BACKUP_INTERVALS;
     }
@@ -76,6 +95,21 @@ public class Variables {
             generateErrorMessage(
                     "Error at `getSTImageFolderName` in `Variables`.",
                     "FATAL. Could not resolve `supply_type_images` directory inside app folder",
+                    "",
+                    e
+            );
+        }
+
+        return "";
+    }
+
+    public static String getDMConfigPath() {
+        try {
+            return Paths.get(getHomeDirectory(), APP_FOLDER, DM_CONFIG_FILENAME).toString();
+        } catch (Exception e) {
+            generateErrorMessage(
+                    "Error at `getDMConfigPath` in `Variables`.",
+                    "FATAL. Could not resolve dark mode config file location.",
                     "",
                     e
             );
