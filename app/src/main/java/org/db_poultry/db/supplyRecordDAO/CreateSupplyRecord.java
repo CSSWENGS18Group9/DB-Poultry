@@ -158,6 +158,10 @@ public class CreateSupplyRecord {
             preparedStatement.setBoolean(6, retrieved);
             preparedStatement.setBigDecimal(7, price);
 
+            System.out.println("insideCreateRecord added:" + added);
+            System.out.println("insideCreateRecord consumed:" + consumed);
+            System.out.println("insideCreateRecord retrieved:" + retrieved);
+
             preparedStatement.executeUpdate();
 
             undoSingleton.INSTANCE.setUndoMode(undoTypes.doUndoSupplyRecord);
