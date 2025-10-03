@@ -6,7 +6,7 @@
 #   CSSWENG, Mar Hererra
 #   STSWENG, Dr. Alvin Alon
 # LAST UPDATE:
-#   September 20, 2025
+#   October 3, 2025
 
 name: CI/CD (FatJar + PostgreSQL)
 
@@ -90,7 +90,9 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+        
       - name: Build project (via FatJar)
         run: ./gradlew clean fatJar
 
