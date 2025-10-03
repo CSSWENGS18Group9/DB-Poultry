@@ -1,9 +1,6 @@
 package org.db_poultry.db.supplyRecordDAO;
 
-import org.db_poultry.db.supplyTypeDAO.ReadSupplyType;
-import org.db_poultry.pojo.SupplyPOJO.SupplyComplete;
-import org.db_poultry.util.undoSingleton;
-import org.db_poultry.util.undoTypes;
+import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -12,7 +9,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
+import org.db_poultry.db.supplyTypeDAO.ReadSupplyType;
+import org.db_poultry.pojo.SupplyPOJO.SupplyComplete;
+import org.db_poultry.util.undoSingleton;
+import org.db_poultry.util.undoTypes;;
 
 public class CreateSupplyRecord {
     /**
@@ -25,6 +25,7 @@ public class CreateSupplyRecord {
      *                     decimal places)
      * @param consumed     the number of the supply that was consumed
      * @param retrieved    the retrieved boolean
+     * @param price        the price of a single unit of the supply type
      * @return {String} if the SQL query was successful, returns the SQL query that was executed. {null} for any
      * other case.
      * <p>
@@ -40,8 +41,7 @@ public class CreateSupplyRecord {
      * {@code @zrygan}
      */
     public static String createSupplyRecord(Connection connect, int supplyTypeID, Date srDate, BigDecimal added,
-                                            BigDecimal consumed, boolean retrieved) {
-
+                                            BigDecimal consumed, boolean retrieved, BigDecimal price) {
         SupplyComplete latestRecord = ReadSupplyRecord.getLatest(connect, supplyTypeID);
 
         BigDecimal currentCount;
@@ -89,6 +89,7 @@ public class CreateSupplyRecord {
         if (retrieved) {
             added = BigDecimal.ZERO.setScale(4, RoundingMode.DOWN);
             consumed = currentCount;
+            price = null;  // Set price to null for retrieved records
 
         } else if (verifier) {
             // if retrieved is false and the numeric values are INVALID
@@ -117,9 +118,36 @@ public class CreateSupplyRecord {
             return null;
         }
 
-        // if all tests pass then run the query
+        // Check price is not negative
+        if (verify_price(price)) {
+            generateErrorMessage(
+                "Error at `createSupplyRecord()` in `CreateSupplyRecord`.",
+                "Price value is invalid.",
+                "Make sure the price is not negative.",
+                null
+            );
+            return null;
+        }
+
+        // Check price precision like other numeric values
+        if (price != null && verify_precision(price)) {
+            generateErrorMessage(
+                "Error at `createSupplyRecord()` in CreateSupplyRecord.",
+                "The precision of price is greater than 4.",
+                "Ensure that the precision of price is at most 4.",
+                null
+            );
+            return null;
+        }
+
+         // Scale price to 4 decimal places before insert
+        if (price != null) {
+            price = price.setScale(4, RoundingMode.DOWN);
+        }
+
+        // if all tests pass then run the query. add price here too
         try (PreparedStatement preparedStatement = connect.prepareStatement("""
-                INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES (?, ?, ?, ?, ?, ?)
+                INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (?, ?, ?, ?, ?, ?, ?)
                 """)) {
 
             preparedStatement.setInt(1, supplyTypeID);
@@ -128,15 +156,17 @@ public class CreateSupplyRecord {
             preparedStatement.setBigDecimal(4, consumed);
             preparedStatement.setBigDecimal(5, currentCount);
             preparedStatement.setBoolean(6, retrieved);
+            preparedStatement.setBigDecimal(7, price);
 
             preparedStatement.executeUpdate();
 
             undoSingleton.INSTANCE.setUndoMode(undoTypes.doUndoSupplyRecord);
 
             return String.format(
-                            "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved) VALUES " +
-                            "(%d, '%s', %.4f, %.4f, %.4f, %b)",
-                    supplyTypeID, srDate, added, consumed, currentCount, retrieved);
+                "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES " +
+                "(%d, '%s', %.4f, %.4f, %.4f, %b, %s)",
+                supplyTypeID, srDate, added, consumed, currentCount, retrieved, 
+                price != null ? String.format("%.4f", price) : "NULL");
         } catch (SQLException e) {
             generateErrorMessage(
                     "Error in `createSupplyRecord()` in `createSupplyRecord.",
@@ -208,6 +238,20 @@ public class CreateSupplyRecord {
 
         // Check if consuming more than what's currently available
         return current.compareTo(BigDecimal.ZERO) < 0;
+    }
+
+    /**
+     * Validates the price value to ensure the value is not negative
+     *
+     * @param price the price to validate
+     * @return {true} if the price is invalid, {false} otherwise
+     */
+    private static boolean verify_price(BigDecimal price) {
+        if (price == null) {
+            return false;
+        }
+        // Only check for negative if price is not null
+        return price.compareTo(BigDecimal.ZERO) < 0;
     }
 
 }

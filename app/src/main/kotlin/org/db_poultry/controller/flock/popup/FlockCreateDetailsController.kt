@@ -11,6 +11,7 @@ import org.db_poultry.controller.NotificationController
 import org.db_poultry.util.FlockSingleton
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
+import org.db_poultry.util.GUIUtil
 import org.db_poultry.util.GeneralUtil
 import org.db_poultry.util.PopupUtil
 import org.db_poultry.util.undoSingleton
@@ -66,7 +67,8 @@ class FlockCreateDetailsController : Initializable {
 
         currentChickenLabel.text = currentChickenCount.toString()
         updatedChickenLabel.text = currentChickenCount.toString()
-        updatedChickenLabel.style = "-fx-text-fill: black;"
+        if(GUIUtil.getDarkMode()) { updatedChickenLabel.style = "-fx-text-fill: white;" }
+        else { updatedChickenLabel.style = "-fx-text-fill: black;" }
         confirmBtn.isDisable = true
     }
 
@@ -85,10 +87,18 @@ class FlockCreateDetailsController : Initializable {
             val today = java.time.LocalDate.now()
             setTodayButton.isDisable = dateDatePicker.value == today
 
-            updatedChickenLabel.style = when {
-                !isCountEntered -> "-fx-text-fill: black;"
-                updatedCount < currentChickenCount -> "-fx-text-fill: #8F250C;" // Red for decrease
-                else -> "-fx-text-fill: #606C38;" // Green (though unlikely in this case)
+            if(GUIUtil.getDarkMode()) {
+                updatedChickenLabel.style = when {
+                    !isCountEntered -> "-fx-text-fill: white;"
+                    updatedCount < currentChickenCount -> "-fx-text-fill: #FF0000;"
+                    else -> "-fx-text-fill: #D4FF43;"
+                }
+            } else {
+                updatedChickenLabel.style = when {
+                    !isCountEntered -> "-fx-text-fill: black;"
+                    updatedCount < currentChickenCount -> "-fx-text-fill: #8F250C;"
+                    else -> "-fx-text-fill: #606C38;"
+                }
             }
         }
 

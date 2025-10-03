@@ -23,7 +23,11 @@ public class DeleteFlockDetail {
 
             preppedStatement.setInt(1, flockID);
             preppedStatement.setDate(2, detailDate);
-            preppedStatement.executeUpdate();
+            int rows = preppedStatement.executeUpdate();
+
+            if (rows == 0) {
+                return null;
+            }
 
             return String.format("DELETE FROM Flock_Details WHERE Flock_ID = %d AND FD_Date = %s", flockID, detailDate.toString());
         } catch (SQLException e) {

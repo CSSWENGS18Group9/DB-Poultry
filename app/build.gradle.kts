@@ -1,4 +1,3 @@
-
 plugins {
     application
     java
@@ -6,7 +5,7 @@ plugins {
 }
 
 group = "org.db_poultry"
-version = "4.0"
+version = "5.0"
 val appMainClass = "org.db_poultry.AppKt"
 
 application {
@@ -51,7 +50,6 @@ sourceSets {
         kotlin.srcDirs("src/main/kotlin")
     }
     test {
-        java.srcDirs("src/test/java")
         kotlin.srcDirs("src/test/kotlin")
     }
 }

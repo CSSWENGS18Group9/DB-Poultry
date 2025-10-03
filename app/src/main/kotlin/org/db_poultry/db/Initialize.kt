@@ -3,16 +3,208 @@ package org.db_poultry.db
 import java.sql.Connection
 import java.sql.SQLException
 import org.db_poultry.errors.generateErrorMessage
+import kotlin.collections.component1
+import kotlin.collections.component2
+import kotlin.collections.iterator
+import kotlin.use
+
 fun cleanTables(conn: Connection?) {
     if (conn == null) {
+        generateErrorMessage("Error at `cleanTables()` in `Initialize.kt`",
+            "Connection is null.",
+            "Ensure a connection exists."
+        )
+
+        return
+    }
+
+    val tables = listOf(
+        "DROP TABLE IF EXISTS Supply_Record",
+        "DROP TABLE IF EXISTS Flock_Details",
+        "DROP TABLE IF EXISTS Supply_Type",
+        "DROP TABLE IF EXISTS Flock"
+    )
+
+    try {
+
+        for (query in tables) {
+            conn.createStatement().use { stmt ->
+                stmt.execute(query)
+            }
+        }
+
+    } catch (e: SQLException) {
+        generateErrorMessage(
+            "Error at `initTables()` in `Initialize.kt`",
+            "Creating tables caused an error.",
+            "",
+            e
+        )
+    }
+
+    conn.close()
+
+    println("closed db_poultry database connection")
+
+    val defaultConn = connectToDefault()
+
+    println("connected to default database")
+
+    if (defaultConn == null) {
         generateErrorMessage(
             "Error at `cleanTables()` in `Initialize.kt`.",
-            "Connection is null.",
-            "Ensure valid connection is given."
+            "Default connection is null.",
+            "Ensure valid connection exists."
         )
         return
     }
 
+    val DBandUser = listOf(
+        "DROP DATABASE IF EXISTS db_poultry",
+        "DROP USER IF EXISTS db_poultry"
+    )
+
+    try {
+
+        for (query in DBandUser) {
+            defaultConn.createStatement().use { stmt ->
+                stmt.execute(query)
+            }
+        }
+
+    } catch (e: SQLException) {
+        generateErrorMessage(
+            "Error at `initTables()` in `Initialize.kt`",
+            "Creating tables caused an error.",
+            "",
+            e
+        )
+    }
+
+    defaultConn.close()
+
+}
+
+fun cleanTablesTest(conn: Connection?) {
+    if (conn == null) {
+        generateErrorMessage("Error at `cleanTablesTest()` in `Initialize.kt`",
+            "Connection is null.",
+            "Ensure a connection exists."
+        )
+
+        return
+    }
+
+    val tables = listOf("Supply_Record", "Flock_Details", "Supply_Type", "Flock")
+
+    val defaultSupplyTypes = listOf(
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('apog', 'ml', 'src/main/resources/img/supply-img/Apog.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('adulticide', 'ml', 'src/main/resources/img/supply-img/Adulticide.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('string', 'cm', 'src/main/resources/img/supply-img/String.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('fuel', 'l', 'src/main/resources/img/supply-img/Fuel.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('chicken medicine', 'bottles', 'src/main/resources/img/supply-img/Chicken_Medicine.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('larvicide', 'ml', 'src/main/resources/img/supply-img/Larvicide.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('fly glue', 'ml', 'src/main/resources/img/supply-img/Fly_Glue.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('disinfectant', 'ml', 'src/main/resources/img/supply-img/Disinfectant.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('starter feed', 'kg', 'src/main/resources/img/supply-img/Starter_Feed.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('grower feed', 'kg', 'src/main/resources/img/supply-img/Grower_Feed.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('booster feed', 'kg', 'src/main/resources/img/supply-img/Booster_Feed.png')",
+        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('finisher feed', 'kg', 'src/main/resources/img/supply-img/Finisher_Feed.png')",
+    )
+
+    try {
+        for (table in tables) {
+            conn.createStatement().use { stmt ->
+                stmt.execute("TRUNCATE TABLE $table RESTART IDENTITY CASCADE;")
+            }
+        }
+
+        for (query in defaultSupplyTypes) {
+            conn.createStatement().use { stmt ->
+                stmt.execute(query)
+            }
+        }
+
+    } catch (e: SQLException) {
+        generateErrorMessage(
+            "Error at `cleanTablesTest()` in `Initialize.kt`",
+            "Cleaning tables caused an error.",
+            "",
+            e
+        )
+    }
+}
+
+fun initDBAndUser() {
+
+    val conn = connectToDefault()
+
+    if (conn == null) {
+        generateErrorMessage(
+            "Error at `initDBAndUser()` in `Initialize.kt`.",
+            "Default connection is null.",
+            "Ensure valid connection exists."
+        )
+        return
+    }
+
+    // Create user and DB_POULTRY DB
+    val initUserDB = listOf(
+        "DROP DATABASE IF EXISTS db_poultry;",
+        "DROP USER IF EXISTS db_poultry;",
+        "CREATE USER X WITH PASSWORD 'Y'",
+        "CREATE DATABASE db_poultry OWNER X;",
+        "GRANT ALL PRIVILEGES ON DATABASE db_poultry TO X;",
+        "ALTER USER X WITH SUPERUSER;"
+    )
+
+    try {
+        conn.autoCommit = true
+
+        // Create user and DB
+        for (query in initUserDB) {
+            conn.createStatement().use { stmt ->
+                stmt.execute(query)
+            }
+        }
+
+        conn.autoCommit = false
+
+    } catch (e: SQLException) {
+        generateErrorMessage(
+            "Error at `initDBAndUser()` in `Initialize.kt`",
+            "Creating user and/or database caused an error.",
+            "",
+            e
+        )
+    }
+
+    conn.close()
+
+}
+
+fun connectToDefault(): Connection? {
+    val jdbcUrl = "jdbc:postgresql://localhost:5432/postgres"
+
+    DBConnect.init(jdbcUrl, "postgres", "password") // default
+
+    val conn = DBConnect.getConnection() // connect to default DB
+
+    return conn
+}
+
+fun initTables(conn: Connection?) {
+
+    if (conn == null) {
+        generateErrorMessage(
+            "Error at `initTables()` in `Initialize.kt`.",
+            "Connection to db_poultry is null.",
+            "Ensure valid connection exists."
+        )
+        return
+    }
+
+    // Create tables
     val databaseTables = linkedMapOf(
         "Flock" to """
             Flock_ID SERIAL PRIMARY KEY,
@@ -43,11 +235,13 @@ fun cleanTables(conn: Connection?) {
             Consumed NUMERIC(12, 4),
             Current_Count   NUMERIC(12, 4),
             Retrieved BOOLEAN,
+            Price NUMERIC(12, 4),
             FOREIGN KEY (Supply_Type_ID) REFERENCES Supply_Type (Supply_Type_ID) ON DELETE CASCADE,
             UNIQUE (Supply_Type_ID, SR_Date)
         """.trimIndent(),
     )
 
+    // Create indices
     val indexQueries = listOf(
         "CREATE INDEX idx_flock_R_starting_date ON Flock (Starting_Date);",
 
@@ -76,14 +270,6 @@ fun cleanTables(conn: Connection?) {
     )
 
     try {
-        // Drop tables in reverse order
-        for (table in databaseTables.keys.reversed()) {
-            val dropQuery = "DROP TABLE IF EXISTS $table CASCADE"
-            conn.createStatement().use { stmt ->
-                stmt.execute(dropQuery)
-            }
-        }
-
         // Create tables in original order
         for ((table, columns) in databaseTables) {
             val createQuery = "CREATE TABLE $table ($columns)"
@@ -104,13 +290,26 @@ fun cleanTables(conn: Connection?) {
                 stmt.execute(query)
             }
         }
-
     } catch (e: SQLException) {
         generateErrorMessage(
-            "Error at `cleanTables()` in `Initialize.kt`",
-            "Cleaning tables caused an error.",
+            "Error at `initTables()` in `Initialize.kt`",
+            "Creating tables in db_poultry caused an error.",
             "",
             e
         )
     }
+}
+
+fun cleanAndInitTables(conn: Connection?) {
+    if (conn == null) {
+        generateErrorMessage(
+            "Error at `initTables()` in `Initialize.kt`.",
+            "Connection to db_poultry is null.",
+            "Ensure valid connection exists."
+        )
+        return
+    }
+
+    cleanTables(conn)
+    initTables(conn)
 }

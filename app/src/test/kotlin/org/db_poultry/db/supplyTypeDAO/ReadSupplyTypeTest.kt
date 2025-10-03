@@ -1,8 +1,9 @@
 package org.db_poultry.db.supplyTypeDAO
 
-import org.db_poultry.App
 import org.db_poultry.db.DBConnect
-import org.db_poultry.db.cleanTables
+import org.db_poultry.db.initDBAndUser
+import org.db_poultry.db.initTables
+import org.db_poultry.db.cleanAndInitTables
 import org.db_poultry.db.supplyRecordDAO.CreateSupplyRecord
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
@@ -25,14 +26,16 @@ import java.sql.Date
 
 
 class ReadSupplyTypeTest {
-    private var jdbcURL: String
-    private var conn: Connection
+    private val jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
+    private val conn: Connection
 
     init {
-        jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
+        initDBAndUser()
+
         DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
         conn = DBConnect.getConnection()!!
-        cleanTables(conn)
+
+        initTables(conn)
     }
 
     // - getAllSupplyTypes should return an empty list if no supply types exist.
@@ -40,6 +43,7 @@ class ReadSupplyTypeTest {
     fun testGetAllSupplyTypesDefault() {
         val result = ReadSupplyType.getAllSupplyTypes(conn)
         assertEquals(12, result.size)
+        cleanAndInitTables(conn)
     }
 
     // - Reading a supply type with a non-existent ID should return null.
@@ -47,6 +51,7 @@ class ReadSupplyTypeTest {
     fun testGetSupplyTypeByIdNonExistent() {
         val result = ReadSupplyType.getSupplyTypeById(conn, 9999)
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 
     // - getSupplyTypeByName should return null if the name does not exist.
@@ -54,6 +59,7 @@ class ReadSupplyTypeTest {
     fun testGetSupplyTypeByNameNonExistent() {
         val result = ReadSupplyType.getSupplyTypeByName(conn, "NonExistent")
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 
     // - Reading a supply type with an existing ID should return the correct supply type.
@@ -71,6 +77,7 @@ class ReadSupplyTypeTest {
         assertEquals("test_1", result?.name)
         assertEquals("kg", result?.unit)
         assertEquals("src/main/resources/img/supply-img/Apog.png", result?.imagePath)
+        cleanAndInitTables(conn)
     }
 
     // - getSupplyTypeByName should return the correct supply type if the name exists.
@@ -88,6 +95,7 @@ class ReadSupplyTypeTest {
         assertEquals("liter", result?.unit)
         assertEquals("src/main/resources/img/supply-img/Apog.png", result?.imagePath)
 
+        cleanAndInitTables(conn)
     }
 
     // - getSupplyTypeById should return null if the Name is empty
@@ -102,6 +110,7 @@ class ReadSupplyTypeTest {
         )
         val result = ReadSupplyType.getSupplyTypeById(conn, 13)
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 
     // - getSupplyTypeById should return null if the ID is empty
@@ -116,6 +125,7 @@ class ReadSupplyTypeTest {
         )
         val result = ReadSupplyType.getSupplyTypeById(conn, 13)
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -123,6 +133,7 @@ class ReadSupplyTypeTest {
         val result = ReadSupplyType.getSupplyTypeAscending(conn)
         assertEquals("adulticide", result[0].name)
         assertEquals("apog", result[1].name)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -144,6 +155,7 @@ class ReadSupplyTypeTest {
         val result = ReadSupplyType.getSupplyTypeDescending(conn)
         assertEquals("test_2", result[0].name)
         assertEquals("test_1", result[1].name)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -171,10 +183,12 @@ class ReadSupplyTypeTest {
             Date.valueOf("2025-01-01"),
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val result = ReadSupplyType.getSupplyTypeByLastUpdate(conn)
         assertEquals("test_2", result[0].name)
+        cleanAndInitTables(conn)
     }
 }

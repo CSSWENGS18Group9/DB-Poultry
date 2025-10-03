@@ -3,13 +3,28 @@
     -fx-background-color: #F7ECB7;
 }
 
+.sidebar-dark,
+.navbar-dark {
+    -fx-background-color: #535353;
+}
+
 .navbar-pane:hover .label {
     -fx-border-color: transparent transparent #BC6C25 transparent;
     -fx-border-width: 0 0 5 0;
 }
 
+.navbar-pane-dark:hover .label {
+    -fx-border-color: transparent transparent #A4AE81 transparent;
+    -fx-border-width: 0 0 5 0;
+}
+
 .underline-label {
     -fx-border-color: transparent transparent #8f250c transparent;
+    -fx-border-width: 0 0 5 0;
+}
+
+.underline-label-dark {
+    -fx-border-color: transparent transparent #F7ECB7 transparent;
     -fx-border-width: 0 0 5 0;
 }
 
@@ -35,9 +50,17 @@
     -fx-background-color: rgba(143, 37, 12, 0.7);
 }
 
+.sidebar-pane-dark:hover {
+    -fx-background-color: #A4AE81;
+}
+
 .sidebar-pane:hover .label {
      -fx-translate-x: 15;
      -fx-text-fill: white;
+ }
+
+ .sidebar-pane-dark:hover .label {
+     -fx-text-fill: black;
  }
 
 .sidebar-pane:hover FontIcon {
@@ -45,14 +68,40 @@
     -fx-translate-x: 15;
 }
 
+.sidebar-pane-dark:hover FontIcon {
+    -fx-icon-color: black;
+}
+
 .sidebar-pane-active {
     -fx-background-color: #8f250c;
+}
+
+.sidebar-pane-active-dark {
+    -fx-background-color: #F7ECB7;
 }
 
 .sidebar-pane-active .label {
     -fx-text-fill: white;
 }
 
+.sidebar-pane-active-dark .label {
+    -fx-text-fill: black;
+}
+
 .sidebar-pane-active FontIcon {
     -fx-icon-color: white;
+}
+
+.sidebar-pane-active-dark FontIcon {
+    -fx-icon-color: black;
+}
+
+.calendar {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+}
+
+.calendar-dark {
+    -fx-background-color: #2C2C2C;
+    -fx-background-radius: 10;
 }

@@ -1,9 +1,11 @@
 package org.db_poultry.controller
 
 import org.db_poultry.util.GeneralUtil
+import org.db_poultry.util.GUIUtil
 
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
+import javafx.scene.Parent
 
 import java.util.ResourceBundle
 import java.net.URL
@@ -11,11 +13,13 @@ import java.net.URL
 import java.time.LocalDate
 
 import javafx.scene.control.Label
+import javafx.scene.image.Image
 import javafx.scene.layout.AnchorPane
 import javafx.scene.image.ImageView
 import javafx.scene.layout.FlowPane
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.StackPane
+import org.controlsfx.control.ToggleSwitch
 import org.db_poultry.util.PopupUtil
 import org.db_poultry.util.SceneSwitcher
 import org.kordamp.ikonli.javafx.FontIcon
@@ -26,7 +30,13 @@ class MainLayoutController : Initializable {
     private lateinit var mainAnchorPane: AnchorPane
 
     @FXML
+    private lateinit var mainGridPane: GridPane
+
+    @FXML
     private lateinit var contentAnchorPane: AnchorPane
+
+    @FXML
+    private lateinit var sidebarAnchorPane: AnchorPane
 
     @FXML
     private lateinit var sideBarImageView: ImageView
@@ -85,7 +95,13 @@ class MainLayoutController : Initializable {
     private lateinit var flockSelectionFlowPane: FlowPane
 
     @FXML
+    private lateinit var logoutFlowPane: FlowPane
+
+    @FXML
     private lateinit var backupLabel: Label
+
+    @FXML
+    private lateinit var darkModeToggleSwitch: ToggleSwitch
 
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
 
@@ -105,6 +121,50 @@ class MainLayoutController : Initializable {
         }
 
         GeneralUtil.loadContentView(contentAnchorPane, "/fxml/content_home.fxml")
+
+        // Setup dark mode toggle - initialize with persisted state from GUIUtil
+        darkModeToggleSwitch.isSelected = GUIUtil.getDarkMode()
+
+        // Apply the persisted dark mode state to the main layout immediately
+        if (GUIUtil.getDarkMode()) {
+            GUIUtil.applyDarkMode(mainAnchorPane, true)
+            updateActiveElementsForDarkMode(true)
+        }
+
+        // Listen for toggle changes and update GUIUtil
+        darkModeToggleSwitch.selectedProperty().addListener { _, _, darkModeEnabled ->
+            GUIUtil.applyDarkMode(mainAnchorPane, darkModeEnabled)
+            updateActiveElementsForDarkMode(darkModeEnabled)
+
+            // Replace sidebar image based on dark mode
+            val imagePath = if (darkModeEnabled) "/img/CSSWENG_DB Poultry Logo Dark.png" else "/img/CSSWENG_DB Poultry Logo.png"
+            sideBarImageView.image = Image(javaClass.getResourceAsStream(imagePath))
+
+            // Apply to currently loaded content if it exists
+            if (contentAnchorPane.children.isNotEmpty()) {
+                val currentContent = contentAnchorPane.children[0]
+                GUIUtil.applyDarkMode(currentContent as Parent, darkModeEnabled)
+            }
+        }
+
+        // Set initial sidebar image based on persisted dark mode state
+        val initialImagePath = if (GUIUtil.getDarkMode()) "/img/CSSWENG_DB Poultry Logo Dark.png" else "/img/CSSWENG_DB Poultry Logo.png"
+        sideBarImageView.image = Image(javaClass.getResourceAsStream(initialImagePath))
+    }
+
+    private fun updateActiveElementsForDarkMode(darkMode: Boolean) {
+        // Convert active elements between light/dark mode
+        val elementsToCheck = listOf(updateSuppliesFlowPane, retrieveChickenFeedPane, flockSelectionFlowPane)
+
+        for (element in elementsToCheck) {
+            if (darkMode && element.styleClass.contains("sidebar-pane-active")) {
+                element.styleClass.remove("sidebar-pane-active")
+                element.styleClass.add("sidebar-pane-active-dark")
+            } else if (!darkMode && element.styleClass.contains("sidebar-pane-active-dark")) {
+                element.styleClass.remove("sidebar-pane-active-dark")
+                element.styleClass.add("sidebar-pane-active")
+            }
+        }
     }
 
     private fun updateSidebarHighlight(section: String) {
@@ -120,14 +180,22 @@ class MainLayoutController : Initializable {
         // Update navbar
         when (mainSection) {
             "SUPPLIES" -> {
-                suppliesLabel.styleClass.add("underline-label")
+                if (GUIUtil.getDarkMode()) {
+                    suppliesLabel.styleClass.add("underline-label-dark")
+                } else {
+                    suppliesLabel.styleClass.add("underline-label")
+                }
                 supplyGridPane.isVisible = true
                 flockGridPane.isVisible = false
                 supplyGridPane.isDisable = false
                 flockGridPane.isDisable = true
             }
             "FLOCK" -> {
-                flockLabel.styleClass.add("underline-label")
+                if (GUIUtil.getDarkMode()) {
+                    flockLabel.styleClass.add("underline-label-dark")
+                } else {
+                    flockLabel.styleClass.add("underline-label")
+                }
                 supplyGridPane.isVisible = false
                 flockGridPane.isVisible = true
                 flockGridPane.isDisable = false
@@ -144,20 +212,43 @@ class MainLayoutController : Initializable {
 
         // Update sidebar based on specific subsection
         when (section) {
-            "SUPPLIES_UPDATE" -> updateSuppliesFlowPane.styleClass.add("sidebar-pane-active")
-            "SUPPLIES_RETRIEVE" -> retrieveChickenFeedPane.styleClass.add("sidebar-pane-active")
-            "FLOCK_SELECT" -> flockSelectionFlowPane.styleClass.add("sidebar-pane-active")
+            "SUPPLIES_UPDATE" -> {
+                if (GUIUtil.getDarkMode()) {
+                    updateSuppliesFlowPane.styleClass.add("sidebar-pane-active-dark")
+                } else {
+                    updateSuppliesFlowPane.styleClass.add("sidebar-pane-active")
+                }
+            }
+            "SUPPLIES_RETRIEVE" -> {
+                if (GUIUtil.getDarkMode()) {
+                    retrieveChickenFeedPane.styleClass.add("sidebar-pane-active-dark")
+                } else {
+                    retrieveChickenFeedPane.styleClass.add("sidebar-pane-active")
+                }
+            }
+            "FLOCK_SELECT" -> {
+                if (GUIUtil.getDarkMode()) {
+                    flockSelectionFlowPane.styleClass.add("sidebar-pane-active-dark")
+                } else {
+                    flockSelectionFlowPane.styleClass.add("sidebar-pane-active")
+                }
+            }
         }
     }
 
     private fun clearAllHighlights() {
         suppliesLabel.styleClass.remove("underline-label")
+        suppliesLabel.styleClass.remove("underline-label-dark")
         flockLabel.styleClass.remove("underline-label")
+        flockLabel.styleClass.remove("underline-label-dark")
 
         // Clear sidebar highlights
         updateSuppliesFlowPane.styleClass.remove("sidebar-pane-active")
+        updateSuppliesFlowPane.styleClass.remove("sidebar-pane-active-dark")
         retrieveChickenFeedPane.styleClass.remove("sidebar-pane-active")
+        retrieveChickenFeedPane.styleClass.remove("sidebar-pane-active-dark")
         flockSelectionFlowPane.styleClass.remove("sidebar-pane-active")
+        flockSelectionFlowPane.styleClass.remove("sidebar-pane-active-dark")
     }
 
     @FXML

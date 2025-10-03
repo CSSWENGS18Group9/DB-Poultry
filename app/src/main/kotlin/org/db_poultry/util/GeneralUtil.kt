@@ -1,6 +1,6 @@
 package org.db_poultry.util
 
-import javafx.application.Platform.runLater
+import javafx.application.Platform
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 
@@ -100,6 +100,12 @@ class GeneralUtil {
                 AnchorPane.setBottomAnchor(view, 0.0)
                 AnchorPane.setLeftAnchor(view, 0.0)
 
+                // Automatically apply current dark mode state to newly loaded content
+                if (GUIUtil.getDarkMode()) {
+                    Platform.runLater {
+                        GUIUtil.applyDarkMode(view, true)
+                    }
+                }
                 val newSection = fxmlSectionMapping[fxmlPath]!!
                 if (currentSection != newSection) {
                     currentSection = newSection
@@ -143,7 +149,7 @@ class GeneralUtil {
         }
 
         fun refreshPage(currentPane: AnchorPane?, fxmlPath: String) {
-            runLater {
+            Platform.runLater {
                 navigateToMainContent(currentPane, fxmlPath)
             }
         }

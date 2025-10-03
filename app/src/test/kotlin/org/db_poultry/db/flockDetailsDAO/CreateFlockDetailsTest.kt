@@ -1,10 +1,11 @@
 package org.db_poultry.db.flockDetailsDAO
 
-import org.db_poultry.App
 import org.db_poultry.db.DBConnect
-import org.db_poultry.db.cleanTables
+import org.db_poultry.db.cleanAndInitTables
+import org.db_poultry.db.cleanAndInitTables
+import org.db_poultry.db.initDBAndUser
+import org.db_poultry.db.initTables
 import org.db_poultry.db.flockDAO.CreateFlock
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
@@ -12,14 +13,16 @@ import java.sql.Connection
 import java.sql.Date
 
 class CreateFlockDetailsTest {
-    private var jdbcURL: String
-    private var conn: Connection
+    private val jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
+    private val conn: Connection
 
     init {
-        jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
+        initDBAndUser()
+
         DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
         conn = DBConnect.getConnection()!!
-        cleanTables(conn)
+
+        initTables(conn)
     }
 
     @Test
@@ -31,7 +34,12 @@ class CreateFlockDetailsTest {
 
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 15)
 
-        assertEquals(result, "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, '1000-01-03', 15)")
+        assertEquals(
+            "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, '1000-01-03', 15)",
+            result
+        )
+
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -42,7 +50,13 @@ class CreateFlockDetailsTest {
         CreateFlock.createFlock(conn, 999, flockDate)
 
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 0)
-        assertEquals(result, "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, '1000-01-03', 0)")
+        assertEquals(
+            "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, '1000-01-03', 0)",
+            result
+        )
+
+        cleanAndInitTables(conn)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -54,6 +68,9 @@ class CreateFlockDetailsTest {
 
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, -1)
         assertNull(result)
+
+        cleanAndInitTables(conn)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -65,6 +82,8 @@ class CreateFlockDetailsTest {
 
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 1000)
         assertNull(result)
+
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -78,6 +97,7 @@ class CreateFlockDetailsTest {
         CreateFlockDetails.createFlockDetails(conn, flockDate, fdDateOne, 500)
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDateTwo, 600)
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -90,6 +110,8 @@ class CreateFlockDetailsTest {
         CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 100)
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 100)
         assertNull(result)
+
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -102,6 +124,7 @@ class CreateFlockDetailsTest {
         CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 100)
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 100)
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -131,6 +154,8 @@ class CreateFlockDetailsTest {
 
         val resultThree = CreateFlockDetails.createFlockDetails(conn, flockOneDate, flockTwoDate, 10)
         assertNull(resultThree)
+
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -143,6 +168,8 @@ class CreateFlockDetailsTest {
 
         val result = CreateFlockDetails.createFlockDetails(conn, flockTwoDate, fdDate, 100)
         assertNull(result)
+
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -159,7 +186,11 @@ class CreateFlockDetailsTest {
 
         val result = CreateFlockDetails.createFlockDetails(conn, flockOneDate, fdDateTwo, 20)
 
-        assertEquals(result, "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, '1000-03-01', 20)")
+        assertEquals(
+            "INSERT INTO Flock_Details (Flock_ID, FD_Date, Depleted_Count) VALUES (1, '1000-03-01', 20)",
+            result
+        )
+
+        cleanAndInitTables(conn)
     }
 }
-
