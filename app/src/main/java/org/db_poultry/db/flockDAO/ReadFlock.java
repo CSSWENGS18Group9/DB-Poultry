@@ -386,9 +386,9 @@ public class ReadFlock {
                 "",
                 e
             );
+        }
+        return 0;
     }
-    return 0;
-}
 }
 
 // Sample execution in App.kt
