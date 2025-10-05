@@ -1,17 +1,22 @@
 package org.db_poultry.db.flockDAO;
 
-import org.db_poultry.pojo.FlockPOJO.Flock;
-import org.db_poultry.pojo.FlockPOJO.FlockComplete;
-import org.db_poultry.pojo.FlockPOJO.FlockDetails;
+import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 
-import static org.db_poultry.errors.GenerateErrorMessageKt.generateErrorMessage;
+import org.db_poultry.pojo.FlockPOJO.Flock;
+import org.db_poultry.pojo.FlockPOJO.FlockComplete;
+import org.db_poultry.pojo.FlockPOJO.FlockDetails;
 
 public class ReadFlock {
     /**
@@ -323,6 +328,67 @@ public class ReadFlock {
         int nextMonth = (month == 12) ? 1 : month + 1;
         return fetchFlocksByMonthYear(conn, nextMonth, year);
     }
+
+    /**
+    * Gets the total depleted count for a specific flock
+    */
+    public static int getTotalDepleted(Connection conn, int flockId) {
+        try (PreparedStatement pstmt = conn.prepareStatement("""
+                SELECT COALESCE(SUM(depleted_count), 0) as total_depleted
+                FROM Flock_Details
+                WHERE flock_id = ?
+                """)) {
+        
+                pstmt.setInt(1, flockId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("total_depleted");
+                }
+            }
+        } catch (SQLException e) {
+            generateErrorMessage(
+            "Error getting total depleted count",
+            "SQLException occurred while getting depleted count.",
+            "",
+            e
+            );
+        }
+        return 0;
+    }
+
+    /**
+    * Calculates alive chickens based on starting count and mortality rate
+    */
+    public static int calculateAliveCount(Connection conn, int flockId) {
+        try (PreparedStatement pstmt = conn.prepareStatement("""
+            SELECT f.starting_count,
+                   COALESCE(SUM(fd.depleted_count), 0) as total_depleted
+            FROM Flock f
+            LEFT JOIN Flock_Details fd ON f.flock_id = fd.flock_id
+            WHERE f.flock_id = ?
+            GROUP BY f.starting_count
+            """)) {
+        
+            pstmt.setInt(1, flockId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    int startingCount = rs.getInt("starting_count");
+                    int totalDepleted = rs.getInt("total_depleted");
+                    double mortalityRate = startingCount > 0 ? 
+                        (double) totalDepleted / startingCount : 0.0;
+                    return (int)(startingCount * (1 - mortalityRate));
+                }
+            }
+        } catch (SQLException e) {
+            generateErrorMessage(
+                "Error calculating alive count",
+                "SQLException occurred while calculating alive chickens.",
+                "",
+                e
+            );
+    }
+    return 0;
+}
 }
 
 // Sample execution in App.kt
