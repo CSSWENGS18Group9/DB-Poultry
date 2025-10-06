@@ -185,7 +185,7 @@ fun initDBAndUser(databasePass: String, databaseName: String) {
 fun connectToDefault(): Connection? {
     val jdbcUrl = "jdbc:postgresql://localhost:5432/postgres"
 
-    print("connecting to local")
+    println("Connecting to local PostgreSQL database in connectToDefault().")
 
     DBConnect.init(jdbcUrl, "postgres", "password") // default
 
