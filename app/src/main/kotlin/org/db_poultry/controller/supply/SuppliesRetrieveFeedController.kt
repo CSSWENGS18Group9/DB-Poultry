@@ -62,11 +62,11 @@ class SuppliesRetrieveFeedController: Initializable {
 
     private fun setFeedCounts() {
         val feedCountMap = HashMap<String, BigDecimal>()
-
+        val conn = getConnection()
         for (feed in feedArrayList) {
-            val supplyTypeID = ReadSupplyType.getSupplyTypeByName(getConnection(), feed).supplyTypeId
+            val supplyTypeID = ReadSupplyType.getSupplyTypeByName(conn, feed).supplyTypeId
             feedSupplyTypeIDList.add(supplyTypeID)
-            val count = ReadSupplyRecord.getMostRecentFromID(getConnection(), supplyTypeID)?.current ?: BigDecimal.ZERO
+            val count = ReadSupplyRecord.getMostRecentFromID(conn, supplyTypeID)?.current ?: BigDecimal.ZERO
             feedCountMap[feed] = count
         }
 
