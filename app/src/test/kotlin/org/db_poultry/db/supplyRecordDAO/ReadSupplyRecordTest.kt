@@ -16,20 +16,18 @@ import java.sql.Date
 class ReadSupplyRecordTest {
     private val jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
     private val conn: Connection
-
+    private val name = "db_poultry_test"
     init {
-        initDBAndUser()
+        initDBAndUser(name, name)
 
-        DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
+        DBConnect.init(jdbcURL, name, name)
         conn = DBConnect.getConnection()!!
 
-        initTables(conn)
+        initTables(conn, name)
     }
 
     @Test
     fun testReadSupplyGetFromDateWithData() {
-        cleanTablesTest(conn)
-
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
@@ -99,6 +97,8 @@ class ReadSupplyRecordTest {
         assertEquals(BigDecimal("50.0000"), second.consumed)
         assertEquals(false, second.isRetrieved)
         assertEquals(BigDecimal("50.0000"), second.price)
+
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -108,7 +108,7 @@ class ReadSupplyRecordTest {
         val supplyCompList = ReadSupplyRecord.getFromDate(conn, date)
 
         assertNull(supplyCompList)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -155,7 +155,7 @@ class ReadSupplyRecordTest {
         val supplyCompList = ReadSupplyRecord.getFromDate(conn, oldDate)
 
         assertNull(supplyCompList)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -271,7 +271,7 @@ class ReadSupplyRecordTest {
         assertEquals(BigDecimal("100.0000"), second.added)
         assertEquals(BigDecimal("50.0000"), second.consumed)
         assertEquals(false, second.isRetrieved)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -288,7 +288,7 @@ class ReadSupplyRecordTest {
         val supplyCompList = ReadSupplyRecord.getFromName(conn, "Test_1")
 
         assertNull(supplyCompList)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -297,7 +297,7 @@ class ReadSupplyRecordTest {
         val supplyCompList = ReadSupplyRecord.getFromName(conn, "Test_1")
 
         assertNull(supplyCompList)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -343,7 +343,7 @@ class ReadSupplyRecordTest {
         val supplyCompList = ReadSupplyRecord.getFromName(conn, "Test_1")
 
         assertNull(supplyCompList)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     //GetOneByDateAndName
@@ -397,7 +397,7 @@ class ReadSupplyRecordTest {
         assertEquals(BigDecimal("200.0000"), supplyComp.added)
         assertEquals(BigDecimal("20.0000"), supplyComp.consumed)
         assertEquals(false, supplyComp.isRetrieved)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -468,7 +468,7 @@ class ReadSupplyRecordTest {
         assertEquals(BigDecimal("300.0000"), supplyComp.added)
         assertEquals(BigDecimal("30.0000"), supplyComp.consumed)
         assertEquals(false, supplyComp.isRetrieved)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -486,7 +486,7 @@ class ReadSupplyRecordTest {
         val supplyComp = ReadSupplyRecord.getOneByDateAndName(conn, date, "test_1")
 
         assertNull(supplyComp)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -496,7 +496,7 @@ class ReadSupplyRecordTest {
         val supplyComp = ReadSupplyRecord.getOneByDateAndName(conn, date, "test_1")
 
         assertNull(supplyComp)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -553,13 +553,14 @@ class ReadSupplyRecordTest {
         val supplyComp = ReadSupplyRecord.getOneByDateAndName(conn, oldDate, "test_2")
 
         assertNull(supplyComp)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     //getMostRecentFromName
 
     @Test
     fun testGetMostRecentFromNameWithData() {
+
         val date = Date.valueOf("2025-02-02")
 
         print(CreateSupplyType.createSupplyType(
@@ -588,7 +589,7 @@ class ReadSupplyRecordTest {
         assertEquals(BigDecimal("20.0000"), supplyComp.consumed)
         assertEquals(false, supplyComp.isRetrieved)
 
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -659,7 +660,7 @@ class ReadSupplyRecordTest {
         assertEquals(BigDecimal("300.0000"), supplyComp.added)
         assertEquals(BigDecimal("30.0000"), supplyComp.consumed)
         assertEquals(false, supplyComp.isRetrieved)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -676,7 +677,7 @@ class ReadSupplyRecordTest {
         val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "test_1")
 
         assertNull(supplyComp)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -685,7 +686,7 @@ class ReadSupplyRecordTest {
         val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "test_999")
 
         assertNull(supplyComp)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     //GetMostRecentFromID
@@ -748,7 +749,7 @@ class ReadSupplyRecordTest {
         assertEquals(BigDecimal("300.0000"), supplyComp.added)
         assertEquals(BigDecimal("30.0000"), supplyComp.consumed)
         assertEquals(false, supplyComp.isRetrieved)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -819,7 +820,7 @@ class ReadSupplyRecordTest {
         assertEquals(BigDecimal("300.0000"), supplyComp.added)
         assertEquals(BigDecimal("30.0000"), supplyComp.consumed)
         assertEquals(false, supplyComp.isRetrieved)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -836,7 +837,7 @@ class ReadSupplyRecordTest {
         val supplyComp = ReadSupplyRecord.getMostRecentFromID(conn, 1)
 
         assertNull(supplyComp)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -845,7 +846,7 @@ class ReadSupplyRecordTest {
         val supplyComp = ReadSupplyRecord.getMostRecentFromID(conn, 1)
 
         assertNull(supplyComp)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     //GetCurrentCountForDate
@@ -906,7 +907,7 @@ class ReadSupplyRecordTest {
 
         assertEquals(BigDecimal("180.0000"), oldCount)
         assertEquals(BigDecimal("450.0000"), currCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -975,7 +976,7 @@ class ReadSupplyRecordTest {
 
         assertEquals(BigDecimal("180.0000"), oldCount)
         assertEquals(BigDecimal("450.0000"), currCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -1042,7 +1043,7 @@ class ReadSupplyRecordTest {
         val currCount = ReadSupplyRecord.getCurrentCountForDate(conn, 2, date)
 
         assertEquals(BigDecimal("300.0000"), currCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -1121,7 +1122,7 @@ class ReadSupplyRecordTest {
         val currCount = ReadSupplyRecord.getCurrentCountForDate(conn, 2, newDate)
 
         assertEquals(BigDecimal("100.0000"), currCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -1200,7 +1201,7 @@ class ReadSupplyRecordTest {
         val currCount = ReadSupplyRecord.getCurrentCountForDate(conn, 14, newDate)
 
         assertNull(currCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -1279,7 +1280,7 @@ class ReadSupplyRecordTest {
         val currCount = ReadSupplyRecord.getCurrentCountForDate(conn, 2, newDate)
 
         assertEquals(BigDecimal("0.0000"), currCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -1298,7 +1299,7 @@ class ReadSupplyRecordTest {
         val currCount = ReadSupplyRecord.getCurrentCountForDate(conn, 13, date)
 
         assertNull(currCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -1309,6 +1310,6 @@ class ReadSupplyRecordTest {
         val currCount = ReadSupplyRecord.getCurrentCountForDate(conn, 1, date)
 
         assertNull(currCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 }

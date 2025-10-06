@@ -19,14 +19,14 @@ import java.sql.Connection
 class CreateSupplyTypeTest {
     private val jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
     private val conn: Connection
-
+    private val name = "db_poultry_test"
     init {
-        initDBAndUser()
+        initDBAndUser(name, name)
 
-        DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
+        DBConnect.init(jdbcURL, name, name)
         conn = DBConnect.getConnection()!!
 
-        initTables(conn)
+        initTables(conn, name)
     }
 
     @Test
@@ -42,7 +42,7 @@ class CreateSupplyTypeTest {
             "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES('feed', 'kg', 'src/main/resources/img/supply-img/Apog.png')",
             result
         )
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -58,7 +58,7 @@ class CreateSupplyTypeTest {
             "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES('feedtwo', 'kg', 'src/main/resources/img/supply-img/default.png')",
             result
         )
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -74,7 +74,7 @@ class CreateSupplyTypeTest {
             "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES('feedthree', 'kg', 'src/main/resources/img/supply-img/default.png')",
             result
         )
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -94,7 +94,7 @@ class CreateSupplyTypeTest {
             "src/main/resources/img/supply-img/default.png"
         )
         assertNull(result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -107,7 +107,7 @@ class CreateSupplyTypeTest {
             "src/main/resources/img/supply-img/default.png"
         )
         assertNull(result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -120,7 +120,7 @@ class CreateSupplyTypeTest {
             "src/main/resources/img/supply-img/default.png"
         )
         assertNull(result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 }
 

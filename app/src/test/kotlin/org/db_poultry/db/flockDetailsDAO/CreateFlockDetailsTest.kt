@@ -15,14 +15,14 @@ import java.sql.Date
 class CreateFlockDetailsTest {
     private val jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
     private val conn: Connection
-
+    private val name = "db_poultry_test"
     init {
-        initDBAndUser()
+        initDBAndUser(name, name)
 
-        DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
+        DBConnect.init(jdbcURL, name, name)
         conn = DBConnect.getConnection()!!
 
-        initTables(conn)
+        initTables(conn, name)
     }
 
     @Test
@@ -39,7 +39,7 @@ class CreateFlockDetailsTest {
             result
         )
 
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -55,8 +55,7 @@ class CreateFlockDetailsTest {
             result
         )
 
-        cleanAndInitTables(conn)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -69,8 +68,7 @@ class CreateFlockDetailsTest {
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, -1)
         assertNull(result)
 
-        cleanAndInitTables(conn)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -83,7 +81,7 @@ class CreateFlockDetailsTest {
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 1000)
         assertNull(result)
 
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -97,7 +95,7 @@ class CreateFlockDetailsTest {
         CreateFlockDetails.createFlockDetails(conn, flockDate, fdDateOne, 500)
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDateTwo, 600)
         assertNull(result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -111,7 +109,7 @@ class CreateFlockDetailsTest {
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 100)
         assertNull(result)
 
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -124,7 +122,7 @@ class CreateFlockDetailsTest {
         CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 100)
         val result = CreateFlockDetails.createFlockDetails(conn, flockDate, fdDate, 100)
         assertNull(result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -155,7 +153,7 @@ class CreateFlockDetailsTest {
         val resultThree = CreateFlockDetails.createFlockDetails(conn, flockOneDate, flockTwoDate, 10)
         assertNull(resultThree)
 
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -169,7 +167,7 @@ class CreateFlockDetailsTest {
         val result = CreateFlockDetails.createFlockDetails(conn, flockTwoDate, fdDate, 100)
         assertNull(result)
 
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -191,6 +189,6 @@ class CreateFlockDetailsTest {
             result
         )
 
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 }

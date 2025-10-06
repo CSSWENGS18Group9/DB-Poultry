@@ -15,14 +15,14 @@ import java.sql.Date
 class CreateSupplyRecordTest {
     private val jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
     private val conn: Connection
-
+    private val name = "db_poultry_test"
     init {
-        initDBAndUser()
+        initDBAndUser(name, name)
 
-        DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
+        DBConnect.init(jdbcURL, name, name)
         conn = DBConnect.getConnection()!!
 
-        initTables(conn)
+        initTables(conn, name)
     }
 
     @Test
@@ -50,11 +50,10 @@ class CreateSupplyRecordTest {
             "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-01-01', 100.0000, 50.0000, 50.0000, false, 50.0000)",
             result
         )
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     // SUPPLY TYPE ID TESTS
-
     @Test
     fun testCreateSupplyRecordWithDNESupplyID() {
         val date = Date.valueOf("2025-01-02")
@@ -71,7 +70,7 @@ class CreateSupplyRecordTest {
 
 
         assertNull(result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     //DATE CONSTRAINT TESTS
@@ -110,7 +109,7 @@ class CreateSupplyRecordTest {
 
 
         assertNull(result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -158,7 +157,7 @@ class CreateSupplyRecordTest {
             "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (2, '2025-01-02', 100.0000, 50.0000, 50.0000, false, 50.0000)",
             result
         )
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -204,7 +203,7 @@ class CreateSupplyRecordTest {
 
 
         assertNull(result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -253,7 +252,7 @@ class CreateSupplyRecordTest {
             "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (2, '2025-01-02', 100.0000, 50.0000, 50.0000, false, 50.0000)",
             result,
         )
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     //PRICE CHANGE TEST
@@ -348,7 +347,7 @@ class CreateSupplyRecordTest {
             "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-02-03', 0.0000, 50.0000, 0.0000, false, 50.0000)",
             resultTwo
         )
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -374,7 +373,7 @@ class CreateSupplyRecordTest {
         )
 
         assertNull(result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -427,7 +426,7 @@ class CreateSupplyRecordTest {
             result,
             "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-01-01', 0.0000, 0.0000, 0.0000, true, NULL)"
         )
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
 
@@ -493,7 +492,7 @@ class CreateSupplyRecordTest {
 
         assertNull(resultFour)
 
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -583,7 +582,7 @@ class CreateSupplyRecordTest {
             "INSERT INTO Supply_Record (Supply_Type_ID, SR_Date, Added, Consumed, Current_Count, Retrieved, Price) VALUES (1, '2025-01-01', 100.0000, 50.0000, 50.0000, false, 50.0000)",
             resultOne
         )
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
