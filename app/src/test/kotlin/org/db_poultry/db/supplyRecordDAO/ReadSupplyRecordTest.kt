@@ -5,7 +5,6 @@ import org.db_poultry.db.initDBAndUser
 import org.db_poultry.db.initTables
 import org.db_poultry.db.cleanAndInitTables
 import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
-import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
@@ -573,11 +572,9 @@ class ReadSupplyRecordTest {
             "src/main/resources/img/supply-img/default.png"
         ))
 
-        print(ReadSupplyType.getSupplyTypeByName(conn, "test_1").supplyTypeId)
-
         print(CreateSupplyRecord.createSupplyRecord(
             conn,
-            11,
+            13,
             date,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
@@ -587,7 +584,7 @@ class ReadSupplyRecordTest {
 
         val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "test_1")
 
-        assertEquals(11, supplyComp.supply_type_id)
+        assertEquals(13, supplyComp.supply_type_id)
         assertEquals(date, supplyComp.date)
         assertEquals(BigDecimal("200.0000"), supplyComp.added)
         assertEquals(BigDecimal("20.0000"), supplyComp.consumed)
