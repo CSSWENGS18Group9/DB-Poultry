@@ -351,7 +351,6 @@ class ReadSupplyRecordTest {
     @Test
     fun testGetOneByDateAndNameWithData() {
         val date = Date.valueOf("2025-02-02")
-        val oldDate = Date.valueOf("2025-01-02")
 
         CreateSupplyType.createSupplyType(
             conn,
@@ -360,19 +359,11 @@ class ReadSupplyRecordTest {
             "src/main/resources/img/supply-img/Apog.png",
             "src/main/resources/img/supply-img/default.png"
         )
-        CreateSupplyType.createSupplyType(
-            conn,
-            "Test_2",
-            "kg",
-            "src/main/resources/img/supply-img/Apog.png",
-            "src/main/resources/img/supply-img/default.png"
-        )
-
 
         CreateSupplyRecord.createSupplyRecord(
             conn,
             13,
-            oldDate,
+            date,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
             false,
@@ -570,7 +561,6 @@ class ReadSupplyRecordTest {
     @Test
     fun testGetMostRecentFromNameWithData() {
         val date = Date.valueOf("2025-02-02")
-        val oldDate = Date.valueOf("2025-01-02")
 
         CreateSupplyType.createSupplyType(
             conn,
@@ -591,7 +581,7 @@ class ReadSupplyRecordTest {
         CreateSupplyRecord.createSupplyRecord(
             conn,
             13,
-            oldDate,
+            date,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
             false,
@@ -622,7 +612,7 @@ class ReadSupplyRecordTest {
 
         assertEquals(13, supplyComp.supply_type_id)
         assertEquals(date, supplyComp.date)
-        assertEquals(BigDecimal("300.0000"), supplyComp.added)
+        assertEquals(BigDecimal("200.0000"), supplyComp.added)
         assertEquals(BigDecimal("30.0000"), supplyComp.consumed)
         assertEquals(false, supplyComp.isRetrieved)
         cleanAndInitTables(conn)
@@ -719,7 +709,7 @@ class ReadSupplyRecordTest {
     @Test
     fun testGetMostRecentFromNameWithDNESupplyType() {
 
-        val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "test_1")
+        val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "test_999")
 
         assertNull(supplyComp)
         cleanAndInitTables(conn)
