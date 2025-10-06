@@ -5,6 +5,7 @@ import org.db_poultry.db.initDBAndUser
 import org.db_poultry.db.initTables
 import org.db_poultry.db.cleanAndInitTables
 import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
+import org.db_poultry.db.supplyTypeDAO.ReadSupplyType
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
@@ -571,6 +572,8 @@ class ReadSupplyRecordTest {
             "src/main/resources/img/supply-img/Apog.png",
             "src/main/resources/img/supply-img/default.png"
         ))
+
+        print(ReadSupplyType.getSupplyTypeByName(conn, "test_1"))
 
         print(CreateSupplyRecord.createSupplyRecord(
             conn,
