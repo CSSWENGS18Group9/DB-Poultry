@@ -2,6 +2,8 @@ package org.db_poultry
 
 import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
+import org.db_poultry.App.databaseName
+import org.db_poultry.App.databasePass
 import org.db_poultry.App.getDotEnv
 import org.db_poultry.controller.DatabasePasswordNameController
 import org.db_poultry.controller.MainFrame
@@ -81,13 +83,15 @@ object App {
         if (!getDotEnv()) { // create missing .env file in .db_poultry
             println(".env not found. creating")
             ENV.makeENVfile() // create the .env file
-            ENV.writeENVfile(inputPassword, inputUsername) // write contents with filled-in db nme and port. password to be filled-in by user
+            ENV.writeENVfile(inputPassword, inputUsername) // write contents with filled-in db name and port. password to be filled-in by user
             getDotEnv()
         }
     }
 
     fun connect() {
         val jdbcUrl = "jdbc:postgresql://localhost:$databasePort/$databaseName"
+
+        println("connecting to $jdbcUrl")
 
         // Connect to the PostgresSQL DB
         DBConnect.init(jdbcUrl, databaseName, databasePass)
@@ -105,7 +109,8 @@ val __DO_WIPE: Boolean = false
 fun main() {
     if (!getDotEnv()) { // if .env missing
         // FIXME: UI opens here, takes user input for password and name (use DatabasePasswordUsernameController)
-        DatabasePasswordNameController().userPasswordName("test", "test")
+        DatabasePasswordNameController().userPasswordName("testPW", "testDBNAME")
+        println("inputs are $databaseName and $databasePass")
         println(".env missing")
     }
 
@@ -122,15 +127,17 @@ fun main() {
     }
 
     if (config == null) {
-        initDBAndUser()
-        println("initialized DB and User")
+        initDBAndUser(databasePass, databaseName)
+        println("Initialized DB and User with values $databaseName and $databasePass")
         App.connect()
-        println("Connecting to DB_Poultry")
-        initTables(App.getConnection())
+        println("Connected to $databaseName")
+        initTables(App.getConnection(), App.databaseName)
+        println("Initialized tables")
     }
 
     println("passed initialization")
     App.connect()
+    println("Connected to $databaseName")
 
     // Open MainFrame (index GUI)
     App.openMainFrame()
@@ -140,7 +147,7 @@ fun main() {
     // ==================================================
     if (__DO_WIPE) {
         App.getConnection()?.close()
-        cleanTables(App.getConnection())
+        cleanTables(App.getConnection(), App.databaseName)
         wipe(App.databaseName)
     }
 }
