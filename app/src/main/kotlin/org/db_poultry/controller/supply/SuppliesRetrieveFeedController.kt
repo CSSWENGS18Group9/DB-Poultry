@@ -52,6 +52,7 @@ class SuppliesRetrieveFeedController: Initializable {
     private lateinit var sqlDate: Date
     private val feedArrayList: List<String> = listOf("booster feed", "starter feed", "grower feed", "finisher feed")
     private lateinit var feedSupplyTypeIDList: MutableList<Int>
+    private val conn = getConnection()
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         feedSupplyTypeIDList = mutableListOf()
@@ -62,7 +63,6 @@ class SuppliesRetrieveFeedController: Initializable {
 
     private fun setFeedCounts() {
         val feedCountMap = HashMap<String, BigDecimal>()
-        val conn = getConnection()
         for (feed in feedArrayList) {
             val supplyTypeID = ReadSupplyType.getSupplyTypeByName(conn, feed).supplyTypeId
             feedSupplyTypeIDList.add(supplyTypeID)
@@ -110,7 +110,7 @@ class SuppliesRetrieveFeedController: Initializable {
         }
 
         for (supplyTypeID in feedSupplyTypeIDList) {
-            val latestSupply = ReadSupplyRecord.getLatest(getConnection(), supplyTypeID)
+            val latestSupply = ReadSupplyRecord.getLatest(conn, supplyTypeID)
             if (latestSupply != null) {
                 val latestDate = latestSupply.date.toLocalDate()
                 if (selectedDate <= latestDate) {
@@ -138,7 +138,7 @@ class SuppliesRetrieveFeedController: Initializable {
         // ENSURE: If we retrieve a supply do we make the supply also zero?
         // RESOLVED: For RETRIEVED supplies set price to NULL
         val results = feedSupplyTypeIDList.map { supplyTypeID ->
-            CreateSupplyRecord.createSupplyRecord(getConnection(), supplyTypeID,
+            CreateSupplyRecord.createSupplyRecord(conn, supplyTypeID,
                 sqlDate, BigDecimal.ZERO, BigDecimal.ZERO, true, null)
         }
 
@@ -154,7 +154,7 @@ class SuppliesRetrieveFeedController: Initializable {
 //            */
 //            results.forEach { result ->
 //                if (result != null) {
-//                    undoSingleton.undo(getConnection())
+//                    undoSingleton.undo(conn)
 //                }
 //            }
 //            return
