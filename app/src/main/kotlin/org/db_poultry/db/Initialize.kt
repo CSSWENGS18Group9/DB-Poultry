@@ -85,56 +85,6 @@ fun cleanTables(conn: Connection?, databaseName: String) {
 
 }
 
-fun cleanTablesTest(conn: Connection?) {
-    if (conn == null) {
-        generateErrorMessage("Error at `cleanTablesTest()` in `Initialize.kt`",
-            "Connection is null.",
-            "Ensure a connection exists."
-        )
-
-        return
-    }
-
-    val tables = listOf("Supply_Record", "Flock_Details", "Supply_Type", "Flock")
-
-    val defaultSupplyTypes = listOf(
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('apog', 'ml', 'src/main/resources/img/supply-img/Apog.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('adulticide', 'ml', 'src/main/resources/img/supply-img/Adulticide.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('string', 'cm', 'src/main/resources/img/supply-img/String.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('fuel', 'l', 'src/main/resources/img/supply-img/Fuel.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('chicken medicine', 'bottles', 'src/main/resources/img/supply-img/Chicken_Medicine.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('larvicide', 'ml', 'src/main/resources/img/supply-img/Larvicide.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('fly glue', 'ml', 'src/main/resources/img/supply-img/Fly_Glue.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('disinfectant', 'ml', 'src/main/resources/img/supply-img/Disinfectant.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('starter feed', 'kg', 'src/main/resources/img/supply-img/Starter_Feed.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('grower feed', 'kg', 'src/main/resources/img/supply-img/Grower_Feed.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('booster feed', 'kg', 'src/main/resources/img/supply-img/Booster_Feed.png')",
-        "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('finisher feed', 'kg', 'src/main/resources/img/supply-img/Finisher_Feed.png')",
-    )
-
-    try {
-        for (table in tables) {
-            conn.createStatement().use { stmt ->
-                stmt.execute("TRUNCATE TABLE $table RESTART IDENTITY CASCADE;")
-            }
-        }
-
-        for (query in defaultSupplyTypes) {
-            conn.createStatement().use { stmt ->
-                stmt.execute(query)
-            }
-        }
-
-    } catch (e: SQLException) {
-        generateErrorMessage(
-            "Error at `cleanTablesTest()` in `Initialize.kt`",
-            "Cleaning tables caused an error.",
-            "",
-            e
-        )
-    }
-}
-
 fun initDBAndUser(databasePass: String, databaseName: String) {
 
     val conn = connectToDefault()
