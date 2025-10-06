@@ -573,7 +573,7 @@ class ReadSupplyRecordTest {
             "src/main/resources/img/supply-img/default.png"
         ))
 
-        print(ReadSupplyType.getSupplyTypeByName(conn, "test_1"))
+        print(ReadSupplyType.getSupplyTypeByName(conn, "test_1").supplyTypeId)
 
         print(CreateSupplyRecord.createSupplyRecord(
             conn,
