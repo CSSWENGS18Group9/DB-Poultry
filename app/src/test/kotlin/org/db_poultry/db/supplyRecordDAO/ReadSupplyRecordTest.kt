@@ -197,6 +197,8 @@ class ReadSupplyRecordTest {
         assertEquals(BigDecimal("0.0000"), first.consumed)
         assertEquals(true, first.isRetrieved)
         assertNull(first.price)
+
+        cleanAndInitTables(conn, name)
     }
 
     //getFromName
