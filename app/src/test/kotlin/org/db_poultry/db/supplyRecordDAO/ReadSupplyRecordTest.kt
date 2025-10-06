@@ -562,15 +562,15 @@ class ReadSupplyRecordTest {
     fun testGetMostRecentFromNameWithData() {
         val date = Date.valueOf("2025-02-02")
 
-        CreateSupplyType.createSupplyType(
+        print(CreateSupplyType.createSupplyType(
             conn,
             "Test_1",
             "kg",
             "src/main/resources/img/supply-img/Apog.png",
             "src/main/resources/img/supply-img/default.png"
-        )
+        ))
 
-        CreateSupplyRecord.createSupplyRecord(
+        print(CreateSupplyRecord.createSupplyRecord(
             conn,
             12,
             date,
@@ -578,7 +578,7 @@ class ReadSupplyRecordTest {
             BigDecimal("20.00"),
             false,
             BigDecimal("50.00")
-        )
+        ))
 
         val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "test_1")
 
