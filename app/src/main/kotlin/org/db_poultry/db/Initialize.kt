@@ -60,8 +60,8 @@ fun cleanTables(conn: Connection?, databaseName: String) {
     }
 
     val DBandUser = listOf(
-        "DROP DATABASE IF EXISTS \"$databaseName\"",
-        "DROP USER IF EXISTS \"$databaseName\""
+        "DROP DATABASE IF EXISTS $databaseName",
+        "DROP USER IF EXISTS $databaseName"
     )
 
     try {
@@ -150,11 +150,11 @@ fun initDBAndUser(databasePass: String, databaseName: String) {
 
     // Create user and DB_POULTRY DB
     val initUserDB = listOf(
-        "DROP DATABASE IF EXISTS \"$databaseName\";",
-        "DROP USER IF EXISTS \"$databaseName\";",
-        "CREATE USER \"$databaseName\" WITH PASSWORD '$databasePass'",
-        "CREATE DATABASE \"$databaseName\" OWNER \"$databaseName\";",
-        "GRANT ALL PRIVILEGES ON DATABASE \"$databaseName\" TO \"$databaseName\";"
+        "DROP DATABASE IF EXISTS $databaseName;",
+        "DROP USER IF EXISTS $databaseName;",
+        "CREATE USER $databaseName WITH PASSWORD '$databasePass'",
+        "CREATE DATABASE $databaseName OWNER $databaseName;",
+        "GRANT ALL PRIVILEGES ON DATABASE $databaseName TO $databaseName;"
     )
 
     try {

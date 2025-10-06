@@ -59,7 +59,7 @@ object App {
 
     fun fillDatabasePasswordName(inputPassword: String, inputName: String) {
         databasePass = inputPassword
-        databaseName = inputName
+        databaseName = inputName.lowercase()
     }
 
 
