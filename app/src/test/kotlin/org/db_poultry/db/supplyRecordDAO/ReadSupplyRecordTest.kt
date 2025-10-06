@@ -4,7 +4,6 @@ import org.db_poultry.db.DBConnect
 import org.db_poultry.db.initDBAndUser
 import org.db_poultry.db.initTables
 import org.db_poultry.db.cleanAndInitTables
-import org.db_poultry.db.cleanTablesTest
 import org.db_poultry.db.supplyTypeDAO.CreateSupplyType
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
