@@ -15,14 +15,14 @@ import kotlin.test.assertNull
 class ReadMortalityRateTest {
     private val jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
     private val conn: Connection
-
+    private val name = "db_poultry_test"
     init {
-        initDBAndUser()
+        initDBAndUser(name, name)
 
-        DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
+        DBConnect.init(jdbcURL, name, name)
         conn = DBConnect.getConnection()!!
 
-        initTables(conn)
+        initTables(conn, name)
     }
 
     @Test
@@ -60,7 +60,7 @@ class ReadMortalityRateTest {
         assertEquals(13.0f, resultTwo.mortalityRate)
         assertEquals(1000, resultTwo.startCount)
         assertEquals(870, resultTwo.curCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -86,7 +86,7 @@ class ReadMortalityRateTest {
         val result = ReadMortalityRate.calculateMortalityRateForFlock(conn, fdDateOne)
 
         assertNull(result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -112,7 +112,7 @@ class ReadMortalityRateTest {
         assertEquals(0.0f, resultTwo.mortalityRate)
         assertEquals(1000, resultTwo.startCount)
         assertEquals(1000, resultTwo.curCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -122,7 +122,7 @@ class ReadMortalityRateTest {
         val result = ReadMortalityRate.calculateMortalityRateForFlock(conn, flockTwoDate)
 
         assertNull(result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     //tests for calculateMortalityRateForFlockDate
@@ -186,7 +186,7 @@ class ReadMortalityRateTest {
         val resultSix = ReadMortalityRate.calculateMortalityRateForFlockDate(conn, fdDateThree, fdDateFour)
 
         assertNull(resultSix)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -224,7 +224,7 @@ class ReadMortalityRateTest {
         assertEquals(3.0f, resultTwo.mortalityRate)
         assertEquals(1000, resultTwo.startCount)
         assertEquals(870, resultTwo.curCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -250,7 +250,7 @@ class ReadMortalityRateTest {
         val result = ReadMortalityRate.calculateMortalityRateForFlockDate(conn, flockOneDate, fdDateFour)
 
         assertNull(result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -267,7 +267,7 @@ class ReadMortalityRateTest {
         assertEquals(0.0f, result.mortalityRate)
         assertEquals(1000, result.startCount)
         assertEquals(1000, result.curCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -278,6 +278,6 @@ class ReadMortalityRateTest {
         val result = ReadMortalityRate.calculateMortalityRateForFlockDate(conn, flockOneDate, fdDateTwo)
 
         assertNull(result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 }

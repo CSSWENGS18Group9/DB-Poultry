@@ -52,6 +52,7 @@ class SuppliesRetrieveFeedController: Initializable {
     private lateinit var sqlDate: Date
     private val feedArrayList: List<String> = listOf("booster feed", "starter feed", "grower feed", "finisher feed")
     private lateinit var feedSupplyTypeIDList: MutableList<Int>
+    private val conn = getConnection()
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         feedSupplyTypeIDList = mutableListOf()
@@ -62,11 +63,10 @@ class SuppliesRetrieveFeedController: Initializable {
 
     private fun setFeedCounts() {
         val feedCountMap = HashMap<String, BigDecimal>()
-
         for (feed in feedArrayList) {
-            val supplyTypeID = ReadSupplyType.getSupplyTypeByName(getConnection(), feed).supplyTypeId
+            val supplyTypeID = ReadSupplyType.getSupplyTypeByName(conn, feed).supplyTypeId
             feedSupplyTypeIDList.add(supplyTypeID)
-            val count = ReadSupplyRecord.getMostRecentFromID(getConnection(), supplyTypeID)?.current ?: BigDecimal.ZERO
+            val count = ReadSupplyRecord.getMostRecentFromID(conn, supplyTypeID)?.current ?: BigDecimal.ZERO
             feedCountMap[feed] = count
         }
 
@@ -110,7 +110,7 @@ class SuppliesRetrieveFeedController: Initializable {
         }
 
         for (supplyTypeID in feedSupplyTypeIDList) {
-            val latestSupply = ReadSupplyRecord.getLatest(getConnection(), supplyTypeID)
+            val latestSupply = ReadSupplyRecord.getLatest(conn, supplyTypeID)
             if (latestSupply != null) {
                 val latestDate = latestSupply.date.toLocalDate()
                 if (selectedDate <= latestDate) {
@@ -134,10 +134,12 @@ class SuppliesRetrieveFeedController: Initializable {
 
         undoSingleton.setIsFeedRetrieval(true)
         undoSingleton.setUndoMode(undoTypes.doUndoSupplyRecord)
-
+        // POSSIBLE POINT OF ERROR
+        // ENSURE: If we retrieve a supply do we make the supply also zero?
+        // RESOLVED: For RETRIEVED supplies set price to NULL
         val results = feedSupplyTypeIDList.map { supplyTypeID ->
-            CreateSupplyRecord.createSupplyRecord(getConnection(), supplyTypeID,
-                sqlDate, BigDecimal.ZERO, BigDecimal.ZERO, true)
+            CreateSupplyRecord.createSupplyRecord(conn, supplyTypeID,
+                sqlDate, BigDecimal.ZERO, BigDecimal.ZERO, true, null)
         }
 
 //
@@ -152,7 +154,7 @@ class SuppliesRetrieveFeedController: Initializable {
 //            */
 //            results.forEach { result ->
 //                if (result != null) {
-//                    undoSingleton.undo(getConnection())
+//                    undoSingleton.undo(conn)
 //                }
 //            }
 //            return
@@ -160,8 +162,8 @@ class SuppliesRetrieveFeedController: Initializable {
 
         NotificationController.setNotification(
             "info",
-            "Chicken Feed Retrieval Undo",
-            "Supply record for '${feedArrayList.joinToString(", ")}' retrieval was undone."
+            "Chicken Feed Retrieval",
+            "Supply records for '${feedArrayList.joinToString(", ")}' retrieval were created."
         )
         PopupUtil.showPopup("success", "Feed retrieval transaction successful.")
 

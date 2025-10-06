@@ -12,15 +12,14 @@ import kotlin.test.*
 class DeleteFlockTest {
     private val jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
     private val conn: Connection
-
-
+    private val name = "db_poultry_test"
     init {
-        initDBAndUser()
+        initDBAndUser(name, name)
 
-        DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
+        DBConnect.init(jdbcURL, name, name)
         conn = DBConnect.getConnection()!!
 
-        initTables(conn)
+        initTables(conn, name)
     }
 
     @Test
@@ -32,7 +31,7 @@ class DeleteFlockTest {
 
         assertEquals("DELETE FROM Flock WHERE ctid IN (SELECT ctid FROM Flock ORDER BY flock_id DESC LIMIT 1)", result)
         assertNull(ReadFlock.getFlockFromADate(conn, date))
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     fun testDeleteFlockWithDataTwo() {
@@ -46,13 +45,13 @@ class DeleteFlockTest {
 
         assertEquals("DELETE FROM Flock ORDER BY flock_id DESC LIMIT 1", result)
         assertNull(ReadFlock.getFlockFromADate(conn, dateTwo))
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     fun testDeleteFlockWithNoData() {
         val result = DeleteFlock.undoCreateFlock(conn)
 
         assertNull(result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 }

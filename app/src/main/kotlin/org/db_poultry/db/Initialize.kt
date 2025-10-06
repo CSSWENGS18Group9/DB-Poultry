@@ -8,7 +8,7 @@ import kotlin.collections.component2
 import kotlin.collections.iterator
 import kotlin.use
 
-fun cleanTables(conn: Connection?) {
+fun cleanTables(conn: Connection?, databaseName: String) {
     if (conn == null) {
         generateErrorMessage("Error at `cleanTables()` in `Initialize.kt`",
             "Connection is null.",
@@ -44,7 +44,7 @@ fun cleanTables(conn: Connection?) {
 
     conn.close()
 
-    println("closed db_poultry database connection")
+    println("closed $databaseName database connection")
 
     val defaultConn = connectToDefault()
 
@@ -60,8 +60,8 @@ fun cleanTables(conn: Connection?) {
     }
 
     val DBandUser = listOf(
-        "DROP DATABASE IF EXISTS db_poultry",
-        "DROP USER IF EXISTS db_poultry"
+        "DROP DATABASE IF EXISTS $databaseName",
+        "DROP USER IF EXISTS $databaseName"
     )
 
     try {
@@ -85,7 +85,7 @@ fun cleanTables(conn: Connection?) {
 
 }
 
-fun initDBAndUser() {
+fun initDBAndUser(databasePass: String, databaseName: String) {
 
     val conn = connectToDefault()
 
@@ -100,12 +100,11 @@ fun initDBAndUser() {
 
     // Create user and DB_POULTRY DB
     val initUserDB = listOf(
-        "DROP DATABASE IF EXISTS db_poultry;",
-        "DROP USER IF EXISTS db_poultry;",
-        "CREATE USER X WITH PASSWORD 'Y'",
-        "CREATE DATABASE db_poultry OWNER X;",
-        "GRANT ALL PRIVILEGES ON DATABASE db_poultry TO X;",
-        "ALTER USER X WITH SUPERUSER;"
+        "DROP DATABASE IF EXISTS $databaseName;",
+        "DROP USER IF EXISTS $databaseName;",
+        "CREATE USER $databaseName WITH PASSWORD '$databasePass'",
+        "CREATE DATABASE $databaseName OWNER $databaseName;",
+        "GRANT ALL PRIVILEGES ON DATABASE $databaseName TO $databaseName;"
     )
 
     try {
@@ -136,6 +135,8 @@ fun initDBAndUser() {
 fun connectToDefault(): Connection? {
     val jdbcUrl = "jdbc:postgresql://localhost:5432/postgres"
 
+    println("Connecting to local PostgreSQL database in connectToDefault().")
+
     DBConnect.init(jdbcUrl, "postgres", "password") // default
 
     val conn = DBConnect.getConnection() // connect to default DB
@@ -143,12 +144,12 @@ fun connectToDefault(): Connection? {
     return conn
 }
 
-fun initTables(conn: Connection?) {
+fun initTables(conn: Connection?, databaseName: String) {
 
     if (conn == null) {
         generateErrorMessage(
             "Error at `initTables()` in `Initialize.kt`.",
-            "Connection to db_poultry is null.",
+            "Connection to $databaseName is null.",
             "Ensure valid connection exists."
         )
         return
@@ -185,6 +186,7 @@ fun initTables(conn: Connection?) {
             Consumed NUMERIC(12, 4),
             Current_Count   NUMERIC(12, 4),
             Retrieved BOOLEAN,
+            Price NUMERIC(12, 4),
             FOREIGN KEY (Supply_Type_ID) REFERENCES Supply_Type (Supply_Type_ID) ON DELETE CASCADE,
             UNIQUE (Supply_Type_ID, SR_Date)
         """.trimIndent(),
@@ -203,7 +205,7 @@ fun initTables(conn: Connection?) {
     // Take note of the default file paths of the images here
     // SPECIFIC FOR @megandasal
     // Feel free to adjust the unit measurements for each default supply
-    val defaultSupplyTypes = listOf(
+    val defaultSupplyTypes = listOf( // default 11
         "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('apog', 'ml', 'src/main/resources/img/supply-img/Apog.png')",
         "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('adulticide', 'ml', 'src/main/resources/img/supply-img/Adulticide.png')",
         "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('string', 'cm', 'src/main/resources/img/supply-img/String.png')",
@@ -242,23 +244,23 @@ fun initTables(conn: Connection?) {
     } catch (e: SQLException) {
         generateErrorMessage(
             "Error at `initTables()` in `Initialize.kt`",
-            "Creating tables in db_poultry caused an error.",
+            "Creating tables in $databaseName caused an error.",
             "",
             e
         )
     }
 }
 
-fun cleanAndInitTables(conn: Connection?) {
+fun cleanAndInitTables(conn: Connection?, databaseName: String) {
     if (conn == null) {
         generateErrorMessage(
             "Error at `initTables()` in `Initialize.kt`.",
-            "Connection to db_poultry is null.",
+            "Connection to $databaseName is null.",
             "Ensure valid connection exists."
         )
         return
     }
 
-    cleanTables(conn)
-    initTables(conn)
+    cleanTables(conn, databaseName)
+    initTables(conn, databaseName)
 }
