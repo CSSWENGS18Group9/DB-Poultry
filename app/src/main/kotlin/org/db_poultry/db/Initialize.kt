@@ -254,7 +254,7 @@ fun initTables(conn: Connection?) {
     // Take note of the default file paths of the images here
     // SPECIFIC FOR @megandasal
     // Feel free to adjust the unit measurements for each default supply
-    val defaultSupplyTypes = listOf(
+    val defaultSupplyTypes = listOf( // default 11
         "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('apog', 'ml', 'src/main/resources/img/supply-img/Apog.png')",
         "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('adulticide', 'ml', 'src/main/resources/img/supply-img/Adulticide.png')",
         "INSERT INTO supply_type (supply_name, unit, image_file_path) VALUES ('string', 'cm', 'src/main/resources/img/supply-img/String.png')",

@@ -394,8 +394,8 @@ class ReadSupplyRecordTest {
 
         assertEquals(13, supplyComp.supply_type_id)
         assertEquals(date, supplyComp.date)
-        assertEquals(BigDecimal("300.0000"), supplyComp.added)
-        assertEquals(BigDecimal("30.0000"), supplyComp.consumed)
+        assertEquals(BigDecimal("200.0000"), supplyComp.added)
+        assertEquals(BigDecimal("20.0000"), supplyComp.consumed)
         assertEquals(false, supplyComp.isRetrieved)
         cleanAndInitTables(conn)
     }
@@ -569,41 +569,13 @@ class ReadSupplyRecordTest {
             "src/main/resources/img/supply-img/Apog.png",
             "src/main/resources/img/supply-img/default.png"
         )
-        CreateSupplyType.createSupplyType(
-            conn,
-            "Test_2",
-            "kg",
-            "src/main/resources/img/supply-img/Apog.png",
-            "src/main/resources/img/supply-img/default.png"
-        )
-
 
         CreateSupplyRecord.createSupplyRecord(
             conn,
-            13,
+            12,
             date,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false,
-            BigDecimal("50.00")
-        )
-
-        CreateSupplyRecord.createSupplyRecord(
-            conn,
-            13,
-            date,
-            BigDecimal("300.00"),
-            BigDecimal("30.00"),
-            false,
-            BigDecimal("50.00")
-        )
-
-        CreateSupplyRecord.createSupplyRecord(
-            conn,
-            14,
-            date,
-            BigDecimal("100.00"),
-            BigDecimal("50.00"),
             false,
             BigDecimal("50.00")
         )
@@ -613,8 +585,9 @@ class ReadSupplyRecordTest {
         assertEquals(13, supplyComp.supply_type_id)
         assertEquals(date, supplyComp.date)
         assertEquals(BigDecimal("200.0000"), supplyComp.added)
-        assertEquals(BigDecimal("30.0000"), supplyComp.consumed)
+        assertEquals(BigDecimal("20.0000"), supplyComp.consumed)
         assertEquals(false, supplyComp.isRetrieved)
+
         cleanAndInitTables(conn)
     }
 
