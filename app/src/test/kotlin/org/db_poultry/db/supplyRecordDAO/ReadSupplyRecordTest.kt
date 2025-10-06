@@ -159,7 +159,7 @@ class ReadSupplyRecordTest {
     }
 
     @Test
-    fun testReadSupplyGet_PriceAfterRetrival(){
+    fun testReadSupplyGet_PriceAfterRetrieval(){
         val date = Date.valueOf("2025-02-02")
         val oldDate = Date.valueOf("2025-01-02")
 
