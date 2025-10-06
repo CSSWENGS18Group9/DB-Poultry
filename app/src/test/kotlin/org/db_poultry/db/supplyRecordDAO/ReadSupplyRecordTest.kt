@@ -574,7 +574,7 @@ class ReadSupplyRecordTest {
 
         print(CreateSupplyRecord.createSupplyRecord(
             conn,
-            12,
+            11,
             date,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
@@ -584,7 +584,7 @@ class ReadSupplyRecordTest {
 
         val supplyComp = ReadSupplyRecord.getMostRecentFromName(conn, "test_1")
 
-        assertEquals(13, supplyComp.supply_type_id)
+        assertEquals(11, supplyComp.supply_type_id)
         assertEquals(date, supplyComp.date)
         assertEquals(BigDecimal("200.0000"), supplyComp.added)
         assertEquals(BigDecimal("20.0000"), supplyComp.consumed)
