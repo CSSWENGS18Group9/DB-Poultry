@@ -15,14 +15,14 @@ import java.sql.Date
 class ReadFlockDetailsTest {
     private val jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
     private val conn: Connection
-
+    private val name = "db_poultry_test"
     init {
-        initDBAndUser()
+        initDBAndUser(name, name)
 
-        DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
+        DBConnect.init(jdbcURL, name, name)
         conn = DBConnect.getConnection()!!
 
-        initTables(conn)
+        initTables(conn, name)
     }
 
     @Test
@@ -45,7 +45,7 @@ class ReadFlockDetailsTest {
         Assertions.assertEquals(1, result.flockId)
         assertEquals(dateThree, result.fdDate)
         Assertions.assertEquals(15, result.depletedCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -73,7 +73,7 @@ class ReadFlockDetailsTest {
             conn, 1
         )
         Assertions.assertEquals(30, result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -104,7 +104,7 @@ class ReadFlockDetailsTest {
         )
 
         Assertions.assertEquals(15, result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     //Test getMostRecent(
@@ -136,7 +136,7 @@ class ReadFlockDetailsTest {
 
         assertEquals(dateThree, result.fdDate)
         assertEquals(15, result.depletedCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
 
@@ -147,7 +147,7 @@ class ReadFlockDetailsTest {
         val result = ReadFlockDetails.getMostRecent(conn, dateFlock)
 
         assertNull(result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     // TEST FOR public static List<FlockDetails> getFlockDetailsFromDate(Connection conn, Date flockDate, Date fdStartDate, Date fdEndDate) {
@@ -180,7 +180,7 @@ class ReadFlockDetailsTest {
 
         assertEquals(dateFDThree, third.fdDate)
         assertEquals(2, third.depletedCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
 
@@ -219,7 +219,7 @@ class ReadFlockDetailsTest {
 
         assertEquals(dateFDThree, third.fdDate)
         assertEquals(2, third.depletedCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -253,7 +253,7 @@ class ReadFlockDetailsTest {
 
         assertEquals(dateFDTwo, second.fdDate)
         assertEquals(1, second.depletedCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -267,7 +267,7 @@ class ReadFlockDetailsTest {
         val flockDetailsList = ReadFlockDetails.getFlockDetailsFromDate(conn, dateFlockOne, dateFDOne, dateFDTwo)
 
         assertNull(flockDetailsList)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -281,7 +281,7 @@ class ReadFlockDetailsTest {
         val flockDetailsList = ReadFlockDetails.getFlockDetailsFromDate(conn, dateFlockOne, dateFDTwo, dateFDOne)
 
         assertNull(flockDetailsList)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -296,7 +296,7 @@ class ReadFlockDetailsTest {
         val flockDetailsList = ReadFlockDetails.getFlockDetailsFromDate(conn, dateFlockTwo, dateFDOne, dateFDTwo)
 
         assertNull(flockDetailsList)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     //TEST for getFlockDetailsFromFlock(Connection conn, Date flockDate)
@@ -331,7 +331,7 @@ class ReadFlockDetailsTest {
 
         assertEquals(dateFDTwo, second.fdDate)
         assertEquals(1, second.depletedCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -343,7 +343,7 @@ class ReadFlockDetailsTest {
         val flockDetailsList = ReadFlockDetails.getFlockDetailsFromFlock(conn, dateFlockOne)
 
         assertNull(flockDetailsList)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -356,6 +356,6 @@ class ReadFlockDetailsTest {
         val flockDetailsList = ReadFlockDetails.getFlockDetailsFromFlock(conn, dateFlockTwo)
 
         assertNull(flockDetailsList)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 }

@@ -12,30 +12,26 @@ import java.sql.Date
 class ReadFlockTest {
     private val jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
     private val conn: Connection
-
+    private val name = "db_poultry_test"
     init {
-        initDBAndUser()
+        initDBAndUser(name, name)
 
-        DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
+        DBConnect.init(jdbcURL, name, name)
         conn = DBConnect.getConnection()!!
 
-        initTables(conn)
+        initTables(conn, name)
     }
 
     @Test
     fun testAllByIDValidData() {
-        val connection = conn
-
-        // Ensure the connection is non-null before proceeding
-
         // Insert valid data into the Flock and Flock_Details tables
-        connection.createStatement().use { stmt ->
+        conn.createStatement().use { stmt ->
             stmt.executeUpdate("INSERT INTO Flock VALUES (1, 100, '2025-01-01 00:00:00')")
             stmt.executeUpdate("INSERT INTO Flock_Details VALUES (10, 1, '2025-01-02 00:00:00', 5)")
         }
 
         // Call the allByID method to retrieve data
-        val result = ReadFlock.allByID(connection)
+        val result = ReadFlock.allByID(conn)
 
         // Assert that the result is not null and contains the expected data
         assertNotNull(result)
@@ -46,75 +42,67 @@ class ReadFlockTest {
         assertEquals(1, flockComplete.flock.flockId)
         assertEquals(1, flockComplete.flockDetails.size)
         assertEquals(5, flockComplete.flockDetails[0].depletedCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
     fun testAllByIDEmptyResultSet() {
-        val connection = conn
-
         // Call the allByID method without inserting any data
-        val result = ReadFlock.allByID(connection)
+        val result = ReadFlock.allByID(conn)
 
         // Assert that the result is not null and is an empty collection
         assertNotNull(result)
         assertTrue(result.isEmpty())
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
     fun testAllByDateValidData() {
-        val connection = conn
-
-        // Ensure the connection is non-null before proceeding
+        // Ensure the conn is non-null before proceeding
 
         // Insert valid data into the Flock and Flock_Details tables
-        connection.createStatement().use { stmt ->
+        conn.createStatement().use { stmt ->
             stmt.executeUpdate("INSERT INTO Flock VALUES (1, 100, '2025-01-01 00:00:00')")
             stmt.executeUpdate("INSERT INTO Flock_Details VALUES (10, 1, '2025-01-02 00:00:00', 5)")
         }
 
         // Call the allByDate method to retrieve data grouped by date
-        val result = ReadFlock.allByDate(connection)
+        val result = ReadFlock.allByDate(conn)
 
         // Assert that the result is not null and contains the expected data
         assertNotNull(result)
         assertEquals(1, result.size)
         assertTrue(result.containsKey(Date.valueOf("2025-01-01")))
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
     fun testAllByDateEmptyResultSet() {
-        val connection = conn
+        val conn = conn
 
         // Call the allByDate method without inserting any data
-        val result = ReadFlock.allByDate(connection)
+        val result = ReadFlock.allByDate(conn)
 
         // Assert that the result is not null and is an empty collection
         assertNotNull(result)
         assertTrue(result.isEmpty())
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
     fun testQueryAllHandlesSQLException() {
-        val connection = conn
+        // Close the conn to simulate an SQLException
+        conn.close()
 
-        // Ensure the connection is non-null before proceeding
-
-        // Close the connection to simulate an SQLException
-        connection.close()
-
-        // Call the allByID method with a closed connection
-        val result = ReadFlock.allByID(connection)
+        // Call the allByID method with a closed conn
+        val result = ReadFlock.allByID(conn)
 
         // Assert that the result is null, indicating the exception was handled gracefully
         assertNull(result)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
-    //TESTs FOR public static Flock getFlockFromADate(Connection conn, Date flockDate) {cleanAndInitTables(conn)
+    //TESTs FOR public static Flock getFlockFromADate(Connection conn, Date flockDate) {cleanAndInitTables(conn, name)
 
     @Test
     fun testGetFlockFromADateWithDataOne() {
@@ -128,7 +116,7 @@ class ReadFlockTest {
         assertEquals(100, first.startingCount)
         assertEquals(dateFlockOne, first.startingDate)
 
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -141,11 +129,11 @@ class ReadFlockTest {
         val flock = ReadFlock.getFlockFromADate(conn, dateEnd)
 
         assertNull(flock)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
 
-    //TESTS getFlockFromDate(Connection conn, Date flockDate, Date fdStartDate, Date fdEndDate) {cleanAndInitTables(conn)
+    //TESTS getFlockFromDate(Connection conn, Date flockDate, Date fdStartDate, Date fdEndDate) {cleanAndInitTables(conn, name)
     @Test
     fun testGetFlocksFromDateWithDataOne() {
         val dateFlockOne = Date.valueOf("1000-05-01")
@@ -161,7 +149,7 @@ class ReadFlockTest {
         assertEquals(100, first.startingCount)
         assertEquals(dateFlockOne, first.startingDate)
 
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -183,7 +171,7 @@ class ReadFlockTest {
         assertEquals(2, second.flockId)
         assertEquals(1000, second.startingCount)
         assertEquals(dateEnd, second.startingDate)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -196,7 +184,7 @@ class ReadFlockTest {
         val flock = ReadFlock.getFlocksFromDate(conn, dateEnd, dateEnd)
 
         assertNull(flock)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -209,7 +197,7 @@ class ReadFlockTest {
         val flockList = ReadFlock.getFlocksFromDate(conn, dateEnd, dateFlockOne)
 
         assertNull(flockList)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -227,7 +215,7 @@ class ReadFlockTest {
         assertEquals(3, result.size)
         assertEquals(dateOne, result[0].startingDate)
         assertEquals(100, result[0].startingCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -240,7 +228,7 @@ class ReadFlockTest {
         assertEquals(1, result.size)
         assertEquals(date, result[0].startingDate)
         assertEquals(100, result[0].startingCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -253,7 +241,7 @@ class ReadFlockTest {
         assertEquals(1, result.size)
         assertEquals(date, result[0].startingDate)
         assertEquals(100, result[0].startingCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -266,7 +254,7 @@ class ReadFlockTest {
         assertEquals(1, result.size)
         assertEquals(date, result[0].startingDate)
         assertEquals(100, result[0].startingCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -290,7 +278,7 @@ class ReadFlockTest {
         assertEquals(200, result[1].startingCount)
         assertEquals(dateThree, result[2].startingDate)
         assertEquals(300, result[2].startingCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -307,7 +295,7 @@ class ReadFlockTest {
         assertEquals(1, result.size)
         assertEquals(dateOne, result[0].startingDate)
         assertEquals(100, result[0].startingCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -324,7 +312,7 @@ class ReadFlockTest {
         assertEquals(1, result.size)
         assertEquals(dateOne, result[0].startingDate)
         assertEquals(100, result[0].startingCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -341,7 +329,7 @@ class ReadFlockTest {
         assertEquals(1, result.size)
         assertEquals(dateOne, result[0].startingDate)
         assertEquals(100, result[0].startingCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -356,7 +344,7 @@ class ReadFlockTest {
 
         val result = ReadFlock.searchFlocks(conn, "1001")
         assertEquals(0, result.size)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -371,7 +359,7 @@ class ReadFlockTest {
 
         val result = ReadFlock.searchFlocks(conn, "December")
         assertEquals(0, result.size)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -388,7 +376,7 @@ class ReadFlockTest {
         assertEquals(1, result.size)
         assertEquals(dateThree, result[0].startingDate)
         assertEquals(300, result[0].startingCount)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -403,7 +391,7 @@ class ReadFlockTest {
 
         val result = ReadFlock.searchFlocks(conn, "March 2000")
         assertEquals(0, result.size)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -418,7 +406,7 @@ class ReadFlockTest {
 
         val result = ReadFlock.searchFlocks(conn, "3 2000")
         assertEquals(0, result.size)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -433,7 +421,7 @@ class ReadFlockTest {
 
         val result = ReadFlock.searchFlocks(conn, "December 1, 1000")
         assertEquals(0, result.size)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -448,7 +436,7 @@ class ReadFlockTest {
 
         val result = ReadFlock.searchFlocks(conn, "Dec 1, 1000")
         assertEquals(0, result.size)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -463,6 +451,6 @@ class ReadFlockTest {
 
         val result = ReadFlock.searchFlocks(conn, "12-01-1000")
         assertEquals(0, result.size)
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 }

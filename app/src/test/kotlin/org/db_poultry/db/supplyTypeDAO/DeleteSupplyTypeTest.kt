@@ -16,14 +16,14 @@ import java.sql.Date
 class DeleteSupplyTypeTest {
     private val jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
     private val conn: Connection
-
+    private val name = "db_poultry_test"
     init {
-        initDBAndUser()
+        initDBAndUser(name, name)
 
-        DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
+        DBConnect.init(jdbcURL, name, name)
         conn = DBConnect.getConnection()!!
 
-        initTables(conn)
+        initTables(conn, name)
     }
 
     @Test
@@ -49,7 +49,7 @@ class DeleteSupplyTypeTest {
 
         assertEquals("DELETE FROM Supply_Type ORDER BY Supply_Type_ID DESC LIMIT 1", result)
         assertNull(ReadSupplyRecord.getOneByDateAndName(conn, date, "Test_2"))
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test
@@ -78,7 +78,8 @@ class DeleteSupplyTypeTest {
             dateOne,
             BigDecimal("200.00"),
             BigDecimal("20.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         CreateSupplyRecord.createSupplyRecord(
@@ -87,13 +88,14 @@ class DeleteSupplyTypeTest {
             dateTwo,
             BigDecimal("100.00"),
             BigDecimal("50.00"),
-            false
+            false,
+            BigDecimal("50.00")
         )
 
         val result = DeleteSupplyType.undoCreateSupplyType(conn)
 
         assertEquals("DELETE FROM Supply_Type ORDER BY Supply_Type_ID DESC LIMIT 1", result)
         assertNull(ReadSupplyRecord.getOneByDateAndName(conn, dateTwo, "Test_2"))
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 }

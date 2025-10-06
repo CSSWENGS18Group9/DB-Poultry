@@ -4,8 +4,6 @@ plugins {
     kotlin("jvm") version "2.1.21"
 }
 
-group = "org.db_poultry"
-version = "5.0"
 val appMainClass = "org.db_poultry.AppKt"
 
 application {
