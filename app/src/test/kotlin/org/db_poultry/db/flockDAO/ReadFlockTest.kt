@@ -480,6 +480,5 @@ class ReadFlockTest {
 
         val result = ReadFlock.searchFlocks(conn, "12-01-1000")
         assertEquals(0, result.size)
-        cleanAndInitTables(conn)
     }
 }
