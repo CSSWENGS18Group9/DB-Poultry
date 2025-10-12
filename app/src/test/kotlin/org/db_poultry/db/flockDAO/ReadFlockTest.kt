@@ -489,7 +489,7 @@ class ReadFlockTest {
         assertEquals(50, resultOne)
         assertEquals(30, resultTwo)
         assertEquals(30, resultThree)
-
+        cleanAndInitTables(conn)
     }
 
     @Test
@@ -506,5 +506,6 @@ class ReadFlockTest {
     fun testCalculateAliveCountNoData() {
         val result = ReadFlock.calculateAliveCount(conn, 1)
         assertNull(result)
+        cleanAndInitTables(conn)
     }
 }
