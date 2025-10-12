@@ -4,6 +4,7 @@ import org.db_poultry.db.DBConnect
 import org.db_poultry.db.initDBAndUser
 import org.db_poultry.db.initTables
 import org.db_poultry.db.cleanAndInitTables
+import org.db_poultry.db.flockDetailsDAO.CreateFlockDetails
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.sql.Connection
@@ -452,5 +453,50 @@ class ReadFlockTest {
         val result = ReadFlock.searchFlocks(conn, "12-01-1000")
         assertEquals(0, result.size)
         cleanAndInitTables(conn, name)
+    }
+
+
+    @Test
+    fun testCalculateAliveCountValid() {
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+        CreateFlock.createFlock(conn, 100, dateOne)
+        CreateFlockDetails.createFlockDetails(conn, dateOne, dateOne, 50)
+        val flock = ReadFlock.getFlockFromADate(conn, dateOne)
+
+        val resultOne = ReadFlock.calculateAliveCount(conn, flock.flockId)
+
+        CreateFlockDetails.createFlockDetails(conn, dateOne, dateTwo, 20)
+
+        val resultTwo = ReadFlock.calculateAliveCount(conn, flock.flockId)
+
+        CreateFlockDetails.createFlockDetails(conn, dateOne, dateThree, 40)
+
+        val resultThree = ReadFlock.calculateAliveCount(conn, flock.flockId)
+
+        assertEquals(50, resultOne)
+        assertEquals(30, resultTwo)
+        assertEquals(30, resultThree)
+        cleanAndInitTables(conn, name)
+
+    }
+
+    @Test
+    fun testCalculateAliveCountZeroFlockDetails() {
+        val date = Date.valueOf("1000-02-01")
+        CreateFlock.createFlock(conn, 100, date)
+        val flock = ReadFlock.getFlockFromADate(conn, date)
+        val result = ReadFlock.calculateAliveCount(conn, flock.flockId)
+        assertEquals(100, result)
+        cleanAndInitTables(conn, name)
+    }
+
+    @Test
+    fun testCalculateAliveCountNoData() {
+        val result = ReadFlock.calculateAliveCount(conn, 1)
+        assertNull(result)
+        cleanAndInitTables(conn, name)
+
     }
 }
