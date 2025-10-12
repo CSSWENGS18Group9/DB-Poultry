@@ -469,16 +469,43 @@ class ReadFlockTest {
 
 
     @Test
-    fun testTemp() {
+    fun testCalculateAliveCountValid() {
         val dateOne = Date.valueOf("1000-02-01")
         val dateTwo = Date.valueOf("1000-03-01")
         val dateThree = Date.valueOf("1000-04-01")
-
         CreateFlock.createFlock(conn, 100, dateOne)
-        CreateFlock.createFlock(conn, 200, dateTwo)
-        CreateFlock.createFlock(conn, 300, dateThree)
+        CreateFlockDetails.createFlockDetails(conn, dateOne, dateOne, 50)
+        val flock = ReadFlock.getFlockFromADate(conn, dateOne)
 
-        val result = ReadFlock.searchFlocks(conn, "12-01-1000")
-        assertEquals(0, result.size)
+        val resultOne = ReadFlock.calculateAliveCount(conn, flock.flockId)
+
+        CreateFlockDetails.createFlockDetails(conn, dateOne, dateTwo, 20)
+
+        val resultTwo = ReadFlock.calculateAliveCount(conn, flock.flockId)
+
+        CreateFlockDetails.createFlockDetails(conn, dateOne, dateThree, 40)
+
+        val resultThree = ReadFlock.calculateAliveCount(conn, flock.flockId)
+
+        assertEquals(50, resultOne)
+        assertEquals(30, resultTwo)
+        assertEquals(30, resultThree)
+
+    }
+
+    @Test
+    fun testCalculateAliveCountZeroFlockDetails() {
+        val date = Date.valueOf("1000-02-01")
+        CreateFlock.createFlock(conn, 100, date)
+        val flock = ReadFlock.getFlockFromADate(conn, date)
+        val result = ReadFlock.calculateAliveCount(conn, flock.flockId)
+        assertEquals(100, result)
+    }
+
+    @Test
+    fun testCalculateAliveCountNoData() {
+        val result = ReadFlock.calculateAliveCount(conn, 1)
+        assertNull(result)
+
     }
 }
