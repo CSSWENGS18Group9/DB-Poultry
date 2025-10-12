@@ -330,33 +330,6 @@ public class ReadFlock {
     }
 
     /**
-    * Gets the total depleted count for a specific flock
-    */
-    public static Integer getTotalDepleted(Connection conn, int flockId) {
-        try (PreparedStatement pstmt = conn.prepareStatement("""
-                SELECT COALESCE(SUM(depleted_count), 0) as total_depleted
-                FROM Flock_Details
-                WHERE flock_id = ?
-                """)) {
-        
-                pstmt.setInt(1, flockId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("total_depleted");
-                }
-            }
-        } catch (SQLException e) {
-            generateErrorMessage(
-            "Error getting total depleted count",
-            "SQLException occurred while getting depleted count.",
-            "",
-            e
-            );
-        }
-        return null;
-    }
-
-    /**
     * Calculates alive chickens based on starting count and mortality rate
     */
     public static Integer calculateAliveCount(Connection conn, int flockId) {
