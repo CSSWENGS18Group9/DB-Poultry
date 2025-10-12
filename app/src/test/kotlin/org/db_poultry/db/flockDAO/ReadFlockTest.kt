@@ -466,4 +466,20 @@ class ReadFlockTest {
         assertEquals(0, result.size)
         cleanAndInitTables(conn)
     }
+
+
+    @Test
+    fun testTemp() {
+        val dateOne = Date.valueOf("1000-02-01")
+        val dateTwo = Date.valueOf("1000-03-01")
+        val dateThree = Date.valueOf("1000-04-01")
+
+        CreateFlock.createFlock(conn, 100, dateOne)
+        CreateFlock.createFlock(conn, 200, dateTwo)
+        CreateFlock.createFlock(conn, 300, dateThree)
+
+        val result = ReadFlock.searchFlocks(conn, "12-01-1000")
+        assertEquals(0, result.size)
+        cleanAndInitTables(conn)
+    }
 }
