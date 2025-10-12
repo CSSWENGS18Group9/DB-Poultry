@@ -22,14 +22,14 @@ will work if there is no data
 class DeleteSupplyRecordTest {
     private val jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
     private val conn: Connection
-
+    private val name = "db_poultry_test"
     init {
-        initDBAndUser()
+        initDBAndUser(name, name)
 
-        DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
+        DBConnect.init(jdbcURL, name, name)
         conn = DBConnect.getConnection()!!
 
-        initTables(conn)
+        initTables(conn, name)
     }
 
     @Test
@@ -76,7 +76,7 @@ class DeleteSupplyRecordTest {
 
         assertEquals("DELETE FROM Supply_Record ORDER BY Supply_ID DESC LIMIT 1", result)
         assertNull(ReadSupplyRecord.getOneByDateAndName(conn, date, "Test_2"))
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
     @Test

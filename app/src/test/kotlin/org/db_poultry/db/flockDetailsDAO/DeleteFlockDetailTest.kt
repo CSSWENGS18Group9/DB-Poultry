@@ -14,14 +14,14 @@ import java.sql.Date
 class DeleteFlockDetailTest {
     private val jdbcURL = "jdbc:postgresql://localhost:5432/db_poultry_test"
     private val conn: Connection
-
+    private val name = "db_poultry_test"
     init {
-        initDBAndUser()
+        initDBAndUser(name, name)
 
-        DBConnect.init(jdbcURL, "db_poultry_test", "db_poultry_test")
+        DBConnect.init(jdbcURL, name, name)
         conn = DBConnect.getConnection()!!
 
-        initTables(conn)
+        initTables(conn, name)
     }
 
     @Test
@@ -45,7 +45,7 @@ class DeleteFlockDetailTest {
         val flockDetail = ReadFlockDetails.getMostRecent(conn, flockOneDate)
         assertEquals(fdDateOne, flockDetail.fdDate)
 
-        cleanAndInitTables(conn)
+        cleanAndInitTables(conn, name)
     }
 
 }
