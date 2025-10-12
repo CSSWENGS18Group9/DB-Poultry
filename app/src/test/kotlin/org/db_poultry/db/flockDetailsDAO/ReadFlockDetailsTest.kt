@@ -356,6 +356,5 @@ class ReadFlockDetailsTest {
         val flockDetailsList = ReadFlockDetails.getFlockDetailsFromFlock(conn, dateFlockTwo)
 
         assertNull(flockDetailsList)
-        cleanAndInitTables(conn)
     }
 }
