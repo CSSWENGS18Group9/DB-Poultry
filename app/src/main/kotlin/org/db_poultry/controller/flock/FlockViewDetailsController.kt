@@ -8,6 +8,7 @@ import javafx.fxml.Initializable
 import javafx.scene.chart.BarChart
 import javafx.scene.chart.PieChart
 import javafx.scene.chart.XYChart
+import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
 import javafx.scene.control.Label
 import javafx.scene.control.TableColumn
@@ -79,6 +80,12 @@ class FlockViewDetailsController : Initializable {
     @FXML
     lateinit var endDateComboBox: ComboBox<String>
 
+    @FXML
+    lateinit var switchDataButton: Button
+
+    @FXML
+    lateinit var comboBoxGridPane: GridPane
+
     private var currentFlockComplete: FlockComplete? = null
     private var cumulativeDepletion: List<Int> = emptyList()
     private var startingDate: Date? = null
@@ -95,6 +102,7 @@ class FlockViewDetailsController : Initializable {
         clearTableSelection()
         setupComboBoxes()
         setupCharts()
+        initializeViewState()
     }
 
     private fun setupLabels() {
@@ -633,6 +641,33 @@ class FlockViewDetailsController : Initializable {
     private fun showCharts() {
         mortalityBarChart.isVisible = true
         mortalityPieChart.isVisible = true
+    }
+
+    private fun initializeViewState() {
+        // Show table by default, hide charts and combo boxes
+        flockRecordsTableView.isVisible = true
+        comboBoxGridPane.isVisible = false
+        mortalityBarChart.isVisible = false
+        mortalityPieChart.isVisible = false
+    }
+
+    @FXML
+    fun onSwitchDataButtonClicked() {
+        if (flockRecordsTableView.isVisible) {
+            // Currently showing table, switch to charts
+            flockRecordsTableView.isVisible = false
+            comboBoxGridPane.isVisible = true
+            mortalityBarChart.isVisible = true
+            mortalityPieChart.isVisible = true
+            switchDataButton.text = "View Table Data"
+        } else {
+            // Currently showing charts, switch to table
+            flockRecordsTableView.isVisible = true
+            comboBoxGridPane.isVisible = false
+            mortalityBarChart.isVisible = false
+            mortalityPieChart.isVisible = false
+            switchDataButton.text = "View Chart Data"
+        }
     }
 
     @FXML
