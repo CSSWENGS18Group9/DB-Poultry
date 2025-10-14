@@ -1,12 +1,11 @@
 package org.db_poultry.controller.flock
 
+import javafx.application.Platform
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.chart.BarChart
-import javafx.scene.chart.CategoryAxis
-import javafx.scene.chart.NumberAxis
 import javafx.scene.chart.PieChart
 import javafx.scene.chart.XYChart
 import javafx.scene.control.ComboBox
@@ -16,7 +15,6 @@ import javafx.scene.control.TableView
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.GridPane
-import javafx.scene.paint.Color
 import org.db_poultry.db.DBConnect.getConnection
 import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
 import org.db_poultry.db.reportDAO.ReadMortalityRate
@@ -295,19 +293,25 @@ class FlockViewDetailsController : Initializable {
         val totalAlive = startingCount ?: 0
         val totalDead = 0
 
-        // Create pie chart slices
-        val deadSlice = PieChart.Data("Dead ($totalDead)", totalDead.toDouble())
+        // Only add slices with non-zero values to prevent label overlap
+        // When there are no mortalities, only show the "Alive" slice
         val aliveSlice = PieChart.Data("Alive ($totalAlive)", totalAlive.toDouble())
 
-        // Add slices to chart
-        mortalityPieChart.data.addAll(deadSlice, aliveSlice)
+        // Add only the alive slice since dead count is 0
+        mortalityPieChart.data.add(aliveSlice)
 
-        // Apply custom colors to the pie slices
-        applyCustomColorsToChart()
-
-        // Set properties for better display
+        // Set properties for better display - disable animation on first render
         mortalityPieChart.labelsVisible = true
-        mortalityPieChart.animated = true
+        mortalityPieChart.animated = false
+
+        // Apply custom colors after the chart is fully rendered to prevent label overlap
+        Platform.runLater {
+            // Apply green color to the alive slice
+            if (mortalityPieChart.data.isNotEmpty()) {
+                val pieNode = mortalityPieChart.data[0].node
+                pieNode?.style = "-fx-pie-color: rgba(40, 167, 69, 1);"
+            }
+        }
     }
 
     private fun applyCustomColorsToChart() {
@@ -541,6 +545,9 @@ class FlockViewDetailsController : Initializable {
         // Clear any existing data
         mortalityPieChart.data.clear()
 
+        // Force layout update to ensure old nodes are removed
+        mortalityPieChart.layout()
+
         // Get the chicken count at the start of the range (skip null dates)
         val allDetailsSorted = currentFlockComplete?.flockDetails
             ?.filter { it.fdDate != null }
@@ -555,19 +562,34 @@ class FlockViewDetailsController : Initializable {
         val totalDeathsInRange = 0
         val aliveAtRangeEnd = countAtRangeStart
 
-        // Create pie chart slices
-        val deadSlice = PieChart.Data("Dead ($totalDeathsInRange)", totalDeathsInRange.toDouble())
-        val aliveSlice = PieChart.Data("Alive ($aliveAtRangeEnd)", aliveAtRangeEnd.toDouble())
-
-        // Add slices to chart
-        mortalityPieChart.data.addAll(deadSlice, aliveSlice)
-
-        // Apply custom colors to the pie slices
-        applyCustomColorsToChart()
+        // Only add slices with non-zero values to prevent label overlap
+        if (totalDeathsInRange > 0) {
+            // Both slices when there are deaths
+            val deadSlice = PieChart.Data("Dead ($totalDeathsInRange)", totalDeathsInRange.toDouble())
+            val aliveSlice = PieChart.Data("Alive ($aliveAtRangeEnd)", aliveAtRangeEnd.toDouble())
+            mortalityPieChart.data.addAll(deadSlice, aliveSlice)
+        } else {
+            // Only alive slice when there are no deaths
+            val aliveSlice = PieChart.Data("Alive ($aliveAtRangeEnd)", aliveAtRangeEnd.toDouble())
+            mortalityPieChart.data.add(aliveSlice)
+        }
 
         // Set properties for better display
         mortalityPieChart.labelsVisible = true
         mortalityPieChart.animated = true
+
+        // Apply custom colors after the chart is fully rendered to prevent label overlap
+        Platform.runLater {
+            if (totalDeathsInRange > 0) {
+                applyCustomColorsToChart()
+            } else {
+                // Only color the alive slice
+                if (mortalityPieChart.data.isNotEmpty()) {
+                    val pieNode = mortalityPieChart.data[0].node
+                    pieNode?.style = "-fx-pie-color: rgba(40, 167, 69, 1);"
+                }
+            }
+        }
     }
 
     private fun setupMortalityPieChartForRange(flockDetailsList: List<FlockDetails>) {
