@@ -447,3 +447,17 @@ HelveticaNowDisplay HairlineIta
 .spinner-dark .decrement-arrow-button:hover .decrement-arrow {
     -fx-background-color: #F7ECB7;
 }
+
+.combo-box {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: black;
+}
+
+.combo-box-dark {
+    -fx-background-color: black;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: white;
+}
