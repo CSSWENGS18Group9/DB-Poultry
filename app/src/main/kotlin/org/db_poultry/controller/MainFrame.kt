@@ -10,10 +10,27 @@ import javafx.scene.Scene
 
 import javafx.scene.text.Font
 import org.db_poultry.util.SceneSwitcher
+import org.db_poultry.App
 
-// TODO: Fix pane switching (eg. login>update supplies > login)
-//  unnecessarily adjusting popup page screen position @Dattebayo25
+//  TODO: Fix unnecessarily adjusting popup page screen position @Dattebayo25
 class MainFrame : Application() {
+
+    override fun init() {
+        super.init()
+        // Preload credentials and connect to database if not first run
+        if (!App.isFirstRun()) {
+            try {
+                App.initializeSubsequentRun()
+                println("Database connection established before UI load.")
+            } catch (e: Exception) {
+                println("Failed to pre-connect to database: ${e.message}")
+                e.printStackTrace()
+            }
+        } else {
+            println("First run detected - database will be initialized after login.")
+        }
+    }
+
     override fun start(primaryStage: Stage) {
         loadCustomFonts()
 
