@@ -1,136 +1,28 @@
 package org.db_poultry.controller.flock
 
-import org.db_poultry.util.GeneralUtil
-import org.db_poultry.util.FlockSingleton
-import org.db_poultry.db.flockDetailsDAO.ReadFlockDetails
-import org.db_poultry.pojo.FlockPOJO.FlockDetails
-import org.db_poultry.db.reportDAO.ReadMortalityRate
-import org.db_poultry.db.DBConnect.getConnection
-
-import javafx.beans.property.SimpleIntegerProperty
-import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
-import javafx.scene.control.Label
-import javafx.scene.control.TableColumn
-import javafx.scene.control.TableView
-import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.layout.AnchorPane
 import org.db_poultry.pojo.FlockPOJO.FlockComplete
+import org.db_poultry.util.FlockSingleton
+import org.db_poultry.util.GeneralUtil
 import java.net.URL
-import java.sql.Date
 import java.util.*
 
-class FlockViewDetailsController : Initializable {
+class FlockViewDetailsController : BaseFlockViewController(), Initializable {
 
     @FXML
     lateinit var mainAnchorPane: AnchorPane
 
-    @FXML
-    lateinit var flockNameLabel: Label
-
-    @FXML
-    lateinit var dateStartedLabel: Label
-
-    @FXML
-    lateinit var quantityStartedLabel: Label
-
-    @FXML
-    lateinit var mortalityRateLabel: Label
-
-    @FXML
-    lateinit var currentCountLabel: Label
-
-    @FXML
-    lateinit var flockRecordsTableView: TableView<FlockDetails>
-
-    @FXML
-    lateinit var colDate: TableColumn<FlockDetails, Date>
-
-    @FXML
-    lateinit var colDepletion: TableColumn<FlockDetails, Int>
-
-    @FXML
-    lateinit var colChickenCount: TableColumn<FlockDetails, Int>
-
-    private var currentFlockComplete: FlockComplete? = null
-    private var cumulativeDepletion: List<Int> = emptyList()
-    private var startingDate: Date? = null
-    private var startingCount: Int? = null
-
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        setupLabels()
-        loadFlockDetails()
-        setupTableColumns()
-        clearTableSelection()
+        initializeFlockData()
     }
 
-    private fun setupLabels() {
-        val currentFlock = FlockSingleton.getCurrentFlockComplete()
-        currentFlockComplete = currentFlock
-
-        val startDate = currentFlockComplete?.flock?.startingDate
-        val startCount = currentFlockComplete?.flock?.startingCount ?: 0
-
-        startingDate = startDate
-        startingCount = startCount
-
-        val mortalityRateData = ReadMortalityRate.calculateMortalityRateForFlock(
-            getConnection(),
-            currentFlockComplete!!.flock.startingDate
-        )
-
-        flockNameLabel.text = GeneralUtil.formatDatePretty(startingDate?.toLocalDate())
-        dateStartedLabel.text = startingDate.toString()
-        quantityStartedLabel.text = startingCount.toString()
-        mortalityRateLabel.text = "${"%.2f".format(mortalityRateData.mortalityRate)}%"
-        currentCountLabel.text = "${mortalityRateData.curCount}"
-    }
-
-    private fun setupTableColumns() {
-        colDate.cellValueFactory = PropertyValueFactory("fdDate")
-        colDepletion.cellValueFactory = PropertyValueFactory("depletedCount")
-    }
-
-    private fun loadFlockDetails() {
-        val latestDetail = ReadFlockDetails.getMostRecent(getConnection(), startingDate)
-
-        if (latestDetail != null) {
-            val flockDetailsList = currentFlockComplete!!.flockDetails.sortedBy { it.fdDate }
-            computeCumulativeDepletion(flockDetailsList)
-            populateTable(flockDetailsList)
-            setupChickenCountColumn()
-        }
-    }
-
-    private fun computeCumulativeDepletion(flockDetailsList: List<FlockDetails>) {
-        cumulativeDepletion = flockDetailsList.runningFold(0) { acc, detail ->
-            acc + detail.depletedCount
-        }.drop(1)
-    }
-
-    private fun setupChickenCountColumn() {
-        colChickenCount.setCellValueFactory { cellData ->
-            val rowIndex = flockRecordsTableView.items.indexOf(cellData.value)
-
-            val remainingChickens: Int = if (rowIndex >= 0 && rowIndex < cumulativeDepletion.size) {
-                (startingCount ?: 0) - cumulativeDepletion[rowIndex]
-            } else {
-                startingCount ?: 0
-            }
-
-            SimpleIntegerProperty(remainingChickens).asObject()
-        }
-    }
-
-    private fun populateTable(flockDetailsList: List<FlockDetails>) {
-        val observableList = FXCollections.observableArrayList(flockDetailsList)
-        flockRecordsTableView.items = observableList
-    }
-
-    private fun clearTableSelection() {
-        flockRecordsTableView.selectionModel.clearSelection()
-        flockRecordsTableView.focusModel.focus(-1)
+    /**
+     * Returns the currently selected flock from FlockSingleton for the details view.
+     */
+    override fun getFlockToDisplay(): FlockComplete? {
+        return FlockSingleton.getCurrentFlockComplete()
     }
 
     @FXML
