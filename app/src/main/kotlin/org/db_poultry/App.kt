@@ -2,10 +2,6 @@ package org.db_poultry
 
 import io.github.cdimascio.dotenv.Dotenv
 import javafx.application.Application
-import org.db_poultry.App.databaseName
-import org.db_poultry.App.databasePass
-import org.db_poultry.App.getDotEnv
-import org.db_poultry.controller.DatabasePasswordNameController
 import org.db_poultry.controller.MainFrame
 import org.db_poultry.db.DBConnect
 import org.db_poultry.db.cleanTables
@@ -25,6 +21,22 @@ object App {
     lateinit var databaseName: String
     lateinit var databasePass: String
     lateinit var databasePort: String
+
+    /**
+     * Check if database credentials are initialized
+     */
+    fun areCredentialsInitialized(): Boolean {
+        return ::databaseName.isInitialized && ::databasePass.isInitialized && ::databasePort.isInitialized
+    }
+
+    /**
+     * Check if this is the first time running the application
+     * by checking if .env file exists
+     */
+    fun isFirstRun(): Boolean {
+        val envPath = Variables.getENVFilePath()
+        return !Files.exists(envPath)
+    }
 
     fun getDotEnv(): Boolean {
         val envPath = Variables.getENVFilePath()
@@ -80,24 +92,82 @@ object App {
     }
 
     fun start(inputPassword: String, inputUsername: String) {
-        if (!getDotEnv()) { // create missing .env file in .db_poultry
+        // Only create .env if it doesn't exist (first run)
+        val envPath = Variables.getENVFilePath()
+        if (!Files.exists(envPath)) {
             println(".env not found. creating")
             ENV.makeENVfile() // create the .env file
-            ENV.writeENVfile(inputPassword, inputUsername) // write contents with filled-in db name and port. password to be filled-in by user
+            ENV.writeENVfile(inputPassword, inputUsername)
             getDotEnv()
         }
     }
 
     fun connect() {
         val jdbcUrl = "jdbc:postgresql://localhost:$databasePort/$databaseName"
-
-        println("connecting to $jdbcUrl")
-
-        // Connect to the PostgresSQL DB
         DBConnect.init(jdbcUrl, databaseName, databasePass)
+        println("Connected to: ${DBConnect.getConnection()}")
     }
 
     fun getConnection(): Connection? = DBConnect.getConnection()
+
+    /**
+     * Initialize database and connection for FIRST RUN
+     */
+    fun initializeApplication() {
+        start(databasePass, databaseName)
+        println("Initialized DB and User with values $databaseName and $databasePass")
+
+        var config: HashMap<String, String>? = null
+        if (__CLIENT_MODE)
+            config = TL_loadConfig()
+            if (config == null)
+                TL_firstOpen(this)
+
+        if (config == null) {
+            initDBAndUser(databasePass, databaseName)
+            println("Initialized DB and User with values $databaseName and $databasePass")
+            connect()
+            println("Connected to $databaseName")
+            initTables(getConnection(), databaseName)
+            println("Initialized tables")
+        }
+
+        println("passed initialization")
+        connect()
+        println("Connected to $databaseName\n")
+
+        println("=== First Run Initialization Complete ===")
+    }
+
+    /**
+     * Initialize database connection for SUBSEQUENT RUNS
+     * THIS IS THE MAINEST METHOD
+     */
+    fun initializeSubsequentRun() {
+        if (!getDotEnv()) {
+            println("MAJOR ERROR: .env MISSING | FIX IMMEDIATELY")
+            return
+        }
+
+        connect()
+
+        var config: HashMap<String, String>? = null
+        if (__CLIENT_MODE)
+            config = TL_loadConfig()
+            Backup.TL_checkLastBackupDate(config, databaseName, databasePass)
+    }
+
+    /**
+     * Wipe database (for development only)
+     */
+    fun wipeDatabase() {
+        if (__DO_WIPE) {
+            println("!!! WIPING DATABASE !!!")
+            getConnection()?.close()
+            cleanTables(getConnection(), databaseName)
+            wipe(databaseName)
+        }
+    }
 }
 
 // checks if the developers are the ones running the code
@@ -107,47 +177,14 @@ val __CLIENT_MODE: Boolean = true
 val __DO_WIPE: Boolean = false
 
 fun main() {
-    if (!getDotEnv()) { // if .env missing
-        // FIXME: UI opens here, takes user input for password and name (use DatabasePasswordUsernameController)
-        DatabasePasswordNameController().userPasswordName("testPW", "testDBNAME")
-        println("inputs are $databaseName and $databasePass")
-        println(".env missing")
-    }
+    println("=== DB Poultry Application Starting ===")
 
-    App.start(App.databasePass, App.databaseName)
-
-    var config: HashMap<String, String>? = null
-    if (__CLIENT_MODE) {
-        // Check if this is the first open
-        config = TL_loadConfig()
-        if (config == null)
-            TL_firstOpen(App)
-        else
-            Backup.TL_checkLastBackupDate(config, App.databaseName, App.databasePass)
-    }
-
-    if (config == null) {
-        initDBAndUser(databasePass, databaseName)
-        println("Initialized DB and User with values $databaseName and $databasePass")
-        App.connect()
-        println("Connected to $databaseName")
-        initTables(App.getConnection(), App.databaseName)
-        println("Initialized tables")
-    }
-
-    println("passed initialization")
-    App.connect()
-    println("Connected to $databaseName")
-
-    // Open MainFrame (index GUI)
-    App.openMainFrame()
-
-    // ==================================================
-    // Keep this here but remove before shipping or every release
-    // ==================================================
-    if (__DO_WIPE) {
-        App.getConnection()?.close()
-        cleanTables(App.getConnection(), App.databaseName)
-        wipe(App.databaseName)
+    if (App.isFirstRun()) {
+        // First run: Launch GUI first, then initialize after user enters credentials
+        App.openMainFrame()
+    } else { // Existing installation detected - database will connect during GUI initialization
+        App.getDotEnv()
+        App.wipeDatabase() // Only if __DO_WIPE is true (development only)
+        App.openMainFrame()
     }
 }
