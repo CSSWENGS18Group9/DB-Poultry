@@ -147,13 +147,18 @@
                                           <Insets />
                                        </GridPane.margin>
                                     </Label>
-                                    <FlowPane fx:id="updateSuppliesFlowPane" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToUpdateSupplies" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                                    <FlowPane fx:id="updateSuppliesFlowPane" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToUpdateSupplies" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane" GridPane.columnSpan="2" GridPane.rowIndex="1">
                                        <children>
                                           <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h3-bold" text="Update Supplies">
                                              <padding>
                                                 <Insets left="10.0" />
                                              </padding>
                                           </Label>
+                                       </children>
+                                    </FlowPane>
+                                    <FlowPane alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                                       <children>
+                                          <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="View Reports" />
                                        </children>
                                     </FlowPane>
                                     <FlowPane fx:id="retrieveChickenFeedPane" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToRetrieveChickenFeed" styleClass="sidebar-pane" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
