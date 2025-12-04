@@ -128,7 +128,7 @@
                         <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <StackPane fx:id="mainStackPane" prefHeight="150.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowSpan="2">
+                        <StackPane fx:id="mainStackPane" prefHeight="150.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowSpan="3">
                            <children>
                               <GridPane fx:id="supplyGridPane" visible="false">
                                 <columnConstraints>
@@ -142,11 +142,6 @@
                                   <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h2-bold" text="Supplies" GridPane.columnSpan="2" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets />
-                                       </GridPane.margin>
-                                    </Label>
                                     <FlowPane fx:id="updateSuppliesFlowPane" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToUpdateSupplies" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane" GridPane.columnSpan="2" GridPane.rowIndex="1">
                                        <children>
                                           <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h3-bold" text="Update Supplies">
@@ -156,9 +151,12 @@
                                           </Label>
                                        </children>
                                     </FlowPane>
-                                    <FlowPane alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                                    <FlowPane alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane" GridPane.columnSpan="2" GridPane.rowIndex="2">
                                        <children>
-                                          <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="View Reports" />
+                                          <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h3-bold" text="View Reports">
+                                             <padding>
+                                                <Insets left="10.0" />
+                                             </padding></Label>
                                        </children>
                                     </FlowPane>
                                     <FlowPane fx:id="retrieveChickenFeedPane" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToRetrieveChickenFeed" styleClass="sidebar-pane" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
@@ -170,9 +168,14 @@
                                           </Label>
                                        </children>
                                     </FlowPane>
+                                    <Label alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h2-bold" text="Supplies" GridPane.columnSpan="2">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                    </Label>
                                  </children>
                               </GridPane>
-                              <GridPane fx:id="flockGridPane" layoutX="10.0" layoutY="10.0" visible="false">
+                              <GridPane fx:id="flockGridPane" layoutX="10.0" layoutY="10.0">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -184,8 +187,8 @@
                                     <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <Label alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h2-bold" text="Flock" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                                    <FlowPane fx:id="flockSelectionFlowPane" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToFlockSelection" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                                    <Label alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h2-bold" text="Flock" GridPane.columnSpan="2" />
+                                    <FlowPane fx:id="flockSelectionFlowPane" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#navigateToFlockSelection" prefHeight="200.0" prefWidth="200.0" styleClass="sidebar-pane" GridPane.columnSpan="2" GridPane.rowIndex="1">
                                        <children>
                                           <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="h3-bold" text="Flock Selection">
                                              <FlowPane.margin>

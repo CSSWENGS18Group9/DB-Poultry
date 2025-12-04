@@ -45,6 +45,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
@@ -103,7 +104,29 @@
                         <Insets top="10.0" />
                      </GridPane.margin>
                   </GridPane>
-                  <GridPane hgap="40.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <GridPane layoutX="102.0" layoutY="229.0" vgap="10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <TextField fx:id="setPriceTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Label styleClass="h4-bold" text="Set Price" GridPane.halignment="CENTER" />
+                        <Label fx:id="currentPriceLabel" styleClass="h5-bold" text="Current Price: " textFill="#8f250c" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label fx:id="currentPriceLabel1" styleClass="h5-bold" text="(Leave blank to retain price)" textFill="#8f250c" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
+                  <GridPane hgap="40.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -130,7 +153,7 @@
                         <Insets bottom="15.0" />
                      </GridPane.margin>
                   </GridPane>
-                  <Button fx:id="confirmButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#confirm" text="Confirm" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                  <Button fx:id="confirmButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#confirm" text="Confirm" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                      <styleClass>
                         <String fx:value="h3-bold" />
                         <String fx:value="confirm-button" />
