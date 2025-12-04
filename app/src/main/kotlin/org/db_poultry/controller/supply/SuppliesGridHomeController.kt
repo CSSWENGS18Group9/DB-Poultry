@@ -182,7 +182,7 @@ class SuppliesGridHomeController: Initializable {
         gridPane.columnConstraints.addAll(col1, col2, col3)
 
         // Set up row constraints
-        repeat(5) {
+        repeat(7) {
             val row = RowConstraints().apply {
                 minHeight = 10.0
                 prefHeight = 30.0
@@ -217,7 +217,7 @@ class SuppliesGridHomeController: Initializable {
         }
         GridPane.setHalignment(imageView, HPos.CENTER)
         GridPane.setValignment(imageView, VPos.CENTER)
-        GridPane.setRowSpan(imageView, 5)
+        GridPane.setRowSpan(imageView, 7)
         gridPane.add(imageView, 0, 0)
 
         // Create name label
@@ -227,7 +227,7 @@ class SuppliesGridHomeController: Initializable {
         }
         GridPane.setHalignment(nameLabel, HPos.CENTER)
         GridPane.setRowSpan(nameLabel, 2)
-        gridPane.add(nameLabel, 1, 1)
+        gridPane.add(nameLabel, 1, 2)
 
         // Create count label
         SupplySingleton.setCurrentSupply(supplyType.name)
@@ -241,7 +241,7 @@ class SuppliesGridHomeController: Initializable {
         }
 
         GridPane.setHalignment(countLabel, HPos.CENTER)
-        gridPane.add(countLabel, 1, 3)
+        gridPane.add(countLabel, 1, 4)
 
         // Create buttons
         val viewHistoryButton = Button("View History").apply {
@@ -260,6 +260,21 @@ class SuppliesGridHomeController: Initializable {
         GridPane.setMargin(viewHistoryButton, Insets(10.0, 10.0, 10.0, 10.0))
         gridPane.add(viewHistoryButton, 2, 1)
 
+        val financialReportsButton = Button("Financial Reports").apply {
+            maxHeight = Double.MAX_VALUE
+            maxWidth = Double.MAX_VALUE
+            if (GUIUtil.getDarkMode()) { styleClass.addAll("main-button-reversed-dark", "h6-bold") }
+            else { styleClass.addAll("main-button-reversed", "h6-bold") }
+            setOnAction { navigateToViewSuppliesReport() }
+            setOnMousePressed { event ->
+                SupplySingleton.setCurrentSupply(supplyType.name)
+                println("Current supply set to: ${SupplySingleton.getCurrentSupplyName()}")
+            }
+        }
+        GridPane.setHalignment(financialReportsButton, HPos.CENTER)
+        GridPane.setMargin(financialReportsButton, Insets(10.0, 10.0, 10.0, 10.0))
+        gridPane.add(financialReportsButton, 2, 3)
+
         val updateCountButton = Button("Update Count").apply {
             maxHeight = Double.MAX_VALUE
             maxWidth = Double.MAX_VALUE
@@ -273,7 +288,7 @@ class SuppliesGridHomeController: Initializable {
         }
         GridPane.setHalignment(updateCountButton, HPos.CENTER)
         GridPane.setMargin(updateCountButton, Insets(10.0, 10.0, 10.0, 10.0))
-        gridPane.add(updateCountButton, 2, 3)
+        gridPane.add(updateCountButton, 2, 5)
 
         return gridPane
     }
@@ -286,6 +301,11 @@ class SuppliesGridHomeController: Initializable {
     @FXML
     fun navigateToUpdateSupplies() {
         PopupUtil.showContentPopup("/fxml/content_update_supplies_add_delete.fxml")
+    }
+
+    @FXML
+    fun navigateToViewSuppliesReport() {
+        GeneralUtil.navigateToMainContent(mainAnchorPane, "/fxml/content_view_supply_report.fxml")
     }
 
     @FXML
