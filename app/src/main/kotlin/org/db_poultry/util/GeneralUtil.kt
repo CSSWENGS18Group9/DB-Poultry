@@ -33,6 +33,7 @@ class GeneralUtil {
             "/fxml/content_create_supplies.fxml" to "SUPPLIES_UPDATE",
             "/fxml/content_home_supplies_grid.fxml" to "SUPPLIES_UPDATE",
             "/fxml/content_update_supplies_add_delete.fxml" to "SUPPLIES_UPDATE",
+            "/fxml/content_view_supply_report.fxml" to "SUPPLIES_UPDATE",
             "/fxml/content_update_supplies_retrieve.fxml" to "SUPPLIES_RETRIEVE",
             "/fxml/content_view_supplies.fxml" to "SUPPLIES_UPDATE",
         )
